@@ -20,6 +20,8 @@
 \usepackage{amssymb}
 \usepackage[version=4]{mhchem}  % For chemical formulas (\ce command)
 \usepackage{booktabs}
+\usepackage{tikz}  % For flowchart
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, backgrounds}
 \usepackage{hyperref}
 \hypersetup{
   colorlinks=true,
@@ -155,6 +157,70 @@
 \end{frame}
 
 % ============================================================
+% Page 4.5: Research Overview (摘要图+流程图)
+% ============================================================
+\begin{frame}{研究概览：问题、方法与核心发现}
+  % 上半部：摘要图
+  \centering
+  \includegraphics[height=0.33\textheight,keepaspectratio]{images/membrane-pore-jc/abs.png}
+
+  \vspace{0.25cm}
+
+  % 下半部：TikZ流程图
+  \resizebox{\textwidth}{!}{%
+    \begin{tikzpicture}[
+      node distance=0.6cm and 0.2cm,
+      stage/.style={rectangle, rounded corners=2pt, minimum width=2.0cm, minimum height=1.8cm,
+                    align=center, font=\tiny, draw=black, line width=0.6pt},
+      arrow/.style={-Stealth, thick=0.5pt, black},
+      label/.style={font=\tiny\bfseries}
+    ]
+      % Stage 1: 方法开发
+      \node[stage, fill=green!20] (fp) {Full-Path\\成核+扩展};
+      \node[stage, fill=green!20, right=0.1cm of fp] (rp) {Rapid\\大孔线张力};
+      \node[label, above=0.12cm of fp.north west, anchor=south west] {① 方法开发};
+
+      % Stage 2: CV验证
+      \node[stage, fill=orange!15, right=0.4cm of rp] (valid) {自发孔\\孔寿命趋势✓\\尾部密度✓};
+      \node[label, above=0.12cm of valid.north, anchor=south] {② 验证};
+
+      % Stage 3: 能量学计算
+      \node[stage, fill=blue!15, right=0.4cm of valid] (fp4) {图4\\Full-Path\\k和γ};
+      \node[stage, fill=blue!15, right=0.1cm of fp4] (rp5) {图5\\Rapid\\γ};
+      \node[label, above=0.12cm of fp4.north west, anchor=south west] {③ 能量学};
+
+      % Stage 4: 交叉验证
+      \node[stage, fill=pink!20, right=0.4cm of rp5] (exp) {6A\\实验\\吻合};
+      \node[stage, fill=pink!20, right=0.1cm of exp] (method) {6B\\两CV\\一致};
+      \node[label, above=0.12cm of exp.north west, anchor=south west] {④ 交叉验证};
+
+      % Stage 5: 力场评估
+      \node[stage, fill=purple!10, right=0.4cm of method] (ff) {✓ C36/p75\\± Slipids\\✗ M2.2/M3};
+      \node[label, above=0.12cm of ff.north, anchor=south] {⑤ 力场};
+
+      % Stage 6: 离子效应
+      \node[stage, fill=yellow!15, right=0.4cm of ff] (ca) {7A\\Ca²⁺\\恢复γ};
+      \node[stage, fill=yellow!15, right=0.1cm of ca] (na) {7B\\Na⁺\\γ↑};
+      \node[label, above=0.12cm of ca.north west, anchor=south west] {⑥ 离子效应};
+
+      % Arrows
+      \draw[arrow] (fp.east) -- (valid.west);
+      \draw[arrow] (rp.east) -- (valid.west);
+      \draw[arrow] (valid.east) -- (fp4.west);
+      \draw[arrow] (valid.east) -- (rp5.west);
+      \draw[arrow] (fp4.east) -- (exp.west);
+      \draw[arrow] (rp5.east) -- (exp.west);
+      \draw[arrow] (fp4.east) -- (method.west);
+      \draw[arrow] (rp5.east) -- (method.west);
+      \draw[arrow] (exp.east) -- (ff.west);
+      \draw[arrow] (method.east) -- (ff.west);
+      \draw[arrow] (ff.east) -- (ca.west);
+      \draw[arrow] (ff.east) -- (na.west);
+    \end{tikzpicture}
+  }
+\end{frame}
+
+% ============================================================
 % Page 5: Innovations (三列布局)
 % ============================================================
 \iqbsectionframe{Methods}{方法}
@@ -197,10 +263,10 @@
   }{权重函数平滑切换}
 }{
   \centering
-  \includegraphics[height=0.45\textheight]{images/membrane-pore-jc/fig1.png}
+  \includegraphics[height=0.45\textheight]{images/membrane-pore-jc/fig1u.png}
 
   \tinysep
-  \iqbcaptiontext{\textbf{图1}：两种创新的集体变量设计。\textbf{上半部}：Full-Path CV同时追踪成核（圆柱内尾部密度CV$_{\text{cyl}}$）和扩展（孔半径CV$_{\text{r}}$）；通过sigmoid切换函数平滑过渡。\textbf{下半部}：Rapid CV使用脂质条带模拟无限孔，通过调节盒子尺寸快速提取线张力（因子2考虑两孔边缘）。}
+  \iqbcaptiontext{\textbf{图1}：Full-Path CV设计。同时追踪成核（圆柱内尾部密度CV$_{\text{cyl}}$）和扩展（孔半径CV$_{\text{r}}$）；通过sigmoid切换函数平滑过渡。}
 }
 
 % ============================================================
@@ -225,12 +291,43 @@
       \item 单一CV占主导
     }
   }{
-    \centering
-    \includegraphics[width=0.9\textwidth]{images/membrane-pore-jc/switching-functions.png}
+    {\centering
+    \includegraphics[width=0.9\textwidth]{images/membrane-pore-jc/switching-functions.png}}
 
     \medskip
     {\footnotesize\raggedright
     \textbf{图2}：Sigmoid切换函数实现平滑过渡。两条曲线在 $\text{CV}_0 = 0.95$ 处相交，权重各为 0.5。\textbf{蓝线}（$s_1$）：CV < 0.95时主导成核，权重从1递减。\textbf{红线}（$s_2$）：CV > 0.95时主导扩展，权重从0递增。参数 $\alpha=20$确保陡峭过渡，避免不连续性。物理效应：单一CV占主导，无数值问题，与实验孔寿命趋势一致。
+    }
+  }
+\end{frame}
+
+% ============================================================
+% Page 7: Method - Rapid Method
+% ============================================================
+\begin{frame}{Rapid方法：脂质条带模拟"无限孔"快速估算线张力}
+  \iqblayoutonethird{
+    {\footnotesize
+    \textbf{创新思路}：(1) 沿膜平面扩展模拟盒子 | (2) 自发形成脂质条带 | (3) 周期边界PBC连接 | (4) 形成环形"无限孔"
+
+    \medskip
+
+    \textbf{物理原理}：线张力 $\Delta G = 2L\gamma$，其中 $L$ 为孔边缘总长度 | 因子2考虑两个孔边缘 | 改变盒子尺寸 $L_x$ = 改变孔边缘长度
+
+    \medskip
+
+    \textbf{关键优势}：参考态通过线性外推自动确定（无需实际模拟完整膜） | 周期边界消除边缘效应 | 物理上等价于 $\Delta G = 2\pi r\gamma$（圆形孔）
+
+    \medskip
+
+    \textbf{计算效率}：Rapid 仅需 21窗 $\times$ 150 ns | Full-Path 需要 65窗 $\times$ 200 ns | 效率提升 $\sim$6倍，准确性与Full-Path高度一致
+    }
+  }{
+    \centering
+    \includegraphics[height=0.63\textheight,keepaspectratio]{images/membrane-pore-jc/fig1d.png}
+
+    \tinysep
+    {\footnotesize\raggedright\setlength{\rightskip}{0pt plus 1cm}
+    \textbf{图2}：Rapid方法示意。(A) 脂质条带侧视图，两个孔边缘（膜外界面）中间夹水 | (B) 俯视图，通过周期边界形成环形"无限孔" | (C) 自由能随盒子尺寸线性增长，斜率 = $2\gamma$，线性拟合确定线张力。
     }
   }
 \end{frame}
@@ -330,7 +427,12 @@
 % ============================================================
 \begin{frame}{Full-Path结果：正反向拉伸完全重合，CV设计可逆无滞后}
   \iqblayouttwothirds{
-    {\footnotesize
+    {
+    
+    \iqbcaptiontext{\textbf{图5}：Full-Path自由能分析。(A)典型孔结构侧视图和俯视图 | (B)自由能剖面展示两阶段：成核阶段$\Delta G=k \cdot \text{CV}^2$（$k$=72.9 kJ/mol）；扩展阶段$G=2\pi r\gamma$（$\gamma$=32.5 pN）；正反向完全重合无滞后 | (C)不同力场线张力对比：CHARMM36和prosECCo75最准确。}
+
+    \footnotesize
+    
     \textbf{成核阶段} ($\text{CV} < 0.5$): $\Delta G = k \cdot \text{CV}^2 + c$ | 二次增长 | $k=72.9$ kJ/mol (CHARMM36) | $k=73.7$ kJ/mol (Martini 2.2p)
 
     \medskip
@@ -346,7 +448,6 @@
     \includegraphics[height=0.55\textheight,keepaspectratio]{images/membrane-pore-jc/fig4.png}
 
     \tinysep
-    \iqbcaptiontext{\textbf{图5}：Full-Path自由能分析。(A)典型孔结构侧视图和俯视图 | (B)自由能剖面展示两阶段：成核阶段$\Delta G=k \cdot \text{CV}^2$（$k$=72.9 kJ/mol）；扩展阶段$G=2\pi r\gamma$（$\gamma$=32.5 pN）；正反向完全重合无滞后 | (C)不同力场线张力对比：CHARMM36和prosECCo75最准确。}
   }
 \end{frame}
 
@@ -355,14 +456,17 @@
 % ============================================================
 \begin{frame}{Rapid方法：脂质条带模拟"无限孔"快速提取线张力}
   \iqblayouttwothirds{
-    {\footnotesize
+    {
+    \iqbcaptiontext{\textbf{图6}：Rapid方法示意。(A)脂质条带侧视图，两个孔边缘（膜外界面）中间夹水 | (B)俯视图，通过PBC形成环形无限孔 | (C)自由能随盒子尺寸线性增长，斜率为$2\pi\gamma$。}
+    
+    \footnotesize
     \textbf{创新思路}：(1) 沿膜平面拉伸模拟盒子 | (2) 形成脂质条带结构 | (3) 周期边界条件连接 | (4) 形成环形"无限孔"
 
     \medskip
 
     \textbf{线张力原理}：大孔自由能为 $\Delta G = 2L\gamma$，其中$L$为孔边缘长度，因子2考虑两个孔边缘 | 通过线性拟合斜率直接提取$\gamma$
 
-    \medskip
+\medskip
 
     \textbf{计算效率}：Full-Path需65窗 $\times$ 200ns（全原子） | Rapid仅21窗 $\times$ 150ns，效率提升 $\sim$6倍 | 准确性与Full-Path结果高度一致
 
@@ -374,8 +478,6 @@
     \centering
     \includegraphics[height=0.58\textheight,keepaspectratio]{images/membrane-pore-jc/fig5ab.png}
 
-    \tinysep
-    \iqbcaptiontext{\textbf{图6}：Rapid方法示意。(A)脂质条带侧视图，两个孔边缘（膜外界面）中间夹水 | (B)俯视图，通过PBC形成环形无限孔 | (C)自由能随盒子尺寸线性增长，斜率为$2\pi\gamma$。}
   }
 \end{frame}
 
@@ -415,7 +517,10 @@
 % ============================================================
 \begin{frame}{双重验证：Full-Path与Rapid高度一致，与实验定性吻合}
   \iqblayouttwothirds{
-    {\footnotesize
+    {
+    \iqbcaptiontext{\textbf{图7}：交叉验证。(A)实验对比，模拟准确捕捉PG与离子效应 | (B)两种CV线张力对比，R²极高，证明一致性。}
+    
+    \footnotesize
     \textbf{(A) 与实验对标}：OK 定性吻合POPC:POPG膜 | PG↑$\Rightarrow$$\gamma$↓ | Ca$^{2+}$$\Rightarrow$$\gamma$恢复 | 定量偏差：实验40 pN vs 模拟6 pN | 原因：离子参数化精度差异
 
     \medskip
@@ -431,7 +536,6 @@
     \includegraphics[height=0.62\textheight,keepaspectratio]{images/membrane-pore-jc/fig6.png}
 
     \tinysep
-    \iqbcaptiontext{\textbf{图7}：交叉验证。(A)实验对比，模拟准确捕捉PG与离子效应 | (B)两种CV线张力对比，R²极高，证明一致性。}
   }
 \end{frame}
 
