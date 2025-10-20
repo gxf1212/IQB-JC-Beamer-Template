@@ -54,6 +54,7 @@ desktop.ini
 *.vscode/settings.json
 .vscode/launch.json
 .vscode/tasks.json
+.vscode
 
 # ============================================================
 # Python（分析脚本）

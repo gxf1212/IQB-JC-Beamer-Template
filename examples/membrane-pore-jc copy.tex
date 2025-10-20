@@ -342,29 +342,28 @@
 % ============================================================
 % Page 10: Results - Full-Path Free Energy Profile
 % ============================================================
-\begin{frame}{Full-Path结果：正反向拉伸完全重合，CV设计可逆无滞后}
-  \iqblayouttwothirds{
-    {\footnotesize
-    \textbf{成核阶段} ($\text{CV} < 0.5$): $\Delta G = k \cdot \text{CV}^2 + c$ | 二次增长 | $k=72.9$ kJ/mol (CHARMM36) | $k=73.7$ kJ/mol (Martini 2.2p)
+\iqbformulaframe{Full-Path结果：正反向拉伸完全重合，CV设计可逆无滞后}{
+  \iqbformblock{成核阶段 ($\text{CV} < 0.5$)}{
+    $$\Delta G = k \cdot \text{CV}^2 + c$$
+  }{二次增长，$k$ 表征成核能垒}
 
-    \medskip
+  \iqbformblock{扩展阶段 ($\text{CV} > 1.2$)}{
+    $$G(r) = 2\pi r\gamma$$
+  }{线性增长，斜率给出线张力}
 
-    \textbf{扩展阶段} ($\text{CV} > 1.2$): $G(r) = 2\pi r\gamma$ | 线性增长 | $\gamma=32.5$ pN (CHARMM36) | $\gamma=49.2$ pN (Martini 2.2p)
+  \iqbformblock{关键结果}{
+    \textit{CHARMM36}: $k=72.9$ kJ/mol, $\gamma=32.5$ pN\\
+    \textit{Martini 2.2p}: $k=73.7$ kJ/mol, $\gamma=49.2$ pN
+  }{{\color{iqbblue}\textbf{无滞后}}：正反向完全重合}
+}{
+  \centering
+  \includegraphics[height=0.58\textheight]{images/membrane-pore-jc/fig4.png}
 
-    \medskip
-
-    \textbf{关键发现}：正反向拉伸曲线完全重合 | CV设计无滞后 | CHARMM36和Martini 2.2p显示不同的线张力
-    }
-  }{
-    \centering
-    \includegraphics[height=0.55\textheight,keepaspectratio]{images/membrane-pore-jc/fig4.png}
-
-    \tinysep
-    {\footnotesize\raggedright\setlength{\rightskip}{0pt plus 1cm}
-    \textbf{图5}：Full-Path自由能分析。(A)典型孔结构侧视图和俯视图 | (B)自由能剖面展示两阶段：成核阶段$\Delta G=k \cdot \text{CV}^2$（$k$=72.9 kJ/mol）；扩展阶段$G=2\pi r\gamma$（$\gamma$=32.5 pN）；正反向完全重合无滞后 | (C)不同力场线张力对比：CHARMM36和prosECCo75最准确。
-    }
+  \tinysep
+  {\footnotesize\raggedright\setlength{\rightskip}{0pt plus 1cm}
+  \textbf{图5}：Full-Path自由能分析。\textbf{(A)}典型孔结构的侧视图和俯视图。\textbf{(B)}自由能剖面展示两阶段：成核(CV<0.5)二次增长$\Delta G=k \cdot \text{CV}^2$（$k$=72.9 kJ/mol）；扩展(CV>1.2)线性增长$G=2\pi r\gamma$（$\gamma$=32.5 pN)。正反向完全重合证明无滞后。\textbf{(C)}不同力场的线张力比较，CHARMM36和prosECCo75最准确。
   }
-\end{frame}
+}
 
 % ============================================================
 % Page 11: Results - Rapid Method
@@ -372,27 +371,46 @@
 \begin{frame}{Rapid方法：脂质条带模拟"无限孔"快速提取线张力}
   \iqblayouttwothirds{
     {\footnotesize
-    \textbf{创新思路}：(1) 沿膜平面拉伸模拟盒子 | (2) 形成脂质条带结构 | (3) 周期边界条件连接 | (4) 形成环形"无限孔"
+    \textbf{创新思路}：
+    \iqbitemize{
+      \item ① 沿膜平面拉伸模拟盒子
+      \item ② 形成脂质条带结构
+      \item ③ 周期边界条件连接
+      \item ④ 形成环形"无限孔"
+    }
 
     \medskip
 
-    \textbf{线张力原理}：大孔自由能为 $\Delta G = 2L\gamma$，其中$L$为孔边缘长度，因子2考虑两个孔边缘 | 通过线性拟合斜率直接提取$\gamma$
+    \textbf{线张力原理}：
+
+    大孔自由能：$\Delta G = 2L\gamma$
+
+    其中$L$为孔边缘长度，因子2考虑两个孔边缘。通过线性拟合斜率直接提取$\gamma$。
 
     \medskip
 
-    \textbf{计算效率}：Full-Path需65窗 $\times$ 200ns（全原子） | Rapid仅21窗 $\times$ 150ns，效率提升 $\sim$6倍 | 准确性与Full-Path结果高度一致
+    \textbf{计算效率对比}：
+    \iqbitemize{
+      \item Full-Path：65窗 $\times$ 200ns（全原子）
+      \item Rapid：仅21窗 $\times$ 150ns，效率提升$\sim$6倍
+      \item 准确性：与Full-Path结果高度一致
+    }
 
     \medskip
 
-    \textbf{关键数据}：POPC CHARMM36 $\gamma=34.1$ pN | POPC Martini 2.2p $\gamma=49.2$ pN
+    \textbf{关键数据}：
+
+    POPC  \textit{C36}: $\gamma=34.1$ pN
+
+    POPC  \textit{M2.2p}: $\gamma=49.2$ pN
     }
   }{
     \centering
-    \includegraphics[height=0.58\textheight,keepaspectratio]{images/membrane-pore-jc/fig5ab.png}
+    \includegraphics[height=0.65\textheight,keepaspectratio]{images/membrane-pore-jc/fig5ab.png}
 
     \tinysep
     {\footnotesize\raggedright\setlength{\rightskip}{0pt plus 1cm}
-    \textbf{图6}：Rapid方法示意。(A)脂质条带侧视图，两个孔边缘（膜外界面）中间夹水 | (B)俯视图，通过PBC形成环形无限孔 | (C)自由能随盒子尺寸线性增长，斜率为$2\pi\gamma$。
+    \textbf{图6}：Rapid方法示意。(A)脂质条带侧视图，两个孔边缘（膜外界面）中间夹水。(B)俯视图，通过PBC形成环形无限孔。(C)自由能随盒子尺寸线性增长，斜率为$2\pi\gamma$。
     }
   }
 \end{frame}
@@ -435,23 +453,43 @@
 \begin{frame}{双重验证：Full-Path与Rapid高度一致，与实验定性吻合}
   \iqblayouttwothirds{
     {\footnotesize
-    \textbf{(A) 与实验对标}：OK 定性吻合POPC:POPG膜 | PG↑$\Rightarrow$$\gamma$↓ | Ca$^{2+}$$\Rightarrow$$\gamma$恢复 | 定量偏差：实验40 pN vs 模拟6 pN | 原因：离子参数化精度差异
+    \textbf{(A) 与实验定性对标}：
+
+    {\color{iqbblue}\textbf{✓ 定性吻合}}：
+    \iqbitemize{
+      \item POPC:POPG膜
+      \item PG含量↑ $\Rightarrow$ $\gamma$↓
+      \item 添加Ca$^{2+}$ $\Rightarrow$ $\gamma$恢复
+    }
+
+    {\color{orange}\textbf{⚠ 定量偏差}}：
+    \iqbitemize{
+      \item 实验Ca$^{2+}$效应：~40 pN
+      \item 模拟Ca$^{2+}$效应：~6 pN
+      \item 原因：离子参数化精度、体系差异
+    }
 
     \medskip
 
-    \textbf{(B) 两方法互补}：Full-Path vs Rapid相关性极高 | C36 Rapid偏低~2 pN | M2.2p偏高~3-5 pN | 原因：孔几何差异（圆柱vs环形）
+    \textbf{(B) 两种方法互补验证}：
+    \iqbitemize{
+      \item Full-Path vs Rapid相关性极高
+      \item C36 Rapid偏低~2 pN
+      \item M2.2p Rapid偏高~3-5 pN
+      \item 原因：孔几何差异（圆柱vs环形）
+    }
 
     \medskip
 
-    \textbf{结论}：双CV互补，高可信度
+    {\color{iqbblue}\textbf{★ 结论}}：双CV互补，提高可信度
     }
   }{
     \centering
-    \includegraphics[height=0.62\textheight,keepaspectratio]{images/membrane-pore-jc/fig6.png}
+    \includegraphics[height=0.68\textheight,keepaspectratio]{images/membrane-pore-jc/fig6.png}
 
     \tinysep
     {\footnotesize\raggedright\setlength{\rightskip}{0pt plus 1cm}
-    \textbf{图7}：交叉验证。(A)实验对比，模拟准确捕捉PG与离子效应 | (B)两种CV线张力对比，R²极高，证明一致性。
+    \textbf{图7}：交叉验证。(A)与Lira等文献实验对比，模拟准确捕捉PG含量和离子效应的定性趋势。(B)两种CV的线张力对比，R²极高，证明方法一致性。
     }
   }
 \end{frame}
@@ -462,23 +500,45 @@
 \begin{frame}{离子效应：Ca$^{2+}$恢复线张力，Na$^+$增强阴离子膜效应}
   \iqblayouttwothirds{
     {\footnotesize
-    \textbf{(A) Ca$^{2+}$恢复膜稳定性}：POPC:POPG体系 | 仅加NaCl：$\gamma$↓到29 pN | 再加CaCl$_2$：$\gamma$↑恢复至35.5 pN | 机制：Ca$^{2+}$与PG头部强结合，静电屏蔽
+    \textbf{(A) Ca$^{2+}$恢复膜稳定性}：
+
+    POPC:POPG体系：
+    \iqbitemize{
+      \item 仅加NaCl：$\gamma$ ↓ 到29 pN
+      \item 再加CaCl$_2$：$\gamma$ ↑ 恢复至35.5 pN
+      \item 机制：Ca$^{2+}$与PG头部强结合，静电屏蔽
+    }
 
     \medskip
 
-    \textbf{(B) Na$^+$增强阴离子膜效应}：对比有/无0.15M NaCl | POPG/POPS：$\Delta\gamma>0$（↑30-50\%） | POPC/POPE：$\Delta\gamma\approx0$（无显著变化） | 机制：Na$^+$屏蔽阴离子静电斥力 | 疏水代价增加$\Rightarrow$线张力升高
+    \textbf{(B) Na$^+$增强阴离子膜效应}：
+
+    对比有/无0.15M NaCl：
+    \iqbitemize{
+      \item POPG/POPS：$\Delta\gamma >$ 0（↑30-50\%）
+      \item POPC/POPE：$\Delta\gamma \approx$ 0（无显著变化）
+      \item 机制：Na$^+$屏蔽阴离子头部静电斥力
+    }
+
+    疏水代价增加 $\Rightarrow$ 线张力升高
 
     \medskip
 
-    \textbf{力场性能}：OK C36精确 | ~ prosECCo75偏小 | X M2.2p低估
+    \textbf{力场性能评分}：
+
+    {\color{green!60!black}✓ C36}：精确
+
+    {\color{orange}△ prosECCo75}：偏小
+
+    {\color{red}✗ M2.2p}：低估
     }
   }{
     \centering
-    \includegraphics[height=0.62\textheight,keepaspectratio]{images/membrane-pore-jc/fig7.png}
+    \includegraphics[height=0.68\textheight,keepaspectratio]{images/membrane-pore-jc/fig7.png}
 
     \tinysep
     {\footnotesize\raggedright\setlength{\rightskip}{0pt plus 1cm}
-    \textbf{图8}：离子效应分析。(A)Ca$^{2+}$恢复POPC:POPG线张力 | (B)Na$^+$对脂质$\Delta\gamma$影响，阴离子特异增强 | 准确性取决于离子参数化。
+    \textbf{图8}：离子效应定量分析。(A)Ca$^{2+}$恢复POPC:POPG膜的线张力。(B)Na$^+$对不同脂质的$\Delta\gamma$影响，清晰展示阴离子脂质特异性增强效应。力场准确性直接取决于离子-脂质头部相互作用的参数化。
     }
   }
 \end{frame}

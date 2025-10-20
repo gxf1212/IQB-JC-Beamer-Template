@@ -660,10 +660,43 @@
 \newcommand{\iqbsectionframe}[2]{%
   \setsection{#1}%
   \begin{frame}[plain,noframenumbering]
-    \vfill
-    \centering
-    {\Huge\color{iqbblue}\textbf{#2}}
-    \vfill
+    % 背景：浅蓝色渐变 (白 → 淡蓝)
+    \begin{tikzpicture}[remember picture,overlay]
+      \fill[white] (current page.south west) rectangle (current page.north east);
+      \shade[left color=white, right color=iqblightgray!30] (current page.south west) rectangle (current page.north east);
+    \end{tikzpicture}
+
+    % 左侧装饰条（竖线）
+    \begin{tikzpicture}[remember picture,overlay]
+      \draw[line width=8pt, color=iqbblue] (current page.north west) -- (current page.south west);
+    \end{tikzpicture}
+
+    % 右下角几何图案（装饰性圆形）
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=south east, inner sep=0pt] at ($(current page.south east) + (-1.5cm, 1.5cm)$) {
+        \begin{tikzpicture}
+          \fill[iqbblue, opacity=0.08] circle (2cm);
+          \draw[iqbblue, line width=1.5pt, opacity=0.15] circle (2cm);
+          \draw[iqbblue, line width=1pt, opacity=0.15] circle (1.3cm);
+        \end{tikzpicture}
+      };
+    \end{tikzpicture}
+
+    % 标题文字 + 英文副标题
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=center] at ($(current page.center) + (0, 0.5cm)$) {
+        \begin{minipage}{0.8\paperwidth}
+          \centering
+          {\Huge\color{iqbblue}\textbf{#2}}\\[0.3cm]
+          {\Large\color{iqbgray}#1}
+        \end{minipage}
+      };
+    \end{tikzpicture}
+
+    % 底部装饰线
+    \begin{tikzpicture}[remember picture,overlay]
+      \draw[line width=1.5pt, color=iqbblue] ($(current page.south west) + (0.5cm, 0.8cm)$) -- ($(current page.south east) + (-0.5cm, 0.8cm)$);
+    \end{tikzpicture}
   \end{frame}
 }
 
@@ -678,17 +711,16 @@
 %     $$\text{CV}_{\text{cyl}} = 1 - d/\text{CV}_{\text{eq}}$$
 %   }{$d$: 圆柱内脂质尾部原子数}
 \newcommand{\iqbformblock}[3]{%
-  \textbf{#1}：
-
-  \vspace{0.15cm}
+  \textbf{#1}：\\*[-0.1cm]
+  \vspace{0.05cm}
 
   #2  % 公式
 
-  \vspace{0.1cm}
+  \vspace{0.05cm}
 
   {\footnotesize #3}  % 解释
 
-  \medskip
+  \smallskip
 }
 
 % 公式+解释Frame (左侧1/3公式/代码，右侧2/3图片或文字)
@@ -856,6 +888,61 @@
 \newcommand{\iqbcomparisonframe}[5]{%
   \begin{frame}{#1}
     \iqbtwofig[height=0.55\textheight]{#2}{#3}{#4}{#5}%
+  \end{frame}
+}
+
+% ============================================================
+% Paper Metadata Commands (论文元数据预定义)
+% ============================================================
+
+% 初始化论文元数据存储变量
+\newcommand{\papertitle}[1]{\def\@papertitle{#1}}
+\newcommand{\paperengtitle}[1]{\def\@paperengtitle{#1}}
+\newcommand{\papercitation}[1]{\def\@papercitation{#1}}
+\newcommand{\paperdoi}[1]{\def\@paperdoi{#1}}
+\newcommand{\paperjournal}[1]{\def\@paperjournal{#1}}
+\newcommand{\correspondingauthor}[2]{\def\@corrauthor{#1}\def\@corraffil{#2}}
+\newcommand{\firstauthor}[2]{\def\@firstauthor{#1}\def\@firstaffil{#2}}
+\newcommand{\paperyear}[1]{\def\@paperyear{#1}}
+
+% 设置默认值
+\def\@papertitle{论文标题}
+\def\@paperengtitle{Paper Title}
+\def\@papercitation{Full Citation}
+\def\@paperdoi{DOI}
+\def\@paperjournal{Journal}
+\def\@corrauthor{通讯作者}
+\def\@corraffil{所属单位}
+\def\@firstauthor{第一作者}
+\def\@firstaffil{所属单位}
+\def\@paperyear{\the\year}
+
+% ============================================================
+% Thank You Frame (致谢页 - 固定样式)
+% ============================================================
+
+% 致谢页frame（自动使用已定义的论文引用）
+% Usage: \iqbthankyouframe
+% 或指定自定义引用: \iqbthankyouframe[自定义引用文本]
+\newcommand{\iqbthankyouframe}[1][\@papercitation]{%
+  \begin{frame}[plain]
+    \vfill
+    \centering
+
+    {\Huge \textcolor{iqbblue}{\textbf{Thanks for Listening!}}}
+
+    \bigskip
+
+    {\Large Questions?}
+
+    \bigskip\bigskip
+
+    {\normalsize
+    \textbf{参考文献}：\\[0.2cm]
+    #1
+    }
+
+    \vfill
   \end{frame}
 }
 

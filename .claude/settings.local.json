@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(identify:*)",
+      "Read(//mnt/e/GitHub-repo/mendelevium/_pages/Specific Sytems/Membrane/**)",
+      "Read(//mnt/e/GitHub-repo/mendelevium/_pages/**)",
+      "Read(//mnt/e/GitHub-repo/literature-reading/JC/2024.12.17/**)",
+      "Bash(python3:*)",
+      "Read(//tmp/**)",
+      "Bash(python tools/extract_pdf_page.py:*)",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "Read(//mnt/e/GitHub-repo/literature-reading/JC/**)",
+      "Bash(mv:*)",
+      "Bash(cp:*)",
+      "Read(//mnt/e/graduate_study/research/NanoMedicine/Polymer_HA_OP_SYQ/figures/report-25.10.15/**)",
+      "Bash(/mnt/d/texlive/2022/bin/win32/xelatex.exe:*)",
+      "Bash(for:*)",
+      "Bash(done)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

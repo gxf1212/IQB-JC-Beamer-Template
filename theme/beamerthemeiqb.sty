@@ -56,10 +56,13 @@
 \setbeamerfont{itemize/enumerate subbody}{size=\scriptsize}  % 子列表项也保持 (8pt)
 \setbeamerfont{caption}{size=\scriptsize}  % 图注统一 (8pt)
 
-% 注：frame字体控制通过两种方式实现：
-% 1. 所有frame内容框自动应用\setbeamerfont{normal text}{size=\scriptsize}（8pt基准）
-% 2. 高级命令（\iqbframetextfig等）内置字体管理，避免手动调整
-% 不使用\BeforeBeginEnvironment{frame}避免与TeXLive 2022+ hook系统兼容性问题
+% 注：frame字体控制策略 - 使用AtBeginEnvironment
+% 对每个frame（除plain外）应用\footnotesize，兼容TeXLive 2022
+\AtBeginEnvironment{frame}{%
+  \ifbeamer@plainframe\else
+    \footnotesize
+  \fi
+}
 
 % ============================================================
 % Inner Theme (Title Page, Blocks, etc.)

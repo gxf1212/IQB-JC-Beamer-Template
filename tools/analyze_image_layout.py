@@ -16,24 +16,35 @@ def get_aspect_ratio(width: int, height: int) -> float:
 
 def classify_orientation(aspect_ratio: float) -> str:
     """根据宽高比分类图片方向"""
-    if aspect_ratio > 1.3:
+    if aspect_ratio > 1.5:
+        return "超宽横向 (Ultra-wide Landscape)"
+    elif aspect_ratio > 1.0:
         return "横向 (Landscape)"
-    elif aspect_ratio < 0.75:
-        return "竖向 (Portrait)"
-    else:
+    elif aspect_ratio >= 0.7:
         return "方形 (Square)"
+    else:
+        return "竖向 (Portrait)"
 
 def recommend_layout(aspect_ratio: float, orientation: str) -> str:
-    """根据图片特征推荐Beamer布局"""
-    if orientation == "横向 (Landscape)":
+    """
+    根据图片特征推荐Beamer布局 (2025优化版)
+    原则:
+    - 竖版高图(ratio<0.7): \\iqblayouttwothirds (2/3文字长行 + 1/3高图)
+    - 方形(0.7-1.0): \\iqblayoutonethird (1/3文字 + 2/3图)
+    - 宽图(1.0-1.5): \\iqblayoutonethird (1/3文字 + 2/3图)
+    - 超宽(>1.5): 考虑单独一行 \\iqbfig 或表格图注
+    """
+    if orientation == "超宽横向 (Ultra-wide Landscape)":
         if aspect_ratio > 2.0:
-            return "\\iqbfig (单图，全宽)"
+            return "\\iqbfig (单独占一行) + 表格图注"
         else:
-            return "\\iqblayoutonethird (1/3文字+2/3图) 或 \\iqbfig"
-    elif orientation == "竖向 (Portrait)":
-        return "\\iqblayouttwo (图在左，文字在右) 或 \\iqblayoutonethird"
-    else:  # Square
-        return "\\iqbfig 或 \\iqblayouttwo"
+            return "\\iqblayoutonethird (1/3文字 + 2/3图)"
+    elif orientation == "横向 (Landscape)":
+        return "\\iqblayoutonethird (1/3文字长行 + 2/3图)"
+    elif orientation == "方形 (Square)":
+        return "\\iqblayoutonethird (1/3文字 + 2/3图) 或 \\iqbfig"
+    else:  # Portrait (ratio < 0.7)
+        return "\\iqblayouttwothirds (2/3文字长行 + 1/3竖图) - 文字行长但行数少"
 
 def analyze_images(folder_path: str) -> List[Dict]:
     """分析文件夹中所有图片"""
@@ -126,17 +137,45 @@ def print_report(results: List[Dict], folder_path: str):
         print(f"{r['filename']:<30} {size_str:<15} {ratio_str:<8} {orientation:<25} {r['layout']:<35} {r['size_kb']:<10.1f}")
 
     print("\n" + "="*80)
-    print("💡 布局建议:")
-    print("  🟢 横向图 (ratio > 1.3): 适合 \\iqbfig 或 \\iqblayoutonethird")
-    print("  🔴 竖向图 (ratio < 0.75): 建议 \\iqblayouttwo (图左文字右)")
-    print("  🟡 方形图 (0.75-1.3): 灵活，\\iqbfig 或 \\iqblayouttwo 均可")
+    print("💡 IQB JC Beamer 布局原则 (2025优化版):")
+    print("="*80)
+    print("""
+  📐 根据宽高比选择布局方案:
+
+  🔴 竖向高图 (ratio < 0.7):
+     → \\iqblayouttwothirds {文字2/3 + 图1/3}
+     → 文字行长但行数少（3-5行，每行30-40字）
+     → 适用场景: 膜孔快照、切片示意等竖版高图
+
+  🟡 方形/宽图 (ratio 0.7-1.5):
+     → \\iqblayoutonethird {文字1/3 + 图2/3}（保持原则）
+     → 适用场景: 大多数实验结果图、对比图
+
+  🟢 超宽横向 (ratio > 1.5):
+     → \\iqbfig (单独占一行) + 表格形式图注
+     → 或 \\iqblayoutonethird (取决于内容)
+     → 适用场景: 流程图、时间线、宽幅数据对比
+
+  💡 图注格式:
+     - 竖向图: 用长行表述（避免换行），可用"|"分隔不同子图说明
+     - 超宽图: 可用Markdown表格或LaTeX表格
+     - 标准图: 2-3行简洁说明 + 子图标记(A)(B)(C)...
+""")
     print("="*80 + "\n")
 
     # 特别关注竖向图片
-    portrait_imgs = [r for r in results if isinstance(r['aspect_ratio'], float) and r['aspect_ratio'] < 0.75]
+    portrait_imgs = [r for r in results if isinstance(r['aspect_ratio'], float) and r['aspect_ratio'] < 0.7]
     if portrait_imgs:
-        print("⚠️  需要特别注意的竖向图片（建议使用横向布局）:")
+        print("🔴 竖向高图列表（应用2:1双栏布局）:")
         for r in portrait_imgs:
+            print(f"  • {r['filename']}: {r['width']}×{r['height']} (ratio={r['aspect_ratio']:.2f})")
+        print()
+
+    # 超宽图
+    ultrawide_imgs = [r for r in results if isinstance(r['aspect_ratio'], float) and r['aspect_ratio'] > 1.5]
+    if ultrawide_imgs:
+        print("🟢 超宽图列表（考虑表格图注）:")
+        for r in ultrawide_imgs:
             print(f"  • {r['filename']}: {r['width']}×{r['height']} (ratio={r['aspect_ratio']:.2f})")
         print()
 
