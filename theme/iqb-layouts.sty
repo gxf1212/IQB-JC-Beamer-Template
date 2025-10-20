@@ -1,0 +1,862 @@
+% ============================================================
+% IQB Journal Club Layout Utilities
+% Provides common layout patterns for JC presentations
+% Version: 1.0
+% ============================================================
+
+\ProvidesPackage{iqb-layouts}
+
+\RequirePackage{graphicx}
+\RequirePackage{tikz}
+\usetikzlibrary{positioning,calc}
+
+% ============================================================
+% Two-Column Layouts (35% usage in JC presentations)
+% ============================================================
+
+% Standard 50-50 two-column layout
+\newcommand{\iqblayouttwo}[2]{%
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      #1
+    \end{column}
+    \hfill
+    \begin{column}{0.48\textwidth}
+      #2
+    \end{column}
+  \end{columns}
+}
+
+% Asymmetric: 1/3 left, 2/3 right
+\newcommand{\iqblayoutonethird}[2]{%
+  \begin{columns}[T]
+    \begin{column}{0.31\textwidth}
+      #1
+    \end{column}
+    \hfill
+    \begin{column}{0.65\textwidth}
+      #2
+    \end{column}
+  \end{columns}
+}
+
+% Asymmetric: 2/3 left, 1/3 right
+\newcommand{\iqblayouttwothirds}[2]{%
+  \begin{columns}[T]
+    \begin{column}{0.65\textwidth}
+      #1
+    \end{column}
+    \hfill
+    \begin{column}{0.31\textwidth}
+      #2
+    \end{column}
+  \end{columns}
+}
+
+% ============================================================
+% Three-Column Layouts (25% usage)
+% ============================================================
+
+% Standard 1/3-1/3-1/3 layout
+\newcommand{\iqblayoutthree}[3]{%
+  \begin{columns}[T]
+    \begin{column}{0.31\textwidth}
+      #1
+    \end{column}
+    \begin{column}{0.31\textwidth}
+      #2
+    \end{column}
+    \begin{column}{0.31\textwidth}
+      #3
+    \end{column}
+  \end{columns}
+}
+
+% ============================================================
+% Grid Layouts for Multiple Images
+% ============================================================
+
+% 2x2 Grid (4 images)
+\newcommand{\iqbgridtwobytwo}[4]{%
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      #1
+      \vskip1em
+      #3
+    \end{column}
+    \hfill
+    \begin{column}{0.48\textwidth}
+      #2
+      \vskip1em
+      #4
+    \end{column}
+  \end{columns}
+}
+
+% 3x2 Grid (6 images)
+\newcommand{\iqbgridthreebytwo}[6]{%
+  \begin{columns}[T]
+    \begin{column}{0.31\textwidth}
+      #1
+      \vskip0.5em
+      #4
+    \end{column}
+    \begin{column}{0.31\textwidth}
+      #2
+      \vskip0.5em
+      #5
+    \end{column}
+    \begin{column}{0.31\textwidth}
+      #3
+      \vskip0.5em
+      #6
+    \end{column}
+  \end{columns}
+}
+
+% ============================================================
+% Figure Modules with Numbered Captions (Left-aligned)
+% ============================================================
+
+% Figure counter
+\newcounter{iqbfigure}
+\setcounter{iqbfigure}{0}
+
+% Single figure with numbered caption (left-aligned)
+% Usage: \iqbfig[image-options]{image-path}{caption-text}
+\newcommand{\iqbfig}[3][height=0.5\textheight]{%
+  \refstepcounter{iqbfigure}%
+  \centering
+  \includegraphics[#1,keepaspectratio]{#2}
+
+  \vspace{0.15cm}
+
+  \raggedright
+  \scriptsize
+  \textbf{图\theiqbfigure}：#3
+}
+
+% Two figures side by side with individual numbered captions
+% Usage: \iqbtwofig[options]{img1}{caption1}{img2}{caption2}
+\newcommand{\iqbtwofig}[5][height=0.45\textheight]{%
+  \iqblayouttwo{
+    \refstepcounter{iqbfigure}%
+    \centering
+    \includegraphics[#1,keepaspectratio]{#2}
+
+    \vspace{0.1cm}
+
+    \raggedright
+    \scriptsize
+    \textbf{图\theiqbfigure}：#3
+  }{
+    \refstepcounter{iqbfigure}%
+    \centering
+    \includegraphics[#1,keepaspectratio]{#4}
+
+    \vspace{0.1cm}
+
+    \raggedright
+    \scriptsize
+    \textbf{图\theiqbfigure}：#5
+  }
+}
+
+% Three figures in a row with captions
+% Usage: \iqbthreefig[options]{img1}{caption1}{img2}{caption2}{img3}{caption3}
+\newcommand{\iqbthreefig}[7][height=0.35\textheight]{%
+  \iqblayoutthree{
+    \refstepcounter{iqbfigure}%
+    \centering
+    \includegraphics[#1,keepaspectratio]{#2}
+
+    \vspace{0.1cm}
+
+    \raggedright
+    \tiny
+    \textbf{图\theiqbfigure}：#3
+  }{
+    \refstepcounter{iqbfigure}%
+    \centering
+    \includegraphics[#1,keepaspectratio]{#4}
+
+    \vspace{0.1cm}
+
+    \raggedright
+    \tiny
+    \textbf{图\theiqbfigure}：#5
+  }{
+    \refstepcounter{iqbfigure}%
+    \centering
+    \includegraphics[#1,keepaspectratio]{#6}
+
+    \vspace{0.1cm}
+
+    \raggedright
+    \tiny
+    \textbf{图\theiqbfigure}：#7
+  }
+}
+
+% 2x2 grid with numbered captions
+% Usage: \iqbfourfig[options]{img1}{caption1}{img2}{caption2}{img3}{caption3}{img4}{caption4}
+\newcommand{\iqbfourfig}[9][height=0.35\textheight]{%
+  \iqbgridtwobytwo{
+    \refstepcounter{iqbfigure}%
+    \centering
+    \includegraphics[#1,keepaspectratio]{#2}
+
+    \vspace{0.05cm}
+
+    \raggedright
+    \tiny
+    \textbf{图\theiqbfigure}：#3
+  }{
+    \refstepcounter{iqbfigure}%
+    \centering
+    \includegraphics[#1,keepaspectratio]{#4}
+
+    \vspace{0.05cm}
+
+    \raggedright
+    \tiny
+    \textbf{图\theiqbfigure}：#5
+  }{
+    \refstepcounter{iqbfigure}%
+    \centering
+    \includegraphics[#1,keepaspectratio]{#6}
+
+    \vspace{0.05cm}
+
+    \raggedright
+    \tiny
+    \textbf{图\theiqbfigure}：#7
+  }{
+    \refstepcounter{iqbfigure}%
+    \centering
+    \includegraphics[#1,keepaspectratio]{#8}
+
+    \vspace{0.05cm}
+
+    \raggedright
+    \tiny
+    \textbf{图\theiqbfigure}：#9
+  }
+}
+
+% ============================================================
+% Legacy Image + Caption Utilities (for backward compatibility)
+% ============================================================
+
+% Image with caption below
+\newcommand{\iqbfigure}[3][width=\textwidth]{%
+  \begin{figure}
+    \centering
+    \includegraphics[#1]{#2}
+    \ifx&#3&%
+    \else
+      \caption{#3}
+    \fi
+  \end{figure}
+}
+
+% Side-by-side images with individual captions
+\newcommand{\iqbtwofigures}[6][width=0.45\textwidth]{%
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{figure}
+        \centering
+        \includegraphics[#1]{#2}
+        \ifx&#3&%
+        \else
+          \caption{#3}
+        \fi
+      \end{figure}
+    \end{column}
+    \hfill
+    \begin{column}{0.48\textwidth}
+      \begin{figure}
+        \centering
+        \includegraphics[#4]{#5}
+        \ifx&#6&%
+        \else
+          \caption{#6}
+        \fi
+      \end{figure}
+    \end{column}
+  \end{columns}
+}
+
+% ============================================================
+% Text + Image Layouts
+% ============================================================
+
+% Image on left, text on right
+\newcommand{\iqbimagetext}[3][width=0.45\textwidth]{%
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \includegraphics[#1]{#2}
+    \end{column}
+    \hfill
+    \begin{column}{0.48\textwidth}
+      #3
+    \end{column}
+  \end{columns}
+}
+
+% Text on left, image on right
+\newcommand{\iqbtextimage}[3][width=0.45\textwidth]{%
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      #2
+    \end{column}
+    \hfill
+    \begin{column}{0.48\textwidth}
+      \includegraphics[#1]{#3}
+    \end{column}
+  \end{columns}
+}
+
+% ============================================================
+% Precise Positioning (for irregular layouts - 10% usage)
+% ============================================================
+
+% Place content at precise coordinates
+% Usage: \iqbplace{x}{y}{width}{content}
+% Coordinates: (0,0) is top-left, units in cm
+\newcommand{\iqbplace}[4]{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=north west,inner sep=0pt] at ($(current page.north west) + (#1,-#2)$) {
+      \begin{minipage}{#3}
+        #4
+      \end{minipage}
+    };
+  \end{tikzpicture}
+}
+
+% Place image at precise coordinates with size
+% Usage: \iqbplaceimage{x}{y}{width}{height}{image-file}
+\newcommand{\iqbplaceimage}[5]{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=north west,inner sep=0pt] at ($(current page.north west) + (#1,-#2)$) {
+      \includegraphics[width=#3,height=#4,keepaspectratio]{#5}
+    };
+  \end{tikzpicture}
+}
+
+% ============================================================
+% Author Information Modules (Commonly used in JC papers)
+% ============================================================
+
+% Two authors with photos: Corresponding + First Author
+% Usage: \iqbauthorstwophoto{corr-photo}{corr-name}{corr-affiliation}{corr-url}{corr-research}
+%                            {first-photo}{first-name}{first-affiliation}{first-url}{first-field}
+\newcommand{\iqbauthorstwophoto}[9]{%
+  \iqblayouttwo{
+    % Corresponding Author
+    \begin{block}{通讯作者 (Corresponding Author)}
+      \vspace{0.1cm}
+      \begin{minipage}{0.25\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth,height=2.5cm,keepaspectratio]{#1}
+      \end{minipage}%
+      \hfill
+      \begin{minipage}{0.70\textwidth}
+        \textbf{\scriptsize #2}\\[0.1cm]
+        \scriptsize #3\\[0.1cm]
+        \textcolor{blue}{\scriptsize #4}\\[0.1cm]
+        \textbf{\scriptsize 研究方向}：\\
+        \scriptsize #5
+      \end{minipage}
+      \vspace{0.1cm}
+    \end{block}
+  }{
+    % First Author
+    \begin{block}{第一作者 (First Author)}
+      \vspace{0.1cm}
+      \begin{minipage}{0.25\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth,height=2.5cm,keepaspectratio]{#6}
+      \end{minipage}%
+      \hfill
+      \begin{minipage}{0.70\textwidth}
+        \textbf{\scriptsize #7}\\[0.1cm]
+        \scriptsize #8\\[0.1cm]
+        \textcolor{blue}{\scriptsize #9}\\[0.1cm]
+        \textbf{\scriptsize 专业领域}：\\
+        \scriptsize \iqbauthorfirstfield
+      \end{minipage}
+      \vspace{0.1cm}
+    \end{block}
+  }
+}
+
+% Helper command for first author field (to work around 9-param limit)
+\newcommand{\iqbauthorfirstfield}{}
+\newcommand{\setauthorfirstfield}[1]{\renewcommand{\iqbauthorfirstfield}{#1}}
+
+% Two authors WITHOUT photos (original version)
+% Usage: \iqbauthorstwo{corr-name}{corr-affiliation}{corr-url}{corr-research}
+%                       {first-name}{first-affiliation}{first-url}{first-field}
+\newcommand{\iqbauthorstwo}[8]{%
+  \iqblayouttwo{
+    % Corresponding Author
+    \begin{block}{通讯作者 (Corresponding Author)}
+      \vspace{0.15cm}
+      \textbf{\scriptsize #1}\\[0.15cm]
+      \scriptsize #2\\[0.15cm]
+      \textcolor{blue}{\scriptsize #3}\\[0.15cm]
+      \textbf{\scriptsize 研究方向}：\\
+      \scriptsize #4
+      \vspace{0.1cm}
+    \end{block}
+  }{
+    % First Author
+    \begin{block}{第一作者 (First Author)}
+      \vspace{0.15cm}
+      \textbf{\scriptsize #5}\\[0.15cm]
+      \scriptsize #6\\[0.15cm]
+      \textcolor{blue}{\scriptsize #7}\\[0.15cm]
+      \textbf{\scriptsize 专业领域}：\\
+      \scriptsize #8
+      \vspace{0.1cm}
+    \end{block}
+  }
+}
+
+% Single author (e.g., solo paper or review)
+% Usage: \iqbauthorone{name}{affiliation}{url}{research}
+\newcommand{\iqbauthorone}[4]{%
+  \begin{block}{作者 (Author)}
+    \vspace{0.2cm}
+    \centering
+    \textbf{\scriptsize #1}\\[0.3cm]
+    \scriptsize #2\\[0.2cm]
+    \textcolor{blue}{\scriptsize #3}\\[0.3cm]
+    \textbf{\scriptsize 研究方向}：\\
+    \scriptsize #4
+    \vspace{0.2cm}
+  \end{block}
+}
+
+% Three authors layout (simplified - 3 authors info blocks)
+% Usage: \iqbauthorsthree{author1-block}{author2-block}{author3-block}
+% Each block should contain formatted author info
+\newcommand{\iqbauthorsthree}[3]{%
+  \iqblayoutthree{
+    \begin{block}{\small 作者 1}
+      \small
+      #1
+    \end{block}
+  }{
+    \begin{block}{\small 作者 2}
+      \small
+      #2
+    \end{block}
+  }{
+    \begin{block}{\small 作者 3}
+      \small
+      #3
+    \end{block}
+  }
+}
+
+% ============================================================
+% Formula + Explanation Module (公式+解释布局)
+% ============================================================
+
+% Formula on left, explanation on right
+% Usage: \iqbformulaexplain{formula-content}{explanation-text}
+\newcommand{\iqbformulaexplain}[2]{%
+  \iqblayoutonethird{
+    \centering
+    #1
+  }{
+    #2
+  }
+}
+
+% ============================================================
+% Key Points Module (关键要点提炼)
+% ============================================================
+
+% Highlighted key points block
+% Usage: \iqbkeypoints{itemize-content}
+\newcommand{\iqbkeypoints}[1]{%
+  \begin{block}{{\color{iqbblue}\textbf{关键要点 (Key Points)}}}
+    #1
+  \end{block}
+}
+
+% ============================================================
+% Comparison Table Module (对比表格)
+% ============================================================
+
+% Simple two-column comparison
+% Usage: \iqbcomparetwo{method-a-title}{method-a-content}
+%                       {method-b-title}{method-b-content}
+\newcommand{\iqbcomparetwo}[4]{%
+  \iqblayouttwo{
+    \centering
+    \textbf{#1}
+
+    \vspace{0.2cm}
+
+    #2
+  }{
+    \centering
+    \textbf{#3}
+
+    \vspace{0.2cm}
+
+    #4
+  }
+}
+
+% Three-column comparison
+% Usage: \iqbcomparethree{titleA}{contentA}{titleB}{contentB}{titleC}{contentC}
+\newcommand{\iqbcomparethree}[6]{%
+  \iqblayoutthree{
+    \centering
+    \textbf{#1}
+
+    \vspace{0.15cm}
+
+    #2
+  }{
+    \centering
+    \textbf{#3}
+
+    \vspace{0.15cm}
+
+    #4
+  }{
+    \centering
+    \textbf{#5}
+
+    \vspace{0.15cm}
+
+    #6
+  }
+}
+
+% ============================================================
+% Timeline / Workflow Module (时间线/流程)
+% ============================================================
+
+% Three-step timeline with arrows
+% Usage: \iqbtimeline{step1-title}{step1-content}
+%                    {step2-title}{step2-content}
+%                    {step3-title}{step3-content}
+\newcommand{\iqbtimeline}[6]{%
+  \begin{center}
+  \begin{tikzpicture}[
+    node distance=0.5cm,
+    box/.style={rectangle, draw=iqbblue, fill=iqblightgray, thick, minimum height=2cm, minimum width=3.5cm, align=center},
+    arrow/.style={->, >=stealth, thick, color=iqbblue}
+  ]
+    \node[box] (step1) {\textbf{\scriptsize #1}\\[0.2cm]\scriptsize #2};
+    \node[box, right=of step1] (step2) {\textbf{\scriptsize #3}\\[0.2cm]\scriptsize #4};
+    \node[box, right=of step2] (step3) {\textbf{\scriptsize #5}\\[0.2cm]\scriptsize #6};
+
+    \draw[arrow] (step1.east) -- (step2.west);
+    \draw[arrow] (step2.east) -- (step3.west);
+  \end{tikzpicture}
+  \end{center}
+}
+
+% ============================================================
+% Conclusion / Summary Module (结论总结)
+% ============================================================
+
+% Centered conclusion block
+% Usage: \iqbconclusion{conclusion-text}
+\newcommand{\iqbconclusion}[1]{%
+  \begin{block}{\centering \textbf{结论 (Conclusion)}}
+    \centering
+    #1
+  \end{block}
+}
+
+% ============================================================
+% Research Question Module (研究问题)
+% ============================================================
+
+% Highlighted research question
+% Usage: \iqbquestion{question-text}
+\newcommand{\iqbquestion}[1]{%
+  \begin{block}{\centering \textbf{核心问题 (Research Question)}}
+    \centering
+    #1
+  \end{block}
+}
+
+% ============================================================
+% Advanced Shortcuts (高级快捷命令 - Phase 1 增强)
+% 用于快速创建常见frame模式，减少代码重复
+% ============================================================
+
+% ============================================================
+% Frame Shortcuts (Frame快捷命令)
+% ============================================================
+
+% 标准单栏frame
+% Usage: \iqbframe{标题}{内容}
+\newcommand{\iqbframe}[2]{%
+  \begin{frame}{#1}
+    #2
+  \end{frame}
+}
+
+% 文字+图片左右分栏frame (文字占1/3，图片占2/3)
+% Usage: \iqbframetextfig{标题}{文字内容}{图片路径}
+%   或: \iqbframetextfig[0.6\textheight]{标题}{文字内容}{图片路径}
+\newcommand{\iqbframetextfig}[4][0.55\textheight]{%
+  \begin{frame}{#2}
+    \iqblayoutonethird{%
+      #3%
+    }{%
+      \centering
+      \includegraphics[height=#1,keepaspectratio]{#4}%
+    }%
+  \end{frame}
+}
+
+% 图片+文字左右分栏frame (图片占1/3，文字占2/3)
+% Usage: \iqbframefigttext{标题}{图片路径}{文字内容}
+%   或: \iqbframefigttext[0.6\textheight]{标题}{图片路径}{文字内容}
+\newcommand{\iqbframefigttext}[4][0.55\textheight]{%
+  \begin{frame}{#2}
+    \iqblayouttwothirds{%
+      \centering
+      \includegraphics[height=#1,keepaspectratio]{#3}%
+    }{%
+      #4%
+    }%
+  \end{frame}
+}
+
+% 文字+两个图片frame (文字占1/3，两个图片并排占2/3)
+% Usage: \iqbframetexttwofig{标题}{文字}{img1}{caption1}{img2}{caption2}
+%   或: \iqbframetexttwofig[0.45\textheight]{标题}{文字}{img1}{cap1}{img2}{cap2}
+\newcommand{\iqbframetexttwofig}[7][0.45\textheight]{%
+  \begin{frame}{#2}
+    \iqblayoutonethird{%
+      #3%
+    }{%
+      \iqbtwofig[height=#1]{#4}{#5}{#6}{#7}%
+    }%
+  \end{frame}
+}
+
+% ============================================================
+% Section Management (Section管理命令)
+% ============================================================
+
+% 自动生成section分隔页，无需手动 \setsection
+% Usage: \iqbsectionframe{Methods}{方法}
+%   参数1: section英文名 (用于footer)
+%   参数2: 分隔页显示的中文标题
+\newcommand{\iqbsectionframe}[2]{%
+  \setsection{#1}%
+  \begin{frame}[plain,noframenumbering]
+    \vfill
+    \centering
+    {\Huge\color{iqbblue}\textbf{#2}}
+    \vfill
+  \end{frame}
+}
+
+% ============================================================
+% Formula + Explanation Layout (公式+解释专用布局)
+% ============================================================
+
+% 单个公式块 (包含标题+公式+解释，自动间距管理)
+% Usage: \iqbformblock{标题}{公式内容}{解释文字}
+% 示例:
+%   \iqbformblock{成核部分 $\text{CV}_{\text{cyl}}$}{
+%     $$\text{CV}_{\text{cyl}} = 1 - d/\text{CV}_{\text{eq}}$$
+%   }{$d$: 圆柱内脂质尾部原子数}
+\newcommand{\iqbformblock}[3]{%
+  \textbf{#1}：
+
+  \vspace{0.15cm}
+
+  #2  % 公式
+
+  \vspace{0.1cm}
+
+  {\footnotesize #3}  % 解释
+
+  \medskip
+}
+
+% 公式+解释Frame (左侧1/3公式/代码，右侧2/3图片或文字)
+% Usage: \iqbformulaframe{标题}{左侧公式内容}{右侧内容}
+% 示例:
+%   \iqbformulaframe{Full-Path CV原理}{
+%     \iqbformblock{成核}{$$\text{CV}_{\text{cyl}} = ...$$}{解释}
+%     \iqbformblock{扩展}{$$\text{CV}_{\text{radius}} = ...$$}{解释}
+%   }{
+%     \iqbfig[height=0.55\textheight]{图片.png}{图注}
+%   }
+\newcommand{\iqbformulaframe}[3]{%
+  \begin{frame}{#1}
+    \iqblayoutonethird{#2}{#3}%
+  \end{frame}
+}
+
+% ============================================================
+% Three-Column Comparison Template (三列对比专用)
+% ============================================================
+
+% 三列对比 (标题+图片+列表的标准模式)
+% Usage: \iqbthreecolcompare{title1}{img1}{items1}{title2}{img2}{items2}{title3}{img3}{content3}
+%   参数: title=标题，img=图片路径，items=\item 列表项，content=文字内容
+% 示例:
+%   \iqbthreecolcompare
+%     {Full-Path CV}{fig1u.png}{\item 成核+扩展 \item 无滞后}
+%     {Rapid CV}{fig1d.png}{\item 无限孔 \item 高效}
+%     {开源实现}{plumed.png}{PLUMED库\\GROMACS/LAMMPS}
+\newcommand{\iqbthreecolcompare}[9]{%
+  \iqblayoutthree{%
+    \centering
+    \textbf{#1}
+
+    \medskip
+
+    \includegraphics[width=\textwidth]{#2}
+
+    \medskip
+
+    \begin{itemize}
+      #3
+    \end{itemize}
+  }{%
+    \centering
+    \textbf{#4}
+
+    \medskip
+
+    \includegraphics[width=\textwidth]{#5}
+
+    \medskip
+
+    \begin{itemize}
+      #6
+    \end{itemize}
+  }{%
+    \centering
+    \textbf{#7}
+
+    \medskip
+
+    \includegraphics[width=\textwidth,height=0.4\textheight,keepaspectratio]{#8}
+
+    \medskip
+
+    {\footnotesize #9}
+  }%
+}
+
+% ============================================================
+% Block Shortcuts (块级快捷命令)
+% ============================================================
+
+% 快速创建block
+% Usage: \iqbblock{标题}{内容}
+\newcommand{\iqbblock}[2]{%
+  \begin{block}{#1}
+    #2
+  \end{block}
+}
+
+% 快速创建列表
+% Usage: \iqbitemize{\item 项1 \item 项2}
+\newcommand{\iqbitemize}[1]{%
+  \begin{itemize}
+    #1
+  \end{itemize}
+}
+
+% 快速创建编号列表
+% Usage: \iqbenumerate{\item 项1 \item 项2}
+\newcommand{\iqbenumerate}[1]{%
+  \begin{enumerate}
+    #1
+  \end{enumerate}
+}
+
+% ============================================================
+% Two-Method Comparison Layout (双方法对比)
+% ============================================================
+
+% 两列对比 (标题+图片+列表)
+% Usage: \iqbtwocolcompare{title1}{img1}{items1}{title2}{img2}{items2}
+%   或仅文字版: \iqbtwocolcompare{title1}{}{text1}{title2}{}{text2}
+\newcommand{\iqbtwocolcompare}[6]{%
+  \iqblayouttwo{%
+    \centering
+    \textbf{#1}
+
+    \medskip
+
+    \ifx&#2&%
+      % 无图片，仅显示文字
+      #3
+    \else
+      % 有图片
+      \includegraphics[width=\textwidth]{#2}
+
+      \medskip
+
+      \begin{itemize}#3\end{itemize}
+    \fi
+  }{%
+    \centering
+    \textbf{#4}
+
+    \medskip
+
+    \ifx&#5&%
+      % 无图片，仅显示文字
+      #6
+    \else
+      % 有图片
+      \includegraphics[width=\textwidth]{#5}
+
+      \medskip
+
+      \begin{itemize}#6\end{itemize}
+    \fi
+  }%
+}
+
+% ============================================================
+% Validation/Results Layout (验证结果专用布局)
+% ============================================================
+
+% 结果展示frame (左侧1/3文字，右侧2/3图片)
+% Usage: \iqbresultframe{标题}{左侧文字}{右侧图片}
+% 自动应用合适的字体大小和间距
+\newcommand{\iqbresultframe}[3]{%
+  \begin{frame}{#1}
+    \iqblayoutonethird{%
+      \footnotesize
+      #2
+    }{%
+      \centering
+      \includegraphics[height=0.65\textheight,keepaspectratio]{#3}
+    }%
+  \end{frame}
+}
+
+% 对比结果frame (两个并排结果展示)
+% Usage: \iqbcomparisonframe{标题}{左图}{左标题}{右图}{右标题}
+\newcommand{\iqbcomparisonframe}[5]{%
+  \begin{frame}{#1}
+    \iqbtwofig[height=0.55\textheight]{#2}{#3}{#4}{#5}%
+  \end{frame}
+}
+
+\endinput

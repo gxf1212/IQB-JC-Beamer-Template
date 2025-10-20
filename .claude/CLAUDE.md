@@ -1,0 +1,168 @@
+# IQB Journal Club Beamer 模板项目指南
+
+## 项目概述
+
+- **项目类型**: LaTeX Beamer 学术幻灯片模板
+- **技术栈**: XeLaTeX + Beamer + CJK中文支持
+- **编译命令**: `/mnt/d/texlive/2022/bin/win32/xelatex.exe` (WSL中调用Windows TeXLive)
+
+## 核心格式要求
+
+### Header（页眉横幅）
+- **资源文件**: `/theme/images/header.png` (1999×204px)
+- **占满slides的full width，保持原始宽高比**
+- **除首页（封面）和末页（致谢）外，所有页面都必须显示**
+- 位于页面顶部，不能被其他元素遮挡
+
+### Frametitle（标题）
+- **位置**: 左上角，叠在header空白区域上（使用TikZ绝对定位）
+- **背景**: 完全透明，无白色背景
+- **颜色**: IQB深蓝色 (#003366)
+- 不占用正文内容空间
+
+### Footer（页脚）
+- **位置**: 固定在页面最底部，不能超出页面
+- **内容三段式**: 左侧"IQB Lab" | 中间Section进度标识 | 右侧"页码/总数"
+- **颜色**: 顶部带IQB蓝色分割线（1.5pt），文字使用主题色
+- 使用`\setsection{Methods}`等命令设置中间Section名称
+
+### 布局与排版
+
+**Beamer最佳实践**：
+- **字体大小**: 正文使用\scriptsize，标题\normalsize，确保10-12行/页
+- **行间距**: 150% point size，增加可读性
+- **不要使用shrink选项**来强行塞入更多内容
+- **左对齐**: 所有文字（标题、正文）沿同一左边距对齐
+- **避免自动换行**: 手动使用`\\`断行，不要依赖LaTeX自动换行
+
+**本模板特定要求**：
+- 文字图片不溢出到下一页
+- 每页尽量有图文结合
+- 图片不要太小，竖版图采用横向column布局（一列图片+其他列文字）
+- **字体大小参考PPTX中字体与页面大小的比例**
+
+### 可复用模块
+
+模板提供丰富的预设模块（详见`theme/iqb-layouts.sty`）：
+
+**作者信息**：
+- `\iqbauthorstwophoto{}{}...` - 通讯+一作，支持照片
+- `\iqbauthorstwo{}{}...` - 通讯+一作，无照片
+- `\setauthorfirstfield{}` - 设置一作研究领域
+
+**图表模块**（带自动编号"图1："，左对齐caption）：
+- `\iqbfig[options]{image}{caption}` - 单图
+- `\iqbtwofig[]{img1}{cap1}{img2}{cap2}` - 双图
+- `\iqbthreefig[]{}...` - 三图
+- `\iqbfourfig[]{}...` - 2×2四图
+
+**布局工具**：
+- `\iqblayouttwo{left}{right}` - 50-50双列
+- `\iqblayoutonethird{left}{right}` - 1/3 + 2/3
+- `\iqblayoutthree{}{}{}}` - 三列均分
+- `\iqbtextimage[]{text}{image}` - 文字+图片
+
+**其他模块**：
+- `\iqbkeypoints{}` - 关键要点
+- `\iqbquestion{}` - 核心问题
+- `\iqbconclusion{}` - 结论总结
+- `\iqbtimeline{}{}...` - 时间线/流程图
+
+## 参考资料
+
+- **PPTX样式参考**: `E:\GitHub-repo\literature-reading\JC`
+- **内容来源**: `E:\GitHub-repo\mendelevium\_pages\Specific Sytems\Membrane`
+
+## 开发工作流
+
+### 编译
+```bash
+cd examples
+/mnt/d/texlive/2022/bin/win32/xelatex.exe -interaction=nonstopmode membrane-pore-jc.tex
+```
+
+### PDF审查
+编译后使用 **pdf-layout-reviewer agent** 自动检查所有格式要求，但不一定所有页面，要不然太慢：
+- Header是否全宽且保持比例
+- Footer是否包含三段式内容且不超出页面
+- Frametitle是否透明背景且叠在banner上
+- 布局是否溢出、图文是否平衡
+- 字体大小是否合适
+
+### 调试工具
+使用 `tools/extract_pdf_page.py` 提取特定页面为PNG供视觉分析：
+```bash
+python3 tools/extract_pdf_page.py examples/output/xxx.pdf 3
+```
+
+或者使用pdf-layout-reviewer这个agent
+
+## 目录结构
+
+```
+IQB-JC-master/
+├── theme/                    # 主题核心（复用）
+│   ├── beamerthemeiqb.sty    # 主题（颜色、字体、header/footer）
+│   ├── iqb-layouts.sty       # 布局工具包
+│   └── images/header.png     # IQB横幅
+├── examples/                 # 示例
+│   ├── membrane-pore-jc.tex  # 完整JC示例
+│   ├── images/membrane-pore-jc/  # 图片资源
+├── template/                 # 空白模板
+│   └── jc-template.tex
+├── tools/                    # 辅助工具
+│   └── extract_pdf_page.py
+└── archive/                  # 历史参考
+```
+
+## 内容设计原则（General Requirements）
+
+### 1. 页面标题（Frametitle）设计
+- **禁止简单罗列式标题**：不要使用"结果：交叉验证"、"方法：Full-Path CV"等平淡描述
+- **必须包含punchline或结论概括**：标题应传达该页面的核心发现或关键洞察
+- **参考原则**：
+  - 问题页 → 突出挑战的本质（如"统一描述成核与扩展两个截然不同的阶段"）
+  - 方法页 → 强调创新点（如"切换函数巧妙结合成核与扩展"）
+  - 结果页 → 突出结论（如"正反向拉伸完全重合，CV设计可逆无滞后"）
+  - 验证页 → 强调验证结果（如"脂质尾部密度与孔寿命正相关(R²=0.82)"）
+
+**示例对比**：
+- ❌ 差：`\begin{frame}{结果：交叉验证}`
+- ✅ 好：`\begin{frame}{双重验证：Full-Path与Rapid高度一致，与实验定性吻合}`
+
+### 2. 图片布局原则
+- **竖版图片（高>宽）必须使用横向column布局**：
+  - 一个column专门放图片（占0.31-0.48宽度）
+  - 其他column放文字说明
+  - **禁止**将竖版图堆在文字下方，会导致图片过小
+  - 每个图都必然有图注，要么详细图注，要么这一页剩下的文字就都是解读图片，反正就是围绕图片来讲解结果。图注也可以写文字栏，如果图片非常高
+- **图片尺寸要求**：
+  - 单图：`height=0.5-0.6\textheight`
+  - 双图并排：`height=0.45-0.55\textheight`
+  - 三图并排：`height=0.35-0.4\textheight`
+  - 竖版图在column中：`height=0.5-0.65\textheight`
+- **图文平衡**：每页尽量都有图文结合，避免纯文字或纯图片页面
+
+生成简洁的总结报告，关于folder（如examples\images\membrane-pore-jc）里所有图片的尺寸和比例，辅助决定layout。试着跑一下，分析layout是否合适
+python3 tools/analyze_image_layout.py examples/images/membrane-pore-jc
+
+### 3. 字体层级（已统一）
+一般**禁止**在正文中出现11pt的文字（如`\normalsize`的加粗标题）
+
+### 4. 溢出检查
+- **编译时检查**：XeLaTeX编译会警告 `Overfull \hbox` 或 `Overfull \vbox`
+- **修复方法**：
+  - 减少文字行数，提炼关键点
+  - 调整图片高度参数
+  - 拆分为两页
+  - 使用更紧凑的布局（如`\iqblayoutthree`代替`\iqblayouttwo`）
+
+## 与 Claude Code 协作提示
+
+- 用户说"编译"或"检查PDF" → 使用TeXLive编译 + 调用pdf-layout-reviewer
+- 修改主题后 → 立即重新编译验证效果
+- 布局问题 → 提取页面截图用视觉模型诊断
+- 完成后 → 清理临时文件 `rm /tmp/pdf_page_*.png`
+- **修改内容后必须编译验证**：检查溢出、字体大小、图片尺寸
+
+给用户的使用说明写在 `software-copyright` 文件夹下。先写一个初版，先只写 `software-copyright/3-usage.tex`（有需要可以拆几章）已经实现的部分，既要满足软著的 `prompt.md`，又要符合LaTeX包的要求

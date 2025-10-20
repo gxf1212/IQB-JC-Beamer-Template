@@ -1,0 +1,260 @@
+% ============================================================
+% IQB Journal Club Template
+% 空白模板 - 快速启动你的 JC 演示
+% ============================================================
+
+\documentclass[aspectratio=169,11pt]{beamer}
+
+% Load IQB theme
+\usepackage{../theme/beamerthemeiqb}
+\usepackage{../theme/iqb-layouts}
+
+% Set header image path (adjust if needed based on your directory structure)
+\renewcommand{\iqbheaderimage}{../theme/images/header.png}
+
+% Additional useful packages
+\usepackage{graphicx}      % 图片支持
+\usepackage{amsmath}       % 数学公式
+\usepackage{amssymb}       % 数学符号
+\usepackage{booktabs}      % 表格美化
+
+% Chinese support (if needed, requires XeLaTeX)
+% \usepackage{xeCJK}
+% \setCJKmainfont{SimSun}  % Windows: SimSun, Linux: Noto Sans CJK SC
+
+% ============================================================
+% TODO: 填写你的演示信息
+% ============================================================
+\title{你的文献标题}
+\subtitle{副标题（可选）}
+\author{你的名字}
+\institute{IQB Lab}
+\date{\today}  % 或指定日期：\date{2025-10-20}
+
+% ============================================================
+\begin{document}
+
+% ============================================================
+% 封面页 (Cover Page) - 无 header/footer
+% ============================================================
+\begin{frame}[plain,noframenumbering]
+  \titlepage
+  % 或自定义封面：
+  % \vfill
+  % \centering
+  % {\LARGE\textcolor{iqbblue}{\textbf{你的标题}}}
+  % \vfill
+\end{frame}
+
+% ============================================================
+% 内容页开始
+% ============================================================
+
+% TODO: 设置当前 section（会显示在 footer 中间）
+\setsection{Background}
+
+% ------------------------------------------------------------
+% 示例页 1：纯文本
+% ------------------------------------------------------------
+\begin{frame}{背景}
+  \begin{itemize}
+    \item 要点 1
+    \item 要点 2
+    \item 要点 3
+  \end{itemize}
+
+  \vspace{0.5cm}
+
+  \begin{block}{重要结论}
+    这里是一个 block 环境，用于强调关键信息。
+  \end{block}
+\end{frame}
+
+% ------------------------------------------------------------
+% 示例页 2：双列布局
+% ------------------------------------------------------------
+\begin{frame}{双列布局示例}
+  \iqblayouttwo{
+    % 左列
+    \textbf{左侧内容}：
+    \begin{itemize}
+      \item 观点 A
+      \item 观点 B
+    \end{itemize}
+
+    % 可以插入图片
+    % \includegraphics[width=\textwidth]{path/to/image.png}
+  }{
+    % 右列
+    \textbf{右侧内容}：
+    \begin{itemize}
+      \item 观点 C
+      \item 观点 D
+    \end{itemize}
+  }
+\end{frame}
+
+% ------------------------------------------------------------
+% 示例页 3：图片 + 文字
+% ------------------------------------------------------------
+\setsection{Methods}  % 更新 footer section
+
+\begin{frame}{方法部分}
+  \iqbimagetext[width=0.4\textwidth]{example-image-a}{
+    % 右侧文字说明
+    \textbf{方法描述}：
+
+    \begin{enumerate}
+      \item 步骤 1
+      \item 步骤 2
+      \item 步骤 3
+    \end{enumerate}
+
+    \vspace{0.3cm}
+
+    这里可以添加更多解释文字。
+  }
+
+  % 注意：example-image-a 是 LaTeX 内置的示例图片
+  % 替换为你的图片路径，如：images/your-figure.png
+\end{frame}
+
+% ------------------------------------------------------------
+% 示例页 4：三列布局
+% ------------------------------------------------------------
+\setsection{Results}
+
+\begin{frame}{结果对比}
+  \iqblayoutthree{
+    % 列 1
+    \centering
+    \textbf{方法 A}
+
+    % \includegraphics[width=\textwidth]{images/result-a.png}
+
+    准确率: 85\%
+  }{
+    % 列 2
+    \centering
+    \textbf{方法 B}
+
+    % \includegraphics[width=\textwidth]{images/result-b.png}
+
+    准确率: 90\%
+  }{
+    % 列 3
+    \centering
+    \textbf{我们的方法}
+
+    % \includegraphics[width=\textwidth]{images/result-ours.png}
+
+    准确率: 95\%
+  }
+\end{frame}
+
+% ------------------------------------------------------------
+% 示例页 5：2×2 网格
+% ------------------------------------------------------------
+\begin{frame}{四图网格}
+  \iqbgridtwobytwo{
+    \centering
+    % \includegraphics[width=\textwidth]{images/fig1.png}
+    \small (A) 图 1 说明
+  }{
+    \centering
+    % \includegraphics[width=\textwidth]{images/fig2.png}
+    \small (B) 图 2 说明
+  }{
+    \centering
+    % \includegraphics[width=\textwidth]{images/fig3.png}
+    \small (C) 图 3 说明
+  }{
+    \centering
+    % \includegraphics[width=\textwidth]{images/fig4.png}
+    \small (D) 图 4 说明
+  }
+\end{frame}
+
+% ------------------------------------------------------------
+% 示例页 6：数学公式
+% ------------------------------------------------------------
+\setsection{Discussion}
+
+\begin{frame}{公式示例}
+  \textbf{自由能计算}：
+
+  \vspace{0.3cm}
+
+  成核阶段：
+  $$\Delta G(\text{CV}) = k \cdot \text{CV}^2 + c$$
+
+  \vspace{0.3cm}
+
+  扩展阶段：
+  $$G(r) = 2\pi r\gamma$$
+
+  \vspace{0.3cm}
+
+  其中 $\gamma$ 为线张力，$r$ 为孔半径。
+\end{frame}
+
+% ============================================================
+% 致谢页 (Thank You) - 无 header/footer
+% ============================================================
+\begin{frame}[plain,noframenumbering]
+  \vfill
+  \centering
+
+  {\Huge \textcolor{iqbblue}{\textbf{Thank You!}}}
+
+  \vspace{1.5cm}
+
+  {\Large Questions?}
+
+  \vspace{2cm}
+
+  % 可选：添加联系信息
+  % {\normalsize
+  % Contact: yourname@iqblab.edu\\
+  % IQB Lab, 2025
+  % }
+
+  \vfill
+\end{frame}
+
+% ============================================================
+% 常用布局命令速查
+% ============================================================
+
+% 双列（50-50）：
+% \iqblayouttwo{左列内容}{右列内容}
+
+% 双列（1/3-2/3）：
+% \iqblayoutonethird{左列（窄）}{右列（宽）}
+
+% 双列（2/3-1/3）：
+% \iqblayouttwothirds{左列（宽）}{右列（窄）}
+
+% 三列（均分）：
+% \iqblayoutthree{列1}{列2}{列3}
+
+% 2×2 网格：
+% \iqbgridtwobytwo{图1}{图2}{图3}{图4}
+
+% 图片 + 文字（图在左）：
+% \iqbimagetext[width=0.4\textwidth]{image.png}{右侧文字}
+
+% 文字 + 图片（图在右）：
+% \iqbtextimage[width=0.4\textwidth]{左侧文字}{image.png}
+
+% 设置 footer section：
+% \setsection{Section Name}
+
+% 无 header/footer 的页面：
+% \begin{frame}[plain,noframenumbering]
+%   内容
+% \end{frame}
+
+% ============================================================
+
+\end{document}

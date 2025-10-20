@@ -1,0 +1,39 @@
+% Minimal test file to verify theme loading
+\documentclass[aspectratio=169,11pt]{beamer}
+
+% Load IQB theme
+\usepackage{../theme/beamerthemeiqb}
+\usepackage{../theme/iqb-layouts}
+
+% Set header image path
+\renewcommand{\iqbheaderimage}{../theme/images/header.png}
+
+\title{Test Presentation}
+\author{Test User}
+\institute{IQB Lab}
+\date{\today}
+
+\begin{document}
+
+% Cover page
+\begin{frame}[plain,noframenumbering]
+  \titlepage
+\end{frame}
+
+% Content page
+\setsection{Test}
+\begin{frame}{Test Frame}
+  \begin{itemize}
+    \item This is a test
+    \item Header should appear above
+    \item Footer should appear below
+  \end{itemize}
+\end{frame}
+
+% Thank you page
+\begin{frame}[plain,noframenumbering]
+  \centering
+  {\Huge Thank You!}
+\end{frame}
+
+\end{document}

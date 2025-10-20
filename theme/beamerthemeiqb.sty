@@ -1,0 +1,255 @@
+% ============================================================
+% IQB Journal Club Beamer Theme
+% Based on Metropolis Theme
+% Version: 1.0
+% Date: 2025-10-20
+% ============================================================
+
+\mode<presentation>
+
+% ============================================================
+% Requirements
+% ============================================================
+\RequirePackage{tikz}
+\RequirePackage{graphicx}
+\RequirePackage{calc}
+\RequirePackage{etoolbox}
+
+% ============================================================
+% Theme Options
+% ============================================================
+\newif\ifbeamer@iqb@showheader
+\beamer@iqb@showheadertrue
+
+\DeclareOptionBeamer{noheader}{\beamer@iqb@showheaderfalse}
+\ProcessOptionsBeamer
+
+% ============================================================
+% Color Theme
+% ============================================================
+\definecolor{iqbblue}{RGB}{0, 51, 102}        % IQB 主题色 #003366
+\definecolor{iqbgray}{RGB}{85, 85, 85}        % 深灰色
+\definecolor{iqblightgray}{RGB}{240, 240, 240} % 浅灰色背景
+
+\setbeamercolor{normal text}{fg=black, bg=white}
+\setbeamercolor{frametitle}{fg=iqbblue}  % 完全透明背景，深蓝文字
+\setbeamercolor{title}{fg=iqbblue}
+\setbeamercolor{subtitle}{fg=iqbgray}
+\setbeamercolor{author}{fg=iqbgray}
+\setbeamercolor{date}{fg=iqbgray}
+\setbeamercolor{footline}{fg=iqbgray, bg=white}
+\setbeamercolor{block title}{fg=white, bg=iqbblue}
+\setbeamercolor{block body}{fg=black, bg=iqblightgray}
+
+% ============================================================
+% Font Theme (统一字号体系: 标题12pt, 正文8pt基准)
+% ============================================================
+\setbeamerfont{title}{size=\Large, series=\bfseries}  % 封面标题 (14.4pt)
+\setbeamerfont{subtitle}{size=\scriptsize}  % 封面副标题 (8pt)
+\setbeamerfont{author}{size=\scriptsize}  % 封面作者 (8pt)
+\setbeamerfont{date}{size=\scriptsize}  % 封面日期 (8pt)
+\setbeamerfont{frametitle}{size=\large, series=\bfseries}  % 页面标题 (12pt)
+\setbeamerfont{footline}{size=\tiny}  % footer (5pt)
+\setbeamerfont{block title}{size=\scriptsize, series=\bfseries}  % block标题 (8pt粗体)
+\setbeamerfont{normal text}{size=\scriptsize}  % 正文基准 (8pt)
+\setbeamerfont{itemize/enumerate body}{size=\scriptsize}  % 列表项 (8pt)
+\setbeamerfont{itemize/enumerate subbody}{size=\scriptsize}  % 子列表项也保持 (8pt)
+\setbeamerfont{caption}{size=\scriptsize}  % 图注统一 (8pt)
+
+% 注：frame字体控制通过两种方式实现：
+% 1. 所有frame内容框自动应用\setbeamerfont{normal text}{size=\scriptsize}（8pt基准）
+% 2. 高级命令（\iqbframetextfig等）内置字体管理，避免手动调整
+% 不使用\BeforeBeginEnvironment{frame}避免与TeXLive 2022+ hook系统兼容性问题
+
+% ============================================================
+% Inner Theme (Title Page, Blocks, etc.)
+% ============================================================
+
+% Remove navigation symbols
+\setbeamertemplate{navigation symbols}{}
+
+% 减小itemize和列表间距，防止内容溢出
+\setlength{\leftmargini}{0.9em}  % 减小左缩进
+\setlength{\itemsep}{0.1ex}  % 减小项目间距
+\setlength{\parsep}{0pt}  % 减小段落间距
+\setlength{\parskip}{0pt}  % 减小段落跳过
+% 减小行间距
+\linespread{0.92}
+% 调整公式周围间距
+\AtBeginDocument{
+  \setlength{\abovedisplayskip}{3pt}
+  \setlength{\belowdisplayskip}{3pt}
+  \setlength{\abovedisplayshortskip}{0pt}
+  \setlength{\belowdisplayshortskip}{2pt}
+}
+
+% 语义化间距命令（替代手动vspace）
+\newcommand{\tinysep}{\par\smallskip}    % 约3pt，替代vspace{0.1-0.15cm}
+\newcommand{\blocksep}{\par\medskip}     % 约6pt，替代vspace{0.2-0.3cm}
+\newcommand{\bigsep}{\par\bigskip}       % 约12pt，替代vspace{0.4-0.6cm}
+
+% Title page
+\defbeamertemplate*{title page}{iqb}[1][]
+{
+  \vbox{}
+  \vfill
+  \begingroup
+    \centering
+    \begin{beamercolorbox}[sep=8pt,center,#1]{title}
+      \usebeamerfont{title}\inserttitle\par%
+      \ifx\insertsubtitle\@empty%
+      \else%
+        \vskip0.25em%
+        {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+      \fi%
+    \end{beamercolorbox}%
+    \vskip1em\par
+    \begin{beamercolorbox}[sep=8pt,center,#1]{author}
+      \usebeamerfont{author}\insertauthor
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[sep=8pt,center,#1]{institute}
+      \usebeamerfont{author}\insertinstitute
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[sep=8pt,center,#1]{date}
+      \usebeamerfont{date}\insertdate
+    \end{beamercolorbox}\vskip0.5em
+  \endgroup
+  \vfill
+}
+
+% Block environment
+\setbeamertemplate{blocks}[rounded][shadow=false]
+
+% Itemize/Enumerate 样式 - IQB蓝色
+\setbeamercolor{itemize item}{fg=iqbblue}
+\setbeamercolor{itemize subitem}{fg=iqbblue}
+\setbeamercolor{itemize subsubitem}{fg=iqbblue}
+\setbeamertemplate{itemize item}{$\bullet$}
+\setbeamertemplate{itemize subitem}{$\circ$}
+\setbeamertemplate{itemize subsubitem}{$-$}
+
+% Caption template - 左对齐
+\setbeamertemplate{caption}{%
+  \raggedright
+  \insertcaption\par
+}
+
+% ============================================================
+% Outer Theme (Header, Footer, Frame Title)
+% ============================================================
+
+% Frame title - 透明背景，左上角，深蓝文字，叠在banner空白区域
+\defbeamertemplate*{frametitle}{iqb}[1][]
+{
+  % 标题绝对定位到header banner空白区域（不占用正常内容空间）
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=north west,inner sep=0pt] at ($(current page.north west) + (1.5cm,-0.35cm)$) {
+      \begin{minipage}{0.6\paperwidth}
+        {\usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}\textbf{\insertframetitle}}
+        \ifx\insertframesubtitle\@empty
+        \else
+          \par\vskip0.05cm
+          {\usebeamerfont{framesubtitle}\usebeamercolor[fg]{subtitle}\insertframesubtitle}
+        \fi
+      \end{minipage}
+    };
+  \end{tikzpicture}
+  \vskip0.1cm  % header后留小间距
+}
+
+% Header with IQB logo banner
+% Default header image path (can be overridden by user)
+\providecommand{\iqbheaderimage}{theme/images/header.png}
+
+\defbeamertemplate*{headline}{iqb}
+{
+  \ifbeamer@iqb@showheader
+    % 只在非plain frame上显示header
+    % plain frame会设置\beamer@plainframe标志
+    \ifbeamer@plainframe
+      % plain frame - 不显示header
+    \else
+      \begin{tikzpicture}[remember picture,overlay]
+        \node[anchor=north,inner sep=0pt] at (current page.north) {
+          % 占满全宽，保持原始宽高比（1999:204 ≈ 9.8:1）
+          \includegraphics[width=\paperwidth,keepaspectratio]{\iqbheaderimage}
+        };
+      \end{tikzpicture}
+      \vskip0.65cm  % header高度约0.65cm（减小给内容更多空间）
+    \fi
+  \fi
+}
+
+% Footer template
+\newcommand{\iqbsection}{}  % Store current section name
+\newcommand{\setsection}[1]{\renewcommand{\iqbsection}{#1}}
+
+\defbeamertemplate*{footline}{iqb}
+{
+  % 只在非plain frame上显示footer
+  \ifbeamer@plainframe
+    % plain frame - 不显示footer
+  \else
+    \vskip-8pt%  % 向上移动footer整体位置
+    % 添加顶部IQB蓝色分割线
+    \begin{beamercolorbox}[wd=\paperwidth,ht=1.5pt,dp=0pt,sep=0pt]{structure}
+      \color{iqbblue}\rule{\paperwidth}{1.5pt}
+    \end{beamercolorbox}%
+    \vskip2pt%  % 蓝线和文字之间增加纵向间距
+    % Footer主体内容
+    \leavevmode%
+    \hbox{%
+    \begin{beamercolorbox}[wd=.333333\paperwidth,ht=1.8ex,dp=0.6ex,left]{footline}%
+      \hspace{0.8em}\usebeamerfont{footline}\textcolor{iqbblue}{\textbf{IQB Lab}}
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.333333\paperwidth,ht=1.8ex,dp=0.6ex,center]{footline}%
+      \usebeamerfont{footline}\iqbsection
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.333333\paperwidth,ht=1.8ex,dp=0.6ex,right]{footline}%
+      \usebeamerfont{footline}\insertpagenumber{} / \insertpresentationendpage\hspace{0.8em}
+    \end{beamercolorbox}}%
+    \vskip2pt%  % 底部留小间距
+  \fi
+}
+
+% ============================================================
+% Custom Layout Environments
+% ============================================================
+
+% Define column separation
+\setlength{\columnsep}{1em}
+
+% Utility commands for common layouts
+\newcommand{\iqbtwocolumn}[2]{%
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      #1
+    \end{column}
+    \hfill
+    \begin{column}{0.48\textwidth}
+      #2
+    \end{column}
+  \end{columns}
+}
+
+\newcommand{\iqbthreecolumn}[3]{%
+  \begin{columns}[T]
+    \begin{column}{0.31\textwidth}
+      #1
+    \end{column}
+    \begin{column}{0.31\textwidth}
+      #2
+    \end{column}
+    \begin{column}{0.31\textwidth}
+      #3
+    \end{column}
+  \end{columns}
+}
+
+% ============================================================
+% Aspect Ratio Setup
+% ============================================================
+% Recommended: use \documentclass[aspectratio=169]{beamer}
+% This matches the 16:9 ratio used in existing JC presentations
+
+\mode<all>
