@@ -44,6 +44,8 @@
 % ============================================================
 \papertitle{膜孔形成的自由能与稳定性的分子动力学模拟研究}
 \paperengtitle{Free Energy of Membrane Pore Formation and Stability from Molecular Dynamics Simulations}
+\papertitlechn{破解膜孔之谜：双CV联手揭示}
+\papertitlechnsub{从成核到扩展的完整能量图景}
 \papercitation{Rivel, T., Biriukov, D., Kabelka, I., \& Vácha, R. (2025). J. Chem. Inf. Model. \textbf{65}, 908–920.}
 \paperdoi{10.1021/acs.jcim.4c01960}
 \paperjournal{Journal of Chemical Information and Modeling}
@@ -52,28 +54,9 @@
 \begin{document}
 
 % ============================================================
-% Page 1: Cover Page (无 header/footer)
+% Page 1: Cover Page (using template - 一行式命令)
 % ============================================================
-\begin{frame}[plain,noframenumbering]
-  \vfill
-  \centering
-
-  {\LARGE\textcolor{iqbblue}{\textbf{破解膜孔之谜：双CV联手揭示}}}\\[0.3cm]
-  {\LARGE\textcolor{iqbblue}{\textbf{从成核到扩展的完整能量图景}}}
-
-  \medskip
-
-  {\large Free Energy of Membrane Pore Formation and Stability\\
-  from Molecular Dynamics Simulations}
-
-  \bigskip
-
-  {\normalsize 汇报人：高旭帆}\\[0.2cm]
-  {\normalsize IQB Lab}\\[0.2cm]
-  {\normalsize \today}
-
-  \vfill
-\end{frame}
+\iqbcoverframe
 
 % ============================================================
 % Page 2: Paper Information (通讯作者 + 一作 with photos)
@@ -146,7 +129,9 @@
       \item 不同力场预测准确性差异大
       \item 缺乏快速评估膜稳定性的方法
     }
-  }{
+
+    \medskip
+
     \textbf{为什么这很难}：
     \iqbitemize{
       \item 成核：极性重原子数量变化
@@ -159,6 +144,13 @@
 
     \textbf{时间尺度}：\\
     成核 $\sim$ ns，扩展 $\sim$ $\mu$s，自发形成 $\sim$ ms
+  }{
+    \centering
+    \includegraphics[height=0.35\textheight,keepaspectratio]{images/membrane-pore-jc/fig4.png}
+
+    \smallskip
+
+    \includegraphics[height=0.35\textheight,keepaspectratio]{images/membrane-pore-jc/fig4b.png}
   }
 \end{frame}
 
@@ -181,10 +173,10 @@
       \item 效率提高10×
     }
     {开源实现}{images/membrane-pore-jc/plumed.png}{%
-      PLUMED库实现\\
-      GROMACS/LAMMPS\\
-      全原子/粗粒化\\
-      参数可定制
+      \item PLUMED库实现
+      \item GROMACS/LAMMPS
+      \item 全原子/粗粒化
+      \item 参数可定制
     }
 \end{frame}
 
@@ -208,9 +200,7 @@
   \includegraphics[height=0.45\textheight]{images/membrane-pore-jc/fig1.png}
 
   \tinysep
-  {\footnotesize\raggedright\setlength{\rightskip}{0pt plus 1cm}
-  \textbf{图1}：两种创新的集体变量设计。\textbf{上半部}：Full-Path CV同时追踪成核（圆柱内尾部密度CV$_{\text{cyl}}$）和扩展（孔半径CV$_{\text{r}}$）；通过sigmoid切换函数平滑过渡。\textbf{下半部}：Rapid CV使用脂质条带模拟无限孔，通过调节盒子尺寸快速提取线张力（因子2考虑两孔边缘）。
-  }
+  \iqbcaptiontext{\textbf{图1}：两种创新的集体变量设计。\textbf{上半部}：Full-Path CV同时追踪成核（圆柱内尾部密度CV$_{\text{cyl}}$）和扩展（孔半径CV$_{\text{r}}$）；通过sigmoid切换函数平滑过渡。\textbf{下半部}：Rapid CV使用脂质条带模拟无限孔，通过调节盒子尺寸快速提取线张力（因子2考虑两孔边缘）。}
 }
 
 % ============================================================
@@ -218,15 +208,15 @@
 % ============================================================
 \begin{frame}{平滑过渡：sigmoid函数消除成核-扩展边界}
   \iqblayouttwo{
-    \iqbformblock{切换函数 $s_1, s_2$}{
+    \iqbformparam{切换函数 $s_1, s_2$}{
       $$s_1 = \frac{1}{1 + e^{\alpha(\text{CV}_r - \text{CV}_0)}}$$
       $$s_2 = \frac{1}{1 + e^{-\alpha(\text{CV}_r - \text{CV}_0)}}$$
-    }{}
-
-    \iqbformblock{优化参数}{
-      $\alpha = 20$ （陡峭）\\
-      $\text{CV}_0 = 0.95$ （切换点）
-    }{CV < 0.95: 主导 $\text{CV}_{\text{cyl}}$ | CV > 0.95: 主导 $\text{CV}_{\text{radius}}$}
+    }{
+      \param{\alpha = 20}{陡峭}
+      \param{\text{CV}_0 = 0.95}{切换点}
+      \param{CV < 0.95}{主导 $\text{CV}_{\text{cyl}}$}
+      \param{CV > 0.95}{主导 $\text{CV}_{\text{radius}}$}
+    }
 
     \textbf{关键优势}：
     \iqbitemize{
@@ -299,20 +289,16 @@
 \begin{frame}{孔闭合过程：尾部碳密度决定膜缺陷稳定性}
   \iqblayouttwothirds{
     {\footnotesize
-    \textbf{四阶段闭合动力学}：
-    \iqbenumerate{
-      \item \textbf{(A) 平衡孔}：初始稳定孔，连续水柱贯穿膜厚度
-      \item \textbf{(B) 半径缩小}：孔边缘脂质重排，整体结构保持不变
-      \item \textbf{(C) 水线程}：关键瞬间，孔只有纤细连续水线相连
-      \item \textbf{(D) 膜恢复}：孔完全闭合，局部膜厚度恢复
+    \iqbsteplist{四阶段闭合动力学}{
+      \step{(A) 平衡孔}{初始稳定孔，连续水柱贯穿膜厚度}
+      \step{(B) 半径缩小}{孔边缘脂质重排，整体结构保持不变}
+      \step{(C) 水线程}{关键瞬间，孔只有纤细连续水线相连}
+      \step{(D) 膜恢复}{孔完全闭合，局部膜厚度恢复}
     }
 
     \medskip
 
-    \textbf{临界发现}：
-    {\color{iqbblue}\textbf{脂质尾部密度}} $\leftrightarrow$ {\color{iqbblue}\textbf{孔寿命 $\tau$}} (R²=0.82)
-
-    \textit{相关性极强！}
+    \iqbhighlight{临界发现}{脂质尾部密度 $\leftrightarrow$ 孔寿命 $\tau$ (R²=0.82)}{相关性极强！}
 
     \tinysep
 
@@ -321,21 +307,21 @@
 
     \medskip
 
-    \textbf{力场表现} (孔寿命/ns)：
+    \textbf{力场表现}：
 
-    DMPC/DPPC/POPC/DOPC
-
-    \textit{C36}: 122/94/34/15
-
-    \textit{Slipids}: 110/32/27/18
+    \iqbthreelinetable{孔寿命/ns}{
+      力场 & DMPC & DPPC & POPC & DOPC \\
+    }{
+      C36 & 122 & 94 & 34 & 15 \\
+      Slipids & 110 & 32 & 27 & 18 \\
+    }
     }
   }{
     \centering
     \includegraphics[height=0.68\textheight,keepaspectratio]{images/membrane-pore-jc/fig3.png}
 
     \tinysep
-    {\footnotesize\raggedright\setlength{\rightskip}{0pt plus 1cm}
-    \textbf{图4}：孔闭合快照。左侧四个阶段清晰展示孔半径缩小、水线程形成、最终闭合的完整过程。右侧四种膜的孔闭合动力学曲线，展示饱和度差异导致的孔寿命差异。}
+    \iqbcaptiontext{\textbf{图4}：孔闭合快照。左侧四个阶段清晰展示孔半径缩小、水线程形成、最终闭合的完整过程。右侧四种膜的孔闭合动力学曲线，展示饱和度差异导致的孔寿命差异。}
   }
 \end{frame}
 
@@ -360,9 +346,7 @@
     \includegraphics[height=0.55\textheight,keepaspectratio]{images/membrane-pore-jc/fig4.png}
 
     \tinysep
-    {\footnotesize\raggedright\setlength{\rightskip}{0pt plus 1cm}
-    \textbf{图5}：Full-Path自由能分析。(A)典型孔结构侧视图和俯视图 | (B)自由能剖面展示两阶段：成核阶段$\Delta G=k \cdot \text{CV}^2$（$k$=72.9 kJ/mol）；扩展阶段$G=2\pi r\gamma$（$\gamma$=32.5 pN）；正反向完全重合无滞后 | (C)不同力场线张力对比：CHARMM36和prosECCo75最准确。
-    }
+    \iqbcaptiontext{\textbf{图5}：Full-Path自由能分析。(A)典型孔结构侧视图和俯视图 | (B)自由能剖面展示两阶段：成核阶段$\Delta G=k \cdot \text{CV}^2$（$k$=72.9 kJ/mol）；扩展阶段$G=2\pi r\gamma$（$\gamma$=32.5 pN）；正反向完全重合无滞后 | (C)不同力场线张力对比：CHARMM36和prosECCo75最准确。}
   }
 \end{frame}
 
@@ -391,24 +375,21 @@
     \includegraphics[height=0.58\textheight,keepaspectratio]{images/membrane-pore-jc/fig5ab.png}
 
     \tinysep
-    {\footnotesize\raggedright\setlength{\rightskip}{0pt plus 1cm}
-    \textbf{图6}：Rapid方法示意。(A)脂质条带侧视图，两个孔边缘（膜外界面）中间夹水 | (B)俯视图，通过PBC形成环形无限孔 | (C)自由能随盒子尺寸线性增长，斜率为$2\pi\gamma$。
-    }
+    \iqbcaptiontext{\textbf{图6}：Rapid方法示意。(A)脂质条带侧视图，两个孔边缘（膜外界面）中间夹水 | (B)俯视图，通过PBC形成环形无限孔 | (C)自由能随盒子尺寸线性增长，斜率为$2\pi\gamma$。}
   }
 \end{frame}
 
 % ============================================================
 % Page 12: Results - Force Field Comparison
 % ============================================================
-\iqbframetextfig[0.53\textheight]{力场筛选：仅CHARMM36和prosECCo75准确复现实验趋势}{
+\iqbframetextfig[0.48\textheight]{力场筛选：仅CHARMM36和prosECCo75准确复现实验趋势}{
   \footnotesize
   \textbf{实验趋势}：\\
   POPE $>$ POPS $>$ POPC $>$ POPG
 
   \medskip
 
-  \textbf{力场表现}：
-  \iqbitemize{
+  \iqbcolorlist{力场表现}{
     \item {\color{green!60!black}\textbf{C36/prosECCo75}}：准确（NMR调参精细）
     \item {\color{orange}\textbf{Slipids/M2.2p}}：部分正确
     \item {\color{red}\textbf{M2.2/M3}}：失败（粗粒化失效）
@@ -450,9 +431,7 @@
     \includegraphics[height=0.62\textheight,keepaspectratio]{images/membrane-pore-jc/fig6.png}
 
     \tinysep
-    {\footnotesize\raggedright\setlength{\rightskip}{0pt plus 1cm}
-    \textbf{图7}：交叉验证。(A)实验对比，模拟准确捕捉PG与离子效应 | (B)两种CV线张力对比，R²极高，证明一致性。
-    }
+    \iqbcaptiontext{\textbf{图7}：交叉验证。(A)实验对比，模拟准确捕捉PG与离子效应 | (B)两种CV线张力对比，R²极高，证明一致性。}
   }
 \end{frame}
 
@@ -466,20 +445,26 @@
 
     \medskip
 
-    \textbf{(B) Na$^+$增强阴离子膜效应}：对比有/无0.15M NaCl | POPG/POPS：$\Delta\gamma>0$（↑30-50\%） | POPC/POPE：$\Delta\gamma\approx0$（无显著变化） | 机制：Na$^+$屏蔽阴离子静电斥力 | 疏水代价增加$\Rightarrow$线张力升高
+    \textbf{(B) Na$^+$增强阴离子膜效应}：对比有/无0.15M NaCl
 
     \medskip
 
-    \textbf{力场性能}：OK C36精确 | ~ prosECCo75偏小 | X M2.2p低估
+    \iqbtwocoltable{脂质类型}{$\Delta\gamma$ 变化}{
+      POPG/POPS & ↑30-50\% \\
+      POPC/POPE & ≈0 \\
+    }
+
+    \medskip
+
+    \textbf{力场性能}：✓ C36精确 | ~ prosECCo75偏小 | ✗ M2.2p低估
     }
   }{
     \centering
     \includegraphics[height=0.62\textheight,keepaspectratio]{images/membrane-pore-jc/fig7.png}
 
     \tinysep
-    {\footnotesize\raggedright\setlength{\rightskip}{0pt plus 1cm}
-    \textbf{图8}：离子效应分析。(A)Ca$^{2+}$恢复POPC:POPG线张力 | (B)Na$^+$对脂质$\Delta\gamma$影响，阴离子特异增强 | 准确性取决于离子参数化。
-    }
+
+    \iqbcaptiontext{\textbf{图8}：离子效应分析。(A)Ca$^{2+}$恢复POPC:POPG线张力 | (B)Na$^+$对脂质$\Delta\gamma$影响，阴离子特异增强 | 准确性取决于离子参数化。}
   }
 \end{frame}
 
@@ -497,29 +482,27 @@
   \vspace{0.25cm}
 
   \iqblayouttwo{
-    \textbf{可借鉴的方法}：
-
-    \tinysep
-
-    \footnotesize
-    \textbf{1. 线张力计算}\\
-    $\bullet$ Full-Path CV: 成核+扩展全过程\\
-    $\bullet$ Rapid CV: 快速评估大孔极限\\
-    $\bullet$ 伞形采样 + WHAM 自由能
+    \iqbbulletlist{1. 线张力计算}{
+      \item Full-Path CV: 成核+扩展全过程
+      \item Rapid CV: 快速评估大孔极限
+      \item 伞形采样 + WHAM 自由能
+    }
 
     \medskip
 
-    \textbf{2. 膜性质表征}\\
-    $\bullet$ Lindemann 指数：脂质流动性\\
-    $\bullet$ Bond-orientational order：相态\\
-    $\bullet$ Area per lipid：膜面积变化
+    \iqbbulletlist{2. 膜性质表征}{
+      \item Lindemann 指数：脂质流动性
+      \item Bond-orientational order：相态
+      \item Area per lipid：膜面积变化
+    }
 
     \medskip
 
-    \textbf{3. 力场选择}\\
-    $\bullet$ CHARMM36: 准确离子-脂质作用\\
-    $\bullet$ Martini 3: 快速筛选\\
-    $\bullet$ 全原子验证关键发现
+    \iqbbulletlist{3. 力场选择}{
+      \item CHARMM36: 准确离子-脂质作用
+      \item Martini 3: 快速筛选
+      \item 全原子验证关键发现
+    }
   }{
     \textbf{与我们研究的关联}：
 

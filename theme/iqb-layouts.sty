@@ -946,4 +946,332 @@
   \end{frame}
 }
 
+% ============================================================
+% Chinese Title Metadata (中文标题配置)
+% ============================================================
+
+% 中文主标题
+% Usage: \papertitlechn{破解膜孔之谜：双CV联手揭示}
+\newcommand{\papertitlechn}[1]{\def\@papertitlechn{#1}}
+
+% 中文副标题
+% Usage: \papertitlechnsub{从成核到扩展的完整能量图景}
+\newcommand{\papertitlechnsub}[1]{\def\@papertitlechnsub{#1}}
+
+% 设置默认值
+\def\@papertitlechn{论文中文标题}
+\def\@papertitlechnsub{论文中文副标题}
+
+% ============================================================
+% Caption Text Styling (图注样式复用)
+% ============================================================
+
+% 标准图注样式 (footnotesize + 左对齐 + 灵活右边距)
+% Usage: \iqbcaptiontext{图注内容}
+% 自动应用: \footnotesize + \raggedright + \setlength{\rightskip}{0pt plus 1cm}
+\newcommand{\iqbcaptiontext}[1]{%
+  {\footnotesize\raggedright\setlength{\rightskip}{0pt plus 1cm}
+  #1
+  }%
+}
+
+% 紧凑型图注 (用于多个小图的情况)
+% Usage: \iqbcaptiontextsmall{内容}
+\newcommand{\iqbcaptiontextsmall}[1]{%
+  {\tiny\raggedright\setlength{\rightskip}{0pt plus 1cm}
+  #1
+  }%
+}
+
+% ============================================================
+% Table Utilities (表格快捷命令)
+% ============================================================
+
+% 三线表 (使用booktabs风格)
+% Usage: \iqbthreelinetable{标题}{表头 & 内容 \\}{表体行 & 内容 \\ ...}
+% 示例:
+%   \iqbthreelinetable{力场表现（孔寿命/ns）}{
+%     力场 & DMPC & DPPC & POPC & DOPC \\
+%   }{
+%     C36     & 122 & 94 & 34 & 15 \\
+%     Slipids & 110 & 32 & 27 & 18 \\
+%   }
+\newcommand{\iqbthreelinetable}[3]{%
+  {\footnotesize
+  \centering
+  \textbf{#1}
+
+  \medskip
+
+  \begin{tabular}{lcccc}
+    \toprule
+    #2
+    \midrule
+    #3
+    \bottomrule
+  \end{tabular}
+  }%
+}
+
+% 两列对比表 (简化版, 用于条件对比)
+% Usage: \iqbtwocoltable{列1标题}{列2标题}{行1 & 值1 \\ 行2 & 值2 \\}
+% 示例:
+%   \iqbtwocoltable{脂质类型}{$\Delta\gamma$ 变化}{
+%     POPG/POPS & ↑30-50\% \\
+%     POPC/POPE & ≈0 \\
+%   }
+\newcommand{\iqbtwocoltable}[3]{%
+  {\footnotesize
+  \centering
+  \begin{tabular}{lc}
+    \toprule
+    \textbf{#1} & \textbf{#2} \\
+    \midrule
+    #3
+    \bottomrule
+  \end{tabular}
+  }%
+}
+
+% 多列表格 (通用版本，可自定义列数和列格式)
+% Usage: \iqbmulticoltable{表头}{行1 \\ 行2 \\}
+% 注: 需要在调用前定义列格式
+% 示例:
+%   \iqbmulticoltable{条件 & 结果 & 准确性 \\}{
+%     Full-Path & 0.82 & 高 \\
+%     Rapid     & 0.81 & 中 \\
+%   }
+\newcommand{\iqbmulticoltable}[2]{%
+  {\footnotesize
+  \centering
+  \begin{tabular}{lll}
+    \toprule
+    #1
+    \midrule
+    #2
+    \bottomrule
+  \end{tabular}
+  }%
+}
+
+% ============================================================
+% Special Image Layout Commands (特殊图片布局)
+% ============================================================
+
+% 1:2 图文布局 (图片占1/3左侧，文字占2/3右侧)
+% 用于特高竖版图，图注写在文字栏
+% Usage: \iqbframeonethirdfig{标题}{左侧图片}{右侧文字}
+%   或: \iqbframeonethirdfig[0.65\textheight]{标题}{左侧图片}{右侧文字}
+\newcommand{\iqbframeonethirdfig}[4][0.65\textheight]{%
+  \begin{frame}{#2}
+    \iqblayoutonethird{%
+      \centering
+      \includegraphics[height=#1,keepaspectratio]{#3}%
+    }{%
+      \footnotesize
+      #4%
+    }%
+  \end{frame}
+}
+
+% 2:1 图文布局 (文字占1/3左侧，图片占2/3右侧)
+% 用于宽图，图注写在图片下方
+% Usage: \iqbframetwothirdsfig{标题}{左侧文字}{右侧图片}
+%   或: \iqbframetwothirdsfig[0.55\textheight]{标题}{左侧文字}{右侧图片}
+\newcommand{\iqbframetwothirdsfig}[4][0.55\textheight]{%
+  \begin{frame}{#2}
+    \iqblayouttwothirds{%
+      \footnotesize
+      #3%
+    }{%
+      \centering
+      \includegraphics[height=#1,keepaspectratio]{#4}%
+    }%
+  \end{frame}
+}
+
+% 特高竖版图 (图占1列，下方带图注)
+% 用于像fig5c这样需要 1:1 或竖版显示且图注在下方的情况
+% Usage: \iqbframefigcaption{标题}{图片路径}{图注文字}
+%   或: \iqbframefigcaption[0.6\textheight]{标题}{图片路径}{图注文字}
+\newcommand{\iqbframefigcaption}[4][0.6\textheight]{%
+  \begin{frame}{#2}
+    \centering
+    \includegraphics[height=#1,keepaspectratio]{#3}
+
+    \medskip
+
+    \iqbcaptiontext{#4}%
+  \end{frame}
+}
+
+% ============================================================
+% P0 Priority Commands (Phase 1.5 高级增强)
+% ============================================================
+
+% ============================================================
+% 封面页一行式模板 (Cover Frame Template)
+% ============================================================
+
+% 快速生成封面页（自动从元数据读取）
+% Usage: \iqbcoverframe
+% 自动使用已定义的元数据：\papertitlechn, \papertitlechnsub, \author, \institute, \date
+\newcommand{\iqbcoverframe}{%
+  \begin{frame}[plain,noframenumbering]
+    \vfill
+    \centering
+
+    {\LARGE\textcolor{iqbblue}{\textbf{\@papertitlechn}}}\\[0.3cm]
+    {\LARGE\textcolor{iqbblue}{\textbf{\@papertitlechnsub}}}
+
+    \medskip
+
+    {\large \@paperengtitle}
+
+    \bigskip
+
+    {\normalsize \@author}\\[0.2cm]
+    {\normalsize \@institute}\\[0.2cm]
+    {\normalsize \@date}
+
+    \vfill
+  \end{frame}
+}
+
+% ============================================================
+% 高亮发现块 (Highlight Findings)
+% ============================================================
+
+% 用于突出核心发现、临界结论等
+% Usage: \iqbhighlight{标题}{核心内容}{强调语}
+% 示例:
+%   \iqbhighlight{临界发现}{
+%     脂质尾部密度 $\leftrightarrow$ 孔寿命 $\tau$ (R²=0.82)
+%   }{相关性极强！}
+\newcommand{\iqbhighlight}[3]{%
+  \textbf{#1}：\\*
+  {\color{iqbblue}\textbf{#2}}
+
+  \smallskip
+
+  {\itshape #3}
+}
+
+% ============================================================
+% 分步骤列表 (Step-by-step List)
+% ============================================================
+
+% 内部计数器
+\newcounter{iqbstep}
+
+% 重置计数器的辅助命令
+\newcommand{\resetiqbstep}{\setcounter{iqbstep}{0}}
+
+% 单个步骤
+% Usage: \step{标签}{描述}
+\newcommand{\step}[2]{%
+  \item \textbf{#1}：#2
+}
+
+% 分步骤列表（带自动编号和间距管理）
+% Usage: \iqbsteplist{标题}{步骤列表}
+% 示例:
+%   \iqbsteplist{四阶段闭合动力学}{
+%     \step{(A) 平衡孔}{初始稳定孔，连续水柱贯穿膜厚度}
+%     \step{(B) 半径缩小}{孔边缘脂质重排，整体结构保持不变}
+%   }
+\newcommand{\iqbsteplist}[2]{%
+  \textbf{#1}：
+
+  \smallskip
+
+  \begin{enumerate}[label=]
+    #2
+  \end{enumerate}
+}
+
+% ============================================================
+% P1 Priority Commands
+% ============================================================
+
+% ============================================================
+% 带色彩强调的列表 (Color-highlighted List)
+% ============================================================
+
+% 用于展示带颜色强调的分类列表（如：✓准确 / ~部分正确 / ✗失败）
+% Usage: \iqbcolorlist[颜色]{标题}{列表项}
+% 颜色可选：green!60!black, orange, red 等
+% 示例:
+%   \iqbcolorlist[green!60!black]{力场表现}{
+%     \item {\color{green!60!black}\textbf{C36/prosECCo75}}：准确（NMR调参精细）
+%     \item {\color{orange}\textbf{Slipids/M2.2p}}：部分正确
+%   }
+\newcommand{\iqbcolorlist}[3][blue]{%
+  \textbf{#2}：
+
+  \smallskip
+
+  \begin{itemize}
+    #3
+  \end{itemize}
+}
+
+% ============================================================
+% Bullet 列表快捷命令 (Bullet List Shortcut)
+% ============================================================
+
+% 简化 bullet 列表的书写，自动处理间距
+% Usage: \iqbbulletlist{标题}{子项}
+% 其中子项使用 \item 或 \line 定义
+% 示例:
+%   \iqbbulletlist{线张力计算}{
+%     \item Full-Path CV: 成核+扩展全过程
+%     \item Rapid CV: 快速评估大孔极限
+%   }
+\newcommand{\iqbbulletlist}[2]{%
+  \textbf{#1}\\
+
+  \begin{itemize}
+    #2
+  \end{itemize}
+}
+
+% ============================================================
+% 增强型公式参数块 (Enhanced Formula Parameter Block)
+% ============================================================
+
+% 参数行（在公式块中使用）
+% Usage: \param{符号/公式}{说明}
+\newcommand{\param}[2]{%
+  $#1$ & \text{：} #2 \\
+}
+
+% 增强型公式块（包含参数表格化展示）
+% Usage: \iqbformparam{公式名}{公式}{参数列表}
+% 示例:
+%   \iqbformparam{切换函数}{
+%     s_1 = \frac{1}{1 + e^{\alpha(\text{CV}_r - \text{CV}_0)}}
+%   }{
+%     \param{\alpha = 20}{陡峭}
+%     \param{\text{CV}_0 = 0.95}{切换点}
+%   }
+\newcommand{\iqbformparam}[3]{%
+  \textbf{#1}：\\*[-0.1cm]
+  \vspace{0.05cm}
+
+  \centering
+  #2  % 公式
+
+  \vspace{0.05cm}
+
+  \raggedright
+  {\footnotesize
+  \begin{tabular}{rl}
+    #3
+  \end{tabular}
+  }
+
+  \smallskip
+}
+
 \endinput
