@@ -51,10 +51,8 @@ desktop.ini
 .idea/
 *.sublime-project
 *.sublime-workspace
-*.vscode/settings.json
-.vscode/launch.json
-.vscode/tasks.json
-.vscode
+.vscode/
+.vscode/*
 
 # ============================================================
 # Python（分析脚本）
@@ -77,11 +75,12 @@ env/
 .cache/
 
 # ============================================================
-# 输出目录（除了 examples/output 和 software-copyright）
+# 输出目录与历史存档（除了 examples/output 和 software-copyright）
 # ============================================================
 /output/
 /build/
 /dist/
+archive/
 
 # ============================================================
 # 敏感文件（勿提交）
