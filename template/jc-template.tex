@@ -1,201 +1,392 @@
 % ============================================================
-% IQB Journal Club Template
-% 空白模板 - 快速启动你的 JC 演示
+% IQB Journal Club Beamer Template
+%
+% 快速启动指南 (Quick Start Guide)
+% 版本: 1.0 | 最后更新: 2025-10-20
+%
+% 这是一个完整的空白模板，用于创建 IQB 课题组文献分享演示。
+% 该模板已配置好 IQB 主题、布局工具、字体和样式。
+% 你只需要修改内容并编译即可。
+%
+% 编译命令 (Compilation):
+%   Linux/Mac:   xelatex -interaction=nonstopmode jc-template.tex
+%   Windows WSL: /mnt/d/texlive/2022/bin/win32/xelatex.exe jc-template.tex
+%
 % ============================================================
 
 \documentclass[aspectratio=169,11pt]{beamer}
 
-% Load IQB theme
+% ============================================================
+% 主题加载 (Load Theme Packages)
+% ============================================================
 \usepackage{../theme/beamerthemeiqb}
 \usepackage{../theme/iqb-layouts}
 
-% Set header image path (adjust if needed based on your directory structure)
+% ============================================================
+% 页面配置 (Header/Footer Configuration)
+% ============================================================
+
+% 设置页眉图片路径（如果你的目录结构不同，需要调整）
+% Set header image path (adjust based on your directory structure)
 \renewcommand{\iqbheaderimage}{../theme/images/header.png}
 
-% Additional useful packages
-\usepackage{graphicx}      % 图片支持
-\usepackage{amsmath}       % 数学公式
-\usepackage{amssymb}       % 数学符号
-\usepackage{booktabs}      % 表格美化
+% 自定义机构名称 - 显示在页脚左侧
+% Customize institute name shown in footer (left side)
+% 默认值: Institute of Quantitative Biology
+% 修改示例: \setiqbinstitute{Wang Lab @ IQB}
+\setiqbinstitute{Institute of Quantitative Biology}
 
-% Chinese support (if needed, requires XeLaTeX)
-% \usepackage{xeCJK}
-% \setCJKmainfont{SimSun}  % Windows: SimSun, Linux: Noto Sans CJK SC
+% 自定义机构logo（如果有的话）
+% Customize logo path if needed (optional)
+% \setiqblogopath{../theme/images/your-logo.png}
 
 % ============================================================
-% TODO: 填写你的演示信息
+% 必需包 (Required Packages)
 % ============================================================
-\title{你的文献标题}
-\subtitle{副标题（可选）}
-\author{你的名字}
+\usepackage{graphicx}      % 图片支持 (Graphics support)
+\usepackage{amsmath}       % 数学公式 (Math formulas)
+\usepackage{amssymb}       % 数学符号 (Math symbols)
+\usepackage{booktabs}      % 表格美化 (Table formatting)
+\usepackage{mhchem}        % 化学公式 (Chemical formulas: \ce{H2O})
+
+% ============================================================
+% 跨平台字体支持 (Cross-Platform Font Support)
+% ============================================================
+%
+% 该模板支持 Windows, macOS, Linux 上的中文渲染。
+% 需要使用 XeLaTeX 编译才能支持中文。
+%
+% 自动字体选择 (Automatic):
+%   - Windows:  SimSun (内置)
+%   - macOS:    Songti SC (内置)
+%   - Linux:    Noto Serif CJK SC (需要安装)
+%
+% 手动指定字体 (Manual override, uncomment if needed):
+%   \usepackage{xeCJK}
+%   \setCJKmainfont{SimSun}  % 或其他字体名称
+%
+% 如果编译时出现中文乱码或缺失，请检查：
+%   1. 确认使用 XeLaTeX (不是 pdflatex)
+%   2. Linux 用户：安装 fonts-noto-cjk 包
+%   3. 手动指定字体（参见上面的注释）
+
+% ============================================================
+% 颜色定义 (Color Definitions - from beamerthemeiqb.sty)
+% ============================================================
+%
+% 主要颜色:
+%   iqbblue      - IQB 主题色 #003366 (RGB: 0, 51, 102)
+%   iqbdarkblue  - 深蓝 #001A33 (RGB: 0, 26, 51)
+%   iqblightblue - 浅蓝 #4A90E2 (RGB: 74, 144, 226)
+%   iqbgray      - 深灰 (RGB: 85, 85, 85)
+%
+% 强调颜色:
+%   iqbgreen     - 绿色 #2ECC71
+%   iqborange    - 橙色 #FF6B35
+%   iqbred       - 红色 #E74C3C
+%
+% 使用示例: \textcolor{iqbblue}{蓝色文字}
+
+% ============================================================
+% 间距命令 (Spacing Commands - Unified System)
+% ============================================================
+%
+% 使用统一的间距命令而不是 \vspace{}:
+%   \iqbtinysep   - 很小的间距 (~0.15cm)，用于紧凑布局
+%   \iqbsep       - 标准间距 (~0.3cm)，最常用
+%   \iqbbigsep    - 大间距 (~0.5cm)，用于分隔内容块
+%
+% 示例:
+%   \iqbsep
+%   \begin{block}{标题}
+%     内容
+%   \end{block}
+
+% ============================================================
+% 演示信息填写 (Fill In Your Presentation Information)
+% ============================================================
+\title{你的文献标题 (Your Literature Title)}
+\subtitle{副标题 - 可选 (Subtitle - Optional)}
+\author{你的名字 (Your Name)}
+
+% 机构信息 - 会显示在封面和 footer 中
+% Institute - shown on cover page and footer
 \institute{IQB Lab}
-\date{\today}  % 或指定日期：\date{2025-10-20}
+
+% 日期 - 默认为当前日期，也可以手动指定
+% Date - defaults to today, or specify manually
+\date{\today}  % 或指定: \date{2025-10-20}
 
 % ============================================================
 \begin{document}
 
 % ============================================================
-% 封面页 (Cover Page) - 无 header/footer
+% 封面页 (Title Page) - 无 header/footer
 % ============================================================
+% plain 选项: 不显示 header/footer/navigation
+% noframenumbering 选项: 不计入页码
+%
 \begin{frame}[plain,noframenumbering]
   \titlepage
-  % 或自定义封面：
+
+  % 自定义封面的另一种方式（取消注释可使用）:
   % \vfill
   % \centering
   % {\LARGE\textcolor{iqbblue}{\textbf{你的标题}}}
+  % \vspace{1cm}
+  % {\large 你的名字}
   % \vfill
 \end{frame}
 
 % ============================================================
-% 内容页开始
+% 内容页开始 (Content Pages)
 % ============================================================
 
-% TODO: 设置当前 section（会显示在 footer 中间）
+% 设置 footer 中间显示的 section 名称
+% Update this periodically as you move through different sections
 \setsection{Background}
 
-% ------------------------------------------------------------
-% 示例页 1：纯文本
-% ------------------------------------------------------------
-\begin{frame}{背景}
+% ============================================================
+% 示例页 1: 纯文本页面 (Text-Only Page)
+% ============================================================
+% 适用场景: 背景介绍、关键概念、主要问题等
+% 最佳实践:
+%   - 使用 bullet points 而不是长段落
+%   - 每行不超过 50 个字符
+%   - 使用 block 环境突出重要信息
+%
+\begin{frame}{背景：研究问题的提出}
+  % 使用 itemize 列出关键点（不要超过 5 个）
   \begin{itemize}
-    \item 要点 1
-    \item 要点 2
-    \item 要点 3
+    \item 第一个关键问题或背景
+    \item 第二个相关的现象
+    \item 第三个需要解决的问题
   \end{itemize}
 
-  \vspace{0.5cm}
+  % 使用统一间距命令
+  \iqbsep
 
-  \begin{block}{重要结论}
-    这里是一个 block 环境，用于强调关键信息。
+  % 用 block 环境突出核心观点
+  \begin{block}{核心问题}
+    这里用来强调该页面的主要洞察或问题陈述。
+    可以是一句话或两句话，字数不要太多。
   \end{block}
+
+  % 另一个 block 示例（可选）
+  % \iqbsep
+  % \begin{block}{已知限制}
+  %   描述现有方法的不足之处
+  % \end{block}
 \end{frame}
 
-% ------------------------------------------------------------
-% 示例页 2：双列布局
-% ------------------------------------------------------------
-\begin{frame}{双列布局示例}
+% ============================================================
+% 示例页 2: 双列布局 (Two-Column Layout)
+% ============================================================
+% 适用场景: 对比方法、左右并行、对偶分析
+% 命令: \iqblayouttwo{左侧}{右侧}
+% 布局: 50% - 50%
+% 最佳实践:
+%   - 左右两侧内容保持平衡
+%   - 可在任一侧放图片或文字
+%   - 使用相同字体大小以保持视觉一致性
+%
+\begin{frame}{对比分析：方法 A 与方法 B}
   \iqblayouttwo{
-    % 左列
-    \textbf{左侧内容}：
+    % 左列 (Left Column)
+    \textbf{方法 A 的特点：}
     \begin{itemize}
-      \item 观点 A
-      \item 观点 B
+      \item 优点 1：快速
+      \item 优点 2：简单
+      \item 缺点 1：精度低
     \end{itemize}
+    \iqbtinysep
+    \textcolor{iqborange}{适用于粗筛}
 
-    % 可以插入图片
-    % \includegraphics[width=\textwidth]{path/to/image.png}
   }{
-    % 右列
-    \textbf{右侧内容}：
+    % 右列 (Right Column)
+    \textbf{方法 B 的特点：}
     \begin{itemize}
-      \item 观点 C
-      \item 观点 D
+      \item 优点 1：精确
+      \item 优点 2：可靠
+      \item 缺点 1：耗时
     \end{itemize}
+    \iqbtinysep
+    \textcolor{iqbgreen}{适用于精细分析}
+
   }
 \end{frame}
 
-% ------------------------------------------------------------
-% 示例页 3：图片 + 文字
-% ------------------------------------------------------------
-\setsection{Methods}  % 更新 footer section
+% ============================================================
+% 示例页 3: 图片 + 文字布局 (Image + Text)
+% ============================================================
+% 适用场景: 方法示意图、装置设置、步骤说明
+% 命令: \iqbimagetext[width=0.4\textwidth]{image.png}{右侧文字}
+% 布局: 左图 (40%) + 右文 (60%)
+% 最佳实践:
+%   - 图片高度: 0.4-0.5 \textheight
+%   - 右侧文字用列表或枚举
+%   - 若文字过多，拆分为两页
+%
+\setsection{Methods}
 
-\begin{frame}{方法部分}
-  \iqbimagetext[width=0.4\textwidth]{example-image-a}{
+\begin{frame}{关键方法：切换函数的设计}
+  \iqbimagetext[width=0.42\textwidth]{example-image-a}{
     % 右侧文字说明
-    \textbf{方法描述}：
+    \textbf{创新设计步骤：}
 
     \begin{enumerate}
-      \item 步骤 1
-      \item 步骤 2
-      \item 步骤 3
+      \item 定义开关条件
+      \item 设计过渡函数
+      \item 参数优化
     \end{enumerate}
 
-    \vspace{0.3cm}
+    \iqbsep
 
-    这里可以添加更多解释文字。
+    \textbf{核心优势：}
+    \begin{itemize}
+      \item 光滑过渡
+      \item 物理意义清晰
+      \item 计算效率高
+    \end{itemize}
+
+    \iqbtinysep
+    更详细的解释可以写成具体数值。
   }
 
-  % 注意：example-image-a 是 LaTeX 内置的示例图片
-  % 替换为你的图片路径，如：images/your-figure.png
+  % 说明: example-image-a 是 LaTeX 内置的示例图片
+  % 替换为你的图片路径：images/your-figure.png
 \end{frame}
 
-% ------------------------------------------------------------
-% 示例页 4：三列布局
-% ------------------------------------------------------------
+% ============================================================
+% 示例页 4: 三列布局 (Three-Column Layout)
+% ============================================================
+% 适用场景: 三方对比、多个结果、方法并列
+% 命令: \iqblayoutthree{列1}{列2}{列3}
+% 布局: 33% - 33% - 33%
+% 最佳实践:
+%   - 三列内容保持对称和平衡
+%   - 每列可放一张图 (height=0.35-0.4 \textheight)
+%   - 或文字说明 + 指标
+%   - 字号较小，避免溢出
+%
 \setsection{Results}
 
-\begin{frame}{结果对比}
+\begin{frame}{方法对比：三种方案的性能}
   \iqblayoutthree{
     % 列 1
     \centering
-    \textbf{方法 A}
+    \textbf{传统方法}
 
-    % \includegraphics[width=\textwidth]{images/result-a.png}
+    % \includegraphics[height=0.35\textheight]{images/result-a.png}
 
-    准确率: 85\%
+    准确率: $85\%$
+
+    运行时间: $10$ 秒
   }{
     % 列 2
     \centering
-    \textbf{方法 B}
+    \textbf{改进方法}
 
-    % \includegraphics[width=\textwidth]{images/result-b.png}
+    % \includegraphics[height=0.35\textheight]{images/result-b.png}
 
-    准确率: 90\%
+    准确率: $90\%$
+
+    运行时间: $8$ 秒
   }{
     % 列 3
     \centering
     \textbf{我们的方法}
 
-    % \includegraphics[width=\textwidth]{images/result-ours.png}
+    % \includegraphics[height=0.35\textheight]{images/result-ours.png}
 
-    准确率: 95\%
+    准确率: $95\%$
+
+    运行时间: $12$ 秒
   }
 \end{frame}
 
-% ------------------------------------------------------------
-% 示例页 5：2×2 网格
-% ------------------------------------------------------------
-\begin{frame}{四图网格}
+% ============================================================
+% 示例页 5: 2×2 网格布局 (2×2 Grid)
+% ============================================================
+% 适用场景: 展示 4 个相关的图表、不同条件下的结果
+% 命令: \iqbgridtwobytwo{图1}{图2}{图3}{图4}
+% 布局: 2 行 × 2 列的网格
+% 最佳实践:
+%   - 每个图都要有编号和说明 ((A), (B), (C), (D))
+%   - 使用统一的图片大小
+%   - 可选: 在图下方添加数值或结论
+%
+\begin{frame}{多图对比：4 个实验条件}
   \iqbgridtwobytwo{
+    % 图 1 (左上)
     \centering
-    % \includegraphics[width=\textwidth]{images/fig1.png}
-    \small (A) 图 1 说明
+    % \includegraphics[width=0.45\textwidth]{images/fig1.png}
+    \textbf{(A)} 条件 1
+
+    参数值: $10$ 倍
   }{
+    % 图 2 (右上)
     \centering
-    % \includegraphics[width=\textwidth]{images/fig2.png}
-    \small (B) 图 2 说明
+    % \includegraphics[width=0.45\textwidth]{images/fig2.png}
+    \textbf{(B)} 条件 2
+
+    参数值: $20$ 倍
   }{
+    % 图 3 (左下)
     \centering
-    % \includegraphics[width=\textwidth]{images/fig3.png}
-    \small (C) 图 3 说明
+    % \includegraphics[width=0.45\textwidth]{images/fig3.png}
+    \textbf{(C)} 条件 3
+
+    参数值: $30$ 倍
   }{
+    % 图 4 (右下)
     \centering
-    % \includegraphics[width=\textwidth]{images/fig4.png}
-    \small (D) 图 4 说明
+    % \includegraphics[width=0.45\textwidth]{images/fig4.png}
+    \textbf{(D)} 条件 4
+
+    参数值: $40$ 倍
   }
 \end{frame}
 
-% ------------------------------------------------------------
-% 示例页 6：数学公式
-% ------------------------------------------------------------
+% ============================================================
+% 示例页 6: 数学公式 (Mathematical Equations)
+% ============================================================
+% 适用场景: 理论推导、模型方程、数学定义
+% 最佳实践:
+%   - 公式前后用 \iqbsep 分隔
+%   - 重要公式用 $$ $$ (displayed) 而不是 $ $ (inline)
+%   - 在公式下方用文字解释变量含义
+%   - 使用 mhchem 处理化学式: \ce{H2O}, \ce{Ca2+}
+%
 \setsection{Discussion}
 
-\begin{frame}{公式示例}
-  \textbf{自由能计算}：
+\begin{frame}{理论基础：自由能函数}
+  % 第一个公式块
+  \textbf{成核阶段的自由能：}
+  \iqbtinysep
 
-  \vspace{0.3cm}
+  $$\Delta G_{\text{nuc}}(\xi) = k \cdot \xi^2 + c$$
 
-  成核阶段：
-  $$\Delta G(\text{CV}) = k \cdot \text{CV}^2 + c$$
+  其中 $\xi$ 是反应坐标，$k$ 和 $c$ 是拟合系数。
 
-  \vspace{0.3cm}
+  % 间距
+  \iqbsep
 
-  扩展阶段：
-  $$G(r) = 2\pi r\gamma$$
+  % 第二个公式块
+  \textbf{扩展阶段的张力贡献：}
+  \iqbtinysep
 
-  \vspace{0.3cm}
+  $$\gamma(r) = 2\pi r \sigma$$
 
-  其中 $\gamma$ 为线张力，$r$ 为孔半径。
+  其中 $\sigma$ 是线张力 (line tension)，$r$ 是孔半径。
+
+  % 关键物理量
+  \iqbsep
+
+  \begin{block}{关键物理量}
+    线张力 $\sigma \approx 0.1$ 到 $1.0 \, \text{pN}$，
+    决定了孔稳定性和形成自由能。
+  \end{block}
 \end{frame}
 
 % ============================================================
@@ -223,38 +414,174 @@
 \end{frame}
 
 % ============================================================
-% 常用布局命令速查
+% 完整命令参考手册 (Complete Command Reference)
 % ============================================================
-
-% 双列（50-50）：
+%
+% 本模板提供了丰富的布局命令，以下是详细的使用说明。
+%
+% ============================================================
+% 1. 布局命令 (Layout Commands)
+% ============================================================
+%
+% 【双列布局 - 50% 分割】
 % \iqblayouttwo{左列内容}{右列内容}
-
-% 双列（1/3-2/3）：
-% \iqblayoutonethird{左列（窄）}{右列（宽）}
-
-% 双列（2/3-1/3）：
-% \iqblayouttwothirds{左列（宽）}{右列（窄）}
-
-% 三列（均分）：
+% 用途: 对比、平行、左右对称
+% 示例:
+%   \begin{frame}{方法对比}
+%     \iqblayouttwo{
+%       方法A描述
+%     }{
+%       方法B描述
+%     }
+%   \end{frame}
+%
+% 【双列布局 - 1/3:2/3 分割（图在左）】
+% \iqblayoutonethird{左侧（窄）}{右侧（宽）}
+% 用途: 左侧是图或装置，右侧是详细说明
+% 建议: 左侧图宽度约 width=0.25-0.30\textwidth
+%
+% 【双列布局 - 2/3:1/3 分割（图在右）】
+% \iqblayouttwothirds{左侧（宽）}{右侧（窄）}
+% 用途: 左侧是详细说明，右侧是图
+%
+% 【三列均分布局】
 % \iqblayoutthree{列1}{列2}{列3}
-
-% 2×2 网格：
+% 用途: 三方对比、多个方法、结果展示
+% 注意: 字号会自动缩小，内容不要太多
+% 建议每列图片高度: height=0.35-0.40\textheight
+%
+% 【2×2 网格】
 % \iqbgridtwobytwo{图1}{图2}{图3}{图4}
-
-% 图片 + 文字（图在左）：
+% 用途: 展示 4 个相关的图或数据
+% 排列: 上左 | 上右
+%       下左 | 下右
+% 建议: 每个图加标号 (A), (B), (C), (D)
+%
+% ============================================================
+% 2. 图片文字混合布局 (Image-Text Combinations)
+% ============================================================
+%
+% 【图片左，文字右】
 % \iqbimagetext[width=0.4\textwidth]{image.png}{右侧文字}
-
-% 文字 + 图片（图在右）：
+% 参数说明:
+%   width: 图片宽度，通常 0.35-0.45\textwidth
+%   image.png: 图片文件路径
+%   右侧文字: 可包含列表、段落、公式等
+%
+% 【文字左，图片右】
 % \iqbtextimage[width=0.4\textwidth]{左侧文字}{image.png}
-
-% 设置 footer section：
-% \setsection{Section Name}
-
-% 无 header/footer 的页面：
+% 参数说明: 同上，但左右位置互换
+%
+% ============================================================
+% 3. 间距控制 (Spacing Control)
+% ============================================================
+%
+% 为保持一致性，请使用以下统一的间距命令，而不是手动 \vspace{}
+%
+% \iqbtinysep       - 很小间距 (~0.15cm)
+%   用途: 列表项之间、紧凑的 block 间距
+%
+% \iqbsep           - 标准间距 (~0.3cm)  [最常用]
+%   用途: 段落间、block 间、内容块分隔
+%
+% \iqbbigsep        - 大间距 (~0.5cm)
+%   用途: 页面主要内容块分隔、大的逻辑段落间
+%
+% 示例:
+%   \begin{itemize}
+%     \item 要点 1
+%     \item 要点 2
+%   \end{itemize}
+%   \iqbsep
+%   \begin{block}{重要信息}
+%     ...
+%   \end{block}
+%
+% ============================================================
+% 4. 页面选项 (Frame Options)
+% ============================================================
+%
+% 【无页眉页脚的页面】
 % \begin{frame}[plain,noframenumbering]
-%   内容
+%   内容（通常用于封面、致谢页）
 % \end{frame}
-
+%
+% 选项说明:
+%   plain: 不显示 header, footer, navigation symbols
+%   noframenumbering: 不计入总页数
+%
+% 【设置 footer 中间显示的 section 名称】
+% \setsection{Section Name}
+% 用途: 在 footer 中间显示当前 section，帮助观众理解进度
+% 建议: 每进入新的主要内容区域时调用一次
+%
+% ============================================================
+% 5. 颜色使用 (Color Usage)
+% ============================================================
+%
+% 【文字着色】
+% \textcolor{iqbblue}{蓝色文字}
+% \textcolor{iqborange}{橙色强调}
+% \textcolor{iqbgreen}{绿色标签}
+% \textcolor{iqbred}{红色警告}
+%
+% 【背景着色 - 用于 block 或强调】
+% \begin{block}{标题}
+%   内容会自动使用 IQB 主题色
+% \end{block}
+%
+% ============================================================
+% 6. 图片尺寸参考 (Image Sizing Reference)
+% ============================================================
+%
+% 纸张可用高度约 0.65 \textheight（去掉 header/footer）
+%
+% 单列图片:
+%   - 单独占一行: height=0.5-0.6\textheight
+%   - 配合文字: height=0.4-0.5\textheight
+%
+% 双列图片 (50-50):
+%   - 每列: height=0.45-0.55\textheight
+%
+% 三列图片:
+%   - 每列: height=0.35-0.40\textheight
+%
+% 2×2 网格:
+%   - 通常固定: width=0.45\textwidth (自动高度)
+%
+% ============================================================
+% 7. 最佳实践总结 (Best Practices)
+% ============================================================
+%
+% 【页面设计】
+% - 避免文字过多，每页最多 8-10 行有效内容
+% - 每页尽量包含图表，图文结合效果最佳
+% - 竖版高图必须与文字并排，不要堆在下方
+%
+% 【文字书写】
+% - 使用短句而非长段落
+% - 列表项不超过 50 个汉字
+% - 标题要体现该页的核心洞察，而不仅是主题
+%
+% 【图片使用】
+% - 每个图都要有图注（caption）
+% - 标号使用 (A), (B), (C)... 或 ①②③...
+% - 避免图片过小，要清晰可见
+%
+% 【公式排版】
+% - 重要公式用 $$ $$ (displayed)
+% - 公式前后用 \iqbsep 分隔
+% - 化学式用 \ce{} 格式（需要 mhchem 包）
+%
+% 【编译排查】
+% - 如出现 "Overfull \hbox", 说明某行超宽
+% - 如出现 "Overfull \vbox", 说明内容超高，需要减少或拆页
+% - 增加 --file-line-error 选项获得详细错误位置
+%
+% ============================================================
+% 更多帮助和示例请参考:
+% - software-copyright/3-usage.tex (详细命令文档)
+% - examples/membrane-pore-jc.tex (完整工作示例)
 % ============================================================
 
 \end{document}

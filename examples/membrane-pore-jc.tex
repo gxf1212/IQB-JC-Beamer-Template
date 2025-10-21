@@ -32,13 +32,25 @@
 
 % Chinese support (XeLaTeX required)
 \usepackage{xeCJK}
-\setCJKmainfont{SimSun}  % Windows: SimSun, Linux: Noto Sans CJK SC
+
+% Cross-platform font configuration
+% Auto-detect OS and use appropriate CJK font
+\usepackage{ifplatform}
+\ifwindows
+  \setCJKmainfont{SimSun}           % Windows: SimSun (built-in)
+\else
+  \ifmacosx
+    \setCJKmainfont{Songti SC}      % macOS: Songti SC (built-in)
+  \else
+    \setCJKmainfont{Noto Serif CJK SC}  % Linux: Noto Serif CJK SC
+  \fi
+\fi
 
 % Metadata
 \title{Free Energy of Membrane Pore Formation and Stability}
 \subtitle{from Molecular Dynamics Simulations}
 \author{高旭帆}
-\institute{IQB Lab}
+\institute{Institute of Quantitative Biology}
 \date{\today}
 
 % ============================================================
@@ -63,7 +75,7 @@
 % ============================================================
 % Page 2: Paper Information (通讯作者 + 一作 with photos)
 % ============================================================
-\iqbsectionframe{Overview}{论文信息}
+% \iqbsectionframe{Overview}{论文信息}
 \begin{frame}{发表论文}
   \setauthorfirstfield{计算生物物理、膜动力学、增强采样方法}
   \iqbauthorstwophoto{images/membrane-pore-jc/corresponding.png}{Robert Vácha}{%
@@ -80,48 +92,55 @@
     \href{https://www.insilibio.com}{www.insilibio.com}
   }
 
-  \smallskip
+  \bigskip
 
   \footnotesize
-  \textbf{发表}: \textit{J. Chem. Inf. Model.} \textbf{65}, 908–920 (2025) | \textbf{DOI}: 10.1021/acs.jcim.4c01960
+  \iqbpublicationinfo
 \end{frame}
 
 % ============================================================
 % Page 3: Background
 % ============================================================
 \iqbsectionframe{Background}{背景和意义}
-\iqbframetextfig[0.52\textheight]{膜孔形成：从抗菌肽到电穿孔的关键过程}{
-  \textbf{膜孔形成的重要性}：
-  \iqbitemize{
-    \item 抗菌肽设计与抗菌机制
-    \item 药物递送系统穿膜
-    \item 细胞通透性调控
-    \item 电穿孔技术应用
+\begin{frame}{膜孔形成：从抗菌肽到电穿孔的关键过程}
+  \iqblayouttwo{
+    \textbf{生物学意义}：
+    膜孔形成是理解细胞防御机制和设计治疗策略的关键。\\
+
+    \iqbitemize{
+      \item \textbf{抗菌肽}：诱导孔形成破坏细胞屏障
+      \item \textbf{药物递送}：控制跨膜物质运输
+      \item \textbf{电穿孔}：促进大分子受控递送
+      \item \textbf{细胞生物学}：基本膜转运机制
+    }
+
+    \medskip
+
+    \textbf{实验局限}：
+    中子散射、固态NMR、AFM等虽能提供信息，但存在根本缺陷：
+    \iqbitemize{
+      \item 静态快照难以捕捉瞬态机制，追踪纳秒动态过程
+      \item 原子尺度分辨率不足
+      \item 缺乏定量自由能学数据
+    }
+
+    \medskip
+
+    \textbf{MD模拟优势}：
+    \iqbitemize{
+      \item 获得完整结构动态信息，准确量化膜线张力和成核能垒，解决成核与扩展统一描述难题
+    }
+  }{
+    \iqbfigcap[height=0.52\textheight]{images/membrane-pore-jc/fig3.png}{%
+      \textbf{图3}：孔闭合的四个阶段。（A）平衡孔，水线贯穿膜；（B）半径缩小，脂质重排；（C）临界瞬间，仅剩水线；（D）孔闭合，膜恢复。
+    }
   }
-
-  \medskip
-
-  \textbf{实验方法的局限}：
-  \iqbitemize{
-    \item 缺乏原子尺度分辨率
-    \item 难以捕捉纳秒瞬态
-    \item 无法量化自由能学
-  }
-
-  \medskip
-
-  {\footnotesize\textbf{图注}：孔闭合的四个阶段。(A)平衡孔，水线贯穿膜；(B)半径缩小，脂质重排；(C)临界瞬间，仅剩水线程；(D)孔闭合，膜恢复。}
-}{images/membrane-pore-jc/fig3.png}
+\end{frame}
 
 % ============================================================
 % Page 4: Key Scientific Questions
 % ============================================================
 \begin{frame}{挑战：统一描述成核与扩展两个截然不同的阶段}
-  \iqbblock{核心挑战}{
-    如何通过MD模拟准确量化膜孔形成全过程（成核+扩展），\\并可靠预测不同条件下的膜线张力？
-  }
-
-  \medskip
 
   \iqblayouttwo{
     \textbf{现有方法的问题}：
@@ -138,8 +157,7 @@
     \iqbitemize{
       \item 成核：极性重原子数量变化
       \item 扩展：孔半径线性增长
-      \item 两者物理机制不同
-      \item 需要无缝切换的描述
+      \item 两者物理机制，需要无缝切换的描述
     }
 
     \medskip
@@ -148,11 +166,14 @@
     成核 $\sim$ ns，扩展 $\sim$ $\mu$s，自发形成 $\sim$ ms
   }{
     \centering
-    \includegraphics[height=0.35\textheight,keepaspectratio]{images/membrane-pore-jc/fig4.png}
+    
+      \iqbblock{核心挑战}{\scriptsize
+    如何通过MD模拟准确量化膜孔形成全过程（成核+扩展），并可靠预测不同条件下的膜线张力？不同离子条件下的膜线张力如何变化？
+  }
+  
+  \medskip
 
-    \smallskip
-
-    \includegraphics[height=0.35\textheight,keepaspectratio]{images/membrane-pore-jc/fig4b.png}
+    \includegraphics[height=0.5\textheight,keepaspectratio]{images/membrane-pore-jc/fig4b.png}
   }
 \end{frame}
 
@@ -160,64 +181,30 @@
 % Page 4.5: Research Overview (摘要图+流程图)
 % ============================================================
 \begin{frame}{研究概览：问题、方法与核心发现}
-  % 上半部：摘要图
-  \centering
-  \includegraphics[height=0.33\textheight,keepaspectratio]{images/membrane-pore-jc/abs.png}
-
-  \vspace{0.25cm}
-
-  % 下半部：TikZ流程图
-  \resizebox{\textwidth}{!}{%
-    \begin{tikzpicture}[
-      node distance=0.6cm and 0.2cm,
-      stage/.style={rectangle, rounded corners=2pt, minimum width=2.0cm, minimum height=1.8cm,
-                    align=center, font=\tiny, draw=black, line width=0.6pt},
-      arrow/.style={-Stealth, thick=0.5pt, black},
-      label/.style={font=\tiny\bfseries}
-    ]
-      % Stage 1: 方法开发
-      \node[stage, fill=green!20] (fp) {Full-Path\\成核+扩展};
-      \node[stage, fill=green!20, right=0.1cm of fp] (rp) {Rapid\\大孔线张力};
-      \node[label, above=0.12cm of fp.north west, anchor=south west] {① 方法开发};
-
-      % Stage 2: CV验证
-      \node[stage, fill=orange!15, right=0.4cm of rp] (valid) {自发孔\\孔寿命趋势✓\\尾部密度✓};
-      \node[label, above=0.12cm of valid.north, anchor=south] {② 验证};
-
-      % Stage 3: 能量学计算
-      \node[stage, fill=blue!15, right=0.4cm of valid] (fp4) {图4\\Full-Path\\k和γ};
-      \node[stage, fill=blue!15, right=0.1cm of fp4] (rp5) {图5\\Rapid\\γ};
-      \node[label, above=0.12cm of fp4.north west, anchor=south west] {③ 能量学};
-
-      % Stage 4: 交叉验证
-      \node[stage, fill=pink!20, right=0.4cm of rp5] (exp) {6A\\实验\\吻合};
-      \node[stage, fill=pink!20, right=0.1cm of exp] (method) {6B\\两CV\\一致};
-      \node[label, above=0.12cm of exp.north west, anchor=south west] {④ 交叉验证};
-
-      % Stage 5: 力场评估
-      \node[stage, fill=purple!10, right=0.4cm of method] (ff) {✓ C36/p75\\± Slipids\\✗ M2.2/M3};
-      \node[label, above=0.12cm of ff.north, anchor=south] {⑤ 力场};
-
-      % Stage 6: 离子效应
-      \node[stage, fill=yellow!15, right=0.4cm of ff] (ca) {7A\\Ca²⁺\\恢复γ};
-      \node[stage, fill=yellow!15, right=0.1cm of ca] (na) {7B\\Na⁺\\γ↑};
-      \node[label, above=0.12cm of ca.north west, anchor=south west] {⑥ 离子效应};
-
-      % Arrows
-      \draw[arrow] (fp.east) -- (valid.west);
-      \draw[arrow] (rp.east) -- (valid.west);
-      \draw[arrow] (valid.east) -- (fp4.west);
-      \draw[arrow] (valid.east) -- (rp5.west);
-      \draw[arrow] (fp4.east) -- (exp.west);
-      \draw[arrow] (rp5.east) -- (exp.west);
-      \draw[arrow] (fp4.east) -- (method.west);
-      \draw[arrow] (rp5.east) -- (method.west);
-      \draw[arrow] (exp.east) -- (ff.west);
-      \draw[arrow] (method.east) -- (ff.west);
-      \draw[arrow] (ff.east) -- (ca.west);
-      \draw[arrow] (ff.east) -- (na.west);
-    \end{tikzpicture}
+  % 上半部：左右两栏（方法创新 + 核心发现）
+  \iqblayouttwo{
+    % 左列：方法创新
+    \textbf{方法创新}：
+    \iqbitemize{
+      \item 双CV策略：Full-Path CV（成核+扩展统一）+ Rapid CV（快速评估）
+      \item Sigmoid切换函数实现平滑过渡
+      \item 多力场对标验证（CHARMM36/M2.2p/prosECCo75）
+    }
+  }{
+    % 右列：核心发现
+    \textbf{核心发现}：
+    \iqbitemize{
+      \item 线张力直接反映膜孔稳定性
+      \item PG脂质含量增加导致线张力降低
+      \item $\ce{Ca^{2+}}$恢复膜稳定，$\ce{Na+}$增强阴离子效应
+      \item 力场选择关键（C36精确，M2.2p低估）
+    }
   }
+
+  % 下半部：mermaid流程图
+  \medskip
+  \centering
+  \includegraphics[height=0.32\textheight,keepaspectratio]{images/membrane-pore-jc/mermaid.png}
 \end{frame}
 
 % ============================================================
@@ -236,7 +223,7 @@
       \item 无限大孔模拟
       \item 脂质条带构型
       \item 线张力快速评估
-      \item 效率提高10×
+      \item 效率提高数倍
     }
     {开源实现}{images/membrane-pore-jc/plumed.png}{%
       \item PLUMED库实现
@@ -262,26 +249,27 @@
     $$\text{CV} = \text{CV}_{\text{cyl}} s_1 + \text{CV}_{\text{r}} s_2$$
   }{权重函数平滑切换}
 }{
-  \centering
-  \includegraphics[height=0.45\textheight]{images/membrane-pore-jc/fig1u.png}
-
-  \tinysep
-  \iqbcaptiontext{\textbf{图1}：Full-Path CV设计。同时追踪成核（圆柱内尾部密度CV$_{\text{cyl}}$）和扩展（孔半径CV$_{\text{r}}$）；通过sigmoid切换函数平滑过渡。}
+    \iqbfigcap[height=0.45\textheight]{images/membrane-pore-jc/fig1u.png}{%
+      \textbf{图1}：Full-Path CV设计。同时追踪成核（圆柱内尾部密度CV$_{\text{cyl}}$）和扩展（孔半径CV$_{\text{r}}$）；通过sigmoid切换函数平滑过渡。
+    }
 }
 
 % ============================================================
 % Page 7: Method - Switching Functions
 % ============================================================
 \begin{frame}{平滑过渡：sigmoid函数消除成核-扩展边界}
-  \iqblayouttwo{
-    \iqbformparam{切换函数 $s_1, s_2$}{
-      $$s_1 = \frac{1}{1 + e^{\alpha(\text{CV}_r - \text{CV}_0)}}$$
-      $$s_2 = \frac{1}{1 + e^{-\alpha(\text{CV}_r - \text{CV}_0)}}$$
-    }{
-      \param{\alpha = 20}{陡峭}
-      \param{\text{CV}_0 = 0.95}{切换点}
-      \param{CV < 0.95}{主导 $\text{CV}_{\text{cyl}}$}
-      \param{CV > 0.95}{主导 $\text{CV}_{\text{radius}}$}
+  \iqblayoutcustom[0.3]{
+    \textbf{切换函数 $s_1, s_2$}：
+    $$s_1 = \frac{1}{1 + e^{\alpha(\text{CV}_r - \text{CV}_0)}}$$
+    $$s_2 = \frac{1}{1 + e^{-\alpha(\text{CV}_r - \text{CV}_0)}}$$
+
+    \medskip
+
+    \iqbitemize{
+      \item $\alpha = 20$ ：陡峭
+      \item $\text{CV}_0 = 0.95$ ：切换点
+      \item $CV < 0.95$ ：主导 $\text{CV}_{\text{cyl}}$
+      \item $CV > 0.95$ ：主导 $\text{CV}_{\text{radius}}$
     }
 
     \textbf{关键优势}：
@@ -291,12 +279,8 @@
       \item 单一CV占主导
     }
   }{
-    {\centering
-    \includegraphics[width=0.9\textwidth]{images/membrane-pore-jc/switching-functions.png}}
-
-    \medskip
-    {\footnotesize\raggedright
-    \textbf{图2}：Sigmoid切换函数实现平滑过渡。两条曲线在 $\text{CV}_0 = 0.95$ 处相交，权重各为 0.5。\textbf{蓝线}（$s_1$）：CV < 0.95时主导成核，权重从1递减。\textbf{红线}（$s_2$）：CV > 0.95时主导扩展，权重从0递增。参数 $\alpha=20$确保陡峭过渡，避免不连续性。物理效应：单一CV占主导，无数值问题，与实验孔寿命趋势一致。
+    \iqbfigcap[width=0.9\textwidth]{images/membrane-pore-jc/switching-functions.png}{%
+      \textbf{图S2}：Sigmoid切换函数实现平滑过渡。两条曲线在 $\text{CV}_0 = 0.95$ 处相交，权重各为 0.5。
     }
   }
 \end{frame}
@@ -305,30 +289,25 @@
 % Page 7: Method - Rapid Method
 % ============================================================
 \begin{frame}{Rapid方法：脂质条带模拟"无限孔"快速估算线张力}
-  \iqblayoutonethird{
+  \iqblayoutcustom[0.4]{
     {\footnotesize
-    \textbf{创新思路}：(1) 沿膜平面扩展模拟盒子 | (2) 自发形成脂质条带 | (3) 周期边界PBC连接 | (4) 形成环形"无限孔"
+    \textbf{创新思路}：(1) 沿膜平面扩展模拟盒子 (2) 自发形成脂质条带 (3) 周期边界PBC连接 (4) 形成环形"无限孔"
 
     \medskip
 
-    \textbf{物理原理}：线张力 $\Delta G = 2L\gamma$，其中 $L$ 为孔边缘总长度 | 因子2考虑两个孔边缘 | 改变盒子尺寸 $L_x$ = 改变孔边缘长度
+    \textbf{物理原理}：线张力 $\Delta G = 2L\gamma$，其中 $L$ 为孔边缘总长度，因子2考虑两个孔边缘，改变盒子尺寸 $L_x$ = 改变孔边缘长度
 
     \medskip
 
-    \textbf{关键优势}：参考态通过线性外推自动确定（无需实际模拟完整膜） | 周期边界消除边缘效应 | 物理上等价于 $\Delta G = 2\pi r\gamma$（圆形孔）
+    \textbf{关键优势}：参考态通过线性外推自动确定（无需实际模拟完整膜），周期边界消除边缘效应，物理上等价于 $\Delta G = 2\pi r\gamma$（圆形孔）
 
     \medskip
 
-    \textbf{计算效率}：Rapid 仅需 21窗 $\times$ 150 ns | Full-Path 需要 65窗 $\times$ 200 ns | 效率提升 $\sim$6倍，准确性与Full-Path高度一致
+    \textbf{计算效率}：Rapid 仅需 21窗口 $\times$ 150 ns，Full-Path 需要 65窗口 $\times$ 200 ns，效率提升 $\sim$6倍，准确性与Full-Path高度一致
     }
   }{
     \centering
-    \includegraphics[height=0.63\textheight,keepaspectratio]{images/membrane-pore-jc/fig1d.png}
-
-    \tinysep
-    {\footnotesize\raggedright\setlength{\rightskip}{0pt plus 1cm}
-    \textbf{图2}：Rapid方法示意。(A) 脂质条带侧视图，两个孔边缘（膜外界面）中间夹水 | (B) 俯视图，通过周期边界形成环形"无限孔" | (C) 自由能随盒子尺寸线性增长，斜率 = $2\gamma$，线性拟合确定线张力。
-    }
+    \iqbfigcap[height=0.5\textheight]{images/membrane-pore-jc/fig1d.png}{\textbf{图1B}：Rapid方法示意。（A）脂质条带侧视图，两个孔边缘（膜外界面）中间夹水；（B）俯视图，通过周期边界形成环形"无限孔"；（C）自由能随盒子尺寸线性增长，斜率 = $2\gamma$，线性拟合确定线张力。}
   }
 \end{frame}
 
@@ -341,16 +320,14 @@
     {\footnotesize
     \textbf{切片划分方法}：
     \iqbitemize{
-      \item 膜沿z轴分17个切片
-      \item 每片厚0.25 nm
-      \item 范围：[-2.125, 2.125] nm
-      \item 高斯权重平滑计数
+      \item 膜沿z轴分17个切片，每片厚0.25 nm
+      \item 范围：[-2.125, 2.125] nm，高斯权重平滑计数
     }
 
     \medskip
 
     \textbf{孔状态$s(t)$计算}：
-    \iqbenumerate{
+    \iqbitemize{
       \item $s_i(t)$：高斯平滑水原子计数
       \item $\mathcal{H}(s_i - 1)$：Heaviside判定
       \item $s(t) = \frac{1}{17}\sum \mathcal{H}(s_i - 1)$
@@ -360,23 +337,16 @@
 
     \textbf{物理意义}：
     \iqbitemize{
-      \item $s=1$：完全开放跨膜孔
-      \item $s=0$：完整无孔膜
+      \item $s=1$：完全开放跨膜孔；$s=0$：完整无孔膜
       \item $0<s<1$：孔形成/闭合过程
     }
 
     \medskip
 
-    \textbf{孔寿命趋势}：DMPC $>$ DPPC $>$ POPC $>$ DOPC
+    （B）4种磷脂闭合过程。\textbf{孔寿命趋势}：DMPC $>$ DPPC $>$ POPC $>$ DOPC。饱和度越高、链越短，寿命越长。
     }
   }{
-    \centering
-    \includegraphics[height=0.65\textheight,keepaspectratio]{images/membrane-pore-jc/fig2.png}
-
-    \tinysep
-    {\tiny\raggedright\setlength{\rightskip}{0pt plus 1cm}
-    \textbf{图3}：孔状态追踪及闭合动力学。(A)蓝色=含水通道。(B)4种磷脂闭合过程，饱和度高→寿命长。
-    }
+    \iqbfigcap[height=0.65\textheight,keepaspectratio]{images/membrane-pore-jc/fig2.png}{\textbf{图2}：孔状态追踪及闭合动力学。蓝色为含水通道。}
   }
 \end{frame}
 
@@ -384,18 +354,19 @@
 % Page 9: Validation - Pore Closure Snapshots
 % ============================================================
 \begin{frame}{孔闭合过程：尾部碳密度决定膜缺陷稳定性}
-  \iqblayouttwothirds{
+  \iqblayouttwo{
     {\footnotesize
     \iqbsteplist{四阶段闭合动力学}{
-      \step{(A) 平衡孔}{初始稳定孔，连续水柱贯穿膜厚度}
-      \step{(B) 半径缩小}{孔边缘脂质重排，整体结构保持不变}
-      \step{(C) 水线程}{关键瞬间，孔只有纤细连续水线相连}
-      \step{(D) 膜恢复}{孔完全闭合，局部膜厚度恢复}
+      \step{（A）平衡孔}{初始稳定孔，连续水柱贯穿膜厚度}
+      \step{（B）半径缩小}{孔边缘脂质重排，整体结构保持不变}
+      \step{（C）水线程}{关键瞬间，孔只有纤细连续水线相连}
+      \step{（D）膜恢复}{孔完全闭合，局部膜厚度恢复}
     }
 
     \medskip
 
-    \iqbhighlight{临界发现}{脂质尾部密度 $\leftrightarrow$ 孔寿命 $\tau$ (R²=0.82)}{相关性极强！}
+    % \iqbhighlight{临界发现}{脂质尾部密度 $\leftrightarrow$ 孔寿命 $\tau$ (R²=0.82)}{相关性极强！}
+    \textbf{临界发现}：脂质尾部密度 $\leftrightarrow$ 孔寿命 $\tau$ (R²=0.82)，相关性极强！
 
     \tinysep
 
@@ -403,8 +374,6 @@
     这一强相关性启发了\textbf{尾部密度CV}($\text{CV}_{\text{cyl}}$)的创新设计，追踪圆柱体内脂质尾部原子数。
 
     \medskip
-
-    \textbf{力场表现}：
 
     \iqbthreelinetable{孔寿命/ns}{
       力场 & DMPC & DPPC & POPC & DOPC \\
@@ -414,11 +383,9 @@
     }
     }
   }{
-    \centering
-    \includegraphics[height=0.68\textheight,keepaspectratio]{images/membrane-pore-jc/fig3.png}
-
-    \tinysep
-    \iqbcaptiontext{\textbf{图4}：孔闭合快照。左侧四个阶段清晰展示孔半径缩小、水线程形成、最终闭合的完整过程。右侧四种膜的孔闭合动力学曲线，展示饱和度差异导致的孔寿命差异。}
+    \iqbfigcap[height=0.7\textheight]{images/membrane-pore-jc/figs6.png}{%
+      
+    }
   }
 \end{frame}
 
@@ -429,23 +396,33 @@
   \iqblayouttwothirds{
     {
     
-    \iqbcaptiontext{\textbf{图5}：Full-Path自由能分析。(A)典型孔结构侧视图和俯视图 | (B)自由能剖面展示两阶段：成核阶段$\Delta G=k \cdot \text{CV}^2$（$k$=72.9 kJ/mol）；扩展阶段$G=2\pi r\gamma$（$\gamma$=32.5 pN）；正反向完全重合无滞后 | (C)不同力场线张力对比：CHARMM36和prosECCo75最准确。}
+    \iqbcaptiontext{\textbf{图4}：Full-Path自由能分析。（A）典型孔结构侧视图和俯视图；（B）自由能剖面展示两阶段，正反向完全重合无滞后；（C）不同力场线张力对比，CHARMM36和prosECCo75最准确。}
 
     \footnotesize
-    
-    \textbf{成核阶段} ($\text{CV} < 0.5$): $\Delta G = k \cdot \text{CV}^2 + c$ | 二次增长 | $k=72.9$ kJ/mol (CHARMM36) | $k=73.7$ kJ/mol (Martini 2.2p)
+
+    \iqbthreelinetable{成核阶段 ($\text{CV} < 0.5$): $\Delta G = k \cdot \text{CV}^2 + c$}{
+      力场 & $k$ (kJ/mol) \\
+    }{
+      CHARMM36 & 72.9 \\
+      Martini 2.2p & 73.7 \\
+    }
 
     \medskip
 
-    \textbf{扩展阶段} ($\text{CV} > 1.2$): $G(r) = 2\pi r\gamma$ | 线性增长 | $\gamma=32.5$ pN (CHARMM36) | $\gamma=49.2$ pN (Martini 2.2p)
+    \iqbthreelinetable{扩展阶段 ($\text{CV} > 1.2$): $G(r) = 2\pi r\gamma$}{
+      力场 & $\gamma$ (pN) \\
+    }{
+      CHARMM36 & 32.5 \\
+      Martini 2.2p & 49.2 \\
+    }
 
     \medskip
 
-    \textbf{关键发现}：正反向拉伸曲线完全重合 | CV设计无滞后 | CHARMM36和Martini 2.2p显示不同的线张力
+    \textbf{关键发现}：正反向拉伸曲线完全重合，CV设计无滞后，CHARMM36和Martini 2.2p显示不同的线张力
     }
   }{
     \centering
-    \includegraphics[height=0.55\textheight,keepaspectratio]{images/membrane-pore-jc/fig4.png}
+    \includegraphics[height=0.75\textheight,keepaspectratio]{images/membrane-pore-jc/fig4.png}
 
     \tinysep
   }
@@ -457,60 +434,69 @@
 \begin{frame}{Rapid方法：脂质条带模拟"无限孔"快速提取线张力}
   \iqblayouttwothirds{
     {
-    \iqbcaptiontext{\textbf{图6}：Rapid方法示意。(A)脂质条带侧视图，两个孔边缘（膜外界面）中间夹水 | (B)俯视图，通过PBC形成环形无限孔 | (C)自由能随盒子尺寸线性增长，斜率为$2\pi\gamma$。}
+    \iqbcaptiontext{\textbf{图5}：Rapid方法示意。（A）脂质条带侧视图，两个孔边缘（膜外界面）中间夹水；（B）俯视图，通过PBC形成环形无限孔；（C）自由能随盒子尺寸线性增长，斜率为$2\pi\gamma$。}
     
     \footnotesize
-    \textbf{创新思路}：(1) 沿膜平面拉伸模拟盒子 | (2) 形成脂质条带结构 | (3) 周期边界条件连接 | (4) 形成环形"无限孔"
+    % \textbf{创新思路}：(1) 沿膜平面拉伸模拟盒子(2) 形成脂质条带结构(3) 周期边界条件连接(4) 形成环形"无限孔"
+
+    % \medskip
+
+    \textbf{线张力原理}：大孔自由能为 $\Delta G = 2L\gamma$，其中$L$为孔边缘长度，因子2考虑两个孔边缘，通过线性拟合斜率直接提取$\gamma$
 
     \medskip
 
-    \textbf{线张力原理}：大孔自由能为 $\Delta G = 2L\gamma$，其中$L$为孔边缘长度，因子2考虑两个孔边缘 | 通过线性拟合斜率直接提取$\gamma$
-
-\medskip
-
-    \textbf{计算效率}：Full-Path需65窗 $\times$ 200ns（全原子） | Rapid仅21窗 $\times$ 150ns，效率提升 $\sim$6倍 | 准确性与Full-Path结果高度一致
+    \iqbthreelinetable{计算效率对比}{
+      方法 & 窗数 & 时间 & 速率 \\
+    }{
+      Full-Path & 65 & 200 ns & 标准 \\
+      Rapid & 21 & 150 ns & $\sim$6$\times$快 \\
+    }
 
     \medskip
 
-    \textbf{关键数据}：POPC CHARMM36 $\gamma=34.1$ pN | POPC Martini 2.2p $\gamma=49.2$ pN
+    \iqbthreelinetable{线张力预测结果}{
+      脂质系统 & 力场 & $\gamma$ (pN) \\
+    }{
+      POPC & CHARMM36 & 34.1 \\
+      POPC & Martini 2.2p & 49.2 \\
+    }
     }
   }{
     \centering
-    \includegraphics[height=0.58\textheight,keepaspectratio]{images/membrane-pore-jc/fig5ab.png}
+    \includegraphics[height=0.8\textheight,keepaspectratio]{images/membrane-pore-jc/fig5ab.png}
 
   }
 \end{frame}
 
+
 % ============================================================
 % Page 12: Results - Force Field Comparison
 % ============================================================
-\iqbframetextfig[0.48\textheight]{力场筛选：仅CHARMM36和prosECCo75准确复现实验趋势}{
-  \footnotesize
-  \textbf{实验趋势}：\\
-  POPE $>$ POPS $>$ POPC $>$ POPG
+\begin{frame}{力场筛选：仅CHARMM36和prosECCo75准确复现实验趋势}
+  \iqblayouttwothirds{
+    % \footnotesize
+    \textbf{实验趋势}：POPE $>$ POPS $>$ POPC $>$ POPG
 
-  \medskip
+    \bigskip
 
-  \iqbcolorlist{力场表现}{
-    \item {\color{green!60!black}\textbf{C36/prosECCo75}}：准确（NMR调参精细）
-    \item {\color{orange}\textbf{Slipids/M2.2p}}：部分正确
-    \item {\color{red}\textbf{M2.2/M3}}：失败（粗粒化失效）
+    \iqbcolorlist{各力场表现}{
+      \item {\color{green!60!black}\textbf{C36/prosECCo75}}：准确（NMR调参精细）
+      \item {\color{orange}\textbf{Slipids/M2.2p}}：部分正确
+      \item {\color{red}\textbf{M2.2/M3}}：失败（粗粒化失效）
+    }
+
+    \medskip
+
+    \textbf{核心差异}：阴离子脂质头部与 $\ce{Na+}$/$\ce{Ca^{2+}}$ 结合的描述精度
+
+    \medskip
+
+    \small
+    结论：选择头部-离子作用精确的力场至关重要
+  }{
+    \iqbfigcap[height=0.5\textheight]{images/membrane-pore-jc/fig5c.png}{}
   }
-
-  \medskip
-
-  \textbf{核心差异}：阴离子脂质头部与 $\ce{Na+}$/$\ce{Ca^{2+}}$ 结合的描述精度
-
-  \medskip
-
-  \small
-  结论：选择头部-离子作用精确的力场至关重要
-
-  \medskip
-
-  {\footnotesize
-  \textbf{图注}：力场性能对标。实验趋势POPE>POPS>POPC>POPG。绿色（C36/p75）准确，橙色（Slipids/M2.2p）部分正确，红色（M2.2/M3）完全失败。差异根源：阴离子脂质与Na$^+$/Ca$^{2+}$结合的参数化精度。}
-}{images/membrane-pore-jc/fig5c.png}
+\end{frame}
 
 % ============================================================
 % Page 13: Results - Cross-Validation
@@ -518,18 +504,24 @@
 \begin{frame}{双重验证：Full-Path与Rapid高度一致，与实验定性吻合}
   \iqblayouttwothirds{
     {
-    \iqbcaptiontext{\textbf{图7}：交叉验证。(A)实验对比，模拟准确捕捉PG与离子效应 | (B)两种CV线张力对比，R²极高，证明一致性。}
-    
-    \footnotesize
-    \textbf{(A) 与实验对标}：OK 定性吻合POPC:POPG膜 | PG↑$\Rightarrow$$\gamma$↓ | Ca$^{2+}$$\Rightarrow$$\gamma$恢复 | 定量偏差：实验40 pN vs 模拟6 pN | 原因：离子参数化精度差异
+      \textbf{图6}：交叉验证。
 
     \medskip
+      \textbf{（A）与实验对标}：
+      \begin{itemize}
+        \item OK 定性吻合POPC:POPG膜
+        \item PG增加导致线张力降低；$\ce{Ca^{2+}}$导致线张力恢复
+        \item 定量偏差：实验40 pN vs 模拟6 pN（离子参数化精度差异）
+      \end{itemize}
 
-    \textbf{(B) 两方法互补}：Full-Path vs Rapid相关性极高 | C36 Rapid偏低~2 pN | M2.2p偏高~3-5 pN | 原因：孔几何差异（圆柱vs环形）
+      \textbf{（B）两方法互补}：
+      \begin{itemize}
+        \item Full-Path vs Rapid相关性极高
+        \item C36 Rapid偏低约2 pN；M2.2p偏高3-5 pN
+        \item 原因：孔几何差异（圆柱 vs 环形）
+      \end{itemize}
 
-    \medskip
-
-    \textbf{结论}：双CV互补，高可信度
+      \textbf{结论}：双CV互补，高可信度
     }
   }{
     \centering
@@ -542,33 +534,30 @@
 % ============================================================
 % Page 14: Results - Ion Effects
 % ============================================================
-\begin{frame}{离子效应：Ca$^{2+}$恢复线张力，Na$^+$增强阴离子膜效应}
-  \iqblayouttwothirds{
-    {\footnotesize
-    \textbf{(A) Ca$^{2+}$恢复膜稳定性}：POPC:POPG体系 | 仅加NaCl：$\gamma$↓到29 pN | 再加CaCl$_2$：$\gamma$↑恢复至35.5 pN | 机制：Ca$^{2+}$与PG头部强结合，静电屏蔽
-
+\begin{frame}{离子效应：$\ce{Ca^{2+}}$恢复被$\ce{Na+}$降低的膜线张力}
+  \iqblayouttwo{
+    \textbf{图7}：离子效应分析。
     \medskip
 
-    \textbf{(B) Na$^+$增强阴离子膜效应}：对比有/无0.15M NaCl
+      \textbf{（A）$\ce{Ca^{2+}}$恢复膜稳定性}：
+      \begin{itemize}
+        \item POPC:POPG体系
+        \item 仅加$\ce{NaCl}$：线张力降低到29 pN
+        \item 再加$\ce{CaCl2}$：线张力升高恢复至35.5 pN
+        \item 机制：$\ce{Ca^{2+}}$与PG头部强结合，静电屏蔽
+      \end{itemize}
 
-    \medskip
+      \textbf{（B）$\ce{Na+}$增强阴离子的效应}：
+      \begin{itemize}
+        \item POPG/POPS：线张力变化增加30-50\%
+        \item POPC/POPE：线张力变化约为零
+        \item 结论：$\ce{Na+}$特异增强阴离子脂质膜稳定性
+      \end{itemize}
 
-    \iqbtwocoltable{脂质类型}{$\Delta\gamma$ 变化}{
-      POPG/POPS & ↑30-50\% \\
-      POPC/POPE & ≈0 \\
-    }
-
-    \medskip
-
-    \textbf{力场性能}：✓ C36精确 | ~ prosECCo75偏小 | ✗ M2.2p低估
-    }
+      \textbf{力场性能}：C36精确，prosECCo75偏小，M2.2p会低估
   }{
     \centering
-    \includegraphics[height=0.62\textheight,keepaspectratio]{images/membrane-pore-jc/fig7.png}
-
-    \tinysep
-
-    \iqbcaptiontext{\textbf{图8}：离子效应分析。(A)Ca$^{2+}$恢复POPC:POPG线张力 | (B)Na$^+$对脂质$\Delta\gamma$影响，阴离子特异增强 | 准确性取决于离子参数化。}
+    \includegraphics[height=0.7\textheight,keepaspectratio]{images/membrane-pore-jc/fig7.png}
   }
 \end{frame}
 
@@ -597,15 +586,13 @@
     \iqbbulletlist{2. 膜性质表征}{
       \item Lindemann 指数：脂质流动性
       \item Bond-orientational order：相态
-      \item Area per lipid：膜面积变化
     }
 
     \medskip
 
     \iqbbulletlist{3. 力场选择}{
       \item CHARMM36: 准确离子-脂质作用
-      \item Martini 3: 快速筛选
-      \item 全原子验证关键发现
+      \item Martini 3: 快速验证
     }
   }{
     \textbf{与我们研究的关联}：
@@ -613,25 +600,24 @@
     \tinysep
 
     \footnotesize
-    \textbf{实验观察}：\\
-    {\color{iqbblue}$\bullet$} OP仅与FFA结合，不与CER/CHOL结合\\
-    {\color{iqbblue}$\bullet$} pH<5时OP质子化带正电\\
-    {\color{iqbblue}$\bullet$} 200nm纳米凝胶穿过20nm通道
+    \textbf{假说}：
+
+    \begin{itemize}
+      \item {\color{orange}OP形成"局部阳离子补丁"}
+      \item {\color{orange}特异性结合FFA羧基(-$\ce{COO-}$)}
+      \item {\color{orange}降低膜线张力，诱导瞬时孔道}
+      \item {\color{orange}纳米凝胶通过形变挤压穿过}
+    \end{itemize}
 
     \medskip
 
-    \textbf{假说}：\\
-    {\color{orange}$\bullet$} OP形成"局部阳离子补丁"\\
-    {\color{orange}$\bullet$} 特异性结合FFA羧基(-COO$^-$)\\
-    {\color{orange}$\bullet$} 降低膜线张力，诱导瞬时孔道\\
-    {\color{orange}$\bullet$} 纳米凝胶通过形变挤压穿过
+    \textbf{下一步}：
 
-    \medskip
-
-    \textbf{下一步}：\\
-    $\Rightarrow$ 定量计算OP-FFA膜的线张力\\
-    $\Rightarrow$ 对比纯SC膜 vs OP结合后的$\gamma$\\
-    $\Rightarrow$ 验证线张力降低假说
+    \begin{itemize}
+      \item[$\Rightarrow$] 定量计算OP-FFA膜的线张力
+      \item[$\Rightarrow$] 对比纯SC膜 vs OP结合后的$\gamma$
+      \item[$\Rightarrow$] 验证线张力降低假说
+    \end{itemize}
   }
 \end{frame}
 

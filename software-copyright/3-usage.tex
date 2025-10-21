@@ -1,6 +1,7 @@
 %!TEX root = document.tex
 
 \section{使用指南}
+\label{sec:usage}
 
 \Name 是一个功能完整的学术演示文稿 LaTeX Beamer 模板，专为 IQB Lab 日志会（Journal Club）汇报设计。通过提供预设的主题、布局工具包和丰富的内容模块，用户可以快速创建专业、美观的学术幻灯片演示。本章详细说明该模板的使用方法，涵盖基础配置、核心功能模块和实际应用示例。
 
@@ -74,7 +75,7 @@ xelatex -interaction=nonstopmode your-presentation.tex
 
 \subsubsection{文档类选项说明}
 
-表格 \ref{tab:documentclass-options} 列出了常用的文档类选项及其含义。
+表 \ref{tab:documentclass-options} 列出了常用的文档类选项及其含义。
 
 \begin{table}[!h]
 \centering
@@ -115,7 +116,7 @@ IQB-JC Beamer 模板具有三种页面类型：封面页、标准内容页和特
 
 \subsubsection{页面类型详解}
 
-表格 \ref{tab:frame-types} 总结了不同页面类型的特性及适用场景。
+表 \ref{tab:frame-types} 总结了不同页面类型的特性及适用场景。
 
 \begin{table}[!h]
 \centering
@@ -435,11 +436,11 @@ IQB-JC 模板提供了带自动编号和统一格式的图表模块。所有图�
 \iqbfig[height=0.5\textheight]{图片路径}{图说文字}
 \end{lstlisting}
 
-参数说明见表格 \ref{tab:iqbfig-params}。
+参数说明见表 \ref{tab:iqbfig-params}。
 
 \begin{table}[!h]
 \centering
-\caption{\lstinline|\iqbfig| 命令参数}
+\caption{iqbfig 命令参数}
 \label{tab:iqbfig-params}
 \begin{tabular}{p{2.5cm}p{2.5cm}p{8cm}}
 \toprule
@@ -817,7 +818,7 @@ IQB-JC 模板提供了专门的作者信息展示模块，适用于文献汇报�
 
 \subsubsection{布局选择建议}
 
-表格 \ref{tab:layout-selection} 提供了在不同内容类型下的布局选择建议。
+表 \ref{tab:layout-selection} 提供了在不同内容类型下的布局选择建议。
 
 \begin{table}[!h]
 \centering
@@ -1131,7 +1132,7 @@ IQB-JC 模板提供了专门的作者信息展示模块，适用于文献汇报�
 
 \subsubsection{代码改进效果统计}
 
-表格 \ref{tab:code-improvement} 展示了使用快捷命令后的代码行数改进。平均而言，使用这些快捷命令可将代码量减少约 79\%。
+表 \ref{tab:code-improvement} 展示了使用快捷命令后的代码行数改进。平均而言，使用这些快捷命令可将代码量减少约 79\%。
 
 \begin{table}[!h]
 \centering
@@ -1376,6 +1377,323 @@ Beamer 演示中常需要展示对比数据。本模板提供了三个预格式�
 \end{table}
 
 对于典型演示，Phase 1.5 可额外减少 \textbf{30-50 行代码}。整合Phase 1+Phase 1.5，平均代码改进达到 \textbf{82\%}（从270行→50行）。
+
+\subsection{故障排除与常见问题}
+
+本小节列举用户使用过程中的常见问题及解决方案。
+
+\subsubsection{编译错误}
+
+\textbf{问题 1：文件找不到 (File not found)}
+
+症状：编译时出现 \lstinline|! I can't find file `../theme/beamerthemeiqb.sty'|
+
+原因：相对路径不正确。该错误通常发生在文件结构与模板预期不符时。
+
+解决方案：
+\begin{enumerate}
+\item 确认目录结构与模板匹配，如下所示：
+\begin{lstlisting}[style=blockstyle]
+my-presentation/
+├── examples/
+│   └── my-jc.tex
+├── theme/
+│   ├── beamerthemeiqb.sty
+│   ├── iqb-layouts.sty
+│   └── images/
+└── ...
+\end{lstlisting}
+
+\item 或在导言区调整相对路径，例如：
+\begin{lstlisting}[style=blockstyle,language=TeX]
+% 若 .tex 文件在项目根目录
+\usepackage{theme/beamerthemeiqb}
+
+% 若 .tex 文件在 examples/ 目录
+\usepackage{../theme/beamerthemeiqb}
+
+% 绝对路径（不推荐）
+\usepackage{/home/user/my-project/theme/beamerthemeiqb}
+\end{lstlisting}
+\end{enumerate}
+
+\textbf{问题 2：中文乱码或无法显示}
+
+症状：编译后 PDF 中中文显示为方框或乱码
+
+原因：未使用 XeLaTeX 编译，或未正确配置中文字体
+
+解决方案：
+\begin{enumerate}
+\item 确认使用 XeLaTeX 编译（非 pdflatex）：
+\begin{lstlisting}[style=blockstyle,language=bash]
+xelatex -interaction=nonstopmode your-file.tex
+\end{lstlisting}
+
+\item 检查字体配置：
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\usepackage{xeCJK}
+% Windows 用户
+\setCJKmainfont{SimSun}
+
+% macOS 用户
+\setCJKmainfont{Songti SC}
+
+% Linux 用户（需先安装 fonts-noto-cjk）
+\setCJKmainfont{Noto Serif CJK SC}
+\end{lstlisting}
+
+\item Linux 用户若字体缺失，安装字体包：
+\begin{lstlisting}[style=blockstyle,language=bash]
+sudo apt-get install fonts-noto-cjk
+\end{lstlisting}
+\end{enumerate}
+
+\textbf{问题 3：化学公式显示错误}
+
+症状：使用 \lstinline|\ce{}| 出现 \lstinline|Undefined control sequence| 错误
+
+原因：未加载 \lstinline|mhchem| 包
+
+解决方案：在导言区添加：
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\usepackage{mhchem}
+\end{lstlisting}
+
+然后使用 \lstinline|\ce{}| 命令：
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\ce{H2O}        % 水
+\ce{Ca2+}       % 钙离子
+\ce{Na-Cl}      % 离子键
+\end{lstlisting}
+
+\subsubsection{布局与排版问题}
+
+\textbf{问题 4：内容超出页面 (Overfull hbox/vbox)}
+
+症状：编译时出现警告 \lstinline|Overfull \hbox| 或 \lstinline|Overfull \vbox|
+
+原因：某一行或某一页的内容超过了允许的宽度或高度
+
+解决方案：
+\begin{enumerate}
+\item 减少文字内容，提炼关键点
+\item 调整图片大小，例如：
+\begin{lstlisting}[style=blockstyle,language=TeX]
+% 超过高度，改用更小的图片
+\iqbfig[height=0.4\textheight]{image.png}{图注}
+
+% 或拆分为两页
+\end{lstlisting}
+
+\item 使用更紧凑的布局，如三列而不是两列：
+\begin{lstlisting}[style=blockstyle,language=TeX]
+% 改为三列（节省空间）
+\iqblayoutthree{内容1}{内容2}{内容3}
+\end{lstlisting}
+
+\item 启用详细的编译报告以定位具体行数：
+\begin{lstlisting}[style=blockstyle,language=bash]
+xelatex --file-line-error your-file.tex
+\end{lstlisting}
+\end{enumerate}
+
+\textbf{问题 5：页眉或页脚不显示}
+
+症状：某些页面缺少 header/footer
+
+原因：使用了 \lstinline|[plain]| 或 \lstinline|[plain,noframenumbering]| 选项
+
+这是正常的——这两个选项用于隐藏 header/footer（用于封面和致谢页）。
+
+若要显示 header/footer，移除 \lstinline|[plain]| 选项：
+\begin{lstlisting}[style=blockstyle,language=TeX]
+% 错误（隐藏 header/footer）
+\begin{frame}[plain]{标题}
+  内容
+\end{frame}
+
+% 正确（显示 header/footer）
+\begin{frame}{标题}
+  内容
+\end{frame}
+\end{lstlisting}
+
+\textbf{问题 6：图片不居中或对齐错误}
+
+症状：图片在列中向左对齐或大小不符预期
+
+原因：布局命令的参数设置或图片大小参数不当
+
+解决方案：
+\begin{enumerate}
+\item 为列中的内容添加 \lstinline|\centering|：
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqblayouttwo{
+  \centering
+  \includegraphics[height=0.5\textheight]{img1.png}
+}{
+  \centering
+  \includegraphics[height=0.5\textheight]{img2.png}
+}
+\end{lstlisting}
+
+\item 确保使用 \lstinline|height| 而不是 \lstinline|width|（宽度会导致比例失调）：
+\begin{lstlisting}[style=blockstyle,language=TeX]
+% 正确：指定高度，宽度自动计算
+\includegraphics[height=0.5\textheight,keepaspectratio]{image.png}
+
+% 错误：只指定宽度可能拉伸图片
+\includegraphics[width=\textwidth]{image.png}
+\end{lstlisting}
+\end{enumerate}
+
+\subsubsection{功能与命令问题}
+
+\textbf{问题 7：图片计数器不递增（使用 \texttt{iqbfig} 系列命令）}
+
+症状：多个图片都显示"图1"而不是递增编号
+
+原因：图片计数器未正确初始化或重置
+
+解决方案：若要重置计数器（例如在新 section 开始），使用：
+\begin{lstlisting}[style=blockstyle,language=TeX]
+% 在新 section 开始处
+\setcounter{iqbfigure}{0}
+
+% 然后继续使用 \iqbfig 命令
+\iqbfig{...}{...}  % 会重新从 图1 开始计数
+\end{lstlisting}
+
+\textbf{问题 8：自定义颜色不生效}
+
+症状：\lstinline|\textcolor{iqbblue}{...}| 无法改变文字颜色
+
+原因：颜色未在主题中定义
+
+解决方案：检查 \lstinline|beamerthemeiqb.sty| 中的颜色定义，或自定义新颜色：
+\begin{lstlisting}[style=blockstyle,language=TeX]
+% 已定义的颜色（可直接使用）
+% iqbblue, iqbdarkblue, iqblightblue, iqbgray, iqborange, iqbgreen, iqbred
+
+% 自定义新颜色
+\usepackage{xcolor}
+\definecolor{mycolor}{RGB}{255,128,0}
+
+% 然后使用
+\textcolor{mycolor}{文字}
+\end{lstlisting}
+
+\textbf{问题 9：间距命令不起作用}
+
+症状：使用 \lstinline|\iqbsep| 等间距命令但间距不变
+
+原因：命令使用位置不当（例如在 block 内部或列环境边界处）
+
+解决方案：
+\begin{enumerate}
+\item 在段落之间使用（而非在环境开始/结束处）：
+\begin{lstlisting}[style=blockstyle,language=TeX]
+% 正确
+\begin{itemize}
+  \item 第一点
+\end{itemize}
+\iqbsep
+\begin{block}{标题}
+  内容
+\end{block}
+
+% 错误
+\iqbsep
+\begin{block}{...}
+  ...
+\end{block}
+\end{lstlisting}
+
+\item 若要调整 block 内部间距，使用标准的 LaTeX 命令：
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\begin{block}{标题}
+  \begin{itemize}
+    \item 项 1
+    \itemsep=0.1em  % 项目间距
+    \item 项 2
+  \end{itemize}
+\end{block}
+\end{lstlisting}
+\end{enumerate}
+
+\subsubsection{性能与编译速度}
+
+\textbf{问题 10：编译速度很慢}
+
+症状：每次编译需要 10 秒以上
+
+原因：
+\begin{itemize}
+\item 加载了过多的图片（尤其是高分辨率图片）
+\item 使用了复杂的 TikZ 绘图
+\item 多次编译以更新交叉引用
+\end{itemize}
+
+解决方案：
+\begin{enumerate}
+\item 优化图片大小（使用合适的分辨率而非超高分辨率）
+\item 若大量使用 TikZ，考虑使用 \lstinline|externalize| 库缓存 TikZ 输出：
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\usepackage{tikz}
+\usetikzlibrary{external}
+\tikzexternalize[prefix=tikz/]
+\end{lstlisting}
+
+\item 只在最终版本时进行双重编译；开发阶段单次编译即可
+\end{enumerate}
+
+\subsubsection{其他常见问题}
+
+\textbf{问题 11：主题颜色或字体无法修改}
+
+若需完全自定义主题颜色或字体，编辑 \lstinline|theme/beamerthemeiqb.sty|：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+% 修改 IQB 主题色（原值 #003366）
+\definecolor{iqbblue}{RGB}{0, 51, 102}  % 改为你的颜色
+
+% 修改标题字体大小
+\setbeamerfont{frametitle}{size=\large, series=\bfseries}
+\end{lstlisting}
+
+然后重新编译演示文稿。
+
+\textbf{问题 12：无法使用 \texttt{iqbauthorstwophoto} 加载图片}
+
+症状：编译时出现图片路径错误
+
+原因：图片路径不正确
+
+解决方案：确保相对路径正确，例如：
+\begin{lstlisting}[style=blockstyle,language=TeX]
+% 若 .tex 在 examples/ 目录，图片在 examples/images/ 目录
+\iqbauthorstwophoto{images/author1.jpg}{...}{...}{...}{...}{...}{...}{...}{...}
+
+% 或使用绝对路径
+\iqbauthorstwophoto{/absolute/path/to/author1.jpg}{...}{...}{...}{...}{...}{...}{...}{...}
+\end{lstlisting}
+
+\subsubsection{获取帮助}
+
+若上述解决方案未能解决问题，建议：
+
+\begin{enumerate}
+\item 查看完整示例：\lstinline|examples/membrane-pore-jc.tex|
+\item 查看模板源代码中的注释：
+\begin{itemize}
+  \item \lstinline|theme/beamerthemeiqb.sty|：主题相关问题
+  \item \lstinline|theme/iqb-layouts.sty|：布局相关问题
+  \item \lstinline|template/jc-template.tex|：最小示例和配置
+\end{itemize}
+\item 参考 Beamer 官方文档：\url{https://ctan.org/pkg/beamer}
+\item 参考 LaTeX Wikibooks 中文排版：\url{https://en.wikibooks.org/wiki/LaTeX}
+\end{enumerate}
 
 \subsubsection{Phase 2 后续计划}
 

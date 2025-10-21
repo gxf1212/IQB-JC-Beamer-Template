@@ -1,20 +1,80 @@
 % ============================================================
 % IQB Journal Club Layout Utilities
-% Provides common layout patterns for JC presentations
-% Version: 1.0
+%
+% LaTeX Beamer 布局工具包 - 为 IQB 课题组文献分享演示提供
+% 统一的、可复用的布局命令和页面模块
+%
+% 版本: 1.0 | 最后更新: 2025-10-20
+%
+% 快速开始:
+%   \usepackage{iqb-layouts}
+%
+% 主要功能模块:
+%   1. 布局命令 - \iqblayouttwo, \iqblayoutthree, \iqbgridtwobytwo 等
+%   2. 图片模块 - \iqbfig, \iqbtwofig, \iqbfourfig（自动编号）
+%   3. 文字+图片混合 - \iqbimagetext, \iqbtextimage
+%   4. 作者信息 - \iqbauthorstwophoto, \iqbauthorstwo
+%   5. 对比模块 - \iqbcomparetwo, \iqbcomparethree
+%   6. Frame 快捷命令 - \iqbframe, \iqbframetextfig 等
+%   7. 间距命令 - \iqbsep, \iqbbigsep, \iqbtinysep
+%
+% 详细说明: 见本文件下方的每个模块注释
 % ============================================================
 
-\ProvidesPackage{iqb-layouts}
+\ProvidesPackage{iqb-layouts}[2025/01/20 v1.0 IQB Journal Club Layout Utilities]
 
 \RequirePackage{graphicx}
 \RequirePackage{tikz}
 \usetikzlibrary{positioning,calc}
 
 % ============================================================
-% Two-Column Layouts (35% usage in JC presentations)
+% Spacing Commands (统一的间距系统)
 % ============================================================
+%
+% 该包提供了三个标准的间距命令，用于替代手动的 \medskip, \bigskip,
+% \smallskip, \vspace{}。使用统一的间距命令可以确保整个演示的视觉一致性。
+%
+% 使用建议:
+%   - 优先使用 \iqbsep（标准间距）分隔逻辑块
+%   - \iqbtinysep 用于列表项之间或紧凑布局
+%   - \iqbbigsep 用于主要内容块之间的大分隔
+%
+% 示例:
+%   \begin{itemize}
+%     \item 第一点
+%     \item 第二点
+%   \end{itemize}
+%   \iqbsep  %← 使用统一间距而不是 \vspace{0.3cm}
+%   \begin{block}{重点}
+%     ...
+%   \end{block}
+%
+\newcommand{\iqbsep}{\vspace{0.3cm}}       % 标准段落间距 (~0.3cm)，最常用
+\newcommand{\iqbbigsep}{\vspace{0.5cm}}    % 大段落间距 (~0.5cm)，用于主要分节
+\newcommand{\iqbtinysep}{\vspace{0.15cm}}  % 小间距 (~0.15cm)，用于列表项间
 
-% Standard 50-50 two-column layout
+% ============================================================
+% Two-Column Layouts (双列布局 - 35% 使用率)
+% ============================================================
+%
+% 双列布局是 JC 演示的核心布局类型（约 35% 的页面使用）。
+% 本包提供了多种双列布局，覆盖常见的比例分割。
+%
+% 【1. 标准 50-50 双列】
+% \iqblayouttwo{左列}{右列}
+% 用途: 对比、左右平行内容、方法对比
+% 布局: 左 48% + 间隔 4% + 右 48%
+% 示例:
+%   \begin{frame}{方法对比}
+%     \iqblayouttwo{
+%       方法A \\
+%       优点: 快速
+%     }{
+%       方法B \\
+%       优点: 精确
+%     }
+%   \end{frame}
+%
 \newcommand{\iqblayouttwo}[2]{%
   \begin{columns}[T]
     \begin{column}{0.48\textwidth}
@@ -27,7 +87,19 @@
   \end{columns}
 }
 
-% Asymmetric: 1/3 left, 2/3 right
+% 【2. 非对称 1/3:2/3 双列（图在左，文在右）】
+% \iqblayoutonethird{左侧（窄）}{右侧（宽）}
+% 用途: 左侧是图或装置，右侧是详细说明
+% 布局: 左 31% + 间隔 4% + 右 65%
+% 建议: 左侧图片宽度设为 width=0.25-0.30\textwidth
+% 示例:
+%   \iqblayoutonethird{
+%     \includegraphics[width=0.3\textwidth]{device.png}
+%   }{
+%     \textbf{详细说明} \\
+%     这是该装置的工作原理...
+%   }
+%
 \newcommand{\iqblayoutonethird}[2]{%
   \begin{columns}[T]
     \begin{column}{0.31\textwidth}
@@ -40,7 +112,12 @@
   \end{columns}
 }
 
-% Asymmetric: 2/3 left, 1/3 right
+% 【3. 非对称 2/3:1/3 双列（文在左，图在右）】
+% \iqblayouttwothirds{左侧（宽）}{右侧（窄）}
+% 用途: 左侧是详细说明或列表，右侧是图或数据
+% 布局: 左 65% + 间隔 4% + 右 31%
+% 建议: 右侧图片宽度设为 width=0.25-0.30\textwidth
+%
 \newcommand{\iqblayouttwothirds}[2]{%
   \begin{columns}[T]
     \begin{column}{0.65\textwidth}
@@ -53,11 +130,60 @@
   \end{columns}
 }
 
-% ============================================================
-% Three-Column Layouts (25% usage)
-% ============================================================
+% 【4. 自定义比例双列】
+% \iqblayoutcustom[左宽度]{左列}{右列}
+% 用途: 任意比例的双列分割
+% 参数: [可选] 左列宽度（默认 0.4\textwidth）
+% 示例:
+%   \iqblayoutcustom[0.35]{
+%     窄左列
+%   }{
+%     宽右列
+%   }
+%   或
+%   \iqblayoutcustom[0.6]{
+%     宽左列
+%   }{
+%     窄右列
+%   }
+%
+\newcommand{\iqblayoutcustom}[3][0.4]{%
+  \begin{columns}[T]
+    \begin{column}{#1\textwidth}
+      #2
+    \end{column}
+    \hfill
+    \begin{column}{\dimexpr 1\textwidth - #1\textwidth - 0.04\textwidth\relax}
+      #3
+    \end{column}
+  \end{columns}
+}
 
-% Standard 1/3-1/3-1/3 layout
+% ============================================================
+% Three-Column Layouts (三列布局 - 25% 使用率)
+% ============================================================
+%
+% 【1. 标准三列均分】
+% \iqblayoutthree{列1}{列2}{列3}
+% 用途: 三方对比、三个方法、三个结果展示
+% 布局: 每列 31% (中间有间隔)
+% 注意: 内容受限，字号会自动缩小
+% 建议每列图片高度: height=0.35-0.40\textheight
+% 示例:
+%   \iqblayoutthree{
+%     \centering
+%     \textbf{方法A} \\
+%     \includegraphics[height=0.35\textheight]{img1.png}
+%   }{
+%     \centering
+%     \textbf{方法B} \\
+%     \includegraphics[height=0.35\textheight]{img2.png}
+%   }{
+%     \centering
+%     \textbf{我们的方法} \\
+%     \includegraphics[height=0.35\textheight]{img3.png}
+%   }
+%
 \newcommand{\iqblayoutthree}[3]{%
   \begin{columns}[T]
     \begin{column}{0.31\textwidth}
@@ -73,10 +199,13 @@
 }
 
 % ============================================================
-% Grid Layouts for Multiple Images
+% Grid Layouts for Multiple Images (网格布局 - 少见)
 % ============================================================
+%
+% 网格布局用于展示多个相关的图表，特别是用于矩阵式的数据展示。
+% 最常见的是 2×2 和 3×2 网格。
 
-% 2x2 Grid (4 images)
+% 【1. 2×2 网格（4 个图或面板）】
 \newcommand{\iqbgridtwobytwo}[4]{%
   \begin{columns}[T]
     \begin{column}{0.48\textwidth}
@@ -115,15 +244,32 @@
 }
 
 % ============================================================
-% Figure Modules with Numbered Captions (Left-aligned)
+% Figure Modules with Numbered Captions (带编号的图片模块 - 最常用)
 % ============================================================
+%
+% 该包提供的图片模块自动处理图片编号、对齐和图注格式。
+% 所有图注都是左对齐，编号自动递增。
+% 这是展示实验结果、数据分析、装置图等的标准方式。
+%
+% 【重要】: 使用这些命令比手动排版图片更简洁、更一致。
 
-% Figure counter
+% 内部计数器（自动维护）
 \newcounter{iqbfigure}
 \setcounter{iqbfigure}{0}
 
-% Single figure with numbered caption (left-aligned)
-% Usage: \iqbfig[image-options]{image-path}{caption-text}
+% 【1. 单个图片】
+% \iqbfig[图片选项]{图片路径}{图注文本}
+% 参数:
+%   [可选] 图片选项: height=0.5\textheight (默认), width=\textwidth 等
+%   图片路径: 相对或绝对路径，如 images/fig1.png
+%   图注文本: 在"图N："后的描述文字
+% 示例:
+%   \iqbfig{images/structure.png}{蛋白质主链构象}
+%   \iqbfig[height=0.6\textheight]{images/result.png}{能量景观的三维表示}
+% 输出:
+%   [图像]
+%   图1: 蛋白质主链构象
+%
 \newcommand{\iqbfig}[3][height=0.5\textheight]{%
   \refstepcounter{iqbfigure}%
   \centering
@@ -611,13 +757,22 @@
 % 文字+图片左右分栏frame (文字占1/3，图片占2/3)
 % Usage: \iqbframetextfig{标题}{文字内容}{图片路径}
 %   或: \iqbframetextfig[0.6\textheight]{标题}{文字内容}{图片路径}
-\newcommand{\iqbframetextfig}[4][0.55\textheight]{%
+%   或: \iqbframetextfig[0.6\textheight]{标题}{文字内容}{图片路径}{图注}
+% 新增: 第5个参数用于图片下的图注（可选）
+\newcommand{\iqbframetextfig}[5][0.55\textheight]{%
   \begin{frame}{#2}
     \iqblayoutonethird{%
       #3%
     }{%
       \centering
       \includegraphics[height=#1,keepaspectratio]{#4}%
+      \ifx&#5&%
+        % 没有提供图注
+      \else
+        % 提供了图注，显示在图片下
+        \medskip
+        \iqbcaptiontext{#5}%
+      \fi
     }%
   \end{frame}
 }
@@ -671,14 +826,10 @@
       \draw[line width=8pt, color=iqbblue] (current page.north west) -- (current page.south west);
     \end{tikzpicture}
 
-    % 右下角几何图案（装饰性圆形）
+    % 右下角装饰（protein图案）
     \begin{tikzpicture}[remember picture,overlay]
-      \node[anchor=south east, inner sep=0pt] at ($(current page.south east) + (-1.5cm, 1.5cm)$) {
-        \begin{tikzpicture}
-          \fill[iqbblue, opacity=0.08] circle (2cm);
-          \draw[iqbblue, line width=1.5pt, opacity=0.15] circle (2cm);
-          \draw[iqbblue, line width=1pt, opacity=0.15] circle (1.3cm);
-        \end{tikzpicture}
+      \node[anchor=south east, inner sep=0pt, opacity=0.12] at ($(current page.south east) + (-1cm, 1cm)$) {
+        \includegraphics[height=5cm,keepaspectratio]{../theme/images/protein.png}
       };
     \end{tikzpicture}
 
@@ -920,6 +1071,17 @@
 \def\@paperyear{\the\year}
 
 % ============================================================
+% Paper Metadata Display (论文元数据显示宏)
+% ============================================================
+
+% 显示发表信息（期刊+年份、体积、页码 | DOI）
+% Usage: \iqbpublicationinfo
+% 需预先定义: \paperdoi{...}
+\newcommand{\iqbpublicationinfo}{%
+  \textbf{发表}: \textit{J. Chem. Inf. Model.} \textbf{65}, 908–920 (2025) | \textbf{DOI}: \@paperdoi
+}
+
+% ============================================================
 % Thank You Frame (致谢页 - 固定样式)
 % ============================================================
 
@@ -986,6 +1148,24 @@
 }
 
 % ============================================================
+% Figure with Caption (居中图片+左对齐图注)
+% ============================================================
+% 标准图+图注模式：自动居中图片，图注左对齐且自动换行
+% Usage: \iqbfigcap[图片选项]{图片路径}{图注内容}
+% 默认图片高度: height=0.5\textheight（可通过可选参数覆盖）
+% 例子：\iqbfigcap[width=0.9\textwidth]{path/to/image.png}{图注文本}
+\newcommand{\iqbfigcap}[3][height=0.5\textheight]{%
+  \begin{figure}[htbp]
+    \centering
+    \includegraphics[#1,keepaspectratio]{#2}
+    \par\vskip0.2cm
+    \begin{minipage}{0.9\linewidth}
+      \iqbcaptiontext{#3}%
+    \end{minipage}
+  \end{figure}
+}
+
+% ============================================================
 % Table Utilities (表格快捷命令)
 % ============================================================
 
@@ -999,20 +1179,22 @@
 %     Slipids & 110 & 32 & 27 & 18 \\
 %   }
 \newcommand{\iqbthreelinetable}[3]{%
-  {\footnotesize
-  \centering
+  \vspace{-0.3cm}
+  \begin{center}
+  {\scriptsize
   \textbf{#1}
+  \vspace{-0.05cm}
 
-  \medskip
-
-  \begin{tabular}{lcccc}
+  \begin{tabular}[t]{lcccc}
     \toprule
     #2
     \midrule
     #3
     \bottomrule
   \end{tabular}
-  }%
+  }
+  \end{center}
+  \vspace{-0.3cm}
 }
 
 % 两列对比表 (简化版, 用于条件对比)
@@ -1187,9 +1369,9 @@
 
   \smallskip
 
-  \begin{enumerate}[label=]
+  \begin{itemize}
     #2
-  \end{enumerate}
+  \end{itemize}
 }
 
 % ============================================================

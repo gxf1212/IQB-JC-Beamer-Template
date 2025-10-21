@@ -5,7 +5,10 @@
 % Date: 2025-10-20
 % ============================================================
 
+\NeedsTeXFormat{LaTeX2e}
 \mode<presentation>
+
+\ProvidesBeamerTheme{iqb}[2025/10/20 v1.0 IQB Journal Club Beamer Theme]
 
 % ============================================================
 % Requirements
@@ -25,11 +28,33 @@
 \ProcessOptionsBeamer
 
 % ============================================================
-% Color Theme
+% Configuration Commands (可定制选项)
 % ============================================================
+% 机构名称配置
+\newcommand{\iqbinstitute}{Institute of Quantitative Biology}
+\newcommand{\setiqbinstitute}[1]{\renewcommand{\iqbinstitute}{#1}}
+
+% Logo路径配置
+\newcommand{\iqblogopath}{../theme/images/header.png}
+\newcommand{\setiqblogopath}[1]{\renewcommand{\iqblogopath}{#1}}
+
+% 主题颜色配置（版本1.0不启用，保留扩展接口）
+% \newcommand{\setiqbcolor}[1]{\definecolor{iqbblue}{HTML}{#1}}
+
+% ============================================================
+% Color Theme (配色方案)
+% ============================================================
+% 主颜色定义
 \definecolor{iqbblue}{RGB}{0, 51, 102}        % IQB 主题色 #003366
+\definecolor{iqbdarkblue}{RGB}{0, 26, 51}    % 深蓝色（标题强调）
+\definecolor{iqblightblue}{RGB}{74, 144, 226} % 浅蓝色（强调）
 \definecolor{iqbgray}{RGB}{85, 85, 85}        % 深灰色
 \definecolor{iqblightgray}{RGB}{240, 240, 240} % 浅灰色背景
+
+% 辅助颜色定义（用于强调和警告）
+\definecolor{iqborange}{RGB}{255, 107, 53}   % 橙色 #FF6B35
+\definecolor{iqbgreen}{RGB}{46, 204, 113}    % 绿色 #2ECC71
+\definecolor{iqbred}{RGB}{231, 76, 60}       % 红色 #E74C3C
 
 \setbeamercolor{normal text}{fg=black, bg=white}
 \setbeamercolor{frametitle}{fg=iqbblue}  % 完全透明背景，深蓝文字
@@ -147,7 +172,7 @@
   % 标题绝对定位到header banner空白区域（不占用正常内容空间）
   \begin{tikzpicture}[remember picture,overlay]
     \node[anchor=north west,inner sep=0pt] at ($(current page.north west) + (1.5cm,-0.35cm)$) {
-      \begin{minipage}{0.6\paperwidth}
+      \begin{minipage}{0.62\paperwidth}
         {\usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}\textbf{\insertframetitle}}
         \ifx\insertframesubtitle\@empty
         \else
@@ -203,7 +228,7 @@
     \leavevmode%
     \hbox{%
     \begin{beamercolorbox}[wd=.333333\paperwidth,ht=1.8ex,dp=0.6ex,left]{footline}%
-      \hspace{0.8em}\usebeamerfont{footline}\textcolor{iqbblue}{\textbf{IQB Lab}}
+      \hspace{0.8em}\usebeamerfont{footline}\textcolor{iqbblue}{\textbf{\iqbinstitute}}
     \end{beamercolorbox}%
     \begin{beamercolorbox}[wd=.333333\paperwidth,ht=1.8ex,dp=0.6ex,center]{footline}%
       \usebeamerfont{footline}\iqbsection
