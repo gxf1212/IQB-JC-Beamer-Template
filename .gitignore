@@ -6,6 +6,7 @@
 software-copyright/*.pdf    # 保留软著 PDF
 software-copyright/document.pdf
 software-copyright/source-code.pdf
+examples/membrane_images/*
 
 # ============================================================
 # LaTeX / XeLaTeX 编译临时文件
