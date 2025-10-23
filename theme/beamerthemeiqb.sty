@@ -1,14 +1,14 @@
 % ============================================================
 % IQB Journal Club Beamer Theme
 % Based on Metropolis Theme
-% Version: 1.0
-% Date: 2025-10-20
+% Version: 2.0
+% Date: 2025-10-23
 % ============================================================
 
 \NeedsTeXFormat{LaTeX2e}
 \mode<presentation>
 
-\ProvidesBeamerTheme{iqb}[2025/10/20 v1.0 IQB Journal Club Beamer Theme]
+\ProvidesPackage{beamerthemeiqb}[2025/10/23 v2.0 IQB Journal Club Beamer Theme]
 
 % ============================================================
 % Requirements
@@ -17,15 +17,36 @@
 \RequirePackage{graphicx}
 \RequirePackage{calc}
 \RequirePackage{etoolbox}
+\RequirePackage{setspace}  % 用于行间距控制
+\RequirePackage{fontawesome5}  % 学术图标和社交媒体图标
 
 % ============================================================
 % Theme Options
 % ============================================================
+% Header display option
 \newif\ifbeamer@iqb@showheader
 \beamer@iqb@showheadertrue
 
 \DeclareOptionBeamer{noheader}{\beamer@iqb@showheaderfalse}
+
+% Table of contents numbering option
+\newif\ifbeamer@iqb@tocnumbered
+\beamer@iqb@tocnumberedfalse  % 默认不编号
+
+\DeclareOptionBeamer{tocnumbered}{\beamer@iqb@tocnumberedtrue}
+
 \ProcessOptionsBeamer
+
+% Apply TOC numbering setting
+\AtBeginDocument{%
+  \ifbeamer@iqb@tocnumbered
+    \setbeamertemplate{section in toc}[sections numbered]
+    \setbeamertemplate{subsection in toc}[subsections numbered]
+  \else
+    \setbeamertemplate{section in toc}[default]
+    \setbeamertemplate{subsection in toc}[default]
+  \fi
+}
 
 % ============================================================
 % Configuration Commands (可定制选项)
@@ -96,13 +117,22 @@
 % Remove navigation symbols
 \setbeamertemplate{navigation symbols}{}
 
+% ============================================================
+% Line Spacing & Vertical Layout (行间距与垂直布局)
+% ============================================================
+% 根据学术Beamer最佳实践（Michaillat, 2025等），行间距应为字号的150%
+% 以增强可读性并减少视觉密度。这有助于在投影时保持清晰度。
+%
+% 注：原\linespread{0.92}已移除，改为使用setspace包的\setstretch命令
+% 可通过在.tex中添加\setstretch{1.0}来局部覆盖此设置（如需紧凑布局）
+\setstretch{1.5}  % 设置行间距为150%字号（学术最佳实践）
+
 % 减小itemize和列表间距，防止内容溢出
 \setlength{\leftmargini}{0.9em}  % 减小左缩进
 \setlength{\itemsep}{0.1ex}  % 减小项目间距
 \setlength{\parsep}{0pt}  % 减小段落间距
 \setlength{\parskip}{0pt}  % 减小段落跳过
-% 减小行间距
-\linespread{0.92}
+
 % 调整公式周围间距
 \AtBeginDocument{
   \setlength{\abovedisplayskip}{3pt}
@@ -182,7 +212,7 @@
       \end{minipage}
     };
   \end{tikzpicture}
-  \vskip0.1cm  % header后留小间距
+  \vskip0.05cm  % header后留较小间距，提高内容高度
 }
 
 % Header with IQB logo banner
@@ -234,7 +264,7 @@
       \usebeamerfont{footline}\iqbsection
     \end{beamercolorbox}%
     \begin{beamercolorbox}[wd=.333333\paperwidth,ht=1.8ex,dp=0.6ex,right]{footline}%
-      \usebeamerfont{footline}\insertpagenumber{} / \insertpresentationendpage\hspace{0.8em}
+      \usebeamerfont{footline}\insertframenumber{} / \inserttotalframenumber\hspace{0.8em}
     \end{beamercolorbox}}%
     \vskip2pt%  % 底部留小间距
   \fi

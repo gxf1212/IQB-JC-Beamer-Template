@@ -1,0 +1,749 @@
+% ============================================================
+% IQB Beamer Template - Features Showcase
+% 功能全展示模板 - 演示所有可用的布局命令和视觉增强功能
+%
+% 版本: 1.1 | 创建日期: 2025-10-23
+%
+% 用途：
+%   1. 作为模板功能的参考手册
+%   2. 测试新功能的兼容性
+%   3. 为用户展示所有可用的排版选项
+%
+% 编译命令:
+%   Linux/Mac:   xelatex -interaction=nonstopmode features-showcase.tex
+%   Windows WSL: /mnt/d/texlive/2022/bin/win32/xelatex.exe features-showcase.tex
+% ============================================================
+
+\documentclass[aspectratio=169,11pt]{beamer}
+
+% Load IQB theme
+\usepackage{../theme/beamerthemeiqb}
+\usepackage{../theme/iqb-layouts}
+
+% Set header image path
+\renewcommand{\iqbheaderimage}{../theme/images/header.png}
+
+% Additional packages
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, backgrounds}
+\usepackage{listings}  % 代码高亮支持
+
+% Bibliography support (用于演示footer引用系统)
+\usepackage[style=authoryear,maxbibnames=3,maxcitenames=2]{biblatex}
+\addbibresource{references.bib}
+
+% Chinese support (XeLaTeX required)
+\usepackage{xeCJK}
+\usepackage{ifplatform}
+\ifwindows
+  \setCJKmainfont{SimSun}
+\else
+  \ifmacosx
+    \setCJKmainfont{Songti SC}
+  \else
+    \setCJKmainfont{Noto Serif CJK SC}
+  \fi
+\fi
+
+% Metadata
+\title{IQB Beamer Template Features Showcase}
+\subtitle{功能展示与最佳实践}
+\author{Xufan Gao}
+\institute{Institute of Quantitative Biology}
+\date{\today}
+
+% Footer customization
+\setiqbinstitute{Xufan Gao}
+
+% Paper metadata (示例)
+\papertitle{IQB Beamer 模板功能展示}
+\paperengtitle{IQB Beamer Template Features Showcase}
+\papertitlechn{学术演示利器}
+\papertitlechnsub{灵活布局，清晰呈现}
+\paperdoi{10.5281/zenodo.0000000}
+
+% ============================================================
+\begin{document}
+
+% ============================================================
+% Cover Page
+% ============================================================
+\iqbcoverframe
+
+% ============================================================
+% Table of Contents
+% ============================================================
+\begin{frame}{目录}
+  \tableofcontents
+\end{frame}
+
+% ============================================================
+% Section 1: Layout System
+% ============================================================
+\iqbsectionframe{Layouts}{布局系统}
+
+\begin{frame}{布局概览：五种核心布局模式}
+  本模板提供灵活的布局系统，覆盖学术演示的所有场景：
+
+
+  \iqbitemize{
+    \item \textbf{双列布局}：50-50、1/3-2/3、2/3-1/3、自定义比例
+    \item \textbf{三列布局}：均分33-33-33，适合三方对比
+    \item \textbf{网格布局}：2×2、3×2，适合多图展示
+    \item \textbf{单列布局}：标准文字页、纯图页
+    \item \textbf{公式布局}：公式+解释，左右分栏
+  }
+
+
+  \iqbbluebox{设计理念}{%
+    所有布局命令遵循"简洁优先"原则，一行代码即可创建复杂布局
+  }
+\end{frame}
+
+\begin{frame}{双列布局 (50-50)：对比分析}
+  \iqblayouttwo{%
+    % 左列
+    \textbf{传统方法}
+    \iqbitemize{%
+      \item 实现简单
+      \item 计算快速
+      \item 精度较低
+      \item 适用范围窄
+    }
+
+
+    准确率: \emphdata{85\%}
+
+    运行时间: $\sim$10秒
+  }{%
+    % 右列
+    \textbf{我们的方法}
+    \iqbitemize{%
+      \item 创新算法
+      \item 全局优化
+      \item 高精度
+      \item 通用性强
+    }
+
+
+    准确率: \emphdata{95\%}
+
+    运行时间: $\sim$12秒
+  }
+
+
+  命令：\texttt{\\iqblayouttwo\{左列\}\{右列\}}
+\end{frame}
+
+\begin{frame}{双列布局 (1/3 + 2/3)：竖版图展示}
+  \iqblayoutonethird{%
+    % 左侧窄列（竖版图）
+    \centering
+
+    % 这里放竖版图
+    \colorbox{iqblightgray}{\parbox{0.8\textwidth}{
+      \centering
+      \vspace{2cm}
+      \textcolor{iqbgray}{竖版图\\height=0.6\textbackslash textheight}
+      \vspace{2cm}
+    }}
+  }{%
+    % 右侧宽列（文字说明）
+    \textbf{竖版高图的正确用法}：
+    \iqbitemize{%
+      \item 竖版图（高$>$宽$\times$1.2）必须采用横向column布局
+      \item 左侧1列放图（占31\%宽度）
+      \item 右侧2列放文字说明（占65\%宽度）
+    }
+
+
+    \textbf{禁止做法}：
+    \iqbitemize{%
+      \item 禁止：竖版图堆在文字下方（图会过小）
+      \item 禁止：强行缩小图片到横版比例（变形）
+    }
+
+
+    命令：\texttt{\\iqblayoutonethird\{图\}\{文字\}}
+  }
+\end{frame}
+
+\begin{frame}{三列布局：方法对比}
+  \iqbthreecolcompare
+    {Full-Path CV}{example-image-a}{
+      \item 成核+扩展统一
+      \item 尾部密度驱动
+      \item 无滞后、可逆
+      \item 平滑切换
+    }
+    {Rapid CV}{example-image-b}{
+      \item 无限大孔模拟
+      \item 脂质条带构型
+      \item 线张力快速评估
+      \item 效率提高6倍
+    }
+    {开源实现}{example-image-c}{
+      \item PLUMED库实现
+      \item GROMACS/LAMMPS
+      \item 全原子/粗粒化
+      \item 参数可定制
+    }
+\end{frame}
+
+\begin{frame}{2×2 网格布局：多条件对比}
+  \iqbgridtwobytwo{
+    % 左上
+    \centering
+    \textbf{(A) 条件1}
+
+    \colorbox{iqblightgray}{\parbox{0.9\textwidth}{
+      \centering
+      \vspace{1cm}
+      图片A
+      \vspace{1cm}
+    }}
+
+    参数: $\alpha = 10$
+  }{
+    % 右上
+    \centering
+    \textbf{(B) 条件2}
+
+    \colorbox{iqblightgray}{\parbox{0.9\textwidth}{
+      \centering
+      \vspace{1cm}
+      图片B
+      \vspace{1cm}
+    }}
+
+    参数: $\alpha = 20$
+  }{
+    % 左下
+    \centering
+    \textbf{(C) 条件3}
+
+    \colorbox{iqblightgray}{\parbox{0.9\textwidth}{
+      \centering
+      \vspace{0.3cm}
+      图片C
+      \vspace{0.3cm}
+    }}
+
+    参数: $\alpha = 30$
+  }{
+    % 右下
+    \centering
+    \textbf{(D) 条件4}
+
+    \colorbox{iqblightgray}{\parbox{0.9\textwidth}{
+      \centering
+      \vspace{0.3cm}
+      图片D
+      \vspace{0.3cm}
+    }}
+
+    参数: $\alpha = 40$
+  }
+\end{frame}
+
+% ============================================================
+% Section 2: Visual Enhancement
+% ============================================================
+\section{Visual Enhancement}
+\iqbsectionframe{Visual}{视觉增强}
+
+\begin{frame}{彩色 Punchline 框：引导注意力}
+  \iqbbluebox{核心观点（蓝色框）}{%
+    用于突出页面的主要发现、核心问题或关键方法。\\
+    这是最常用的punchline框，适用于80\%的情况。
+  }
+
+
+  \iqborangebox{挑战/警示（橙色框）}{%
+    用于标识需要注意的问题、方法的局限性或尚未解决的挑战。
+  }
+
+  \iqbgreenbox{成功验证（绿色框）}{%
+    用于展示验证通过、实验成功或正面结果的内容。
+  }
+
+  \iqbtinysep
+
+  \footnotesize 命令：\texttt{\\iqbbluebox}, \texttt{\\iqborangebox}, \texttt{\\iqbgreenbox}
+\end{frame}
+
+\begin{frame}{数据强调：突出关键数值}
+  \textbf{传统写法}（平淡）：
+
+  我们的方法线张力为 34.1 pN，相比传统方法的 49.2 pN 降低了 30.7\%。
+
+  \iqbbigsep
+
+  \textbf{使用emphdata（醒目）}：
+
+  我们的方法线张力为 \emphdata{34.1 pN}，相比传统方法的 \emphdata{49.2 pN} 降低了 \emphdata{30.7\%}。
+
+  \iqbbigsep
+
+  \textbf{关键发现高亮}：
+
+  \keyfinding{双CV方法预测高度一致，与实验定性吻合 (R²=0.95)}
+
+
+  命令：\texttt{\\emphdata\{数据\}}、\texttt{\\keyfinding\{结论\}}
+\end{frame}
+
+\begin{frame}{字号层级示例}
+  {\large \textbf{大号标题 (12pt, large)}}
+
+  用于frametitle或页面内的二级标题
+
+
+  {\normalsize \textbf{重要正文 (11pt, normalsize)}}
+
+  用于需要强调的段落或关键数据说明
+
+
+  {\footnotesize 标准正文 (9pt, footnotesize) - 默认}
+
+  这是模板的默认字号，适用于大部分内容、列表和图注
+
+
+  {\scriptsize 备注与参考 (8pt, scriptsize)}
+
+  用于参考文献、表格注释、技术细节等次要信息
+
+  \iqbbigsep
+
+  \iqborangebox{最佳实践}{%
+    避免在同一页混用超过3种字号，保持视觉一致性
+  }
+\end{frame}
+
+% ============================================================
+% Section 3: Advanced Features
+% ============================================================
+\section{Advanced Features}
+\iqbsectionframe{Advanced}{高级功能}
+
+\begin{frame}[fragile]{代码块展示：Python示例}
+  \begin{iqbcode}[Python]
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(0, 2*np.pi, 100)
+y = np.sin(x)
+plt.plot(x, y, 'b-', label='sin(x)')
+plt.legend()
+  \end{iqbcode}
+
+  \iqbtinysep
+
+  环境：\texttt{\\begin\{iqbcode\}[Python] ... \\end\{iqbcode\}}
+\end{frame}
+
+\begin{frame}{行内代码与代码框}
+  在正文中引用函数名：使用 \texttt{np.linspace()} 生成等间距数组。
+
+
+  命令：使用 \texttt{iqbbluebox} 或 \texttt{iqborangebox} 展示代码片段
+\end{frame}
+
+\begin{frame}{TikZ 流程图示例}
+  \centering
+  \begin{tikzpicture}[
+    node distance=0.8cm,
+    box/.style={rectangle, draw=iqbblue, fill=iqblightgray, thick, minimum height=1.3cm, minimum width=2.5cm, align=center, font=\small},
+    arrow/.style={->, >=stealth, thick, color=iqbblue}
+  ]
+    \node[box] (step1) {\textbf{数据采集}\\Data Collection};
+    \node[box, right=of step1] (step2) {\textbf{预处理}\\Preprocessing};
+    \node[box, right=of step2] (step3) {\textbf{模型训练}\\Model Training};
+    \node[box, right=of step3] (step4) {\textbf{结果验证}\\Validation};
+
+    \draw[arrow] (step1) -- (step2);
+    \draw[arrow] (step2) -- (step3);
+    \draw[arrow] (step3) -- (step4);
+  \end{tikzpicture}
+
+
+  使用 TikZ 可创建流程图、决策树、网络图等复杂图形
+\end{frame}
+
+\begin{frame}{渐进显示 (\textbackslash pause)}
+  第一句话总是显示在屏幕上
+
+  \pause
+
+  点击后第二句出现
+
+  \pause
+
+  再点击第三句出现
+
+  \pause
+
+  \iqbbluebox{适用场景}{%
+    逐步揭示推导过程、分步骤展示实验结果、制造悬念引导思考
+  }
+
+  \pause
+
+  注意：\textbackslash pause 会增加PDF页数，谨慎使用以避免演示过长
+\end{frame}
+
+% ============================================================
+% Section 4: Academic Essentials
+% ============================================================
+\section{Academic Modules}
+\iqbsectionframe{Academics}{学术常用模块}
+
+\iqbformulaframe{公式+解释布局（示例1）}{
+  \iqbformblock{成核阶段}{
+    $$\Delta G_{\text{nuc}}(\xi) = k \cdot \xi^2 + c$$
+  }{$\xi$ 是反应坐标，$k$ 和 $c$ 是拟合系数}
+
+  \iqbformblock{扩展阶段}{
+    $$\Delta G_{\text{exp}}(r) = 2\pi r \gamma$$
+  }{$r$ 是孔半径，$\gamma$ 是线张力}
+}{
+  % 右侧图片或补充说明
+  \centering
+  \colorbox{iqblightgray}{\parbox{0.9\textwidth}{
+    \centering
+    \vspace{0.8cm}
+    自由能曲线图\\
+    (这里放实际图片)
+    \vspace{0.8cm}
+  }}
+}
+
+\begin{frame}{公式+解释布局（示例2）}
+  \iqblayouttwo{%
+    \iqbformblock{总自由能}{
+      $$\Delta G_{\text{total}} = \Delta G_{\text{nuc}} + \Delta G_{\text{exp}}$$
+    }{平滑拼接两个阶段}
+
+    适用于展示复杂公式推导过程
+  }{%
+    \iqborangebox{布局特点}{%
+      左侧：公式+解释\\
+      右侧：图片或补充说明\\
+      命令：\texttt{iqbformulaframe}
+    }
+  }
+\end{frame}
+
+\begin{frame}{三线表：力场性能对比}
+  \iqbthreelinetable{不同力场的线张力预测（单位：pN）}{
+    力场 & POPC & POPG & POPS & POPE \\
+  }{
+    CHARMM36 & 34.1 & 29.3 & 31.8 & 38.2 \\
+    Martini 2.2p & 49.2 & 42.5 & 45.1 & 51.3 \\
+    prosECCo75 & 35.8 & 30.1 & 33.2 & 39.5 \\
+  }
+
+  \keyfinding{CHARMM36 和 prosECCo75 准确复现实验趋势}
+\end{frame}
+
+\begin{frame}{作者信息展示}
+  \setauthorfirstfield{计算生物物理、膜动力学、增强采样方法}
+
+  \iqbauthorstwophoto{example-image-a}{Robert Vácha}{%
+    CEITEC and NCBR, Faculty of Science\\
+    Masaryk University, Brno, Czech Republic
+  }{%
+    \href{https://vacha.ceitec.cz}{vacha.ceitec.cz}
+  }{%
+    膜蛋白相互作用、抗菌肽、多尺度分子模拟
+  }{example-image-b}{Timothée Rivel}{%
+    CTO at InSiliBio\\
+    Université de Franche-Comté, France
+  }{%
+    \href{https://www.insilibio.com}{www.insilibio.com}
+  }
+
+  \iqbtinysep
+
+  命令：\texttt{\\iqbauthorstwophoto\{...\}}（需9个参数）
+\end{frame}
+
+% ============================================================
+% Section 5: Best Practices
+% ============================================================
+\section{Best Practices}
+\iqbsectionframe{Guidelines}{最佳实践指南}
+
+\begin{frame}{内容密度控制：6-6-6 规则}
+  \iqbbluebox{6-6-6 规则（推荐但非强制）}{%
+    \begin{enumerate}
+      \item 每页最多 \textbf{6 个 bullet points}
+      \item 每个 bullet 最多 \textbf{6 个词}（中文约12字）
+      \item 连续文字页不超过 \textbf{6 页}
+    \end{enumerate}
+  }
+
+
+  \textbf{拆分建议}：
+  \iqbitemize{%
+    \item 内容超过10行 → 拆分为2页
+    \item 图片+文字溢出 → 调整图片高度或拆页
+    \item 编译警告 "Overfull \textbackslash vbox" → 必须减少内容
+  }
+
+
+  \iqborangebox{记住}{%
+    你是演讲，幻灯片是辅助。slides应该"无法自解释"。
+  }
+\end{frame}
+
+\begin{frame}{图片布局原则}
+  \textbf{竖版图（高$>$宽$\times$1.2）}：
+  \iqbitemize{%
+    \item 推荐：使用横向column布局（1列图 + 2列文字）
+    \item 推荐：图片高度 \texttt{height=0.5-0.65\\textbackslash textheight}
+    \item 禁止：将竖版图堆在文字下方（会过小）
+  }
+
+
+  \textbf{宽图（宽$\geq$高$\times$1.5）}：
+  \iqbitemize{%
+    \item 推荐：2:1布局（图占2，文字占1）
+    \item 推荐：或纯图页（图注在下方）
+  }
+
+
+  \textbf{每张图都必须有图注}：
+  \iqbitemize{%
+    \item 详细 figure caption，或
+    \item 整页文字都围绕图片解读
+  }
+\end{frame}
+
+\begin{frame}{色彩无障碍建议}
+  \iqborangebox{避免红绿配色}{%
+    8\%男性 + 0.5\%女性有色盲，红绿是最常见的色盲类型
+  }
+
+
+  \textbf{推荐做法}：
+  \iqbitemize{%
+    \item 使用蓝-黄配色代替红-绿
+    \item 图表中用不同\textbf{形状}辅助颜色（圆形、方形、三角形）
+    \item 添加texture patterns（斜线、点阵）
+    \item 确保文字与背景对比度 $\geq$ 4.5:1（WCAG标准）
+  }
+
+
+  \iqbgreenbox{本模板的色彩设计}{%
+    所有预设颜色（蓝、橙、绿）都是色盲友好的高对比度配色
+  }
+\end{frame}
+
+\begin{frame}{排版自查清单}
+  编译完成后，检查以下事项：
+
+  \iqbenumerate{
+    \item 无编译警告（Overfull \textbackslash hbox/\textbackslash vbox）
+    \item 行间距舒适（已自动设置为1.5倍）
+    \item 字号层级清晰（最多3种字号）
+    \item 每页都有图文结合
+    \item 图片足够大且清晰
+    \item Frametitle包含punchline（而非简单罗列）
+    \item Header占满全宽且保持比例
+    \item Footer三段式内容完整
+  }
+
+
+  使用 \texttt{pdf-layout-reviewer} agent 自动检查布局问题
+\end{frame}
+
+% ============================================================
+% Section 6: References & Citations (第6节：引用与学术标识)
+% ============================================================
+\iqbsectionframe{Citations}{引用与学术标识}
+
+\begin{frame}{Footer引用系统}
+  \textbf{使用场景}：在页面底部显示参考文献
+
+
+  \textbf{可用命令}：
+  \begin{itemize}\small
+    \item \texttt{\textbackslash iqbfootcite\{key\}} - 完整引用（需biblatex）
+    \item \texttt{\textbackslash iqbfooterurl[title]\{url\}} - URL链接
+    \item \texttt{\textbackslash iqbfooterdoi\{10.xxxx/xxx\}} - DOI链接
+    \item \texttt{\textbackslash iqbfootcitewithurl\{key\}\{url\}} - 引用+URL
+  \end{itemize}
+
+
+  \iqbbluebox{最佳实践}{%
+    引用文献优先用footcite；在线资源用footerurl；期刊文章同时显示DOI
+  }
+\end{frame}
+
+\begin{frame}{学术徽章与图标}
+  \textbf{可用图标命令}：
+
+  \iqblayoutthree{%
+    \textbf{学术身份}\\[0.2cm]
+    \texttt{\textbackslash iqborcid\{ID\}}\\
+    \texttt{\textbackslash iqbgscholar\{url\}}\\
+    \texttt{\textbackslash iqbresearchgate\{name\}}
+  }{%
+    \textbf{社交与代码}\\[0.2cm]
+    \texttt{\textbackslash iqbgithub\{user\}}\\
+    \texttt{\textbackslash iqbtwitter\{user\}}\\
+    \texttt{\textbackslash iqbwebsite\{url\}}
+  }{%
+    \textbf{联系方式}\\[0.2cm]
+    \texttt{\textbackslash iqbemail\{email\}}\\
+    \faLinkedin\ LinkedIn\\
+    \faWeixin\ WeChat
+  }
+
+
+  \textbf{所需包}：\texttt{fontawesome5}（IQB主题已加载）
+\end{frame}
+
+% ============================================================
+% Section 7: Real World Examples (真实案例)
+% ============================================================
+\iqbsectionframe{Real Cases}{真实案例展示}
+
+\begin{frame}{真实案例1：挑战页面 - 突出核心问题}
+  \footnotesize
+  \textbf{来源}：membrane-pore-jc-original.tex
+
+  \iqbtinysep
+
+  \textbf{设计要点}：
+  \iqbitemize{%
+    \item 双列布局：左侧文字分析，右侧核心挑战+关键图
+    \item 标题包含punchline：「统一描述成核与扩展两个截然不同的阶段」
+    \item 使用 \texttt{\\iqbblock} 突出核心问题
+    \item 图片高度0.5textheight，确保清晰可见
+  }
+
+  \iqbtinysep
+
+  \iqbbluebox{排版技巧}{%
+    问题分析页面：左侧列举具体问题（enumerated list），右侧用视觉元素（图+强调框）抓住注意力
+  }
+
+  \iqbtinysep
+
+  {\scriptsize 参考：第143行，\texttt{\\iqblayouttwo}双列布局 + \texttt{\\iqbblock}强调框}
+\end{frame}
+
+\begin{frame}{真实案例2：方法页面 - 公式与图解并重}
+  \footnotesize
+  \textbf{来源}：membrane-pore-jc-original.tex (Line 260)
+
+  \iqbtinysep
+
+  \textbf{设计要点}：
+  \iqbitemize{%
+    \item 自定义1/3布局：左侧公式+要点，右侧大图
+    \item Sigmoid函数用 \texttt{\$\$...\$\$} 独立成行
+    \item 关键参数用itemize清晰列出
+    \item 使用 \texttt{\\iqbfigcap} 添加详细图注
+  }
+
+  \iqbtinysep
+
+  \iqborangebox{数学公式排版}{%
+    方法页：左侧公式不要过多（2-3个核心公式），用bullet points解释参数物理意义
+  }
+
+  \iqbtinysep
+
+  {\scriptsize 参考：第260行，\texttt{\\iqblayoutcustom[0.3]}自定义比例布局}
+\end{frame}
+
+\begin{frame}{真实案例3：结果页面 - 表格+图片+结论}
+  \footnotesize
+  \textbf{来源}：membrane-pore-jc-original.tex (Line 395)
+
+  \iqbtinysep
+
+  \textbf{设计要点}：
+  \iqbitemize{%
+    \item 2/3-1/3反向布局：左侧表格+图注，右侧高图
+    \item 两个 \texttt{\\iqbthreelinetable} 展示不同阶段数据
+    \item 图片占0.75textheight（竖版图需要足够高）
+    \item 文字部分用 \texttt{\\iqbcaptiontext} 详细图注
+  }
+
+  \iqbtinysep
+
+  \iqbgreenbox{结果呈现最佳实践}{%
+    定量结果页：用表格精确展示数值，用图片展示趋势，用加粗文字强调核心发现
+  }
+
+  \iqbtinysep
+
+  {\scriptsize 参考：第395行，\texttt{\\iqblayouttwothirds}布局 + 多表格组合}
+\end{frame}
+
+% ============================================================
+% Thank You
+% ============================================================
+\iqbthankyouframe
+
+% ============================================================
+% Appendix: Backup Slides
+% ============================================================
+\iqbappendix
+
+\begin{frame}{附录：核心命令速查（1/2）}
+  \textbf{核心布局}：
+  \begin{itemize}\tiny
+    \item \texttt{\\iqblayouttwo}, \texttt{\\iqblayoutonethird}, \texttt{\\iqblayoutthree}
+  \end{itemize}
+
+  \textbf{视觉增强}：
+  \begin{itemize}\tiny
+    \item \texttt{\\emphdata}, \texttt{\\keyfinding}, \texttt{\\iqbbluebox}
+  \end{itemize}
+
+  \textbf{学术模块}：
+  \begin{itemize}\tiny
+    \item \texttt{\\iqbfig}, \texttt{\\iqbthreelinetable}, \texttt{\\iqbauthorstwophoto}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{附录：核心命令速查（2/2）}
+  \textbf{引用与学术标识}：
+  \begin{itemize}\tiny
+    \item \texttt{\\iqbfootcite}, \texttt{\\iqbfooterdoi}, \texttt{\\iqborcid}, \texttt{\\iqbemail}
+  \end{itemize}
+
+  详细命令列表请参考 \texttt{iqb-layouts.sty} 或 GitHub README
+\end{frame}
+
+\begin{frame}{附录：更多资源}
+  \textbf{模板文件}：
+  \begin{itemize}\small
+    \item \texttt{jc-template.tex} - 空白起始模板
+    \item \texttt{membrane-pore-jc-original.tex} - 真实案例
+    \item \texttt{features-showcase.tex} - 本展示文件
+  \end{itemize}
+
+
+  \textbf{文档}：
+  \begin{itemize}\small
+    \item \texttt{iqb-layouts.sty} - 命令详细注释
+    \item GitHub README - 快速入门指南
+  \end{itemize}
+
+
+  \iqbbluebox{贡献与反馈}{%
+    发现问题或有建议？请在项目仓库提交 Issue
+  }
+\end{frame}
+
+\end{document}

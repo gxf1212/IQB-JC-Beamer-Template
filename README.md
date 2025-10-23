@@ -1,18 +1,28 @@
 # IQB Journal Club Beamer Template
 
-**专业的学术文献汇报 LaTeX Beamer 模板，为 IQB Lab 定制**
+**专业学术演示 Beamer 模板 - 灵活布局 + 学术功能 + 完美中文支持**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Version](https://img.shields.io/badge/Version-2.0-blue)](https://github.com/IQB-Lab/IQB-JC-master)
 
 ---
 
-## ✨ 特性
+## ✨ 核心特性
 
-- 🎨 **IQB 品牌化设计** - 全宽 header 横幅 + 三段式 footer（IQB Lab | Section | 页码）
-- 📐 **丰富布局组件** - 双列、三列、2×2 网格、不规则布局等
-- 🌏 **中文完美支持** - 基于 XeLaTeX + CJK 字体
-- 📦 **开箱即用** - 完整示例 + 空白模板，5 分钟快速启动
-- 🔧 **高度可定制** - 主题颜色、footer section、布局参数均可调整
+### 设计与布局
+- 🎨 **品牌化设计** - 全宽header横幅 + 三段式footer（机构名 | Section | 页码）
+- 📐 **30+ 布局模块** - 双列/三列/网格/图文混排/时间线/对比表格等
+- 📏 **学术最佳实践** - 1.5x行间距，4级字号体系，无障碍配色
+
+### 学术功能 (v2.0 新增)
+- 📚 **Footer引用系统** - 支持biblatex完整引用、URL、DOI链接
+- 🎓 **学术徽章** - ORCID、Google Scholar、GitHub等图标命令
+- 👤 **增强作者信息** - 可选email字段，三作者紧凑布局
+
+### 技术支持
+- 🌏 **中文完美支持** - 基于XeLaTeX + xeCJK，跨平台字体自动适配
+- 📦 **开箱即用** - 完整示例 + 空白模板 + 26页功能展示PDF
+- 🔧 **高度可定制** - 主题选项（header显示、目录编号）、颜色、布局参数
 
 ---
 
@@ -29,9 +39,13 @@
 ```latex
 \documentclass[aspectratio=169,11pt]{beamer}
 
-% 加载 IQB 主题
-\usepackage{theme/beamerthemeiqb}
+% 加载IQB主题 (可选参数: noheader, tocnumbered)
+\usetheme{iqb}  % 或 \usetheme[tocnumbered]{iqb} 启用目录编号
 \usepackage{theme/iqb-layouts}
+
+% 如需使用footer引用系统，加载biblatex
+\usepackage[style=authoryear]{biblatex}
+\addbibresource{references.bib}
 
 \title{你的演示标题}
 \author{你的名字}
@@ -40,25 +54,29 @@
 
 \begin{document}
 
-% 封面页
-\begin{frame}[plain]
-  \titlepage
+% 封面页 (使用快捷命令)
+\iqbcoverframe
+
+% 目录页
+\begin{frame}{目录}
+  \tableofcontents  % 默认不编号，除非使用 tocnumbered 选项
 \end{frame}
 
 % 内容页
-\setsection{Background}  % 设置 footer 的 section 标识
-\begin{frame}{第一页}
+\iqbsectionframe{Background}{研究背景}  % 自动设置section并显示分隔页
+
+\begin{frame}{研究现状}
   \begin{itemize}
     \item 要点 1
     \item 要点 2
   \end{itemize}
+
+  % Footer引用示例
+  \iqbfootcite{smith2023}  % 显示完整文献引用
 \end{frame}
 
-% 致谢页
-\begin{frame}[plain]
-  \centering
-  {\Huge Thank You!}
-\end{frame}
+% 致谢页 (使用快捷命令)
+\iqbthankyouframe
 
 \end{document}
 ```
@@ -78,37 +96,39 @@ pdflatex your-presentation.tex
 ## 📂 目录结构
 
 ```
-IQB-JC-Beamer/
-├── README.md                  # 项目主文档（当前文件）
-├── LICENSE                    # MIT 许可证
+IQB-JC-master/
+├── README.md                     # 项目主文档（当前文件）
+├── LICENSE                       # MIT 许可证
+├── CHANGELOG.md                  # 版本更新日志
 │
-├── theme/                     # IQB 主题（核心，可复用）
-│   ├── beamerthemeiqb.sty     # 主题文件（颜色、字体、header/footer）
-│   ├── iqb-layouts.sty        # 布局工具包（双列、三列、网格等）
+├── theme/                        # IQB 主题核心（可复用）
+│   ├── beamerthemeiqb.sty        # 主题文件 (v2.0)
+│   │                             #   - 颜色/字体/header/footer
+│   │                             #   - 选项: noheader, tocnumbered
+│   ├── iqb-layouts.sty           # 布局工具包 (30+ 模块)
+│   │                             #   - 双列/三列/网格/图文混排
+│   │                             #   - Footer引用系统
+│   │                             #   - 学术徽章/作者信息
 │   └── images/
-│       └── header.png         # IQB logo 横幅图片
+│       └── header.png            # IQB logo 横幅 (1999×204px)
 │
-├── examples/                  # 示例演示稿
-│   ├── membrane-pore-jc.tex   # 真实 JC 示例（膜孔自由能，15+ 页）
-│   ├── test-minimal.tex       # 最小测试示例
-│   ├── images/                # 示例用图片
-│   │   └── membrane-pore-jc/  # 膜孔 JC 图片（19 张，含作者照片）
-│   └── output/                # 编译输出 PDF
+├── examples/                     # 示例演示稿
+│   ├── membrane-pore-jc.tex      # 真实JC案例 (膜孔自由能MD研究)
+│   ├── features-showcase.tex     # 功能全展示 (26页，含v2.0新功能)
+│   ├── references.bib            # 示例文献库 (9条记录)
+│   └── images/                   # 示例图片资源
 │
-├── template/                  # 空白模板（快速启动）
-│   └── jc-template.tex        # 预设好的模板骨架
+├── template/                     # 空白模板（快速启动）
+│   └── jc-template.tex           # 预设模板骨架
 │
-├── docs/                      # 使用文档
-│   ├── QUICK_START.md         # 5 分钟快速开始指南
-│   └── LAYOUT_GUIDE.md        # 布局完全指南
+├── software-copyright/           # 软件著作权申请材料
+│   └── 3-usage.tex               # 完整使用手册 (LaTeX源码)
 │
-├── archive/                   # 历史参考文件（保留）
-│   ├── analysis/              # JC 布局分析报告
-│   ├── legacy/                # 旧版本模板
-│   └── mtheme-master.zip      # Metropolis 主题源码（参考）
+├── archive/                      # 历史参考文件
+│   └── ...                       # 旧版本/分析报告/参考主题
 │
 └── tools/
-    └── extract_pdf_page.py    # PDF 调试工具（提取单页为图片）
+    └── extract_pdf_page.py       # PDF调试工具 (提取页面为PNG)
 ```
 
 ---
@@ -169,16 +189,79 @@ git submodule add https://github.com/your-org/IQB-JC-Beamer.git themes/iqb
 
 ## 🔧 核心功能速查
 
-### 1. 设置 Footer Section
+### 1. 主题选项
 
 ```latex
-\setsection{Methods}  % footer 中间显示 "Methods"
-\begin{frame}{方法部分}
-  % 内容
+% 基础用法
+\usetheme{iqb}
+
+% 禁用header横幅
+\usetheme[noheader]{iqb}
+
+% 启用目录编号
+\usetheme[tocnumbered]{iqb}
+
+% 组合选项
+\usetheme[noheader,tocnumbered]{iqb}
+```
+
+### 2. 快捷页面命令
+
+```latex
+% 封面页（自动使用\title, \author等信息）
+\iqbcoverframe
+
+% Section分隔页（自动设置footer section）
+\iqbsectionframe{Methods}{研究方法}
+
+% 致谢页
+\iqbthankyouframe
+```
+
+### 3. Footer引用系统 (v2.0 新增)
+
+```latex
+% 需先加载biblatex
+\usepackage[style=authoryear]{biblatex}
+\addbibresource{references.bib}
+
+\begin{frame}{研究背景}
+  % 内容...
+
+  % 在页面底部显示完整引用
+  \iqbfootcite{smith2023}
+
+  % 显示URL链接
+  \iqbfooterurl[来源]{https://example.com}
+
+  % 显示DOI（自动添加超链接）
+  \iqbfooterdoi{10.1038/nature12345}
 \end{frame}
 ```
 
-### 2. 常用布局命令
+### 4. 学术徽章/图标 (v2.0 新增)
+
+```latex
+% ORCID
+\iqborcid{0000-0001-2345-6789}
+
+% GitHub
+\iqbgithub{username}
+
+% Google Scholar
+\iqbgscholar{https://scholar.google.com/citations?user=XXXX}
+
+% Email
+\iqbemail{someone@example.com}
+
+% 通用网站
+\iqbwebsite{https://example.com}
+
+% 组合使用（如在作者信息中）
+\iqbauthoronephoto{photo.jpg}{张三}{清华大学}{\iqbwebsite{url}}{计算生物学}{\iqbemail{email}}
+```
+
+### 5. 常用布局命令
 
 ```latex
 % 双列布局（50-50）
@@ -187,20 +270,25 @@ git submodule add https://github.com/your-org/IQB-JC-Beamer.git themes/iqb
 % 三列布局
 \iqblayoutthree{左列}{中列}{右列}
 
-% 2×2 网格
-\iqbgridtwobytwo{图1}{图2}{图3}{图4}
+% 1/3 + 2/3 布局
+\iqblayoutonethird{窄列}{宽列}
 
-% 图片 + 文字
-\iqbimagetext[width=0.4\textwidth]{image.png}{右侧文字内容}
+% 2×2 网格（插入4张图片）
+\iqbgridtwobytwo{img1.png}{img2.png}{img3.png}{img4.png}
+
+% 图片 + 文字（文字在右）
+\iqbtextimage[width=0.4\textwidth]{文字内容}{image.png}
 ```
 
-### 3. 特殊页面（无 header/footer）
+### 6. 作者信息展示
 
 ```latex
-% 封面页或致谢页
-\begin{frame}[plain,noframenumbering]
-  \titlepage  % 或其他内容
-\end{frame}
+% 单作者（带照片，可选email）
+\iqbauthoronephoto{photo.jpg}{姓名}{单位}{网站}{研究方向}{email}
+%                                                      ^^^^^ 可传空{}
+
+% 三作者紧凑布局
+\iqbauthorsthreephoto{p1}{n1}{a1}{p2}{n2}{a2}{p3}{n3}{a3}
 ```
 
 ---
@@ -262,6 +350,16 @@ git submodule add https://github.com/your-org/IQB-JC-Beamer.git themes/iqb
 
 ---
 
-**生成时间**: 2025-10-20
-**模板版本**: 1.0
-**基于**: Metropolis Beamer Theme
+## 📋 版本历史
+
+| 版本 | 日期 | 主要更新 |
+|------|------|----------|
+| v2.0 | 2025-10-23 | Footer引用系统、学术徽章、增强作者信息、目录编号选项、学术最佳实践（1.5x行间距） |
+| v1.0 | 2025-10-20 | 初始版本：30+布局模块、中文支持、品牌化设计 |
+
+---
+
+**当前版本**: v2.0
+**最后更新**: 2025-10-23
+**基于**: Metropolis Beamer Theme (参考设计)
+**维护者**: IQB Lab
