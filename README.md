@@ -23,6 +23,7 @@
 - 🌏 **中文完美支持** - 基于XeLaTeX + xeCJK，跨平台字体自动适配
 - 📦 **开箱即用** - 完整示例 + 空白模板 + 26页功能展示PDF
 - 🔧 **高度可定制** - 主题选项（header显示、目录编号）、颜色、布局参数
+- 🛠️ **实用工具集** - PDF调试、PDF转PowerPoint、布局分析等辅助工具
 
 ---
 
@@ -128,7 +129,10 @@ IQB-JC-master/
 │   └── ...                       # 旧版本/分析报告/参考主题
 │
 └── tools/
-    └── extract_pdf_page.py       # PDF调试工具 (提取页面为PNG)
+    ├── README.md                 # 工具使用说明
+    ├── extract_pdf_page.py       # PDF调试工具 (提取页面为PNG)
+    ├── pdf_to_pptx.py            # PDF转PPTX基础工具
+    └── pdf_to_editable_pptx.py   # PDF转可编辑PPTX工具 (布局完美保留)
 ```
 
 ---
@@ -159,14 +163,12 @@ git submodule add https://github.com/your-org/IQB-JC-Beamer.git themes/iqb
 
 ## 📚 示例展示
 
-### 1. `examples/demo-basic.tex`
+### 1. `examples/features-showcase.tex`
 
-展示所有可用的布局组件：
-- 双列布局（50-50、1/3-2/3、2/3-1/3）
-- 三列布局（均分、不规则）
-- 2×2 和 3×2 网格
-- 图文混排
-- Block 环境
+完整功能演示（26 页）：
+- **主题**：IQB Beamer模板所有功能展示
+- **内容**：所有布局模块、Footer引用系统、学术徽章、增强作者信息
+- **特点**：每页功能详细演示，包含v2.0新增的所有学术功能
 
 ### 2. `examples/membrane-pore-jc.tex`
 
@@ -180,10 +182,14 @@ git submodule add https://github.com/your-org/IQB-JC-Beamer.git themes/iqb
 
 ## 📖 详细文档
 
-| 文档 | 内容 |
-|------|------|
-| [快速开始指南](docs/QUICK_START.md) | 安装要求、基础用法、编译命令、常见错误 |
-| [布局完全指南](docs/LAYOUT_GUIDE.md) | 所有布局命令详解、footer 设置、图片处理技巧 |
+所有详细使用说明请参考 **software-copyright/3-basic-usage.tex**，包含：
+- 完整安装要求和依赖说明
+- 所有布局命令详细用法和示例
+- Footer引用系统和学术徽章使用指南
+- 高级布局和自定义配置
+- 故障排除和最佳实践
+
+**快速查阅**：使用PDF阅读器打开 `software-copyright/3-basic-usage.pdf` 获取格式化的完整文档。
 
 ---
 
@@ -344,6 +350,28 @@ git submodule add https://github.com/your-org/IQB-JC-Beamer.git themes/iqb
 
 ---
 
+## 🛠️ 工具使用
+
+### PDF调试工具
+```bash
+# 提取PDF特定页面为PNG用于视觉分析
+python3 tools/extract_pdf_page.py examples/output/xxx.pdf 3
+```
+
+### PDF转PowerPoint工具
+```bash
+# 基础转换：PDF → PPTX (图片格式，只读)
+python3 tools/pdf_to_pptx.py input.pdf
+
+# 高级转换：PDF → 可编辑PPTX (布局完美保留)
+python3 tools/pdf_to_editable_pptx.py input.pdf output.pptx
+```
+
+### 工具详细说明
+所有工具的详细使用说明请参考 **tools/README.md** 或 **software-copyright/3-basic-usage.tex**。
+
+---
+
 ## 📧 联系
 
 如有问题或建议，欢迎联系 **IQB Lab**
@@ -354,12 +382,13 @@ git submodule add https://github.com/your-org/IQB-JC-Beamer.git themes/iqb
 
 | 版本 | 日期 | 主要更新 |
 |------|------|----------|
+| v2.1 | 2025-11-05 | 新增PDF转换工具：PDF调试、PDF转PPTX、PDF转可编辑PPTX；完善文档结构 |
 | v2.0 | 2025-10-23 | Footer引用系统、学术徽章、增强作者信息、目录编号选项、学术最佳实践（1.5x行间距） |
 | v1.0 | 2025-10-20 | 初始版本：30+布局模块、中文支持、品牌化设计 |
 
 ---
 
-**当前版本**: v2.0
-**最后更新**: 2025-10-23
+**当前版本**: v2.1
+**最后更新**: 2025-11-05
 **基于**: Metropolis Beamer Theme (参考设计)
 **维护者**: IQB Lab
