@@ -4,7 +4,7 @@
 % LaTeX Beamer 布局工具包 - 为 IQB 课题组文献分享演示提供
 % 统一的、可复用的布局命令和页面模块
 %
-% 版本: 1.0 | 最后更新: 2025-10-20
+% 版本: 1.1 | 最后更新: 2025-10-23
 %
 % 快速开始:
 %   \usepackage{iqb-layouts}
@@ -17,8 +17,39 @@
 %   5. 对比模块 - \iqbcomparetwo, \iqbcomparethree
 %   6. Frame 快捷命令 - \iqbframe, \iqbframetextfig 等
 %   7. 间距命令 - \iqbsep, \iqbbigsep, \iqbtinysep
+%   8. 视觉增强 - \emphdata, \keyfinding, 彩色punchline框
 %
 % 详细说明: 见本文件下方的每个模块注释
+% ============================================================
+%
+% ============================================================
+% 内容密度最佳实践 (Content Density Best Practices)
+% ============================================================
+% 根据学术Beamer最佳实践（2025），建议遵循以下原则以提高可读性：
+%
+% 【6-6-6 规则】（推荐但非强制）：
+%   - 每页最多 6 个 bullet points
+%   - 每个 bullet 最多 6 个词（中文约 12 字）
+%   - 连续文字页不超过 6 页
+%
+% 【内容拆分建议】：
+%   - 内容超过 10 行 → 考虑拆分为 2 页
+%   - 图片+文字溢出 → 调整图片高度或拆页
+%   - 编译警告 "Overfull \vbox" → 必须减少内容或拆页
+%
+% 【字号层级系统】（11pt 基准）：
+%   \large (12pt)       - frametitle（由主题自动应用）
+%   \normalsize (11pt)  - 重要正文、关键数据（手动使用）
+%   \footnotesize (9pt) - 标准正文、图注（默认）
+%   \scriptsize (8pt)   - 备注、参考文献、表格
+%
+% 【视觉层次建议】：
+%   - 使用 \emphdata{} 强调关键数据（大号蓝色加粗）
+%   - 使用 \keyfinding{} 高亮核心结论（黄色背景）
+%   - 使用彩色 punchline 框区分重要性：
+%     * \iqbbluebox - 核心观点（蓝色，最常用）
+%     * \iqborangebox - 警示/挑战（橙色）
+%     * \iqbgreenbox - 成功/验证（绿色）
 % ============================================================
 
 \ProvidesPackage{iqb-layouts}[2025/01/20 v1.0 IQB Journal Club Layout Utilities]
@@ -608,6 +639,147 @@
 }
 
 % ============================================================
+% Enhanced Author Information Commands (增强作者信息模块)
+% ============================================================
+% 提供更灵活的作者信息展示，支持可选参数
+
+% Single author WITH photo and optional email
+% Usage: \iqbauthoronephoto{photo}{name}{affiliation}{url}{research}{email}
+%        email可为空：\iqbauthoronephoto{photo}{name}{aff}{url}{research}{}
+% 示例:
+%   \iqbauthoronephoto{images/author.jpg}{张三}{清华大学}{https://example.com}{计算生物学}{zhangsan@tsinghua.edu.cn}
+\newcommand{\iqbauthoronephoto}[6]{%
+  \begin{block}{作者 (Author)}
+    \vspace{0.15cm}
+    \begin{minipage}{0.25\textwidth}
+      \centering
+      \includegraphics[width=0.9\textwidth,height=2.5cm,keepaspectratio]{#1}
+    \end{minipage}%
+    \hfill
+    \begin{minipage}{0.70\textwidth}
+      \textbf{\scriptsize #2}\\[0.1cm]
+      \scriptsize #3\\[0.1cm]
+      \textcolor{blue}{\scriptsize #4}\\[0.1cm]
+      \ifx&#6&%  % 如果email为空
+        % 不显示email
+      \else%
+        \textcolor{iqbgray}{\scriptsize \faEnvelope\ #6}\\[0.1cm]
+      \fi%
+      \textbf{\scriptsize 研究方向}：\\
+      \scriptsize #5
+    \end{minipage}
+    \vspace{0.1cm}
+  \end{block}
+}
+
+% Three authors WITH photos (compact layout)
+% Usage: \iqbauthorsthreephoto{p1}{n1}{a1}{p2}{n2}{a2}{p3}{n3}{a3}
+%        p=photo, n=name, a=affiliation
+% 示例: 用于多位并列作者的紧凑展示
+\newcommand{\iqbauthorsthreephoto}[9]{%
+  \iqblayoutthree{
+    \begin{block}{\small 作者 1}
+      \vspace{0.1cm}
+      \centering
+      \includegraphics[width=0.7\textwidth,height=2cm,keepaspectratio]{#1}\\[0.15cm]
+      \textbf{\scriptsize #2}\\[0.1cm]
+      \scriptsize #3
+      \vspace{0.1cm}
+    \end{block}
+  }{
+    \begin{block}{\small 作者 2}
+      \vspace{0.1cm}
+      \centering
+      \includegraphics[width=0.7\textwidth,height=2cm,keepaspectratio]{#4}\\[0.15cm]
+      \textbf{\scriptsize #5}\\[0.1cm]
+      \scriptsize #6
+      \vspace{0.1cm}
+    \end{block}
+  }{
+    \begin{block}{\small 作者 3}
+      \vspace{0.1cm}
+      \centering
+      \includegraphics[width=0.7\textwidth,height=2cm,keepaspectratio]{#7}\\[0.15cm]
+      \textbf{\scriptsize #8}\\[0.1cm]
+      \scriptsize #9
+      \vspace{0.1cm}
+    \end{block}
+  }
+}
+
+% Author information with optional fields helper
+% 使用说明：对于更复杂的可选参数场景，推荐使用以下模式：
+% 1. 定义临时变量存储可选信息
+% 2. 使用 \iqbauthoronephoto 或 \iqbauthorstwo 等基础命令
+% 3. 传递空参数给不需要的字段
+%
+% 示例:
+%   \newcommand{\myauthor}[5][]{%  % #1=optional email
+%     \iqbauthoronephoto{#2}{#3}{#4}{#5}{研究内容}{#1}
+%   }
+%
+% 未来版本计划：使用pgfkeys实现完全可选的参数系统
+
+% ============================================================
+% Academic Badges and Icons (学术徽章与图标)
+% ============================================================
+% 用于显示作者的学术身份标识和社交链接
+% 需要fontawesome5包支持（已在beamerthemeiqb.sty中加载）
+
+% ORCID图标+ID（带超链接）
+% Usage: \iqborcid{0000-0001-2345-6789}
+% 效果: 显示ORCID图标和可点击的ID链接
+\newcommand{\iqborcid}[1]{%
+  \href{https://orcid.org/#1}{\faOrcid\ \textcolor{black}{#1}}%
+}
+
+% GitHub用户名链接
+% Usage: \iqbgithub{username}
+% 效果: GitHub图标 + username（可点击）
+\newcommand{\iqbgithub}[1]{%
+  \href{https://github.com/#1}{\faGithub\ #1}%
+}
+
+% Google Scholar链接（仅显示图标，需完整URL）
+% Usage: \iqbgscholar{https://scholar.google.com/citations?user=XXXX}
+% 效果: Google Scholar图标（可点击）
+\newcommand{\iqbgscholar}[1]{%
+  \href{#1}{\faGraduationCap\ Google Scholar}%
+}
+
+% Email链接（带图标）
+% Usage: \iqbemail{someone@example.com}
+% 效果: 信封图标 + email（可点击发送邮件）
+\newcommand{\iqbemail}[1]{%
+  \href{mailto:#1}{\faEnvelope\ #1}%
+}
+
+% Twitter/X链接
+% Usage: \iqbtwitter{username}
+% 效果: Twitter图标 + @username（可点击）
+\newcommand{\iqbtwitter}[1]{%
+  \href{https://twitter.com/#1}{\faTwitter\ @#1}%
+}
+
+% ResearchGate链接
+% Usage: \iqbresearchgate{Full_Name}
+% 效果: ResearchGate图标 + 链接
+\newcommand{\iqbresearchgate}[1]{%
+  \href{https://www.researchgate.net/profile/#1}{\faResearchgate\ ResearchGate}%
+}
+
+% 通用网站链接（带图标）
+% Usage: \iqbwebsite{https://example.com}
+% 效果: 地球图标 + Website
+\newcommand{\iqbwebsite}[1]{%
+  \href{#1}{\faGlobe\ Website}%
+}
+
+% 组合使用示例（在作者信息中）
+% \iqbauthoronephoto{photo}{Name}{Affiliation}{\iqbwebsite{url}}{Research}{\iqbemail{email}}
+% 或在文本中：\iqborcid{0000-0001-2345-6789} \iqbgithub{username}
+
+% ============================================================
 % Formula + Explanation Module (公式+解释布局)
 % ============================================================
 
@@ -956,12 +1128,67 @@
   \end{block}
 }
 
-% 快速创建列表
-% Usage: \iqbitemize{\item 项1 \item 项2}
-\newcommand{\iqbitemize}[1]{%
-  \begin{itemize}
-    #1
-  \end{itemize}
+% 设置列表缩进（在 iqbitemize 前使用）
+% Usage: \setiqbitemizeindent{1cm}
+%        \begin{iqbitemize} ... \end{iqbitemize}
+\newcommand{\setiqbitemizeindent}[1]{%
+  \setlength{\leftmargini}{#1}%
+}
+
+% 快速创建列表（支持缩进，自动标签加粗蓝色）
+% Usage: \begin{iqbitemize} \item[标签] 内容 \end{iqbitemize}
+%        或: \item 不带标签的项
+%        标签会自动加粗并变为 IQB 蓝色
+\newenvironment{iqbitemize}[1][0em]{%
+  \leavevmode\hspace*{#1}%
+  \begin{minipage}[t]{\dimexpr\linewidth - #1\relax}%
+  \begin{itemize}%
+  % 重定义 \item 命令以处理可选参数（支持带标签和不带标签）
+  \let\iqbolditem\item%
+  % 使用 \@ifnextchar 检测是否有 [ 参数
+  \def\item{%
+    \@ifnextchar[%
+      {\iqb@item@withopt}%
+      {\iqbolditem}%
+  }%
+  % 处理有可选参数的情况
+  \def\iqb@item@withopt[##1]{%
+    \iqbolditem[\textcolor{iqbblue}{\textbf{##1}}]%
+  }%
+}{%
+  \end{itemize}%
+  \end{minipage}%
+}
+
+% 快速创建描述列表（适合较长标签，支持标签右对齐）
+% Usage: \begin{iqbdescription} ... \end{iqbdescription}
+%        \begin{iqbdescription}[2.5cm] ... \end{iqbdescription}  (向右移动2.5cm)
+%        标签会自动加粗并变为 IQB 蓝色，标签在1cm宽度内右对齐
+%        适合4-6字的较长标签；短标签或无标签列表请使用 iqbitemize
+\newenvironment{iqbdescription}[1][0em]{%
+  \leavevmode\hspace*{#1}%
+  \begin{minipage}[t]{\dimexpr\linewidth - #1\relax}%
+  \begin{itemize}%
+  % 设置标签宽度为1cm，实现右对齐显示长标签
+  \setlength{\labelwidth}{1cm}%
+  \setlength{\leftmargini}{1.2cm}%
+  % 重定义标签显示方式：右对齐，蓝色加粗
+  \def\makelabel##1{\makebox[1cm][r]{\textcolor{iqbblue}{\textbf{##1}}}}%
+  % 重定义 \item 命令以处理可选参数（支持带标签和不带标签）
+  \let\iqbolditem\item%
+  % 使用 \@ifnextchar 检测是否有 [ 参数
+  \def\item{%
+    \@ifnextchar[%
+      {\iqb@desc@item@withopt}%
+      {\iqbolditem}%
+  }%
+  % 处理有可选参数的情况
+  \def\iqb@desc@item@withopt[##1]{%
+    \iqbolditem[##1]%
+  }%
+}{%
+  \end{itemize}%
+  \end{minipage}%
 }
 
 % 快速创建编号列表
@@ -1456,6 +1683,421 @@
   }
 
   \smallskip
+}
+
+% ============================================================
+% P0: Visual Hierarchy Enhancement (视觉层次增强)
+% ============================================================
+% 这些命令帮助创建清晰的视觉层次，引导观众注意力到关键信息
+
+% ============================================================
+% 数据与结论强调 (Data & Findings Emphasis)
+% ============================================================
+
+% 强调关键数据（大号蓝色加粗）
+% Usage: 线张力：\emphdata{34.1 pN}
+% 效果：显著大于周围文字，IQB蓝色，粗体
+\newcommand{\emphdata}[1]{{\Large\color{iqbblue}\textbf{#1}}}
+
+% 高亮关键发现（黄色背景）
+% Usage: \keyfinding{双CV方法高度一致}
+% 效果：黄色背景高亮，黑色加粗文字
+\newcommand{\keyfinding}[1]{\colorbox{yellow!30}{\textbf{#1}}}
+
+% ============================================================
+% Punchline 居中强调 (Centered Emphasis Punchlines)
+% ============================================================
+% 灵活的居中punchline系统，支持多种样式和颜色
+% 适用场景：页面结论、核心发现、关键观点、学术申请陈述等
+
+% 基础命令：简单居中强调 (支持颜色参数，默认蓝色)
+% Usage: \iqbpunchline[orange]{计算驱动创新，精准设计引领药物研发新方向！}
+%    或: \iqbpunchline{核心观点}  (默认蓝色)
+% ============================================================
+% 内部辅助命令 - 实现不同的样式组合
+% ============================================================
+
+% 无框，居中对齐
+\newcommand{\@iqbpunchline@center}[2]{%
+  \begin{center}
+    {\large\color{#1}\textbf{#2}}
+  \end{center}
+}
+
+% 无框，左对齐（多行文本）
+\newcommand{\@iqbpunchline@left}[2]{%
+  \raggedright
+  {\large\color{#1}\textbf{#2}}
+  \par
+}
+
+% 有框，居中对齐
+\newcommand{\@iqbpunchline@boxcenter}[2]{%
+  \begin{center}
+    \colorbox{#1!15}{%
+      \parbox{0.85\textwidth}{%
+        \centering
+        {\large\color{#1}\textbf{#2}}
+      }%
+    }
+  \end{center}
+}
+
+% 有框，左对齐
+\newcommand{\@iqbpunchline@boxleft}[2]{%
+  \colorbox{#1!15}{%
+    \parbox{0.95\textwidth}{%
+      {\large\color{#1}\textbf{#2}}
+    }%
+  }
+  \par
+}
+
+% ============================================================
+% 基础命令：\iqbpunchline[color]{text}
+% ============================================================
+% 简单易用，默认居中
+% Usage: \iqbpunchline[iqbgreen]{文本}
+\newcommand{\iqbpunchline}[2][iqbblue]{%
+  \@iqbpunchline@center{#1}{#2}%
+}
+
+% ============================================================
+% 色彩快捷命令 - 支持可选参数 [选项]
+% ============================================================
+% 参数说明：
+%   默认（空）：无框，居中对齐
+%   [l]：无框，左对齐
+%   [b]：有框，居中对齐
+%   [bl]或[lb]：有框，左对齐
+
+% 蓝色punchline（核心观点、主要发现）
+% Usage: \iqbpunchlineblue{文本}
+%   或: \iqbpunchlineblue[l]{多行文本}
+%   或: \iqbpunchlineblue[b]{文本}
+%   或: \iqbpunchlineblue[bl]{多行+框}
+\newcommand{\iqbpunchlineblue}[2][]{%
+  \def\@punchopt{#1}%
+  \ifx\@punchopt\empty
+    \@iqbpunchline@center{iqbblue}{#2}%
+  \else
+    \expandafter\@iqbpunchlineparse@iqbblue\expandafter{\@punchopt}{#2}%
+  \fi
+}
+
+% 绿色punchline（成功验证、正面结果）
+% 参数用法同蓝色
+\newcommand{\iqbpunchlinegreen}[2][]{%
+  \def\@punchopt{#1}%
+  \ifx\@punchopt\empty
+    \@iqbpunchline@center{iqbgreen}{#2}%
+  \else
+    \expandafter\@iqbpunchlineparse@iqbgreen\expandafter{\@punchopt}{#2}%
+  \fi
+}
+
+% 橙色punchline（警示、挑战、需要关注）
+% 参数用法同蓝色
+\newcommand{\iqbpunchlineorange}[2][]{%
+  \def\@punchopt{#1}%
+  \ifx\@punchopt\empty
+    \@iqbpunchline@center{iqborange}{#2}%
+  \else
+    \expandafter\@iqbpunchlineparse@iqborange\expandafter{\@punchopt}{#2}%
+  \fi
+}
+
+% ============================================================
+% 参数解析辅助宏
+% ============================================================
+
+\newcommand{\@iqbpunchlineparse@iqbblue}[2]{%
+  % #1=选项, #2=文本
+  \ifx#1b%
+    \@iqbpunchline@boxcenter{iqbblue}{#2}%
+  \else\ifx#1l%
+    \@iqbpunchline@left{iqbblue}{#2}%
+  \else\ifx#1B%
+    \@iqbpunchline@boxcenter{iqbblue}{#2}%
+  \else\ifx#1L%
+    \@iqbpunchline@left{iqbblue}{#2}%
+  \else
+    % 处理 "bl" 或 "lb"
+    \def\@tempbl{bl}\def\@templb{lb}\def\@temptest{#1}%
+    \ifx\@temptest\@tempbl
+      \@iqbpunchline@boxleft{iqbblue}{#2}%
+    \else\ifx\@temptest\@templb
+      \@iqbpunchline@boxleft{iqbblue}{#2}%
+    \else
+      \@iqbpunchline@center{iqbblue}{#2}%
+    \fi\fi
+  \fi\fi\fi\fi
+}
+
+\newcommand{\@iqbpunchlineparse@iqbgreen}[2]{%
+  \ifx#1b%
+    \@iqbpunchline@boxcenter{iqbgreen}{#2}%
+  \else\ifx#1l%
+    \@iqbpunchline@left{iqbgreen}{#2}%
+  \else\ifx#1B%
+    \@iqbpunchline@boxcenter{iqbgreen}{#2}%
+  \else\ifx#1L%
+    \@iqbpunchline@left{iqbgreen}{#2}%
+  \else
+    \def\@tempbl{bl}\def\@templb{lb}\def\@temptest{#1}%
+    \ifx\@temptest\@tempbl
+      \@iqbpunchline@boxleft{iqbgreen}{#2}%
+    \else\ifx\@temptest\@templb
+      \@iqbpunchline@boxleft{iqbgreen}{#2}%
+    \else
+      \@iqbpunchline@center{iqbgreen}{#2}%
+    \fi\fi
+  \fi\fi\fi\fi
+}
+
+\newcommand{\@iqbpunchlineparse@iqborange}[2]{%
+  \ifx#1b%
+    \@iqbpunchline@boxcenter{iqborange}{#2}%
+  \else\ifx#1l%
+    \@iqbpunchline@left{iqborange}{#2}%
+  \else\ifx#1B%
+    \@iqbpunchline@boxcenter{iqborange}{#2}%
+  \else\ifx#1L%
+    \@iqbpunchline@left{iqborange}{#2}%
+  \else
+    \def\@tempbl{bl}\def\@templb{lb}\def\@temptest{#1}%
+    \ifx\@temptest\@tempbl
+      \@iqbpunchline@boxleft{iqborange}{#2}%
+    \else\ifx\@temptest\@templb
+      \@iqbpunchline@boxleft{iqborange}{#2}%
+    \else
+      \@iqbpunchline@center{iqborange}{#2}%
+    \fi\fi
+  \fi\fi\fi\fi
+}
+
+% ============================================================
+% 向后兼容的别名命令
+% ============================================================
+\newcommand{\iqbpunchlineboxgreen}[1]{\iqbpunchlinegreen[b]{#1}}
+\newcommand{\iqbpunchlineboxorange}[1]{\iqbpunchlineorange[b]{#1}}
+\newcommand{\iqbpunchlinebox}[2][iqbblue]{\iqbpunchline[#1]{#2}}
+
+% ============================================================
+% 页面标题命令 (Page Title Commands)
+% ============================================================
+% 用于plain页面的大标题（如"个人承诺"、"感谢"、"致谢"等）
+% Usage: \iqbpagetitle{标题文字}
+% 效果：Large字号 (14.4pt) + IQB蓝色 + 加粗
+\newcommand{\iqbpagetitle}[1]{%
+  {\Large\textcolor{iqbblue}{\textbf{#1}}}%
+}
+
+% 页面内段落标题命令 (Section Title Command - NEW)
+% ============================================================
+% 用于页面内的段落小标题（如"FEbuilder - 高通量自由能计算体系搭建工具"）
+% 相比frametitle (12pt) 较小，比正文 (9pt) 较大，用于分组说明
+% Usage: \iqbsectiontitle{标题文字}          或  \iqbsectiontitle[颜色]{标题文字}
+% 效果：normalsize字号 (11pt) + IQB蓝色（默认） + 加粗，支持可选颜色参数
+\newcommand{\iqbsectiontitle}[2][iqbblue]{%
+  {\normalsize\textcolor{#1}{\textbf{#2}}}\vspace{-0.5em}%
+}
+
+% ============================================================
+% 标签列表环境 (Labeled Itemize Environment)
+% ============================================================
+% 自动为\item[标签]中的标签添加加粗和颜色（默认iqbblue）
+%
+% Usage:
+%   \begin{iqbitemize}
+%     \item[标签1] 内容...
+%     \item[标签2] 内容...
+%   \end{iqbitemize}
+%
+% 可选参数：indent=long 用于长标签缩进
+%   \begin{iqbitemize}[indent=long]
+%     \item[长标签] 内容...
+%   \end{iqbitemize}
+
+% ============================================================
+% Punchline 彩色框 (Colored Highlight Boxes)
+% ============================================================
+% 用于突出页面的核心观点、警示或成功验证
+% 建议：每页最多使用1个punchline框
+
+% 蓝色核心观点框（最常用）
+% Usage: \iqbbluebox{标题}{内容}
+% 适用：核心问题、主要发现、关键方法
+\newcommand{\iqbbluebox}[2]{%
+  \setbeamercolor{block title}{fg=white,bg=iqbblue}%
+  \setbeamercolor{block body}{fg=black,bg=iqblightgray!30}%
+  \begin{block}{\textbf{#1}}
+    #2
+  \end{block}%
+  \setbeamercolor{block title}{fg=white,bg=iqbblue}%  % 保持默认
+  \setbeamercolor{block body}{fg=black,bg=iqblightgray!30}%
+}
+
+% 橙色警示框
+% Usage: \iqborangebox{标题}{内容}
+% 适用：挑战、限制、需注意的问题
+\newcommand{\iqborangebox}[2]{%
+  \setbeamercolor{block title}{fg=white,bg=iqborange}%
+  \setbeamercolor{block body}{fg=black,bg=iqborange!10}%
+  \begin{block}{\textbf{#1}}
+    #2
+  \end{block}%
+  \setbeamercolor{block title}{fg=white,bg=iqbblue}%  % 恢复默认
+  \setbeamercolor{block body}{fg=black,bg=iqblightgray!30}%
+}
+
+% 绿色成功框
+% Usage: \iqbgreenbox{标题}{内容}
+% 适用：验证通过、成功案例、正面结果
+\newcommand{\iqbgreenbox}[2]{%
+  \setbeamercolor{block title}{fg=white,bg=iqbgreen}%
+  \setbeamercolor{block body}{fg=black,bg=iqbgreen!10}%
+  \begin{block}{\textbf{#1}}
+    #2
+  \end{block}%
+  \setbeamercolor{block title}{fg=white,bg=iqbblue}%  % 恢复默认
+  \setbeamercolor{block body}{fg=black,bg=iqblightgray!30}%
+}
+
+% 红色警告框（谨慎使用）
+% Usage: \iqbredbox{标题}{内容}
+% 适用：错误、严重问题、需要立即关注的内容
+% 注意：红色有强烈视觉冲击，避免过度使用
+\newcommand{\iqbredbox}[2]{%
+  \setbeamercolor{block title}{fg=white,bg=iqbred}%
+  \setbeamercolor{block body}{fg=black,bg=iqbred!10}%
+  \begin{block}{\textbf{#1}}
+    #2
+  \end{block}%
+  \setbeamercolor{block title}{fg=white,bg=iqbblue}%  % 恢复默认
+  \setbeamercolor{block body}{fg=black,bg=iqblightgray!30}%
+}
+
+% ============================================================
+% Code Display Support (代码展示支持)
+% ============================================================
+% 需要用户在.tex中添加 \usepackage{listings} 包
+
+% 行内代码样式
+% Usage: 使用\iqbinlinecode{plt.show()}进行绘图
+% 效果：等宽字体，浅灰背景
+\DeclareRobustCommand{\iqbinlinecode}[1]{\texttt{\colorbox{gray!15}{#1}}}
+
+% 代码块环境（需要listings包）
+% Usage:
+%   \begin{iqbcode}[Python]
+%   import numpy as np
+%   x = np.linspace(0, 10, 100)
+%   \end{iqbcode}
+% 注意：这个环境需要用户在.tex中先加载listings包
+\RequirePackage{listings}
+
+\lstnewenvironment{iqbcode}[1][]{%
+  \lstset{
+    basicstyle=\ttfamily\scriptsize,
+    frame=single,
+    backgroundcolor=\color{gray!10},
+    keywordstyle=\color{iqbblue}\bfseries,
+    commentstyle=\color{iqbgray}\itshape,
+    stringstyle=\color{iqborange},
+    numbers=left,
+    numberstyle=\tiny\color{iqbgray},
+    breaklines=true,
+    language=#1
+  }
+}{}
+
+% 简化版代码块命令（不需要environment）
+% Usage: \iqbcodebox{Python}{import numpy as np\\x = [1, 2, 3]}
+% 注意：换行需要使用 \\ 或实际换行
+\newcommand{\iqbcodebox}[2]{%
+  \begin{block}{代码示例：#1}
+    \ttfamily\scriptsize
+    \begin{flushleft}
+    \colorbox{gray!10}{\parbox{0.95\textwidth}{%
+      #2
+    }}
+    \end{flushleft}
+  \end{block}
+}
+
+% ============================================================
+% Appendix Mode (附录模式)
+% ============================================================
+% 用于在主演示后添加备份slides，不计入总页数
+
+% 开启附录模式（之后的slides不计页码）
+% Usage: \iqbappendix
+% 效果：后续slides显示为"backup slides"，页码独立
+\newcommand{\iqbappendix}{%
+  \appendix
+  \setsection{Backup Slides}
+  % 可选：修改footer显示"附录"而非页码
+  % \setbeamertemplate{footline}[frame number]
+}
+
+% ============================================================
+% Footer Citation System (页脚引用系统)
+% ============================================================
+% 用于在页面footer显示参考文献、URL或DOI链接
+% 适用场景：引用原文献、显示数据来源、标注图片出处
+
+% Footer完整引用（需要biblatex或natbib包）
+% Usage:
+%   \iqbfootcite{bibtex-key}  % 在frame末尾调用
+% 示例:
+%   \begin{frame}{研究背景}
+%     内容...
+%     \iqbfootcite{smith2023}
+%   \end{frame}
+% 注意：需要在主文档中加载 \usepackage[style=authoryear]{biblatex} 并添加 \addbibresource{references.bib}
+\newcommand{\iqbfootcite}[1]{%
+  \footnote{\tiny\fullcite{#1}}%
+}
+
+% Footer URL显示（带可选标题）
+% Usage:
+%   \iqbfooterurl{https://example.com}  % 仅显示URL
+%   \iqbfooterurl[来源]{https://example.com}  % 带标题显示
+% 示例:
+%   \iqbfooterurl[Official Documentation]{https://docs.python.org}
+\newcommand{\iqbfooterurl}[2][]{%
+  \ifx&#1&%
+    \footnote{\tiny\url{#2}}%
+  \else%
+    \footnote{\tiny#1: \url{#2}}%
+  \fi%
+}
+
+% Footer DOI链接（自动添加可点击超链接）
+% Usage:
+%   \iqbfooterdoi{10.1038/nature12345}
+% 效果: DOI: 10.1038/nature12345 (可点击跳转至doi.org)
+% 注意：需要 hyperref 包支持（IQB主题已包含）
+\newcommand{\iqbfooterdoi}[1]{%
+  \footnote{\tiny DOI: \href{https://doi.org/#1}{\nolinkurl{#1}}}%
+}
+
+% 组合引用命令（同时显示引用+URL）
+% Usage:
+%   \iqbfootcitewithurl{bibtex-key}{https://arxiv.org/abs/2301.12345}
+% 效果: 完整引用 + 在线链接
+\newcommand{\iqbfootcitewithurl}[2]{%
+  \footnote{\tiny\fullcite{#1} \\ \url{#2}}%
+}
+
+% 图片局部居中命令（不影响后续文字）
+% 使用 \begingroup...\endgroup 局限 \centering 作用域
+\newcommand{\iqbimgcenter}[2][width=0.5\textwidth]{%
+  \begingroup%
+  \centering%
+  \includegraphics[#1]{#2}\par%
+  \endgroup%
 }
 
 \endinput

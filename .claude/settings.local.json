@@ -16,7 +16,11 @@
       "Read(//mnt/e/graduate_study/research/NanoMedicine/Polymer_HA_OP_SYQ/figures/report-25.10.15/**)",
       "Bash(/mnt/d/texlive/2022/bin/win32/xelatex.exe:*)",
       "Bash(for:*)",
-      "Bash(done)"
+      "Bash(done)",
+      "Bash(/mnt/d/texlive/2022/bin/win32/biber.exe:*)",
+      "Bash(pdfinfo:*)",
+      "Bash(rm examples/features-showcase.vrb)",
+      "Bash(do:*)"
     ],
     "deny": [],
     "ask": []

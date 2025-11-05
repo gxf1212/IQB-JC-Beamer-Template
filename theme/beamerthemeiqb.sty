@@ -1,14 +1,14 @@
 % ============================================================
 % IQB Journal Club Beamer Theme
 % Based on Metropolis Theme
-% Version: 1.0
-% Date: 2025-10-20
+% Version: 2.0
+% Date: 2025-10-23
 % ============================================================
 
 \NeedsTeXFormat{LaTeX2e}
 \mode<presentation>
 
-\ProvidesBeamerTheme{iqb}[2025/10/20 v1.0 IQB Journal Club Beamer Theme]
+\ProvidesPackage{beamerthemeiqb}[2025/10/23 v2.0 IQB Journal Club Beamer Theme]
 
 % ============================================================
 % Requirements
@@ -17,15 +17,81 @@
 \RequirePackage{graphicx}
 \RequirePackage{calc}
 \RequirePackage{etoolbox}
+\RequirePackage{setspace}  % 用于行间距控制
+\RequirePackage{fontawesome5}  % 学术图标和社交媒体图标
+\RequirePackage{xeCJK}       % 中文支持（XeLaTeX required）
+\RequirePackage{ifplatform}  % 平台检测，用于跨平台字体配置
+\RequirePackage{ifthen}      % 条件判断，用于日期格式切换
 
 % ============================================================
 % Theme Options
 % ============================================================
+% Header display option
 \newif\ifbeamer@iqb@showheader
 \beamer@iqb@showheadertrue
 
 \DeclareOptionBeamer{noheader}{\beamer@iqb@showheaderfalse}
+
+% Table of contents numbering option
+\newif\ifbeamer@iqb@tocnumbered
+\beamer@iqb@tocnumberedfalse  % 默认不编号
+
+\DeclareOptionBeamer{tocnumbered}{\beamer@iqb@tocnumberedtrue}
+
 \ProcessOptionsBeamer
+
+% ============================================================
+% Custom Metadata Fields
+% ============================================================
+\newcommand{\advisor}[1]{\gdef\@advisor{#1}}
+\newcommand{\stuid}[1]{\gdef\@stuid{#1}}
+\newcommand{\major}[1]{\gdef\@major{#1}}
+\newcommand{\college}[1]{\gdef\@college{#1}}
+\newcommand{\grade}[1]{\gdef\@grade{#1}}
+
+\gdef\@advisor{}
+\gdef\@stuid{}
+\gdef\@major{}
+\gdef\@college{}
+\gdef\@grade{}
+
+% Date format command (Chinese/English)
+\newcommand{\dateformat}[1]{%
+  \ifthenelse{\equal{#1}{zh}}{%
+    \renewcommand{\today}{\the\year 年 \the\month 月 \the\day 日}%
+  }{%
+    \renewcommand{\today}{\the\day\ \ifcase\the\month\or January\or February\or March\or April\or May\or June\or July\or August\or September\or October\or November\or December\fi\ \the\year}%
+  }%
+}
+
+% ============================================================
+% Cross-platform CJK Font Configuration (跨平台中文字体配置)
+% ============================================================
+% 根据操作系统自动选择最优字体，用户无需手动配置
+% 同时配置粗体字体，使 \textbf{中文} 能正确显示加粗效果
+\ifwindows
+  % Windows: 宋体正文 + 黑体加粗
+  \setCJKmainfont[BoldFont=SimHei]{SimSun}
+\else
+  \ifmacosx
+    % macOS: 宋体-简体正文 + 黑体加粗
+    \setCJKmainfont[BoldFont=STHeiti]{Songti SC}
+  \else
+    % Linux: Noto Serif CJK SC正文 + Noto Sans CJK SC加粗
+    \setCJKmainfont[BoldFont=Noto Sans CJK SC]{Noto Serif CJK SC}
+  \fi
+\fi
+
+% Apply TOC numbering setting
+\AtBeginDocument{%
+  \ifbeamer@iqb@tocnumbered
+    \setbeamertemplate{section in toc}[sections numbered]
+    \setbeamertemplate{subsection in toc}[subsections numbered]
+  \else
+    \setbeamertemplate{section in toc}[default]
+    \setbeamertemplate{subsection in toc}[default]
+  \fi
+}
 
 % ============================================================
 % Configuration Commands (可定制选项)
@@ -67,18 +133,25 @@
 \setbeamercolor{block body}{fg=black, bg=iqblightgray}
 
 % ============================================================
-% Font Theme (统一字号体系: 标题12pt, 正文8pt基准)
+% Font Theme (统一字号体系: 正文9pt, 标题12pt, 大标题14.4pt)
 % ============================================================
+% 字体层级（从大到小）：
+%   Level 3: \Large (14.4pt)       - 封面标题、\iqbpagetitle
+%   Level 4: \large (12pt)         - frametitle、punchline系列
+%   Level 5: \normalsize (11pt)    - \iqbsectiontitle（页面内段落标题）
+%   Level 7: \footnotesize (9pt)   - 正文、itemize（新默认）
+%   Level 8: \scriptsize (8pt)     - 图注、表格、备注
+%   Level 9: \tiny (5pt)           - 页脚
 \setbeamerfont{title}{size=\Large, series=\bfseries}  % 封面标题 (14.4pt)
-\setbeamerfont{subtitle}{size=\scriptsize}  % 封面副标题 (8pt)
-\setbeamerfont{author}{size=\scriptsize}  % 封面作者 (8pt)
-\setbeamerfont{date}{size=\scriptsize}  % 封面日期 (8pt)
+\setbeamerfont{subtitle}{size=\normalsize}  % 封面副标题 (11pt)
+\setbeamerfont{author}{size=\normalsize}  % 封面作者 (11pt)
+\setbeamerfont{date}{size=\normalsize}  % 封面日期 (11pt)
 \setbeamerfont{frametitle}{size=\large, series=\bfseries}  % 页面标题 (12pt)
 \setbeamerfont{footline}{size=\tiny}  % footer (5pt)
 \setbeamerfont{block title}{size=\scriptsize, series=\bfseries}  % block标题 (8pt粗体)
-\setbeamerfont{normal text}{size=\scriptsize}  % 正文基准 (8pt)
-\setbeamerfont{itemize/enumerate body}{size=\scriptsize}  % 列表项 (8pt)
-\setbeamerfont{itemize/enumerate subbody}{size=\scriptsize}  % 子列表项也保持 (8pt)
+\setbeamerfont{normal text}{size=\footnotesize}  % 正文基准 (9pt - 改为 footnotesize)
+\setbeamerfont{itemize/enumerate body}{size=\footnotesize}  % 列表项 (9pt - 改为 footnotesize)
+\setbeamerfont{itemize/enumerate subbody}{size=\footnotesize}  % 子列表项也保持 (9pt)
 \setbeamerfont{caption}{size=\scriptsize}  % 图注统一 (8pt)
 
 % 注：frame字体控制策略 - 使用AtBeginEnvironment
@@ -96,13 +169,24 @@
 % Remove navigation symbols
 \setbeamertemplate{navigation symbols}{}
 
+% ============================================================
+% Line Spacing & Vertical Layout (行间距与垂直布局)
+% ============================================================
+% 使用setspace包的\setstretch命令进行行间距控制
+% 默认设置为1.2倍行间距（120%）以实现紧凑、专业的布局
+% 用户可通过在.tex中添加\setstretch{值}来自由调整：
+%   \setstretch{1.0}  - 单倍行距
+%   \setstretch{1.2}  - 1.2倍行距（默认，推荐）
+%   \setstretch{1.5}  - 1.5倍行距（宽松）
+%   \setstretch{2.0}  - 双倍行距
+\setstretch{1.2}  % 设置行间距为120%字号（紧凑布局，推荐用于演示PPT）
+
 % 减小itemize和列表间距，防止内容溢出
 \setlength{\leftmargini}{0.9em}  % 减小左缩进
 \setlength{\itemsep}{0.1ex}  % 减小项目间距
 \setlength{\parsep}{0pt}  % 减小段落间距
 \setlength{\parskip}{0pt}  % 减小段落跳过
-% 减小行间距
-\linespread{0.92}
+
 % 调整公式周围间距
 \AtBeginDocument{
   \setlength{\abovedisplayskip}{3pt}
@@ -131,16 +215,43 @@
         {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
       \fi%
     \end{beamercolorbox}%
-    \vskip1em\par
-    \begin{beamercolorbox}[sep=8pt,center,#1]{author}
+    \vskip0.8em\par
+    \begin{beamercolorbox}[sep=4pt,center,#1]{author}
       \usebeamerfont{author}\insertauthor
     \end{beamercolorbox}
-    \begin{beamercolorbox}[sep=8pt,center,#1]{institute}
+    \vskip0.2em
+    \begin{beamercolorbox}[sep=4pt,center,#1]{institute}
       \usebeamerfont{author}\insertinstitute
     \end{beamercolorbox}
-    \begin{beamercolorbox}[sep=8pt,center,#1]{date}
+    % 显示自定义字段（学号、专业、导师等）
+    \ifx\@stuid\empty\else
+      \vskip0.2em
+      \begin{beamercolorbox}[sep=2pt,center,#1]{author}
+        \usebeamerfont{author}学号：\@stuid
+      \end{beamercolorbox}
+    \fi
+    \ifx\@major\empty\else
+      \vskip0.2em
+      \begin{beamercolorbox}[sep=2pt,center,#1]{author}
+        \usebeamerfont{author}专业：\@major
+      \end{beamercolorbox}
+    \fi
+    \ifx\@grade\empty\else
+      \vskip0.2em
+      \begin{beamercolorbox}[sep=2pt,center,#1]{author}
+        \usebeamerfont{author}年级：\@grade
+      \end{beamercolorbox}
+    \fi
+    \ifx\@advisor\empty\else
+      \vskip0.2em
+      \begin{beamercolorbox}[sep=2pt,center,#1]{author}
+        \usebeamerfont{author}导师：\@advisor
+      \end{beamercolorbox}
+    \fi
+    \vskip0.5em
+    \begin{beamercolorbox}[sep=4pt,center,#1]{date}
       \usebeamerfont{date}\insertdate
-    \end{beamercolorbox}\vskip0.5em
+    \end{beamercolorbox}
   \endgroup
   \vfill
 }
@@ -182,7 +293,7 @@
       \end{minipage}
     };
   \end{tikzpicture}
-  \vskip0.1cm  % header后留小间距
+  \vskip0.05cm  % header后留较小间距，提高内容高度
 }
 
 % Header with IQB logo banner
@@ -234,7 +345,7 @@
       \usebeamerfont{footline}\iqbsection
     \end{beamercolorbox}%
     \begin{beamercolorbox}[wd=.333333\paperwidth,ht=1.8ex,dp=0.6ex,right]{footline}%
-      \usebeamerfont{footline}\insertpagenumber{} / \insertpresentationendpage\hspace{0.8em}
+      \usebeamerfont{footline}\insertframenumber{} / \inserttotalframenumber\hspace{0.8em}
     \end{beamercolorbox}}%
     \vskip2pt%  % 底部留小间距
   \fi
@@ -272,6 +383,32 @@
       #3
     \end{column}
   \end{columns}
+}
+
+% ============================================================
+% Font Size Mode Switching
+% ============================================================
+% 提供三种模式：normal（默认）、small（紧凑）
+% 使用 \iqbfontsizemode{normal|small} 在导言区或frame间进行切换
+
+\newcommand{\iqbfontsizemode}[1]{%
+  \ifthenelse{\equal{#1}{small}}{%
+    % small 模式：所有字体缩小1级
+    \setbeamerfont{normal text}{size=\scriptsize}              % 9pt → 8pt
+    \setbeamerfont{itemize/enumerate body}{size=\scriptsize}  % 9pt → 8pt
+    \setbeamerfont{itemize/enumerate subbody}{size=\tiny}     % 9pt → 7pt
+    \setbeamerfont{frametitle}{size=\normalsize, series=\bfseries}  % 12pt → 11pt
+    \setbeamerfont{block title}{size=\tiny}                   % 8pt → 7pt
+    \setbeamerfont{caption}{size=\tiny}                       % 8pt → 7pt
+  }{%
+    % normal 模式（默认）：恢复初始设置
+    \setbeamerfont{normal text}{size=\footnotesize}           % 9pt
+    \setbeamerfont{itemize/enumerate body}{size=\footnotesize}  % 9pt
+    \setbeamerfont{itemize/enumerate subbody}{size=\footnotesize}  % 9pt
+    \setbeamerfont{frametitle}{size=\large, series=\bfseries}  % 12pt
+    \setbeamerfont{block title}{size=\scriptsize, series=\bfseries}  % 8pt
+    \setbeamerfont{caption}{size=\scriptsize}                 % 8pt
+  }%
 }
 
 % ============================================================
