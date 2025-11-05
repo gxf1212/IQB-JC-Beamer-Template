@@ -13,38 +13,7 @@
 
 % Set header image path (relative to this .tex file)
 \renewcommand{\iqbheaderimage}{../theme/images/header.png}
-
-% Additional packages
-\usepackage{graphicx}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage[version=4]{mhchem}  % For chemical formulas (\ce command)
-\usepackage{booktabs}
-\usepackage{tikz}  % For flowchart
-\usetikzlibrary{shapes.geometric, arrows.meta, positioning, backgrounds}
-\usepackage{hyperref}
-\hypersetup{
-  colorlinks=true,
-  linkcolor=blue,
-  urlcolor=blue,
-  citecolor=blue
-}
-
-% Chinese support (XeLaTeX required)
-\usepackage{xeCJK}
-
-% Cross-platform font configuration
-% Auto-detect OS and use appropriate CJK font
-\usepackage{ifplatform}
-\ifwindows
-  \setCJKmainfont{SimSun}           % Windows: SimSun (built-in)
-\else
-  \ifmacosx
-    \setCJKmainfont{Songti SC}      % macOS: Songti SC (built-in)
-  \else
-    \setCJKmainfont{Noto Serif CJK SC}  % Linux: Noto Serif CJK SC
-  \fi
-\fi
+\setstretch{1.0}
 
 % Metadata
 \title{Free Energy of Membrane Pore Formation and Stability}
@@ -203,8 +172,7 @@
 
   % 下半部：mermaid流程图
   \medskip
-  \centering
-  \includegraphics[height=0.32\textheight,keepaspectratio]{images/membrane-pore-jc/mermaid.png}
+  \iqbimgcenter[height=0.32\textheight,keepaspectratio]{images/membrane-pore-jc/mermaid.png}
 \end{frame}
 
 % ============================================================
@@ -421,8 +389,7 @@
     \textbf{关键发现}：正反向拉伸曲线完全重合，CV设计无滞后，CHARMM36和Martini 2.2p显示不同的线张力
     }
   }{
-    \centering
-    \includegraphics[height=0.75\textheight,keepaspectratio]{images/membrane-pore-jc/fig4.png}
+    \iqbimgcenter[height=0.75\textheight,keepaspectratio]{images/membrane-pore-jc/fig4.png}
 
     \tinysep
   }
@@ -462,8 +429,7 @@
     }
     }
   }{
-    \centering
-    \includegraphics[height=0.8\textheight,keepaspectratio]{images/membrane-pore-jc/fig5ab.png}
+    \iqbimgcenter[height=0.8\textheight,keepaspectratio]{images/membrane-pore-jc/fig5ab.png}
 
   }
 \end{frame}
@@ -524,8 +490,7 @@
       \textbf{结论}：双CV互补，高可信度
     }
   }{
-    \centering
-    \includegraphics[height=0.62\textheight,keepaspectratio]{images/membrane-pore-jc/fig6.png}
+    \iqbimgcenter[height=0.62\textheight,keepaspectratio]{images/membrane-pore-jc/fig6.png}
 
     \tinysep
   }
@@ -556,8 +521,7 @@
 
       \textbf{力场性能}：C36精确，prosECCo75偏小，M2.2p会低估
   }{
-    \centering
-    \includegraphics[height=0.7\textheight,keepaspectratio]{images/membrane-pore-jc/fig7.png}
+    \iqbimgcenter[height=0.7\textheight,keepaspectratio]{images/membrane-pore-jc/fig7.png}
   }
 \end{frame}
 

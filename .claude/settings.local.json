@@ -19,7 +19,8 @@
       "Bash(done)",
       "Bash(/mnt/d/texlive/2022/bin/win32/biber.exe:*)",
       "Bash(pdfinfo:*)",
-      "Bash(rm examples/features-showcase.vrb)"
+      "Bash(rm examples/features-showcase.vrb)",
+      "Bash(do:*)"
     ],
     "deny": [],
     "ask": []

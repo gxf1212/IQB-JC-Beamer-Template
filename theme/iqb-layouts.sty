@@ -1128,12 +1128,67 @@
   \end{block}
 }
 
-% 快速创建列表
-% Usage: \iqbitemize{\item 项1 \item 项2}
-\newcommand{\iqbitemize}[1]{%
-  \begin{itemize}
-    #1
-  \end{itemize}
+% 设置列表缩进（在 iqbitemize 前使用）
+% Usage: \setiqbitemizeindent{1cm}
+%        \begin{iqbitemize} ... \end{iqbitemize}
+\newcommand{\setiqbitemizeindent}[1]{%
+  \setlength{\leftmargini}{#1}%
+}
+
+% 快速创建列表（支持缩进，自动标签加粗蓝色）
+% Usage: \begin{iqbitemize} \item[标签] 内容 \end{iqbitemize}
+%        或: \item 不带标签的项
+%        标签会自动加粗并变为 IQB 蓝色
+\newenvironment{iqbitemize}[1][0em]{%
+  \leavevmode\hspace*{#1}%
+  \begin{minipage}[t]{\dimexpr\linewidth - #1\relax}%
+  \begin{itemize}%
+  % 重定义 \item 命令以处理可选参数（支持带标签和不带标签）
+  \let\iqbolditem\item%
+  % 使用 \@ifnextchar 检测是否有 [ 参数
+  \def\item{%
+    \@ifnextchar[%
+      {\iqb@item@withopt}%
+      {\iqbolditem}%
+  }%
+  % 处理有可选参数的情况
+  \def\iqb@item@withopt[##1]{%
+    \iqbolditem[\textcolor{iqbblue}{\textbf{##1}}]%
+  }%
+}{%
+  \end{itemize}%
+  \end{minipage}%
+}
+
+% 快速创建描述列表（适合较长标签，支持标签右对齐）
+% Usage: \begin{iqbdescription} ... \end{iqbdescription}
+%        \begin{iqbdescription}[2.5cm] ... \end{iqbdescription}  (向右移动2.5cm)
+%        标签会自动加粗并变为 IQB 蓝色，标签在1cm宽度内右对齐
+%        适合4-6字的较长标签；短标签或无标签列表请使用 iqbitemize
+\newenvironment{iqbdescription}[1][0em]{%
+  \leavevmode\hspace*{#1}%
+  \begin{minipage}[t]{\dimexpr\linewidth - #1\relax}%
+  \begin{itemize}%
+  % 设置标签宽度为1cm，实现右对齐显示长标签
+  \setlength{\labelwidth}{1cm}%
+  \setlength{\leftmargini}{1.2cm}%
+  % 重定义标签显示方式：右对齐，蓝色加粗
+  \def\makelabel##1{\makebox[1cm][r]{\textcolor{iqbblue}{\textbf{##1}}}}%
+  % 重定义 \item 命令以处理可选参数（支持带标签和不带标签）
+  \let\iqbolditem\item%
+  % 使用 \@ifnextchar 检测是否有 [ 参数
+  \def\item{%
+    \@ifnextchar[%
+      {\iqb@desc@item@withopt}%
+      {\iqbolditem}%
+  }%
+  % 处理有可选参数的情况
+  \def\iqb@desc@item@withopt[##1]{%
+    \iqbolditem[##1]%
+  }%
+}{%
+  \end{itemize}%
+  \end{minipage}%
 }
 
 % 快速创建编号列表
@@ -1650,6 +1705,221 @@
 \newcommand{\keyfinding}[1]{\colorbox{yellow!30}{\textbf{#1}}}
 
 % ============================================================
+% Punchline 居中强调 (Centered Emphasis Punchlines)
+% ============================================================
+% 灵活的居中punchline系统，支持多种样式和颜色
+% 适用场景：页面结论、核心发现、关键观点、学术申请陈述等
+
+% 基础命令：简单居中强调 (支持颜色参数，默认蓝色)
+% Usage: \iqbpunchline[orange]{计算驱动创新，精准设计引领药物研发新方向！}
+%    或: \iqbpunchline{核心观点}  (默认蓝色)
+% ============================================================
+% 内部辅助命令 - 实现不同的样式组合
+% ============================================================
+
+% 无框，居中对齐
+\newcommand{\@iqbpunchline@center}[2]{%
+  \begin{center}
+    {\large\color{#1}\textbf{#2}}
+  \end{center}
+}
+
+% 无框，左对齐（多行文本）
+\newcommand{\@iqbpunchline@left}[2]{%
+  \raggedright
+  {\large\color{#1}\textbf{#2}}
+  \par
+}
+
+% 有框，居中对齐
+\newcommand{\@iqbpunchline@boxcenter}[2]{%
+  \begin{center}
+    \colorbox{#1!15}{%
+      \parbox{0.85\textwidth}{%
+        \centering
+        {\large\color{#1}\textbf{#2}}
+      }%
+    }
+  \end{center}
+}
+
+% 有框，左对齐
+\newcommand{\@iqbpunchline@boxleft}[2]{%
+  \colorbox{#1!15}{%
+    \parbox{0.95\textwidth}{%
+      {\large\color{#1}\textbf{#2}}
+    }%
+  }
+  \par
+}
+
+% ============================================================
+% 基础命令：\iqbpunchline[color]{text}
+% ============================================================
+% 简单易用，默认居中
+% Usage: \iqbpunchline[iqbgreen]{文本}
+\newcommand{\iqbpunchline}[2][iqbblue]{%
+  \@iqbpunchline@center{#1}{#2}%
+}
+
+% ============================================================
+% 色彩快捷命令 - 支持可选参数 [选项]
+% ============================================================
+% 参数说明：
+%   默认（空）：无框，居中对齐
+%   [l]：无框，左对齐
+%   [b]：有框，居中对齐
+%   [bl]或[lb]：有框，左对齐
+
+% 蓝色punchline（核心观点、主要发现）
+% Usage: \iqbpunchlineblue{文本}
+%   或: \iqbpunchlineblue[l]{多行文本}
+%   或: \iqbpunchlineblue[b]{文本}
+%   或: \iqbpunchlineblue[bl]{多行+框}
+\newcommand{\iqbpunchlineblue}[2][]{%
+  \def\@punchopt{#1}%
+  \ifx\@punchopt\empty
+    \@iqbpunchline@center{iqbblue}{#2}%
+  \else
+    \expandafter\@iqbpunchlineparse@iqbblue\expandafter{\@punchopt}{#2}%
+  \fi
+}
+
+% 绿色punchline（成功验证、正面结果）
+% 参数用法同蓝色
+\newcommand{\iqbpunchlinegreen}[2][]{%
+  \def\@punchopt{#1}%
+  \ifx\@punchopt\empty
+    \@iqbpunchline@center{iqbgreen}{#2}%
+  \else
+    \expandafter\@iqbpunchlineparse@iqbgreen\expandafter{\@punchopt}{#2}%
+  \fi
+}
+
+% 橙色punchline（警示、挑战、需要关注）
+% 参数用法同蓝色
+\newcommand{\iqbpunchlineorange}[2][]{%
+  \def\@punchopt{#1}%
+  \ifx\@punchopt\empty
+    \@iqbpunchline@center{iqborange}{#2}%
+  \else
+    \expandafter\@iqbpunchlineparse@iqborange\expandafter{\@punchopt}{#2}%
+  \fi
+}
+
+% ============================================================
+% 参数解析辅助宏
+% ============================================================
+
+\newcommand{\@iqbpunchlineparse@iqbblue}[2]{%
+  % #1=选项, #2=文本
+  \ifx#1b%
+    \@iqbpunchline@boxcenter{iqbblue}{#2}%
+  \else\ifx#1l%
+    \@iqbpunchline@left{iqbblue}{#2}%
+  \else\ifx#1B%
+    \@iqbpunchline@boxcenter{iqbblue}{#2}%
+  \else\ifx#1L%
+    \@iqbpunchline@left{iqbblue}{#2}%
+  \else
+    % 处理 "bl" 或 "lb"
+    \def\@tempbl{bl}\def\@templb{lb}\def\@temptest{#1}%
+    \ifx\@temptest\@tempbl
+      \@iqbpunchline@boxleft{iqbblue}{#2}%
+    \else\ifx\@temptest\@templb
+      \@iqbpunchline@boxleft{iqbblue}{#2}%
+    \else
+      \@iqbpunchline@center{iqbblue}{#2}%
+    \fi\fi
+  \fi\fi\fi\fi
+}
+
+\newcommand{\@iqbpunchlineparse@iqbgreen}[2]{%
+  \ifx#1b%
+    \@iqbpunchline@boxcenter{iqbgreen}{#2}%
+  \else\ifx#1l%
+    \@iqbpunchline@left{iqbgreen}{#2}%
+  \else\ifx#1B%
+    \@iqbpunchline@boxcenter{iqbgreen}{#2}%
+  \else\ifx#1L%
+    \@iqbpunchline@left{iqbgreen}{#2}%
+  \else
+    \def\@tempbl{bl}\def\@templb{lb}\def\@temptest{#1}%
+    \ifx\@temptest\@tempbl
+      \@iqbpunchline@boxleft{iqbgreen}{#2}%
+    \else\ifx\@temptest\@templb
+      \@iqbpunchline@boxleft{iqbgreen}{#2}%
+    \else
+      \@iqbpunchline@center{iqbgreen}{#2}%
+    \fi\fi
+  \fi\fi\fi\fi
+}
+
+\newcommand{\@iqbpunchlineparse@iqborange}[2]{%
+  \ifx#1b%
+    \@iqbpunchline@boxcenter{iqborange}{#2}%
+  \else\ifx#1l%
+    \@iqbpunchline@left{iqborange}{#2}%
+  \else\ifx#1B%
+    \@iqbpunchline@boxcenter{iqborange}{#2}%
+  \else\ifx#1L%
+    \@iqbpunchline@left{iqborange}{#2}%
+  \else
+    \def\@tempbl{bl}\def\@templb{lb}\def\@temptest{#1}%
+    \ifx\@temptest\@tempbl
+      \@iqbpunchline@boxleft{iqborange}{#2}%
+    \else\ifx\@temptest\@templb
+      \@iqbpunchline@boxleft{iqborange}{#2}%
+    \else
+      \@iqbpunchline@center{iqborange}{#2}%
+    \fi\fi
+  \fi\fi\fi\fi
+}
+
+% ============================================================
+% 向后兼容的别名命令
+% ============================================================
+\newcommand{\iqbpunchlineboxgreen}[1]{\iqbpunchlinegreen[b]{#1}}
+\newcommand{\iqbpunchlineboxorange}[1]{\iqbpunchlineorange[b]{#1}}
+\newcommand{\iqbpunchlinebox}[2][iqbblue]{\iqbpunchline[#1]{#2}}
+
+% ============================================================
+% 页面标题命令 (Page Title Commands)
+% ============================================================
+% 用于plain页面的大标题（如"个人承诺"、"感谢"、"致谢"等）
+% Usage: \iqbpagetitle{标题文字}
+% 效果：Large字号 (14.4pt) + IQB蓝色 + 加粗
+\newcommand{\iqbpagetitle}[1]{%
+  {\Large\textcolor{iqbblue}{\textbf{#1}}}%
+}
+
+% 页面内段落标题命令 (Section Title Command - NEW)
+% ============================================================
+% 用于页面内的段落小标题（如"FEbuilder - 高通量自由能计算体系搭建工具"）
+% 相比frametitle (12pt) 较小，比正文 (9pt) 较大，用于分组说明
+% Usage: \iqbsectiontitle{标题文字}          或  \iqbsectiontitle[颜色]{标题文字}
+% 效果：normalsize字号 (11pt) + IQB蓝色（默认） + 加粗，支持可选颜色参数
+\newcommand{\iqbsectiontitle}[2][iqbblue]{%
+  {\normalsize\textcolor{#1}{\textbf{#2}}}\vspace{-0.5em}%
+}
+
+% ============================================================
+% 标签列表环境 (Labeled Itemize Environment)
+% ============================================================
+% 自动为\item[标签]中的标签添加加粗和颜色（默认iqbblue）
+%
+% Usage:
+%   \begin{iqbitemize}
+%     \item[标签1] 内容...
+%     \item[标签2] 内容...
+%   \end{iqbitemize}
+%
+% 可选参数：indent=long 用于长标签缩进
+%   \begin{iqbitemize}[indent=long]
+%     \item[长标签] 内容...
+%   \end{iqbitemize}
+
+% ============================================================
 % Punchline 彩色框 (Colored Highlight Boxes)
 % ============================================================
 % 用于突出页面的核心观点、警示或成功验证
@@ -1819,6 +2089,15 @@
 % 效果: 完整引用 + 在线链接
 \newcommand{\iqbfootcitewithurl}[2]{%
   \footnote{\tiny\fullcite{#1} \\ \url{#2}}%
+}
+
+% 图片局部居中命令（不影响后续文字）
+% 使用 \begingroup...\endgroup 局限 \centering 作用域
+\newcommand{\iqbimgcenter}[2][width=0.5\textwidth]{%
+  \begingroup%
+  \centering%
+  \includegraphics[#1]{#2}\par%
+  \endgroup%
 }
 
 \endinput

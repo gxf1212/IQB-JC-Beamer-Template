@@ -179,4 +179,4 @@ IQB-JC-master/
 - 完成后 → 清理临时文件 `rm /tmp/pdf_page_*.png`
 - **修改内容后必须编译验证**：检查溢出、字体大小、图片尺寸
 
-给用户的使用说明写在 `software-copyright` 文件夹下。先写一个初版，先只写 `software-copyright/3-usage.tex`（有需要可以拆几章）已经实现的部分，既要满足软著的 `prompt.md`，又要符合LaTeX包的要求
+给用户的使用说明写在 `software-copyright` 文件夹下。先写一个初版，先只写 `software-copyright/3-usage.tex`（有需要可以拆几章）已经实现的部分，既要满足软著使用手册的 `prompt.md`，又要符合LaTeX包说明文档的要求。使用说明更新到software-copyright中，所有新的更新。 

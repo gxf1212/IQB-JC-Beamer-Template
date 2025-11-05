@@ -97,3 +97,8 @@ credentials.json
 *.rar
 *.7z
 *.tar.gz
+
+examples/Xufan.tex
+examples/images/Scholarship/
+examples/membrane_images
+.history/

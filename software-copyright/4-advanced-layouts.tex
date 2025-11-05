@@ -1,0 +1,900 @@
+%!TEX root = document.tex
+
+\chapter{高级布局与快捷命令}
+\label{chap:advanced-layouts}
+
+本章详细介绍 IQB-JC 模板的高级布局模块和快捷命令系统，帮助用户更高效地创建复杂的学术演示文稿。这些高级功能包括自动编号图表模块、作者信息模块、智能强调系统和一系列代码简化命令。
+
+\section{图片局部居中}
+
+\subsection{问题描述}
+
+在多列布局中（如 \lstinline|\iqblayouttwo| 等），使用 \lstinline|\centering| 命令会影响整个列的后续文字对齐方式，导致本意只想居中图片，结果文字也被迫居中。
+
+\subsection{解决方案：\texttt{\textbackslash iqbimgcenter}}
+
+使用 \lstinline|\iqbimgcenter| 命令可以实现图片局部居中，不影响后续文字的对齐。该命令使用 \lstinline|\begingroup...\endgroup| 来局限 \lstinline|\centering| 的作用范围。
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbimgcenter[图片选项]{图片路径}
+\end{lstlisting}
+
+参数说明：
+\begin{itemize}
+  \item \lstinline|[图片选项]| - 可选，图片尺寸设置，如 \lstinline|width=0.5\textwidth|、\lstinline|height=0.6\textheight| 等
+  \item \lstinline|{图片路径}| - 必需，图片的相对或绝对路径
+\end{itemize}
+
+使用示例：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqblayouttwo{
+  \iqbimgcenter[width=0.5\textwidth]{images/photo.jpg}
+  \iqbtinysep
+  \textbf{说明文字：}
+  \begin{itemize}
+    \item 文字项目1
+    \item 文字项目2
+  \end{itemize}
+}{
+  右列内容...
+}
+\end{lstlisting}
+
+效果：图片会在列内居中显示，而下方的"说明文字"仍然保持左对齐。
+
+\subsection{与 \texttt{center} 环境的对比}
+
+\begin{table}[!h]
+\centering
+\caption{图片居中方式对比}
+\label{tab:imgcenter-compare}
+\begin{tabular}{p{3cm}p{3.5cm}p{6cm}}
+\toprule
+\textbf{方式} & \textbf{使用方式} & \textbf{特点} \\
+\midrule
+\lstinline|\iqbimgcenter| & \lstinline|\iqbimgcenter[opts]{path}| & 局部生效，不影响后续文字 \\
+\lstinline|\centering| & \lstinline|\centering\includegraphics...| & 全局生效，影响后续所有文字 \\
+\lstinline|\begin{center}| & \lstinline|\begin{center}\includegraphics\end{center}| & 局部生效，独占一行 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{推荐}：在多列布局中，优先使用 \lstinline|\iqbimgcenter|；在简单场景中，\lstinline|\begin{center}| 也很有效。
+
+\section{图表模块（自动编号）}
+
+IQB-JC 模板提供了带自动编号和统一格式的图表模块。所有图表自动生成"图X："格式的编号，caption 左对齐显示。
+
+\subsection{单图模块}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbfig[height=0.5\textheight]{图片路径}{图说文字}
+\end{lstlisting}
+
+参数说明见表 \ref{tab:iqbfig-params}。
+
+\begin{table}[!h]
+\centering
+\caption{iqbfig 命令参数}
+\label{tab:iqbfig-params}
+\begin{tabular}{p{2.5cm}p{2.5cm}p{8cm}}
+\toprule
+\textbf{参数} & \textbf{默认值} & \textbf{说明} \\
+\midrule
+\lstinline|[选项]| & \lstinline|height=0.5\textheight| & 图片尺寸，支持 \lstinline|height| 或 \lstinline|width| \\
+图片路径 & 必需 & 相对或绝对路径，支持 PNG/PDF \\
+图说文字 & 必需 & 图片下方的说明文字，自动编号 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+使用示例：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\begin{frame}{单图展示}
+  \iqbfig[height=0.55\textheight]{results.png}{
+    结果展示图：实验数据对比分析
+  }
+\end{frame}
+\end{lstlisting}
+
+\subsection{双图模块}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbtwofig[height=0.45\textheight]{img1}{caption1}{img2}{caption2}
+\end{lstlisting}
+
+该模块将两张图片并排显示，各占 48\% 宽度。使用示例：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\begin{frame}{双图对比}
+  \iqbtwofig[height=0.5\textheight]{
+    method_a.png
+  }{
+    方法 A 的结果展示
+  }{
+    method_b.png
+  }{
+    方法 B 的结果展示
+  }
+\end{frame}
+\end{lstlisting}
+
+\subsection{三图模块}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbthreefig[height=0.35\textheight]{img1}{cap1}{img2}{cap2}{img3}{cap3}
+\end{lstlisting}
+
+三张图片均匀分布在一行，各占 31\% 宽度。该布局适合展示三个相关的分析结果。
+
+\subsection{四图网格模块}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbfourfig[height=0.35\textheight]{
+  img1}{cap1}{img2}{cap2}{img3}{cap3}{img4}{cap4}
+\end{lstlisting}
+
+四张图片排列为 2×2 网格。该布局提供清晰的图表组织方式，适合展示多阶段或多方法的结果对比。
+
+\section{作者信息模块}
+
+IQB-JC 模板提供了专门的作者信息展示模块，适用于文献汇报时介绍论文作者的信息。
+
+\subsection{双作者模块（无照片）}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbauthorstwo{
+  通讯作者姓名}{通讯作者单位}{通讯作者网址}{通讯作者研究方向}{
+  第一作者姓名}{第一作者单位}{第一作者网址}{第一作者研究方向
+}
+\end{lstlisting}
+
+该模块以 50-50 双列布局展示通讯作者和第一作者的信息。使用示例：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\begin{frame}{作者信息}
+  \iqbauthorstwo{
+    Prof. John Smith
+  }{
+    Department of Biology\\
+    University of Example
+  }{
+    https://example.edu/smith
+  }{
+    Molecular dynamics, Protein folding
+  }{
+    Dr. Jane Doe
+  }{
+    Institute of Computational Science\\
+    Example University
+  }{
+    https://example.edu/doe
+  }{
+    MD simulations, Free energy calculations
+  }
+\end{frame}
+\end{lstlisting}
+
+\subsection{双作者模块（带照片）}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\setauthorfirstfield{第一作者研究领域}
+\iqbauthorstwophoto{
+  通讯作者照片路径}{通讯作者姓名}{...}{...}{通讯作者研究方向}{
+  第一作者照片路径}{第一作者姓名}{...}{...}
+}
+\end{lstlisting}
+
+使用 \lstinline|\setauthorfirstfield{}| 命令单独设置第一作者的专业领域。使用示例：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\begin{frame}{论文作者}
+  \setauthorfirstfield{计算生物物理、膜蛋白模拟、自由能计算}
+  \iqbauthorstwophoto{
+    author1.jpg
+  }{
+    Prof. Alice Brown
+  }{
+    College of Science\\
+    Tech University
+  }{
+    https://example.org/alice
+  }{
+    Protein structure prediction, Force field development
+  }{
+    author2.jpg
+  }{
+    Dr. Bob White
+  }{
+    Center for Molecular Dynamics\\
+    Research Institute
+  }{
+    https://example.org/bob
+  }
+\end{frame}
+\end{lstlisting}
+
+\subsection{单作者模块}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbauthorone{作者姓名}{作者单位}{作者网址}{研究方向}
+\end{lstlisting}
+
+该模块适用于单作者论文或特邀评论文章。信息居中显示。
+
+\section{Punchline 智能强调系统}
+
+\label{sec:punchline}
+
+IQB-JC 模板提供了灵活的 Punchline 系统，用于在幻灯片页面中突出核心观点、关键发现或学术申请陈述的重点内容。该系统支持多种颜色、对齐方式和框风格的组合，满足不同的表达需求。
+
+\subsection{基础 Punchline 命令}
+
+\textbf{简单指定颜色}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbpunchline[颜色]{文本}
+\end{lstlisting}
+
+默认蓝色，文本自动居中。使用示例：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbpunchline[iqbgreen]{计算驱动创新，精准设计引领药物研发新方向！}
+
+\iqbpunchline[iqborange]{警示：需要特别关注的重要发现}
+\end{lstlisting}
+
+\subsection{色彩快捷命令（推荐）}
+
+提供三种颜色的快捷命令，对应不同的内容类型：
+
+\textbf{蓝色 Punchline（核心观点、主要发现）}
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+% 最简单：默认无框，居中对齐
+\iqbpunchlineblue{核心观点文本}
+
+% 左对齐（适合多行文本）
+\iqbpunchlineblue[l]{
+  多行文本行 1\\
+  多行文本行 2
+}
+
+% 有框，居中对齐
+\iqbpunchlineblue[b]{有框的蓝色 punchline}
+
+% 有框，左对齐（多行+框）
+\iqbpunchlineblue[bl]{
+  多行文本：\\
+  第一行\\
+  第二行
+}
+\end{lstlisting}
+
+\textbf{绿色 Punchline（成功验证、正面结果）}
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+% 默认：无框，居中对齐
+\iqbpunchlinegreen{验证通过：实验结果符合预期}
+
+% 有框，居中对齐
+\iqbpunchlinegreen[b]{成功案例：有框显示}
+
+% 长文本左对齐（推荐多行内容）
+\iqbpunchlinegreen[l]{PKNAP整合FEPaML、NEOM、MultiTAP等多个肿瘤免疫服务器，\\
+融合物理、知识与AI，与FEbuilder、PolyglotMol等形成完整计算药物设计平台！}
+\end{lstlisting}
+
+\textbf{橙色 Punchline（警示、挑战、需要关注）}
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbpunchlineorange{警示：需要关注的重要事项}
+
+\iqbpunchlineorange[l]{多行警告\\
+需要特别注意}
+\end{lstlisting}
+
+\textbf{参数说明}
+
+表 \ref{tab:punchline-params} 详细说明了可选参数及其含义。
+
+\begin{table}[!h]
+\centering
+\caption{Punchline 快捷命令参数}
+\label{tab:punchline-params}
+\begin{tabular}{p{2cm}p{3cm}p{7cm}}
+\toprule
+\textbf{参数} & \textbf{效果} & \textbf{适用场景} \\
+\midrule
+空（默认） & 无框，居中对齐 & 单行短文本 \\
+\lstinline|[l]| & 无框，左对齐 & 多行长文本 \\
+\lstinline|[b]| & 有框，居中对齐 & 需要突出强调的单行 \\
+\lstinline|[bl]| 或 \lstinline|[lb]| & 有框，左对齐 & 多行文本需要框突显 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{向后兼容命令}
+
+为了兼容之前的代码，以下命令仍然可用（等价于 \lstinline|[b]| 参数版本）：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbpunchlineboxgreen{有框的绿色 punchline}
+
+\iqbpunchlineboxorange{有框的橙色 punchline}
+\end{lstlisting}
+
+\section{内容模块}
+
+\subsection{关键要点模块}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbkeypoints{
+  \begin{itemize}
+    \item 要点 1
+    \item 要点 2
+  \end{itemize}
+}
+\end{lstlisting}
+
+该模块将内容包装在突出显示的 block 环境中，背景色为 IQB 浅灰色，标题为"关键要点"。适合提炼每页的核心内容。使用示例：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\begin{frame}{研究成果}
+  \iqbkeypoints{
+    \begin{itemize}
+      \item 发现了新的分子动力学计算方法
+      \item 提高了计算精度 50\%
+      \item 减少了计算时间 30\%
+    \end{itemize}
+  }
+\end{frame}
+\end{lstlisting}
+
+\subsection{核心问题模块}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbquestion{该项研究的核心问题是什么？}
+\end{lstlisting}
+
+该模块突出显示研究的核心科学问题，文字居中排列。适合在研究背景部分强调关键问题。
+
+\subsection{结论模块}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbconclusion{
+  通过 XX 方法，我们发现了 YY 现象，为 ZZ 领域的发展奠定了基础。
+}
+\end{lstlisting}
+
+该模块用于总结研究的主要结论，适合放在讨论或总结页面。文字自动居中显示。
+
+\section{高级功能模块}
+
+\subsection{公式与解释布局}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbformulaexplain{公式内容}{公式右侧解释文字}
+\end{lstlisting}
+
+该模块采用 1/3 + 2/3 布局，左侧放置公式（居中），右侧放置解释说明。使用示例：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\begin{frame}{关键公式推导}
+  \iqbformulaexplain{
+    $\Delta G = \Delta H - T\Delta S$
+  }{
+    \textbf{含义：}
+    \begin{itemize}
+      \item $\Delta G$ 是自由能变化
+      \item $\Delta H$ 是焓变
+      \item $T\Delta S$ 是熵项贡献
+    \end{itemize}
+  }
+\end{frame}
+\end{lstlisting}
+
+\subsection{时间线/流程图模块}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbtimeline{步骤1标题}{步骤1内容}{步骤2标题}{步骤2内容}{
+  步骤3标题}{步骤3内容}
+\end{lstlisting}
+
+该模块创建一个三步的流程图，使用 TikZ 绘制连接的方框。每个方框包含标题和内容，步骤间有箭头连接。使用示例：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\begin{frame}{研究方法流程}
+  \iqbtimeline{
+    数据采集}{收集 1000 个样本}{
+    数据处理}{质量控制与预处理}{
+    统计分析}{方差分析与回归
+  }
+\end{frame}
+\end{lstlisting}
+
+\subsection{双列对比模块}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbcomparetwo{标题 A}{内容 A}{标题 B}{内容 B}
+\end{lstlisting}
+
+该模块在双列布局中展示两个方法或方案的对比。每列包含标题和内容，自动对齐。
+
+\subsection{三列对比模块}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbcomparethree{标题A}{内容A}{标题B}{内容B}{标题C}{内容C}
+\end{lstlisting}
+
+该模块采用三列布局展示三个方法或方案的对比分析。
+
+\subsection{精确定位（高级）}
+
+对于需要自定义精确布局的情况，模板提供了底层的定位工具。
+
+\textbf{文本精确定位}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbplace{x}{y}{宽度}{内容}
+\end{lstlisting}
+
+其中坐标 (0,0) 为页面左上角，x 和 y 单位为 cm。使用示例：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\begin{frame}{}
+  \iqbplace{2}{3}{10cm}{
+    自定义位置的文本内容
+  }
+\end{frame}
+\end{lstlisting}
+
+\textbf{图片精确定位}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbplaceimage{x}{y}{宽度}{高度}{图片路径}
+\end{lstlisting}
+
+\section{Phase 1: 高级快捷命令（Advanced Shortcuts）}
+
+\subsection{概述}
+
+为了进一步简化用户编写，模板在 \lstinline|iqb-layouts.sty| 中提供了一系列高级宏命令。这些命令将常见的Frame模式标准化和模板化，显著减少代码重复，提升编写效率。所有新命令与现有代码完全兼容，用户可以渐进式采用。
+
+\subsection{Frame 快捷命令}
+
+\textbf{标准 Frame}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbframe{标题}{内容}
+\end{lstlisting}
+
+用于快速创建标准单栏 frame，相比原始写法减少 67\% 的代码。
+
+\textbf{文字+图片 Frame（左文右图）}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbframetextfig[高度]{标题}{文字内容}{图片路径}
+\end{lstlisting}
+
+自动应用 1/3 左 + 2/3 右的布局。可选参数 \lstinline|[高度]| 默认为 \lstinline|0.55\textheight|。
+
+使用示例：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbframetextfig{膜孔形成的重要性}{
+  \textbf{应用领域}：
+  \begin{itemize}
+    \item 抗菌肽设计
+    \item 药物递送系统
+    \item 细胞通透性调控
+  \end{itemize}
+}{images/membrane-pore.png}
+\end{lstlisting}
+
+\textbf{图片+文字 Frame（左图右文）}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbframefigttext[高度]{标题}{图片路径}{文字内容}
+\end{lstlisting}
+
+图片占 1/3 左，文字占 2/3 右。
+
+\textbf{文字+双图 Frame}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbframetexttwofig[高度]{标题}{文字}{img1}{cap1}{img2}{cap2}
+\end{lstlisting}
+
+文字占 1/3 左，两张并排的图片占 2/3 右。
+
+\subsection{Section 管理快捷}
+
+\textbf{自动 Section 分隔页}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbsectionframe{SectionName}{中文标题}
+\end{lstlisting}
+
+自动生成 section 分隔页，并更新 footer 中的 section 进度标识，无需手动调用 \lstinline|\setsection|。
+
+使用示例：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbsectionframe{Methods}{方法}
+% 后续该 section 下的 frame 会自动显示 "Methods" 在 footer 中
+
+\iqbsectionframe{Results}{结果}
+% section 切换，footer 自动更新
+\end{lstlisting}
+
+\subsection{公式+解释专用布局}
+
+\textbf{公式 Frame}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbformulaframe{标题}{公式内容}{右侧图文}
+\end{lstlisting}
+
+左侧 1/3 放置公式推导，右侧 2/3 放置图片或补充说明。代码量减少 70\%。
+
+\textbf{公式块辅助命令}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbformblock{标题}{公式}{解释}
+\end{lstlisting}
+
+自动管理公式块的间距和字体。使用示例：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbformulaframe{Full-Path CV 原理}{
+  \iqbformblock{成核部分 $\text{CV}_{\text{cyl}}$}{
+    $$\text{CV}_{\text{cyl}} = 1 - d/\text{CV}_{\text{eq}}$$
+  }{$d$: 圆柱内脂质尾部原子数}
+
+  \iqbformblock{扩展部分 $\text{CV}_{\text{radius}}$}{
+    $$\text{CV}_{\text{radius}} = r_{\text{min}}/r_{\text{unit}}$$
+  }{$r_{\text{min}}$: 孔中心到最近脂质距离}
+}{
+  \iqbfig[height=0.55\textheight]{fig1.png}{集体变量示意图}
+}
+\end{lstlisting}
+
+\subsection{对比展示快捷}
+
+\textbf{三列对比}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbthreecolcompare{title1}{img1}{items1}{title2}{img2}{items2}{title3}{img3}{content3}
+\end{lstlisting}
+
+三列均匀分布，每列可包含标题、图片、列表。代码量减少 83\%。
+
+使用示例：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\begin{frame}{创新方法对比}
+  \iqbthreecolcompare
+    {Full-Path CV}{fig1u.png}{\item 成核+扩展统一 \item 无滞后}
+    {Rapid CV}{fig1d.png}{\item 无限孔模拟 \item 效率高 10×}
+    {开源实现}{plumed.png}{PLUMED 库\\GROMACS/LAMMPS}
+\end{frame}
+\end{lstlisting}
+
+\textbf{双列对比}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbtwocolcompare{title1}{img1}{items1}{title2}{img2}{items2}
+\end{lstlisting}
+
+\subsection{结果展示快捷}
+
+\textbf{结果展示 Frame}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbresultframe{标题}{左侧文字}{右侧图片}
+\end{lstlisting}
+
+左侧 1/3 放置关键发现和数据，右侧 2/3 放置结果图片。代码量减少 80\%。
+
+使用示例：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbresultframe{孔闭合过程分析}{
+  \textbf{四阶段闭合}：
+  \begin{enumerate}
+    \item 平衡孔：初始稳定孔，连续水柱贯穿膜
+    \item 半径缩小：孔边缘脂质重排，结构保持
+    \item 水线程：闭合最后瞬间，仅剩连续水线
+    \item 膜变薄：孔完全闭合，局部膜缺陷
+  \end{enumerate}
+
+  \textbf{关键发现}：脂质尾部密度与孔寿命强相关 (R²=0.82)
+}{images/closure.png}
+\end{lstlisting}
+
+\textbf{对比结果 Frame}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbcomparisonframe{标题}{左图}{左标题}{右图}{右标题}
+\end{lstlisting}
+
+并排展示两个对比结果，自动编号图片。代码量减少 90\%。
+
+\subsection{块级快捷命令}
+
+\textbf{快速创建 Block}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbblock{标题}{内容}
+\end{lstlisting}
+
+替代冗长的 \lstinline|\begin{block}...\end{block}| 写法。
+
+\textbf{快速创建列表}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbitemize{\item 项1 \item 项2 \item 项3}
+
+\iqbenumerate{\item 项1 \item 项2 \item 项3}
+\end{lstlisting}
+
+\subsection{VSCode Snippets 集成}
+
+配置文件位置：\lstinline|.vscode/latex.code-snippets|
+
+在 VSCode 中使用快捷方式，输入缩写后按 Tab 键自动展开完整命令模板：
+
+\begin{table}[!h]
+\centering
+\caption{VSCode Snippets 快捷方式列表}
+\label{tab:vscode-snippets}
+\begin{tabular}{p{2cm}p{3cm}p{6cm}}
+\toprule
+\textbf{快捷方式} & \textbf{对应命令} & \textbf{功能说明} \\
+\midrule
+\lstinline|iqbf| & \lstinline|\iqbframe| & 快速创建标准 frame \\
+\lstinline|iqbtf| & \lstinline|\iqbframetextfig| & 文字+图片 frame \\
+\lstinline|iqbfit| & \lstinline|\iqbframefigttext| & 图片+文字 frame \\
+\lstinline|iqbff| & \lstinline|\iqbformulaframe| & 公式+解释 frame \\
+\lstinline|iqbsec| & \lstinline|\iqbsectionframe| & Section 分隔页 \\
+\lstinline|iqb3c| & \lstinline|\iqbthreecolcompare| & 三列对比 \\
+\lstinline|iqb2c| & \lstinline|\iqbtwocolcompare| & 双列对比 \\
+\lstinline|iqbrf| & \lstinline|\iqbresultframe| & 结果展示 \\
+\lstinline|iqbcf| & \lstinline|\iqbcomparisonframe| & 对比结果 \\
+\lstinline|iqbitem| & \lstinline|\iqbitemize| & 列表 \\
+\lstinline|iqbenum| & \lstinline|\iqbenumerate| & 编号列表 \\
+\lstinline|iqbfb| & \lstinline|\iqbformblock| & 公式块 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+使用示例：在 VSCode 中输入 \lstinline|iqbtf| 并按 Tab，自动展开为：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbframetextfig{标题}{
+  文字内容...
+}{images/xxx.png}
+\end{lstlisting}
+
+\subsection{使用建议与最佳实践}
+
+\begin{itemize}
+\item \textbf{优先使用快捷命令}：在日常编写中优先采用快捷命令，保持代码简洁明了。
+\item \textbf{灵活使用可选参数}：大多数命令支持可选参数微调，如 \lstinline|[0.6\textheight]| 自定义图片高度。
+\item \textbf{完全兼容旧代码}：新命令与现有代码完全兼容，现有幻灯片无需修改。
+\item \textbf{IDE 集成}：配合 VSCode 和 Snippets 获得最佳编写体验。
+\item \textbf{图注管理}：每个图片都应有图注，可以是详细描述或文字解读。当图片非常高时，可以在旁边文字栏中编写解释。
+\end{itemize}
+
+\subsection{代码改进效果统计}
+
+表 \ref{tab:code-improvement} 展示了使用快捷命令后的代码行数改进。平均而言，使用这些快捷命令可将代码量减少约 79\%。
+
+\begin{table}[!h]
+\centering
+\caption{快捷命令代码改进统计}
+\label{tab:code-improvement}
+\begin{tabular}{lcccr}
+\toprule
+\textbf{模板类型} & \textbf{改进前} & \textbf{改进后} & \textbf{减少} & \textbf{对应命令} \\
+\midrule
+标准 Frame & 3 行 & 1 行 & 67\% & \lstinline|\iqbframe| \\
+文字+图片 & 6 行 & 1 行 & 83\% & \lstinline|\iqbframetextfig| \\
+公式+解释 & 40 行 & 12 行 & 70\% & \lstinline|\iqbformulaframe| \\
+三列对比 & 48 行 & 8 行 & 83\% & \lstinline|\iqbthreecolcompare| \\
+结果展示 & 15 行 & 3 行 & 80\% & \lstinline|\iqbresultframe| \\
+对比结果 & 10 行 & 1 行 & 90\% & \lstinline|\iqbcomparisonframe| \\
+\midrule
+\textbf{平均} & - & - & \textbf{79\%} & - \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+对于一个典型的 14 页 Journal Club 演示，使用快捷命令可以将源代码从约 270 行减少至 80 行，显著提升维护效率和可读性。
+
+\section{Phase 1.5: 高级模式快捷命令（P0+P1 Priority Commands）}
+
+\subsection{概述}
+
+继Phase 1（基础快捷命令）之后，Phase 1.5进一步识别并抽象了8个常见的重复模式，提供6个新的快捷命令，可再减少30-50行代码。
+
+\subsection{P0优先级（立即实现）}
+
+\textbf{1. 封面页一行式模板：\lstinline|\iqbcoverframe|}
+
+将20行的手动封面页代码简化为1行，自动从元数据生成：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+% 文档开头定义元数据
+\papertitlechn{破解膜孔之谜：双CV联手揭示}
+\papertitlechnsub{从成核到扩展的完整能量图景}
+\author{高旭帆}
+\institute{IQB Lab}
+
+% 文档中调用
+\iqbcoverframe  % 1 line instead of 20!
+\end{lstlisting}
+
+\textbf{优势}：代码减少 95\%，修改标题只需改元数据一处
+
+\textbf{2. 高亮发现块：\lstinline|\iqbhighlight|}
+
+用于突出核心科学发现或临界结论：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbhighlight{临界发现}{
+  脂质尾部密度 $\leftrightarrow$ 孔寿命 $\tau$ (R²=0.82)
+}{相关性极强！}
+\end{lstlisting}
+
+\textbf{优势}：代码减少 80\%，自动颜色和格式管理
+
+\textbf{3. 分步骤列表：\lstinline|\iqbsteplist| 和 \lstinline|\step|}
+
+清晰展示多阶段流程：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbsteplist{四阶段闭合动力学}{
+  \step{(A) 平衡孔}{初始稳定孔，连续水柱贯穿膜厚度}
+  \step{(B) 半径缩小}{孔边缘脂质重排，整体结构保持}
+  \step{(C) 水线程}{关键瞬间，孔只有纤细连续水线}
+  \step{(D) 膜恢复}{孔完全闭合，局部膜厚度恢复}
+}
+\end{lstlisting}
+
+\textbf{优势}：代码减少 50\%，自动编号和间距管理
+
+---
+
+\subsection{P1优先级（下一批）}
+
+\textbf{4. 带色彩强调的列表：\lstinline|\iqbcolorlist|}
+
+用于展示带颜色分类的列表（✓准确 / ~部分正确 / ✗失败）：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbcolorlist{力场表现}{
+  \item {\color{green!60!black}\textbf{C36}}：准确
+  \item {\color{orange}\textbf{Slipids}}：部分正确
+  \item {\color{red}\textbf{M2.2/M3}}：失败
+}
+\end{lstlisting}
+
+\textbf{优势}：代码减少 57\%
+
+\textbf{5. Bullet列表快捷命令：\lstinline|\iqbbulletlist|}
+
+简化bullet列表：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbbulletlist{1. 线张力计算}{
+  \item Full-Path CV: 成核+扩展全过程
+  \item Rapid CV: 快速评估大孔极限
+}
+\end{lstlisting}
+
+\textbf{优势}：代码减少 63\%
+
+\textbf{6. 增强型公式参数块：\lstinline|\iqbformparam| 和 \lstinline|\param|}
+
+将公式和参数表格化展示：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbformparam{切换函数}{
+  $$s = \frac{1}{1 + e^{\alpha(\text{CV} - \text{CV}_0)}}$$
+}{
+  \param{\alpha = 20}{陡峭}
+  \param{\text{CV}_0 = 0.95}{切换点}
+}
+\end{lstlisting}
+
+\textbf{优势}：代码减少 40\%，参数表格化易读
+
+---
+
+\subsection{Phase 1.5 改进统计}
+
+\begin{table}[!h]
+\centering
+\caption{Phase 1.5 新命令代码改进统计}
+\label{tab:p1.5-improvement}
+\begin{tabular}{lcccr}
+\toprule
+\textbf{命令} & \textbf{原方式} & \textbf{新方式} & \textbf{减少} & \textbf{级别} \\
+\midrule
+\lstinline|\iqbcoverframe| & 20行 & 1行 & 95\% & P0 \\
+\lstinline|\iqbhighlight| & 5行 & 1行 & 80\% & P0 \\
+\lstinline|\iqbsteplist| & 8行 & 4行 & 50\% & P0 \\
+\lstinline|\iqbcolorlist| & 7行 & 3行 & 57\% & P1 \\
+\lstinline|\iqbbulletlist| & 8行 & 3行 & 63\% & P1 \\
+\lstinline|\iqbformparam| & 10行 & 6行 & 40\% & P1 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+对于典型演示，Phase 1.5 可额外减少 \textbf{30-50 行代码}。整合Phase 1+Phase 1.5，平均代码改进达到 \textbf{82\%}（从270行→50行）。
