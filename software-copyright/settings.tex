@@ -1,6 +1,10 @@
 %https://blog.csdn.net/qq_44643644/article/details/107358084
 
 % 中文字体设置 - 使用easybook类的noto字体配置，无需手动设置字体
+% 章节编号设置 - 确保章节和节都有正确的编号
+\setcounter{secnumdepth}{3} % 章、节、小节都编号
+\renewcommand{\thechapter}{\arabic{chapter}.}
+\renewcommand{\thesection}{\thechapter.\arabic{section}}
 
 \usepackage{libertine}
 \usepackage{tikz}

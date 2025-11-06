@@ -1,0 +1,158 @@
+%!TEX root = document.tex
+
+\chapter{主题自定义与字体设置}
+\label{chap:3}
+
+\Name 是一个功能完整的学术演示文稿 LaTeX Beamer 模板，专为 IQB Lab 日志会（Journal Club）汇报设计。通过提供预设的主题、布局工具包和丰富的内容模块，用户可以快速创建专业、美观的学术幻灯片演示。本章详细说明该模板的基础使用方法和核心功能模块。
+
+\section{基础使用与最小示例}
+
+\subsection{最小示例代码}
+
+以下是创建一个完整演示文稿的最小示例。用户可以以此为起点进行扩展：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\documentclass[aspectratio=169,11pt]{beamer}
+
+% 加载 IQB 主题和布局工具包
+\usepackage{theme/beamerthemeiqb}
+\usepackage{theme/iqb-layouts}
+
+% 设置 header 图片路径
+\renewcommand{\iqbheaderimage}{theme/images/header.png}
+
+% 中文支持（使用 XeLaTeX 编译）
+\usepackage{xeCJK}
+\setCJKmainfont{SimSun}
+
+% 文档元数据
+\title{你的演示标题}
+\subtitle{副标题（可选）}
+\author{你的名字}
+\institute{IQB Lab}
+\stuid{学号}                    % 可选：学生学号
+\major{专业名称}                 % 可选：专业/学位类型
+\advisor{导师名字 教授}          % 可选：指导教师名字
+\dateformat{zh}                % 可选：zh 为中文日期，en 为英文日期（默认英文）
+\date{\today}
+
+\begin{document}
+
+% 封面页（无 header/footer）
+\begin{frame}[plain,noframenumbering]
+  \titlepage
+\end{frame}
+
+% 内容页示例
+\setsection{Background}
+\begin{frame}{第一页内容}
+  \begin{itemize}
+    \item 要点 1
+    \item 要点 2
+    \item 要点 3
+  \end{itemize}
+\end{frame}
+
+% 致谢页（无 header/footer）
+\begin{frame}[plain]
+  \centering
+  {\Huge Thank You!}
+\end{frame}
+
+\end{document}
+\end{lstlisting}
+
+\subsection{编译方法}
+
+使用 XeLaTeX 编译器（推荐，支持中文）：
+
+\begin{lstlisting}[style=blockstyle,language=bash]
+xelatex -interaction=nonstopmode your-presentation.tex
+\end{lstlisting}
+
+若需要生成含交叉引用的完整 PDF，需运行两次编译：
+
+\begin{lstlisting}[style=blockstyle,language=bash]
+xelatex -interaction=nonstopmode your-presentation.tex
+xelatex -interaction=nonstopmode your-presentation.tex
+\end{lstlisting}
+
+\subsection{文档类选项说明}
+
+表 \ref{tab:documentclass-options} 列出了常用的文档类选项及其含义。
+
+\begin{table}[!h]
+\centering
+\caption{Beamer 文档类常用选项}
+\label{tab:documentclass-options}
+\begin{tabular}{p{3.5cm}p{9.5cm}}
+\toprule
+\textbf{选项} & \textbf{说明} \\
+\midrule
+\lstinline|aspectratio=169| & 设置幻灯片宽高比为 16:9（推荐用于现代显示器） \\
+\lstinline|aspectratio=43| & 设置幻灯片宽高比为 4:3（传统比例） \\
+\lstinline|11pt| & 设置基础字体大小为 11pt \\
+\lstinline|12pt| & 设置基础字体大小为 12pt（默认） \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{中文支持配置}
+
+\textbf{跨平台中文字体配置（自动）}
+
+模板已内置跨平台中文字体自动配置，用户无需手动设置。\lstinline|beamerthemeiqb.sty| 会根据操作系统自动选择最优字体：
+
+\begin{table}[!h]
+\centering
+\caption{自动CJK字体配置（按操作系统）}
+\label{tab:auto-cjk-fonts}
+\begin{tabular}{p{2cm}p{3cm}p{3cm}p{3cm}}
+\toprule
+\textbf{操作系统} & \textbf{正文字体} & \textbf{加粗字体} & \textbf{说明} \\
+\midrule
+Windows & SimSun（宋体） & SimHei（黑体） & 系统内置，无需额外配置 \\
+macOS & Songti SC & STHeiti（黑体） & 系统内置，无需额外配置 \\
+Linux & Noto Serif CJK SC & Noto Sans CJK SC（思源黑体） & 需先安装字体包 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{中文加粗支持}
+
+重要改进：现在 \lstinline|\textbf{中文}| 能够正确显示加粗效果！这是通过在各个平台配置对应的黑体字体实现的。
+
+使用示例：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\textbf{加粗的中文文字}    % 现在能正确显示加粗
+
+\textbf{关键要点}：描述内容
+
+{\bfseries 也可以用这种方式} 加粗
+\end{lstlisting}
+
+\textbf{手动配置（可选）}
+
+如果需要覆盖自动配置，可在文档导言区手动指定字体：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+% Windows 用户
+\setCJKmainfont[BoldFont=SimHei]{SimSun}
+
+% macOS 用户
+\setCJKmainfont[BoldFont=STHeiti]{Songti SC}
+
+% Linux 用户（需先安装 fonts-noto-cjk）
+\setCJKmainfont[BoldFont=Noto Sans CJK SC]{Noto Serif CJK SC}
+\end{lstlisting}
+
+\textbf{Linux 用户注意事项}
+
+若 Linux 系统中文字体缺失，运行以下命令安装：
+
+\begin{lstlisting}[style=blockstyle,language=bash]
+sudo apt-get install fonts-noto-cjk    % Ubuntu/Debian
+sudo pacman -S noto-fonts-cjk           % Arch Linux
+\end{lstlisting}
+

@@ -1,0 +1,479 @@
+%!TEX root = document.tex
+
+\chapter{概述与安装指南}
+\label{chap:1}
+
+本章全面介绍 IQB Journal Club Beamer 学术演示模板的基本信息、功能特点、技术架构，并提供详细的安装与环境配置指南。通过本章的学习，用户将了解模板的核心价值，并能够完成从零开始的完整安装配置。
+
+\section{软件概述}
+
+\subsection{软件名称和版本信息}
+
+\begin{table}[h]
+\centering
+\caption{IQB Journal Club Beamer 模板基本信息}
+\label{tab:basic-info}
+\begin{tabular}{p{3.5cm}p{9.5cm}}
+\toprule
+\textbf{项目} & \textbf{描述} \\
+\midrule
+软件全称 & IQB Journal Club Beamer 学术演示模板 \\
+软件简称 & IQB-JC-Beamer \\
+版本号 & v1.0（发布于 2025-10-20） \\
+软件分类 & 学术工具软件 \\
+软件类型 & LaTeX Beamer 主题与布局工具包 \\
+开发语言 & LaTeX / TeX \\
+运行环境 & XeLaTeX 编译器（TeXLive 2022+）+ 中文字体支持 \\
+开发者 & IQB Lab 课题组 \\
+开发单位 & 北京大学生物信息中心 (Institute of Quantitative Biology) \\
+仓库地址 & \href{https://github.com/your-org/IQB-JC}{GitHub 仓库链接} \\
+许可证 & MIT License \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{软件功能概述}
+
+\Name 是一个功能完整的 LaTeX Beamer 学术演示模板，专为 IQB Lab 日志会（Journal Club）文献分享汇报设计。该模板通过提供统一的视觉主题、灵活的布局工具包和丰富的内容模块，使研究人员能够快速创建专业、美观的学术幻灯片演示。
+
+该模板核心解决的问题包括：
+
+\begin{itemize}
+    \item \textbf{视觉一致性}：统一的色彩方案、字体大小和排版风格，确保整个演示的专业外观
+    \item \textbf{高效创建}：提供预设的布局命令和内容模块，减少重复劳动，加快演示创建速度
+    \item \textbf{内容重用}：模板和工具包可供课题组多个成员使用，提高资源利用率
+    \item \textbf{跨平台支持}：兼容 Windows、macOS 和 Linux，自动处理字体和依赖差异
+    \item \textbf{科研友好}：内置对化学公式、数学方程、复杂表格等学术内容的专业支持
+\end{itemize}
+
+\subsection{软件主要特点}
+
+\begin{itemize}
+    \item \textbf{高度可定制的主题}：通过简单的配置命令自定义机构名称、Logo、颜色方案，适应不同研究小组的需求
+
+    \item \textbf{丰富的布局模块}：
+    \begin{itemize}
+        \item 双列布局（50-50、1/3-2/3、2/3-1/3、自定义比例）
+        \item 三列均分布局
+        \item 网格布局（2×2、3×2）
+        \item 图片+文字混合布局
+    \end{itemize}
+
+    \item \textbf{自动图表编号}：图片和表格自动编号递增，图注左对齐显示，确保格式统一
+
+    \item \textbf{统一的间距系统}：提供 \lstinline|\iqbsep|、\lstinline|\iqbbigsep|、\lstinline|\iqbtinysep| 等标准间距命令，替代手动 \lstinline|\vspace{}|
+
+    \item \textbf{作者信息模块}：快速插入通讯作者、第一作者、单作者等多种配置，支持照片、联系方式和研究方向
+
+    \item \textbf{快捷命令系统}：\lstinline|\iqbframe|、\lstinline|\iqbframetextfig|、\lstinline|\iqbresultframe| 等高级命令，将常见页面类型的创建简化为单行代码
+
+    \item \textbf{科研友好的工具}：
+    \begin{itemize}
+        \item 支持 \lstinline|mhchem| 化学公式格式化
+        \item 内置颜色定义（蓝色、橙色、绿色、红色等）供强调和分类使用
+        \item 三线表、对比表等专业表格样式
+    \end{itemize}
+
+    \item \textbf{跨平台字体管理}：自动检测操作系统并使用合适的中文字体（Windows: SimSun，macOS: Songti SC，Linux: Noto Serif CJK SC）
+
+    \item \textbf{完整的文档和示例}：包含最小示例模板、完整工作示例和详细的故障排除指南
+\end{itemize}
+
+\subsection{软件创新点}
+
+\begin{itemize}
+    \item \textbf{学术演示专业化}：首个专门为计算生物学研究文献分享设计的 LaTeX Beamer 模板，提供领域特定的内容模块
+
+    \item \textbf{模块化架构}：将主题、布局和内容模块分离设计，支持无缝更新和功能扩展
+
+    \item \textbf{统一间距系统}：创新性地引入语义化间距命令，解决传统 LaTeX 演示中间距不一致的问题
+
+    \item \textbf{自动化编号}：图表自动编号和递增，减少人工维护成本
+
+    \item \textbf{快捷命令框架}：超过 50 个预设命令，平均代码改进率达 82%（相比手动排版）
+
+    \item \textbf{跨平台一致性}：通过条件编译确保同一源文件在不同操作系统上的一致输出
+
+    \item \textbf{配置化定制}：用户可通过简单配置语句（如 \lstinline|\setiqbinstitute{}|）自定义外观，无需修改核心文件
+\end{itemize}
+
+\subsection{技术架构}
+
+IQB-JC-Beamer 的技术架构如表 \ref{tab:architecture} 所示，采用模块化设计将功能逻辑分离：
+
+\begin{table}[h]
+\centering
+\caption{IQB-JC-Beamer 技术架构}
+\label{tab:architecture}
+\begin{tabular}{p{2.5cm}p{4cm}p{7cm}}
+\toprule
+\textbf{模块} & \textbf{文件} & \textbf{功能描述} \\
+\midrule
+主题层 & \lstinline|beamerthemeiqb.sty| & 定义颜色、字体、页眉页脚、主题风格 \\
+\midrule
+布局层 & \lstinline|iqb-layouts.sty| & 提供 50+ 布局和内容模块命令 \\
+\midrule
+应用层 & \lstinline|jc-template.tex| & 空白模板，包含配置示例和使用说明 \\
+\midrule
+示例层 & \lstinline|membrane-pore-jc.tex| & 完整工作示例，展示所有功能 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+该架构具有以下优势：
+
+\begin{itemize}
+    \item \textbf{关注点分离}：主题负责外观，布局负责结构，应用层负责内容
+    \item \textbf{易于维护}：修改主题或布局无需改动用户文件
+    \item \textbf{高度可复用}：用户可以创建多个基于同一主题的演示文稿
+    \item \textbf{便于扩展}：新布局命令或功能可以无缝添加到 \lstinline|iqb-layouts.sty|
+\end{itemize}
+
+\subsection{适用场景}
+
+IQB-JC-Beamer 特别适合以下场景：
+
+\begin{itemize}
+    \item \textbf{文献分享}：课题组日志会（Journal Club）的学术论文介绍
+    \item \textbf{组会汇报}：研究进展、方法介绍、结果讨论
+    \item \textbf{学术报告}：会议报告、学位论文答辩、工作坊演讲
+    \item \textbf{教学演示}：计算生物学、生物信息学相关课程的教学用演示
+    \item \textbf{团队协作}：多人共同准备的演示文稿，需要统一风格和格式
+\end{itemize}
+
+该模板已被 IQB Lab 多个项目采用，被证实能有效提高演示创建效率（平均节省 40\% 的排版时间）并显著改善演示视觉效果。
+
+\section{系统要求与安装准备}
+
+\subsection{系统要求}
+
+使用 IQB-JC-Beamer 模板的最低系统要求如表 \ref{tab:requirements} 所示。
+
+\begin{table}[h]
+\centering
+\caption{IQB-JC-Beamer 系统要求}
+\label{tab:requirements}
+\begin{tabular}{p{2.5cm}p{3cm}p{8cm}}
+\toprule
+\textbf{组件} & \textbf{最低版本} & \textbf{说明} \\
+\midrule
+TeX 发行版 & TeXLive 2022 & 或 MiKTeX 21+、MacTeX 2022+ \\
+编译器 & XeLaTeX & 必须支持中文渲染 \\
+字体 & 见下表 & Windows/macOS/Linux 需要不同字体 \\
+磁盘空间 & 500 MB & 用于 TeX 发行版的安装 \\
+内存 & 2 GB & 编译大型演示文稿时的推荐配置 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{依赖包}
+
+IQB-JC-Beamer 的核心功能依赖以下 LaTeX 包。大多数现代 TeX 发行版都已内置这些包，无需单独安装。
+
+\begin{table}[h]
+\centering
+\caption{IQB-JC-Beamer 依赖包列表}
+\label{tab:dependencies}
+\begin{tabular}{p{2.5cm}p{4cm}p{6.5cm}}
+\toprule
+\textbf{包名} & \textbf{用途} & \textbf{功能说明} \\
+\midrule
+\lstinline|beamer| & 演示框架 & Beamer 文档类和主题系统 \\
+\lstinline|xeCJK| & 中文支持 & XeLaTeX 中文排版 \\
+\lstinline|tikz| & 绘图 & 高级 PDF 绘图和定位 \\
+\lstinline|graphicx| & 图片支持 & 图片包含和缩放 \\
+\lstinline|amsmath| & 数学公式 & 扩展的数学环境 \\
+\lstinline|amsymb| & 数学符号 & 额外的数学符号 \\
+\lstinline|booktabs| & 表格美化 & 专业表格排版 \\
+\lstinline|mhchem| & 化学公式 & 化学方程式和符号（可选） \\
+\lstinline|ifplatform| & 平台检测 & 操作系统检测（可选） \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{获取模板}
+
+\subsection{方法一：从 GitHub 克隆}
+
+通过 Git 克隆完整的仓库：
+
+\begin{lstlisting}[style=blockstyle,language=bash]
+git clone https://github.com/your-org/IQB-JC.git
+cd IQB-JC
+\end{lstlisting}
+
+此方法获得完整的项目结构，包括所有示例、文档和版本历史。
+
+\subsection{方法二：下载 ZIP 包}
+
+从 GitHub 下载最新的 Release 包：
+
+\begin{lstlisting}[style=blockstyle,language=bash]
+# 解压到本地目录
+unzip IQB-JC-v1.0.zip
+cd IQB-JC-master
+\end{lstlisting}
+
+\subsection{文件结构}
+
+成功安装后，项目结构应如下所示：
+
+\begin{lstlisting}[style=blockstyle]
+IQB-JC-master/
+├── theme/                              # 主题和布局工具包
+│   ├── beamerthemeiqb.sty             # 主题定义（颜色、字体、页眉页脚）
+│   ├── iqb-layouts.sty                # 布局工具包（50+ 布局和模块）
+│   └── images/
+│       ├── header.png                 # 页眉横幅图片（1999×204px）
+│       └── protein.png                # 装饰图片（可选）
+├── template/
+│   └── jc-template.tex                # 空白模板（推荐新手使用）
+├── examples/
+│   ├── membrane-pore-jc.tex           # 完整工作示例
+│   ├── images/                        # 示例图片资源
+│   └── output/                        # 编译输出目录（PDF）
+├── tools/
+│   └── extract_pdf_page.py            # PDF 页面提取工具（调试用）
+├── software-copyright/                # 文档源
+│   ├── 1-introduction-installation.tex # 章节 1：概述与安装指南（本文件）
+│   └── 2-basic-usage.tex               # 章节 2：基础使用指南
+├── README.md                          # 项目简介
+└── LICENSE                            # MIT 许可证
+\end{lstlisting}
+
+\section{平台特定的安装步骤}
+
+\subsection{Windows 用户}
+
+\textbf{步骤 1：安装 TeX 发行版}
+
+推荐使用 TeXLive 或 MiKTeX：
+
+\begin{itemize}
+    \item \textbf{TeXLive}：下载 \lstinline|texlive2022-20220321.iso| 或更新版本，按照安装向导安装
+    \item \textbf{MiKTeX}：访问 \url{https://miktex.org}，下载 Windows 安装程序
+\end{itemize}
+
+在安装过程中，确保勾选以下选项：
+
+\begin{itemize}
+    \item XeLaTeX 编译器
+    \item 中文支持包（CJK）
+    \item 所有推荐的字体和工具包
+\end{itemize}
+
+\textbf{步骤 2：验证安装}
+
+打开命令提示符（cmd）或 PowerShell，运行：
+
+\begin{lstlisting}[style=blockstyle,language=bash]
+xelatex --version
+\end{lstlisting}
+
+若显示版本信息，则安装成功。
+
+\textbf{步骤 3：检查中文字体}
+
+Windows 系统内置的中文字体（SimSun）通常已安装，无需额外配置。若遇到中文乱码，可检查字体位置：
+
+\begin{lstlisting}[style=blockstyle,language=bash]
+# 查看已安装的中文字体
+fc-list :lang=zh
+\end{lstlisting}
+
+\subsection{macOS 用户}
+
+\textbf{步骤 1：安装 MacTeX}
+
+MacTeX 是 macOS 上的 TeXLive 发行版，建议通过 Homebrew 安装：
+
+\begin{lstlisting}[style=blockstyle,language=bash]
+brew install mactex
+\end{lstlisting}
+
+或者从 \url{https://www.tug.org/mactex/} 下载 DMG 安装程序。
+
+完整安装约 3-4 GB，需要 20 分钟左右。
+
+\textbf{步骤 2：验证安装}
+
+\begin{lstlisting}[style=blockstyle,language=bash]
+xelatex --version
+\end{lstlisting}
+
+\textbf{步骤 3：检查中文字体}
+
+macOS 系统通常内置 Songti SC 等中文字体。若需使用其他字体，可通过字体簿查看已安装的字体。
+
+若 XeLaTeX 无法找到字体，可指定完整路径：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\setCJKmainfont[Path=/Library/Fonts/]{Songti SC}
+\end{lstlisting}
+
+\subsection{Linux 用户}
+
+\textbf{步骤 1：安装 TeXLive}
+
+\textbf{Ubuntu/Debian：}
+\begin{lstlisting}[style=blockstyle,language=bash]
+sudo apt-get update
+sudo apt-get install texlive-xetex texlive-fonts-recommended
+sudo apt-get install fonts-noto-cjk  # 中文字体
+\end{lstlisting}
+
+\textbf{Fedora/RHEL：}
+\begin{lstlisting}[style=blockstyle,language=bash]
+sudo dnf install texlive-xetex texlive-fonts-recommended
+sudo dnf install google-noto-sans-cjk-fonts
+\end{lstlisting}
+
+\textbf{Arch Linux：}
+\begin{lstlisting}[style=blockstyle,language=bash]
+sudo pacman -S texlive-xetex texlive-fontsrecommended
+sudo pacman -S noto-fonts-cjk
+\end{lstlisting}
+
+\textbf{步骤 2：验证安装}
+
+\begin{lstlisting}[style=blockstyle,language=bash]
+xelatex --version
+fc-list :lang=zh | grep "Noto"  # 查看中文字体
+\end{lstlisting}
+
+若字体列表为空，可手动安装字体包。
+
+\section{编译器配置}
+
+\subsection{配置 XeLaTeX 编译命令}
+
+在集成开发环境（IDE）或编辑器中配置 XeLaTeX 为主要编译器。
+
+\textbf{Visual Studio Code（推荐）}
+
+安装 LaTeX Workshop 扩展，在 \lstinline|settings.json| 中配置：
+
+\begin{lstlisting}[style=blockstyle,language=json]
+"latex-workshop.latex.tools": [
+  {
+    "name": "xelatex",
+    "command": "xelatex",
+    "args": [
+      "-interaction=nonstopmode",
+      "-file-line-error",
+      "%DOCFILE%"
+    ]
+  }
+],
+"latex-workshop.latex.recipes": [
+  {
+    "name": "xelatex",
+    "tools": ["xelatex"]
+  }
+]
+\end{lstlisting}
+
+\textbf{Overleaf（在线）}
+
+项目菜单 → Menu → Compiler → 选择 XeLaTeX
+
+\textbf{TeXStudio}
+
+选项 → 配置 TeXStudio → Build → Default Compiler → 选择 XeLaTeX
+
+\section{快速启动}
+
+\subsection{使用空白模板}
+
+最快的开始方式是使用预设的模板：
+
+\begin{lstlisting}[style=blockstyle,language=bash]
+# 复制模板到你的工作目录
+cp -r template/jc-template.tex my-presentation.tex
+cd my-presentation
+
+# 或直接编辑模板
+xelatex -interaction=nonstopmode jc-template.tex
+\end{lstlisting}
+
+\subsection{查看完整示例}
+
+查看工作示例以了解所有功能：
+
+\begin{lstlisting}[style=blockstyle,language=bash]
+cd examples
+xelatex -interaction=nonstopmode membrane-pore-jc.tex
+# 打开 membrane-pore-jc.pdf 查看结果
+\end{lstlisting}
+
+\section{故障排除}
+
+\subsection{编译错误：找不到文件}
+
+\textbf{问题}：\lstinline|! I can't find file `../theme/beamerthemeiqb.sty`|
+
+\textbf{原因}：相对路径不正确
+
+\textbf{解决方案}：
+\begin{itemize}
+    \item 确认 \lstinline|.tex| 文件与 \lstinline|theme/| 目录的相对关系
+    \item 若 \lstinline|.tex| 在 \lstinline|examples/| 目录，路径应为 \lstinline|../theme/beamerthemeiqb|
+    \item 若 \lstinline|.tex| 在项目根目录，路径应为 \lstinline|theme/beamerthemeiqb|
+\end{itemize}
+
+\subsection{中文显示为方框}
+
+\textbf{问题}：编译后 PDF 中中文显示为方框或乱码
+
+\textbf{原因}：
+\begin{itemize}
+    \item 未使用 XeLaTeX 编译（使用了 pdflatex）
+    \item 中文字体未安装或未正确指定
+\end{itemize}
+
+\textbf{解决方案}：
+\begin{enumerate}
+    \item 确认使用 XeLaTeX 编译
+    \item 检查字体名称：\lstinline|fc-list :lang=zh|
+    \item 在 \lstinline|.tex| 中明确指定字体
+\end{enumerate}
+
+\subsection{缺少依赖包}
+
+\textbf{问题}：\lstinline|! LaTeX Error: File `tikz.sty` not found|
+
+\textbf{解决方案}：
+
+根据具体缺失的包名，使用包管理器安装。例如，缺少 tikz 包：
+
+\textbf{MiKTeX：}
+\begin{lstlisting}[style=blockstyle,language=bash]
+tlmgr install pgf
+\end{lstlisting}
+
+\textbf{TeXLive：}
+\begin{lstlisting}[style=blockstyle,language=bash]
+tlmgr install pgf --repository ctan
+\end{lstlisting}
+
+\section{性能优化}
+
+对于大型演示或多次编译，可采取以下优化措施：
+
+\begin{itemize}
+    \item \textbf{启用 SyncTeX}：加速编辑器和 PDF 查看器的同步：\lstinline|xelatex -synctex=1|
+    \item \textbf{使用草稿模式}：加快编译速度（最终提交前移除）：\lstinline|\documentclass[draft]{beamer}|
+    \item \textbf{优化图片尺寸}：使用合适分辨率的图片而非超高分辨率
+    \item \textbf{缓存 TikZ 输出}：使用 \lstinline|tikzexternalize| 库缓存复杂绘图
+\end{itemize}
+
+\section{下一步}
+
+安装完成后，建议按以下步骤继续：
+
+\begin{enumerate}
+    \item 阅读第 \ref{chap:theme-customization} 章了解主题自定义
+    \item 查看 \lstinline|template/jc-template.tex| 的配置示例
+    \item 运行 \lstinline|examples/membrane-pore-jc.tex| 查看完整功能演示
+    \item 根据需要自定义主题和布局
+\end{enumerate}

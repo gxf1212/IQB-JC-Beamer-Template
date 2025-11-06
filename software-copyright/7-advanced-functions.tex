@@ -1,0 +1,321 @@
+%!TEX root = document.tex
+
+\chapter{高级功能模块与快捷命令系统}
+\label{chap:7}
+
+本章详细介绍 IQB-JC 模板的图表模块、作者信息模块和 Punchline 智能强调系统。这些模块提供了丰富的内容展示功能，帮助用户创建更加专业、美观的学术演示文稿。
+
+\section{图表模块（自动编号）}
+
+IQB-JC 模板提供了带自动编号和统一格式的图表模块。所有图表自动生成"图X："格式的编号，caption 左对齐显示。
+
+\subsection{单图模块}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbfig[height=0.5\textheight]{图片路径}{图说文字}
+\end{lstlisting}
+
+参数说明见表 \ref{tab:iqbfig-params}。
+
+\begin{table}[!h]
+\centering
+\caption{iqbfig 命令参数}
+\label{tab:iqbfig-params}
+\begin{tabular}{p{2.5cm}p{2.5cm}p{8cm}}
+\toprule
+\textbf{参数} & \textbf{默认值} & \textbf{说明} \\
+\midrule
+\lstinline|[选项]| & \lstinline|height=0.5\textheight| & 图片尺寸，支持 \lstinline|height| 或 \lstinline|width| \\
+图片路径 & 必需 & 相对或绝对路径，支持 PNG/PDF \\
+图说文字 & 必需 & 图片下方的说明文字，自动编号 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+使用示例：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\begin{frame}{单图展示}
+  \iqbfig[height=0.55\textheight]{results.png}{
+    结果展示图：实验数据对比分析
+  }
+\end{frame}
+\end{lstlisting}
+
+\subsection{双图模块（带图号和图注）}
+
+当需要两张图片并排显示且各有独立的图号和图注时，使用 \lstinline|\iqbtwofig| 命令。该命令自动为每张图片编号（"图1"、"图2"等）。
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbtwofig[height=0.45\textheight]{img1}{caption1}{img2}{caption2}
+\end{lstlisting}
+
+该模块将两张图片并排显示，各占 48\% 宽度，自动添加图号前缀。使用示例：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\begin{frame}{双图对比}
+  \iqbtwofig[height=0.5\textheight]{
+    method_a.png
+  }{
+    方法 A 的结果展示
+  }{
+    method_b.png
+  }{
+    方法 B 的结果展示
+  }
+\end{frame}
+\end{lstlisting}
+
+\subsection{双图并排（无caption，支持间距控制）}
+
+当需要并排放置两张图片，但不需要图号和图注时，使用 \lstinline|\iqbtwoimgside| 命令。该命令支持自定义两图间距。
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbtwoimgside[间距]{左图内容}{右图内容}
+\end{lstlisting}
+
+参数说明：
+\begin{itemize}
+  \item \texttt{[间距]}（可选，默认 0.3cm）：控制两张图片之间的距离
+  \begin{itemize}
+    \item 正值（如 \texttt{0.2cm}）：增加间距
+    \item 负值（如 \texttt{-0.3cm}）：减少间距，使图片靠近
+  \end{itemize}
+  \item 左图内容：通常使用 \lstinline|\iqbimgcenter| 或其他图片命令
+  \item 右图内容：同上
+\end{itemize}
+
+使用示例：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\begin{frame}{两个奖项展示}
+  \iqbtwoimgside[-0.3cm]{
+    \iqbimgcenter[height=0.4\textheight]{award1.png}
+  }{
+    \iqbimgcenter[height=0.4\textheight]{award2.png}
+  }
+\end{frame}
+\end{lstlisting}
+
+\subsection{三图模块}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbthreefig[height=0.35\textheight]{img1}{cap1}{img2}{cap2}{img3}{cap3}
+\end{lstlisting}
+
+三张图片均匀分布在一行，各占 31\% 宽度。该布局适合展示三个相关的分析结果。
+
+\subsection{四图网格模块}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbfourfig[height=0.35\textheight]{
+  img1}{cap1}{img2}{cap2}{img3}{cap3}{img4}{cap4}
+\end{lstlisting}
+
+四张图片排列为 2×2 网格。该布局提供清晰的图表组织方式，适合展示多阶段或多方法的结果对比。
+
+\section{作者信息模块}
+
+IQB-JC 模板提供了专门的作者信息展示模块，适用于文献汇报时介绍论文作者的信息。
+
+\subsection{双作者模块（无照片）}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbauthorstwo{
+  通讯作者姓名}{通讯作者单位}{通讯作者网址}{通讯作者研究方向}{
+  第一作者姓名}{第一作者单位}{第一作者网址}{第一作者研究方向
+}
+\end{lstlisting}
+
+该模块以 50-50 双列布局展示通讯作者和第一作者的信息。使用示例：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\begin{frame}{作者信息}
+  \iqbauthorstwo{
+    Prof. John Smith
+  }{
+    Department of Biology\\
+    University of Example
+  }{
+    https://example.edu/smith
+  }{
+    Molecular dynamics, Protein folding
+  }{
+    Dr. Jane Doe
+  }{
+    Institute of Computational Science\\
+    Example University
+  }{
+    https://example.edu/doe
+  }{
+    MD simulations, Free energy calculations
+  }
+\end{frame}
+\end{lstlisting}
+
+\subsection{双作者模块（带照片）}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\setauthorfirstfield{第一作者研究领域}
+\iqbauthorstwophoto{
+  通讯作者照片路径}{通讯作者姓名}{...}{...}{通讯作者研究方向}{
+  第一作者照片路径}{第一作者姓名}{...}{...}
+}
+\end{lstlisting}
+
+使用 \lstinline|\setauthorfirstfield{}| 命令单独设置第一作者的专业领域。使用示例：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\begin{frame}{论文作者}
+  \setauthorfirstfield{计算生物物理、膜蛋白模拟、自由能计算}
+  \iqbauthorstwophoto{
+    author1.jpg
+  }{
+    Prof. Alice Brown
+  }{
+    College of Science\\
+    Tech University
+  }{
+    https://example.org/alice
+  }{
+    Protein structure prediction, Force field development
+  }{
+    author2.jpg
+  }{
+    Dr. Bob White
+  }{
+    Center for Molecular Dynamics\\
+    Research Institute
+  }{
+    https://example.org/bob
+  }
+\end{frame}
+\end{lstlisting}
+
+\subsection{单作者模块}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbauthorone{作者姓名}{作者单位}{作者网址}{研究方向}
+\end{lstlisting}
+
+该模块适用于单作者论文或特邀评论文章。信息居中显示。
+
+\section{Punchline 智能强调系统}
+
+\label{sec:punchline}
+
+IQB-JC 模板提供了灵活的 Punchline 系统，用于在幻灯片页面中突出核心观点、关键发现或学术申请陈述的重点内容。该系统支持多种颜色、对齐方式和框风格的组合，满足不同的表达需求。
+
+\subsection{基础 Punchline 命令}
+
+\textbf{简单指定颜色}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbpunchline[颜色]{文本}
+\end{lstlisting}
+
+默认蓝色，文本自动居中。使用示例：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbpunchline[iqbgreen]{计算驱动创新，精准设计引领药物研发新方向！}
+
+\iqbpunchline[iqborange]{警示：需要特别关注的重要发现}
+\end{lstlisting}
+
+\subsection{色彩快捷命令（推荐）}
+
+提供三种颜色的快捷命令，对应不同的内容类型：
+
+\textbf{蓝色 Punchline（核心观点、主要发现）}
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+% 最简单：默认无框，居中对齐
+\iqbpunchlineblue{核心观点文本}
+
+% 左对齐（适合多行文本）
+\iqbpunchlineblue[l]{
+  多行文本行 1\\
+  多行文本行 2
+}
+
+% 有框，居中对齐
+\iqbpunchlineblue[b]{有框的蓝色 punchline}
+
+% 有框，左对齐（多行+框）
+\iqbpunchlineblue[bl]{
+  多行文本：\\
+  第一行\\
+  第二行
+}
+\end{lstlisting}
+
+\textbf{绿色 Punchline（成功验证、正面结果）}
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+% 默认：无框，居中对齐
+\iqbpunchlinegreen{验证通过：实验结果符合预期}
+
+% 有框，居中对齐
+\iqbpunchlinegreen[b]{成功案例：有框显示}
+
+% 长文本左对齐（推荐多行内容）
+\iqbpunchlinegreen[l]{PKNAP整合FEPaML、NEOM、MultiTAP等多个肿瘤免疫服务器，\\
+融合物理、知识与AI，与FEbuilder、PolyglotMol等形成完整计算药物设计平台！}
+\end{lstlisting}
+
+\textbf{橙色 Punchline（警示、挑战、需要关注）}
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbpunchlineorange{警示：需要关注的重要事项}
+
+\iqbpunchlineorange[l]{多行警告\\
+需要特别注意}
+\end{lstlisting}
+
+\textbf{参数说明}
+
+表 \ref{tab:punchline-params} 详细说明了可选参数及其含义。
+
+\begin{table}[!h]
+\centering
+\caption{Punchline 快捷命令参数}
+\label{tab:punchline-params}
+\begin{tabular}{p{2cm}p{3cm}p{7cm}}
+\toprule
+\textbf{参数} & \textbf{效果} & \textbf{适用场景} \\
+\midrule
+空（默认） & 无框，居中对齐 & 单行短文本 \\
+\lstinline|[l]| & 无框，左对齐 & 多行长文本 \\
+\lstinline|[b]| & 有框，居中对齐 & 需要突出强调的单行 \\
+\lstinline|[bl]| 或 \lstinline|[lb]| & 有框，左对齐 & 多行文本需要框突显 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{向后兼容命令}
+
+为了兼容之前的代码，以下命令仍然可用（等价于 \lstinline|[b]| 参数版本）：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbpunchlineboxgreen{有框的绿色 punchline}
+
+\iqbpunchlineboxorange{有框的橙色 punchline}
+\end{lstlisting}
