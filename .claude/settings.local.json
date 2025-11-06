@@ -20,7 +20,8 @@
       "Bash(/mnt/d/texlive/2022/bin/win32/biber.exe:*)",
       "Bash(pdfinfo:*)",
       "Bash(rm examples/features-showcase.vrb)",
-      "Bash(do:*)"
+      "Bash(do:*)",
+      "Bash(rm /mnt/e/GitHub-repo/IQB-JC-master/software-copyright/4-advanced-layouts.tex)"
     ],
     "deny": [],
     "ask": []

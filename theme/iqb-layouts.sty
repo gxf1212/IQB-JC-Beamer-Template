@@ -161,6 +161,23 @@
   \end{columns}
 }
 
+% 【3.5 两张图片并排（无caption，支持间距控制）】
+% Usage: \iqbtwoimgside[间距]{左图内容}{右图内容}
+% 例如: \iqbtwoimgside[0.2cm]{\iqbimgcenter[height=0.4\textheight]{img1.png}}{\iqbimgcenter[height=0.4\textheight]{img2.png}}
+\newcommand{\iqbtwoimgside}[3][0.3cm]{%
+  \begin{columns}[T]
+    \begin{column}{0.45\textwidth}
+      \centering
+      #2
+    \end{column}
+    \hspace{#1}
+    \begin{column}{0.45\textwidth}
+      \centering
+      #3
+    \end{column}
+  \end{columns}
+}
+
 % 【4. 自定义比例双列】
 % \iqblayoutcustom[左宽度]{左列}{右列}
 % 用途: 任意比例的双列分割
