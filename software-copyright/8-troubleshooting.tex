@@ -1,0 +1,388 @@
+%!TEX root = document.tex
+
+\chapter{故障排除与最佳实践}
+\label{chap:8}
+
+本章详细介绍 IQB-JC 模板的高级功能模块和快捷命令系统，包括高级布局模块、各种快捷命令框架以及 VSCode Snippets 集成。这些功能显著提升了模板的使用效率和代码的可维护性。
+
+\section{高级功能模块}
+
+\subsection{公式与解释布局}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbformulaexplain{公式内容}{公式右侧解释文字}
+\end{lstlisting}
+
+该模块采用 1/3 + 2/3 布局，左侧放置公式（居中），右侧放置解释说明。使用示例：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\begin{frame}{关键公式推导}
+  \iqbformulaexplain{
+    $\Delta G = \Delta H - T\Delta S$
+  }{
+    \textbf{含义：}
+    \begin{itemize}
+      \item $\Delta G$ 是自由能变化
+      \item $\Delta H$ 是焓变
+      \item $T\Delta S$ 是熵项贡献
+    \end{itemize}
+  }
+\end{frame}
+\end{lstlisting}
+
+\subsection{时间线/流程图模块}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbtimeline{步骤1标题}{步骤1内容}{步骤2标题}{步骤2内容}{
+  步骤3标题}{步骤3内容}
+\end{lstlisting}
+
+该模块创建一个三步的流程图，使用 TikZ 绘制连接的方框。每个方框包含标题和内容，步骤间有箭头连接。使用示例：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\begin{frame}{研究方法流程}
+  \iqbtimeline{
+    数据采集}{收集 1000 个样本}{
+    数据处理}{质量控制与预处理}{
+    统计分析}{方差分析与回归
+  }
+\end{frame}
+\end{lstlisting}
+
+\subsection{双列对比模块}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbcomparetwo{标题 A}{内容 A}{标题 B}{内容 B}
+\end{lstlisting}
+
+该模块在双列布局中展示两个方法或方案的对比。每列包含标题和内容，自动对齐。
+
+\subsection{三列对比模块}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbcomparethree{标题A}{内容A}{标题B}{内容B}{标题C}{内容C}
+\end{lstlisting}
+
+该模块采用三列布局展示三个方法或方案的对比分析。
+
+\subsection{精确定位（高级）}
+
+对于需要自定义精确布局的情况，模板提供了底层的定位工具。
+
+\textbf{文本精确定位}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbplace{x}{y}{宽度}{内容}
+\end{lstlisting}
+
+其中坐标 (0,0) 为页面左上角，x 和 y 单位为 cm。使用示例：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\begin{frame}{}
+  \iqbplace{2}{3}{10cm}{
+    自定义位置的文本内容
+  }
+\end{frame}
+\end{lstlisting}
+
+\textbf{图片精确定位}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbplaceimage{x}{y}{宽度}{高度}{图片路径}
+\end{lstlisting}
+
+\section{快捷命令系统}
+
+\subsection{概述}
+
+为了进一步简化用户编写，模板在 \lstinline|iqb-layouts.sty| 中提供了一系列高级宏命令。这些命令将常见的Frame模式标准化和模板化，显著减少代码重复，提升编写效率。所有新命令与现有代码完全兼容，用户可以渐进式采用。
+
+\subsection{Frame 快捷命令}
+
+\textbf{标准 Frame}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbframe{标题}{内容}
+\end{lstlisting}
+
+用于快速创建标准单栏 frame，相比原始写法减少 67\% 的代码。
+
+\textbf{文字+图片 Frame（左文右图）}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbframetextfig[高度]{标题}{文字内容}{图片路径}
+\end{lstlisting}
+
+自动应用 1/3 左 + 2/3 右的布局。可选参数 \lstinline|[高度]| 默认为 \lstinline|0.55\textheight|。
+
+使用示例：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbframetextfig{膜孔形成的重要性}{
+  \textbf{应用领域}：
+  \begin{itemize}
+    \item 抗菌肽设计
+    \item 药物递送系统
+    \item 细胞通透性调控
+  \end{itemize}
+}{images/membrane-pore.png}
+\end{lstlisting}
+
+\textbf{图片+文字 Frame（左图右文）}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbframefigttext[高度]{标题}{图片路径}{文字内容}
+\end{lstlisting}
+
+图片占 1/3 左，文字占 2/3 右。
+
+\textbf{文字+双图 Frame}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbframetexttwofig[高度]{标题}{文字}{img1}{cap1}{img2}{cap2}
+\end{lstlisting}
+
+文字占 1/3 左，两张并排的图片占 2/3 右。
+
+\subsection{Section 管理快捷}
+
+\textbf{自动 Section 分隔页}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbsectionframe{SectionName}{中文标题}
+\end{lstlisting}
+
+自动生成 section 分隔页，并更新 footer 中的 section 进度标识，无需手动调用 \lstinline|\setsection|。
+
+使用示例：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbsectionframe{Methods}{方法}
+% 后续该 section 下的 frame 会自动显示 "Methods" 在 footer 中
+
+\iqbsectionframe{Results}{结果}
+% section 切换，footer 自动更新
+\end{lstlisting}
+
+\subsection{公式+解释专用布局}
+
+\textbf{公式 Frame}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbformulaframe{标题}{公式内容}{右侧图文}
+\end{lstlisting}
+
+左侧 1/3 放置公式推导，右侧 2/3 放置图片或补充说明。代码量减少 70\%。
+
+\textbf{公式块辅助命令}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbformblock{标题}{公式}{解释}
+\end{lstlisting}
+
+自动管理公式块的间距和字体。使用示例：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbformulaframe{Full-Path CV 原理}{
+  \iqbformblock{成核部分 $\text{CV}_{\text{cyl}}$}{
+    $$\text{CV}_{\text{cyl}} = 1 - d/\text{CV}_{\text{eq}}$$
+  }{$d$: 圆柱内脂质尾部原子数}
+}{
+  \iqbformblock{扩展部分 $\text{CV}_{\text{radius}}$}{
+    $$\text{CV}_{\text{radius}} = r_{\text{min}}/r_{\text{unit}}$$
+  }{$r_{\text{min}}$: 孔中心到最近脂质距离}
+}{
+  \iqbfig[height=0.55\textheight]{fig1.png}{集体变量示意图}
+}
+\end{lstlisting}
+
+\subsection{对比展示快捷}
+
+\textbf{三列对比}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbthreecolcompare{title1}{img1}{items1}{title2}{img2}{items2}{title3}{img3}{content3}
+\end{lstlisting}
+
+三列均匀分布，每列可包含标题、图片、列表。代码量减少 83\%。
+
+使用示例：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\begin{frame}{创新方法对比}
+  \iqbthreecolcompare
+    {Full-Path CV}{fig1u.png}{\item 成核+扩展统一 \item 无滞后}
+    {Rapid CV}{fig1d.png}{\item 无限孔模拟 \item 效率高 10×}
+    {开源实现}{plumed.png}{PLUMED 库\\GROMACS/LAMMPS}
+\end{frame}
+\end{lstlisting}
+
+\textbf{双列对比}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbtwocolcompare{title1}{img1}{items1}{title2}{img2}{items2}
+\end{lstlisting}
+
+\subsection{结果展示快捷}
+
+\textbf{结果展示 Frame}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbresultframe{标题}{左侧文字}{右侧图片}
+\end{lstlisting}
+
+左侧 1/3 放置关键发现和数据，右侧 2/3 放置结果图片。代码量减少 80\%。
+
+使用示例：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbresultframe{孔闭合过程分析}{
+  \textbf{四阶段闭合}：
+  \begin{enumerate}
+    \item 平衡孔：初始稳定孔，连续水柱贯穿膜
+    \item 半径缩小：孔边缘脂质重排，结构保持
+    \item 水线程：闭合最后瞬间，仅剩连续水线
+    \item 膜变薄：孔完全闭合，局部膜缺陷
+  \end{enumerate}
+
+  \textbf{关键发现}：脂质尾部密度与孔寿命强相关 (R²=0.82)
+}{images/closure.png}
+\end{lstlisting}
+
+\textbf{对比结果 Frame}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbcomparisonframe{标题}{左图}{左标题}{右图}{右标题}
+\end{lstlisting}
+
+并排展示两个对比结果，自动编号图片。代码量减少 90\%。
+
+\subsection{块级快捷命令}
+
+\textbf{快速创建 Block}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbblock{标题}{内容}
+\end{lstlisting}
+
+替代冗长的 \lstinline|\begin{block}...\end{block}| 写法。
+
+\textbf{快速创建列表}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbitemize{\item 项1 \item 项2 \item 项3}
+
+\iqbenumerate{\item 项1 \item 项2 \item 项3}
+\end{lstlisting}
+
+\subsection{VSCode Snippets 集成}
+
+配置文件位置：\lstinline|.vscode/latex.code-snippets|
+
+在 VSCode 中使用快捷方式，输入缩写后按 Tab 键自动展开完整命令模板：
+
+\begin{table}[!h]
+\centering
+\caption{VSCode Snippets 快捷方式列表}
+\label{tab:vscode-snippets}
+\begin{tabular}{p{2cm}p{3cm}p{6cm}}
+\toprule
+\textbf{快捷方式} & \textbf{对应命令} & \textbf{功能说明} \\
+\midrule
+\lstinline|iqbf| & \lstinline|\iqbframe| & 快速创建标准 frame \\
+\lstinline|iqbtf| & \lstinline|\iqbframetextfig| & 文字+图片 frame \\
+\lstinline|iqbfit| & \lstinline|\iqbframefigttext| & 图片+文字 frame \\
+\lstinline|iqbff| & \lstinline|\iqbformulaframe| & 公式+解释 frame \\
+\lstinline|iqbsec| & \lstinline|\iqbsectionframe| & Section 分隔页 \\
+\lstinline|iqb3c| & \lstinline|\iqbthreecolcompare| & 三列对比 \\
+\lstinline|iqb2c| & \lstinline|\iqbtwocolcompare| & 双列对比 \\
+\lstinline|iqbrf| & \lstinline|\iqbresultframe| & 结果展示 \\
+\lstinline|iqbcf| & \lstinline|\iqbcomparisonframe| & 对比结果 \\
+\lstinline|iqbitem| & \lstinline|\iqbitemize| & 列表 \\
+\lstinline|iqbenum| & \lstinline|\iqbenumerate| & 编号列表 \\
+\lstinline|iqbfb| & \lstinline|\iqbformblock| & 公式块 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+使用示例：在 VSCode 中输入 \lstinline|iqbtf| 并按 Tab，自动展开为：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbframetextfig{标题}{
+  文字内容...
+}{images/xxx.png}
+\end{lstlisting}
+
+\subsection{使用建议与最佳实践}
+
+\begin{itemize}
+\item \textbf{优先使用快捷命令}：在日常编写中优先采用快捷命令，保持代码简洁明了。
+\item \textbf{灵活使用可选参数}：大多数命令支持可选参数微调，如 \lstinline|[0.6\textheight]| 自定义图片高度。
+\item \textbf{完全兼容旧代码}：新命令与现有代码完全兼容，现有幻灯片无需修改。
+\item \textbf{IDE 集成}：配合 VSCode 和 Snippets 获得最佳编写体验。
+\item \textbf{图注管理}：每个图片都应有图注，可以是详细描述或文字解读。当图片非常高时，可以在旁边文字栏中编写解释。
+\end{itemize}
+
+\subsection{代码改进效果统计}
+
+表 \ref{tab:code-improvement} 展示了使用快捷命令后的代码行数改进。平均而言，使用这些快捷命令可将代码量减少约 79\%。
+
+\begin{table}[!h]
+\centering
+\caption{快捷命令代码改进统计}
+\label{tab:code-improvement}
+\begin{tabular}{lcccr}
+\toprule
+\textbf{模板类型} & \textbf{改进前} & \textbf{改进后} & \textbf{减少} & \textbf{对应命令} \\
+\midrule
+标准 Frame & 3 行 & 1 行 & 67\% & \lstinline|\iqbframe| \\
+文字+图片 & 6 行 & 1 行 & 83\% & \lstinline|\iqbframetextfig| \\
+公式+解释 & 40 行 & 12 行 & 70\% & \lstinline|\iqbformulaframe| \\
+三列对比 & 48 行 & 8 行 & 83\% & \lstinline|\iqbthreecolcompare| \\
+结果展示 & 15 行 & 3 行 & 80\% & \lstinline|\iqbresultframe| \\
+对比结果 & 10 行 & 1 行 & 90\% & \lstinline|\iqbcomparisonframe| \\
+\midrule
+\textbf{平均} & - & - & \textbf{79\%} & - \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+对于一个典型的 14 页 Journal Club 演示，使用快捷命令可以将源代码从约 270 行减少至 80 行，显著提升维护效率和可读性。

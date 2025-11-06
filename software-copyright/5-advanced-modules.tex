@@ -1,0 +1,418 @@
+\chapter{高级布局模块}
+\label{chap:5}
+
+本章详细介绍 IQB-JC 模板的多列布局系统、图表布局模块、图文混排功能，以及相关的辅助工具。这些模块为用户提供了丰富的布局选择，满足不同内容类型的展示需求。
+
+\section{多列布局模块}
+
+以下字段是必填的，用于定义演示文稿的基本信息：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\title{演示标题}           % 封面主标题
+\subtitle{副标题}           % 可选：副标题
+\author{作者名字}           % 作者名字
+\institute{机构/学院}       % 学院或研究所名称
+\date{\today}               % 日期（\today 表示当前日期）
+\end{lstlisting}
+
+\subsection{扩展字段}
+
+模板额外支持以下字段，用于学位申请、奖学金申请等场景。这些字段**完全可选**，如不设置则不显示：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\stuid{学号}               % 学号（如果设置则在封面显示）
+\major{专业名称}           % 专业或学位类型（如果设置则在封面显示）
+\advisor{导师名字 教授}    % 指导教师名字（如果设置则在封面显示）
+\end{lstlisting}
+
+使用示例：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\title{杨咏曼奖学金申请陈述}
+\author{高旭帆}
+\institute{生命科学学院 \quad 生物物理研究所}
+\stuid{12207134}
+\major{生物物理学}
+\advisor{周如鸿 教授}
+\end{lstlisting}
+
+\subsection{日期格式设置}
+
+模板支持中英文日期格式切换，通过 \lstinline|\dateformat{}| 命令控制：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+% 使用中文日期格式（推荐用于中文演示）
+\dateformat{zh}
+\date{\today}           % 显示为："2025 年 11 月 5 日"
+
+% 使用英文日期格式（推荐用于英文演示）
+\dateformat{en}
+\date{\today}           % 显示为："5 November 2025"
+\end{lstlisting}
+
+\textbf{注意}：\lstinline|\dateformat| 命令必须在 \lstinline|\date{}| 之前调用。
+
+\section{多列布局模块}
+
+IQB-JC 模板通过 \lstinline|iqb-layouts.sty| 包提供了多种预设布局工具，满足不同的内容排版需求。
+
+\subsection{双列布局（50-50）}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqblayouttwo{左列内容}{右列内容}
+\end{lstlisting}
+
+该命令将页面平均分为两列，各占 48\% 宽度，中间留 4\% 间距。适用于并行展示两个相关内容的场景。使用示例：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\begin{frame}{双列对比}
+  \iqblayouttwo{
+    \textbf{方法 A}
+    \begin{itemize}
+      \item 优点 1
+      \item 优点 2
+    \end{itemize}
+  }{
+    \textbf{方法 B}
+    \begin{itemize}
+      \item 优点 1
+      \item 优点 2
+    \end{itemize}
+  }
+\end{frame}
+\end{lstlisting}
+
+\subsection{不对称双列布局}
+
+\textbf{1/3 + 2/3 布局}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqblayoutonethird{左列内容（占 31\%）}{右列内容（占 65\%）}
+\end{lstlisting}
+
+该布局将页面分为 31\% 和 65\% 两列，适合在右侧放置大图，左侧放置说明文字。使用示例：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\begin{frame}{竖版图片布局}
+  \iqblayoutonethird{
+    \textbf{说明文字}
+
+    该图展示了关键结果
+  }{
+    \includegraphics[height=0.6\textheight,keepaspectratio]{image.png}
+  }
+\end{frame}
+\end{lstlisting}
+
+\textbf{2/3 + 1/3 布局}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqblayouttwothirds{左列内容（占 65\%）}{右列内容（占 31\%）}
+\end{lstlisting}
+
+该布局与上述布局对称，适合在左侧放置大图，右侧放置说明文字。
+
+\subsection{三列布局}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqblayoutthree{左列内容}{中列内容}{右列内容}
+\end{lstlisting}
+
+将页面平均分为三列，各占 31\% 宽度。适合展示三个平行的内容或对比三种方法。使用示例：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\begin{frame}{三方法对比}
+  \iqblayoutthree{
+    \textbf{方法 A}
+
+    优点与缺点分析
+  }{
+    \textbf{方法 B}
+
+    优点与缺点分析
+  }{
+    \textbf{方法 C}
+
+    优点与缺点分析
+  }
+\end{frame}
+\end{lstlisting}
+
+\section{网格与图表布局}
+
+\subsection{2×2 网格布局}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbgridtwobytwo{左上}{右上}{左下}{右下}
+\end{lstlisting}
+
+该布局适合展示四个相关的图片或内容块，自动排列成 2×2 网格。使用示例：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\begin{frame}{四个关键结果}
+  \iqbgridtwobytwo{
+    \includegraphics[height=0.35\textheight]{fig1.png}
+  }{
+    \includegraphics[height=0.35\textheight]{fig2.png}
+  }{
+    \includegraphics[height=0.35\textheight]{fig3.png}
+  }{
+    \includegraphics[height=0.35\textheight]{fig4.png}
+  }
+\end{frame}
+\end{lstlisting}
+
+\subsection{3×2 网格布局}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbgridthreebytwo{左上}{中上}{右上}{左下}{中下}{右下}
+\end{lstlisting}
+
+该布局展示六个内容块，排列为 3 列 2 行。各列占 31\% 宽度，垂直间距为 0.5em。
+
+\section{图文混排模块}
+
+\subsection{图片左、文字右}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbimagetext[图片选项]{图片路径}{右侧文字内容}
+\end{lstlisting}
+
+默认图片选项为 \lstinline|width=0.45\textwidth|。使用示例：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\begin{frame}{实验结果}
+  \iqbimagetext[width=0.4\textwidth]{experiment.png}{
+    \textbf{关键发现：}
+    \begin{itemize}
+      \item 发现 1
+      \item 发现 2
+      \item 发现 3
+    \end{itemize}
+  }
+\end{frame}
+\end{lstlisting}
+
+\subsection{文字左、图片右}
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbtextimage[图片选项]{左侧文字内容}{图片路径}
+\end{lstlisting}
+
+这是上述布局的镜像版本，文字显示在左列，图片显示在右列。使用示例：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\begin{frame}{方法流程}
+  \iqbtextimage[height=0.55\textheight]{
+    \textbf{研究步骤：}
+    \begin{enumerate}
+      \item 数据收集
+      \item 预处理
+      \item 分析
+    \end{enumerate}
+  }{flowchart.png}
+\end{frame}
+\end{lstlisting}
+
+\section{辅助工具}
+
+\subsection{PDF 转 PPTX（嵌入图片）}
+
+\subsubsection{用途与特点}
+
+\lstinline|pdf_to_pptx.py| 工具用于快速将编译后的 PDF 演示文稿转换为 PPTX 格式。该工具将 PDF 的每一页转换为高分辨率图片并嵌入到 PPTX 中，适用于以下场景：
+
+\begin{itemize}
+  \item 需要快速生成 PowerPoint 格式供他人浏览
+  \item 保留 PDF 中的完整布局和样式（包括 header、footer、排版等）
+  \item 无需在 PowerPoint 中编辑内容，只需要演示
+\end{itemize}
+
+\paragraph{使用方法}
+
+基本用法：
+
+\begin{lstlisting}[style=blockstyle,language=bash]
+python tools/pdf_to_pptx.py examples/Xufan.pdf output.pptx
+\end{lstlisting}
+
+高分辨率转换（可选）：
+
+\begin{lstlisting}[style=blockstyle,language=bash]
+python tools/pdf_to_pptx.py examples/Xufan.pdf output.pptx --dpi 300
+\end{lstlisting}
+
+添加页码注释：
+
+\begin{lstlisting}[style=blockstyle,language=bash]
+python tools/pdf_to_pptx.py examples/Xufan.pdf output.pptx --add-notes
+\end{lstlisting}
+
+\paragraph{系统依赖}
+
+使用前需要安装必要的依赖：
+
+\begin{lstlisting}[style=blockstyle,language=bash]
+# Python 依赖
+pip install pdf2image python-pptx pillow
+
+# 系统依赖（Linux/WSL）
+sudo apt install poppler-utils
+
+# 系统依赖（macOS）
+brew install poppler
+\end{lstlisting}
+
+\paragraph{限制}
+
+因为是嵌入图片，生成的 PPTX：
+\begin{itemize}
+  \item 不可编辑（文字无法选中和修改）
+  \item 文件较大（由于高分辨率图片）
+  \item 无法提取或修改单个元素（如字体、颜色）
+\end{itemize}
+
+\subsection{PDF 提取页面为 PNG}
+
+\subsubsection{用途与特点}
+
+\lstinline|extract_pdf_page.py| 工具用于提取 PDF 中的指定页面并保存为 PNG 图片，用于视觉验证和调试。该工具常配合 pdf-layout-reviewer agent 使用，用于检查页面布局是否符合模板要求。
+
+\paragraph{使用方法}
+
+提取第 6 页到默认路径 \lstinline|/tmp/pdf_page_6.png|：
+
+\begin{lstlisting}[style=blockstyle,language=bash]
+python tools/extract_pdf_page.py examples/Xufan.pdf 6
+\end{lstlisting}
+
+指定输出路径：
+
+\begin{lstlisting}[style=blockstyle,language=bash]
+python tools/extract_pdf_page.py examples/Xufan.pdf 6 my_output.png
+\end{lstlisting}
+
+\paragraph{系统依赖}
+
+\begin{lstlisting}[style=blockstyle,language=bash]
+# Python 依赖
+pip install pdf2image pillow
+
+# 系统依赖（Linux/WSL）
+sudo apt install poppler-utils
+
+# 系统依赖（macOS）
+brew install poppler
+\end{lstlisting}
+
+\subsection{生成可编辑 PPTX（布局保持）}
+
+\subsubsection{用途与特点}
+
+\lstinline|pdf_to_editable_pptx.py| 工具生成真正可编辑的 PPTX 文件，采用 \textbf{混合方法（背景图 + 文本框）}，实现：
+\begin{itemize}
+  \item \textbf{完全相同的布局}：PDF 页面作为 300 DPI 高清背景图，确保视觉完全一致
+  \item \textbf{完全可编辑的文字}：透明文本框精确覆盖原文字位置，保持样式
+  \item \textbf{最佳的可用性}：既有专业的视觉效果，又能在 PowerPoint 中自由编辑
+\end{itemize}
+
+\paragraph{核心特性}
+
+\begin{itemize}
+  \item \textbf{样式完整保留}：字体名称、字号、颜色、粗体、斜体等
+  \item \textbf{布局精确映射}：保留精确的文本位置（坐标映射）
+  \item \textbf{页面比例精确匹配}：自动从 PDF 获取真实页面尺寸，确保 PPTX 与 PDF 页面比例完全一致
+  \item \textbf{小文件体积}：40--50KB（相比嵌入图片方式小 100 倍）
+  \item \textbf{完全可编辑}：文本可选、可修改、可重新设置样式
+  \item \textbf{快速转换}：无需 OCR，直接提取 PDF 结构信息
+\end{itemize}
+
+\paragraph{适用场景}
+
+\begin{itemize}
+  \item 需要在 PowerPoint 中进一步编辑内容
+  \item 需要保持原始样式（颜色、字体、大小）的可编辑性
+  \item 文件大小有限制（邮件、云同步等）
+  \item 需要提取和复用幻灯片中的文本内容
+  \item 需要修改某些 PDF 内容但保留整体样式
+\end{itemize}
+
+\paragraph{限制与注意}
+
+\begin{itemize}
+  \item 不能保留 PDF 中的复杂矢量图形（但可提取图片）
+  \item 某些特殊 PostScript 字体可能被替换为相似的可用字体
+  \item 复杂多列布局的重排可能需要手动微调
+  \item 超复杂的 LaTeX 数学公式可能无法完美还原
+\end{itemize}
+
+\paragraph{使用方法}
+
+标准用法：
+
+\begin{lstlisting}[style=blockstyle,language=bash]
+python tools/pdf_to_editable_pptx.py input.pdf output.pptx
+\end{lstlisting}
+
+示例：
+
+\begin{lstlisting}[style=blockstyle,language=bash]
+# 转换为可编辑 PPTX（保留所有样式）
+python tools/pdf_to_editable_pptx.py examples/Xufan.pdf my_presentation.pptx
+
+# 转换后的 PPTX 可在 PowerPoint/LibreOffice 中编辑
+# - 文字可选择和修改
+# - 颜色、字体保持不变
+# - 位置和大小也能准确还原
+\end{lstlisting}
+
+\paragraph{系统依赖}
+
+\begin{lstlisting}[style=blockstyle,language=bash]
+# Python 依赖
+pip install pymupdf python-pptx pillow
+
+# 系统依赖（仅 Linux/WSL 需要，Windows 不需要）
+# 如果不使用 pdf_to_pptx.py，不需要安装 poppler
+sudo apt install poppler-utils
+\end{lstlisting}
+
+\paragraph{工作原理}
+
+该工具的转换流程：
+
+\begin{enumerate}
+  \item 使用 PyMuPDF 的 \lstinline|get_text("dict")| 提取 PDF 每个 span 的详细信息
+  \item 提取内容：文本内容、字体名称、字号、RGB 颜色、粗体/斜体标志、精确坐标
+  \item 坐标映射：将 PDF 坐标（左下角原点）转换为 PPTX 坐标（左上角原点）
+  \item 创建文本框：根据提取的样式逐个创建 PPTX 文本框，应用对应的字体/颜色/大小
+  \item 生成 PPTX：保存为可在 PowerPoint/LibreOffice 中编辑的 PPTX 文件
+\end{enumerate}
+
+\paragraph{工作流推荐}
+
+\begin{enumerate}
+  \item 在 LaTeX 中完成演示文稿的设计和编辑
+  \item 编译得到最终 PDF
+  \item 根据需求选择：
+    \begin{itemize}
+      \item 仅需 PowerPoint 查看 $\Rightarrow$ 使用 \lstinline|pdf_to_pptx.py|（快速，文件完整）
+      \item 需要在 PowerPoint 中编辑 $\Rightarrow$ 使用 \lstinline|pdf_to_editable_pptx.py|（灵活，可编辑）
+    \end{itemize}
+  \item 如需验证 PDF 布局是否正确 $\Rightarrow$ 使用 \lstinline|extract_pdf_page.py| + pdf-layout-reviewer

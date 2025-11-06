@@ -1,0 +1,332 @@
+%!TEX root = document.tex
+
+\chapter{多列布局与模块系统}
+\label{chap:4}
+
+本章详细介绍 IQB-JC 模板的主题自定义选项，包括颜色修改、字体调整、间距控制等个性化配置。通过这些设置，用户可以根据自己的需求调整模板的外观，同时保持整体的专业性和一致性。
+
+\section{主题自定义}
+
+\subsection{修改主题颜色}
+
+IQB-JC 模板的主题颜色定义在 \lstinline|theme/beamerthemeiqb.sty| 文件中。主要颜色包括：
+
+\begin{table}[!h]
+\centering
+\caption{IQB-JC 主题颜色定义}
+\label{tab:theme-colors}
+\begin{tabular}{p{3cm}p{4cm}p{4cm}}
+\toprule
+\textbf{颜色名称} & \textbf{RGB 值} & \textbf{十六进制} \\
+\midrule
+\lstinline|iqbblue| & 0, 51, 102 & \#003366 \\
+\lstinline|iqbgray| & 85, 85, 85 & \#555555 \\
+\lstinline|iqblightgray| & 240, 240, 240 & \#F0F0F0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+若要修改主题颜色，可在导言区添加颜色重定义：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\definecolor{iqbblue}{RGB}{0, 100, 200}  % 自定义蓝色
+\definecolor{iqbgray}{RGB}{100, 100, 100}  % 自定义灰色
+\end{lstlisting}
+
+\subsection{替换 Header 图片}
+
+Header 横幅图片可通过重新定义 \lstinline|\iqbheaderimage| 命令更改：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\renewcommand{\iqbheaderimage}{path/to/your/header.png}
+\end{lstlisting}
+
+建议的 header 图片规格：
+
+\begin{itemize}
+  \item 分辨率：1999×204 像素（保持原始 1999:204 比例）
+  \item 宽高比：约 9.8:1
+  \item 格式：PNG 或 PDF（支持透明度）
+\end{itemize}
+
+\subsection{调整字体大小与字体层级系统}
+
+IQB-JC 模板采用精心设计的 5 级字体层级体系，确保页面整体视觉平衡且易于阅读。以下表格展示了完整的字体层级及其应用场景：
+
+\begin{table}[!h]
+\centering
+\caption{IQB-JC 完整字体层级体系}
+\label{tab:font-sizes}
+\begin{tabular}{p{2cm}p{4cm}p{2.5cm}p{5.5cm}}
+\toprule
+\textbf{层级} & \textbf{文本类型} & \textbf{字号} & \textbf{使用场景} \\
+\midrule
+1 & 封面页标题 (\lstinline|\title|) & 14.4pt & 演示文稿的总标题，仅在封面使用 \\
+2 & Frame Title（页标题） & 12pt & 每页最上方的标题栏，所有内容页必有 \\
+3 & Section Title（段标题） & 11pt & 页面内的分段标题，使用 \lstinline|\iqbsectiontitle{}| 命令 \\
+4 & 正文/Itemize（默认） & 9pt & 页面主要内容、列表项等日常文字 \\
+5 & 图注/表注/脚注 & 8pt & 较小的辅助说明文字 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{分段标题命令 (\texttt{\textbackslash iqbsectiontitle})}
+
+在页面内使用分段标题来组织内容结构。分段标题会自动应用 11pt 大小、IQB 蓝色及加粗样式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbsectiontitle{FEbuilder - 高通量自由能计算工具}
+
+高度优化的自由能计算框架...
+\end{lstlisting}
+
+\subsubsection{字体模式切换 (\texttt{\textbackslash iqbfontsizemode})}
+
+模板提供了两种字体模式，可根据内容密度灵活切换：
+
+\begin{enumerate}
+  \item \textbf{normal 模式（默认）}：正文 9pt，适用于内容较少或需要突出视觉效果的页面
+  \item \textbf{small 模式}：所有字体缩小 1 级，适用于内容密集的页面
+\end{enumerate}
+
+在演示文稿中切换模式的用法：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+% 在特定页面启用 small 模式（内容较多）
+\begin{frame}{内容密集的页面}
+  \iqbfontsizemode{small}
+
+  \begin{itemize}
+    \item 项目 1
+    \item 项目 2
+    % ...更多项目
+  \end{itemize}
+\end{frame}
+
+% 后续页面自动恢复 normal 模式
+\end{lstlisting}
+
+\textbf{注意}：字体模式的改变仅在当前 frame 内有效，不会影响其他页面。
+
+\subsubsection{列表环境（iqbitemize）}
+
+IQB-JC 提供了增强版的列表环境 \lstinline|iqbitemize|，支持自动为带标签的项目应用蓝色加粗样式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\begin{iqbitemize}
+  \item[标签1] 带标签的项目内容
+  \item[标签2] 另一个带标签的项目
+  \item 不带标签的普通项目
+\end{iqbitemize}
+\end{lstlisting}
+
+标签会自动呈现为 IQB 蓝色加粗文字，无需手动指定颜色或加粗。
+
+\subsubsection{描述列表环境（iqbdescription）}
+
+对于包含较长标签（4 字以上）的列表，推荐使用 \lstinline|iqbdescription| 环境。相比 \lstinline|iqbitemize|，\lstinline|iqbdescription| 具有以下优势：
+
+\begin{itemize}
+  \item 标签自动右对齐，视觉更整齐
+  \item 支持更长的标签文本（最多可显示 4--6 个中文字符）
+  \item 可通过参数 \lstinline|[距离]| 灵活调整列表的左边距
+\end{itemize}
+
+\paragraph{基本用法}
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\begin{iqbdescription}
+  \item[文献处理] 文献检索、自动写综述、文献讲解PPT生成
+  \item[多智能体协作] 多智能体交互助力科研方案设计
+  \item[个性化智能体] 私域知识库构建和增量学习
+\end{iqbdescription}
+\end{lstlisting}
+
+\paragraph{调整左边距}
+
+使用可选参数 \lstinline|[距离]| 可将列表向右移动指定距离，默认为 0em：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+% 标准用法（无缩进）
+\begin{iqbdescription}
+  \item[标签1] 内容
+\end{iqbdescription}
+
+% 向右移动 2.5cm
+\begin{iqbdescription}[2.5cm]
+  \item[标签1] 内容
+\end{iqbdescription}
+\end{lstlisting}
+
+\paragraph{样式说明}
+
+\lstinline|iqbdescription| 中的标签具有以下特点：
+\begin{itemize}
+  \item 标签显示为 IQB 蓝色（\textcolor{iqbblue}{\textbf{示例}}）
+  \item 标签文字为加粗显示
+  \item 标签在 1cm 宽度内右对齐，确保整齐的竖排对齐
+\end{itemize}
+
+\paragraph{何时使用}
+
+\begin{table}[!h]
+\centering
+\begin{tabular}{p{3cm}p{4cm}p{4cm}}
+\toprule
+\textbf{列表类型} & \textbf{iqbitemize} & \textbf{iqbdescription} \\
+\midrule
+无标签或短标签 & \checkmark（推荐） & 可用（不推荐） \\
+中等长度标签（2--3 字） & 可用 & \checkmark（推荐） \\
+较长标签（4 字以上） & \text{\ding{55}}（不适合） & \checkmark（推荐） \\
+需要灵活缩进 & \checkmark & \checkmark（更灵活） \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{手动字体调整}
+
+若要进行更细致的字体定制，编辑 \lstinline|theme/beamerthemeiqb.sty| 文件中的 \lstinline|\setbeamerfont| 命令。例如，以下代码控制正文字体：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+% normal 模式下的正文字体
+\setbeamerfont{normal text}{size=\footnotesize}  % 9pt
+
+% small 模式下的正文字体
+\setbeamerfont{normal text}{size=\scriptsize}   % 8pt
+\end{lstlisting}
+
+\section{间距与排版控制}
+
+为了保持演示文稿的视觉一致性和专业感，IQB-JC 提供了三个标准化的间距命令。相比手动使用 \lstinline|\vspace{}|，这些命令能更好地确保全文间距的统一性。
+
+\subsection{标准间距命令}
+
+IQB-JC 模板定义了以下三个间距命令，涵盖了常见的排版需求：
+
+\begin{table}[!h]
+\centering
+\caption{间距命令一览表}
+\label{tab:spacing-commands}
+\begin{tabular}{p{2.5cm}p{1.5cm}p{7cm}}
+\toprule
+\textbf{命令} & \textbf{间距大小} & \textbf{使用场景} \\
+\midrule
+\lstinline|\iqbsep| & 0.3cm & 标准段落间距，最常用，用于分隔逻辑内容块 \\
+\lstinline|\iqbbigsep| & 0.5cm & 大段落间距，用于主要分节之间的间隔 \\
+\lstinline|\iqbtinysep| & 0.15cm & 小间距，用于列表项之间或紧凑内容区间 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{使用示例}
+
+以下示例展示了如何在演示文稿中使用这些间距命令：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\begin{frame}{多段落内容页面}
+  \iqbsectiontitle{背景介绍}
+
+  这是第一段内容，介绍了该部分的基本背景。
+
+  \iqbsep  % 使用标准间距分隔段落
+
+  \iqbsectiontitle{方法论}
+
+  \begin{itemize}
+    \item 方法一
+    \iqbtinysep  % 使用小间距分隔列表项
+    \item 方法二
+    \iqbtinysep
+    \item 方法三
+  \end{itemize}
+
+  \iqbbigsep  % 使用大间距分隔主要内容块
+
+  \iqbsectiontitle{结论}
+
+  这是最后一段内容...
+\end{frame}
+\end{lstlisting}
+
+\subsection{间距与图片的配合}
+
+当在演示文稿中插入图片时，常需要在图片与文字之间增加合适的间距。使用标准间距命令能确保整体布局的协调性：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\begin{frame}{图文结合布局}
+  \iqbsectiontitle{研究成果}
+
+  \iqbsep
+
+  \iqbimgcenter[height=0.4\textheight]{images/result.png}
+
+  \iqbtinysep
+
+  \textbf{图 1：}实验结果展示了该方法的有效性。
+\end{frame}
+\end{lstlisting}
+
+\subsection{推荐实践}
+
+\begin{enumerate}
+  \item \textbf{优先使用标准命令}：用 \lstinline|\iqbsep|、\lstinline|\iqbbigsep|、\lstinline|\iqbtinysep| 代替手动 \lstinline|\vspace{}|，以保持全文间距风格一致。
+
+  \item \textbf{逻辑清晰}：用间距命令清晰地分隔演示文稿中的逻辑块（如不同章节、内容组）。
+
+  \item \textbf{避免过度间距}：不要过度使用大间距（\lstinline|\iqbbigsep|），否则页面显得疏散；也不要过度使用小间距，否则内容显得拥挤。
+
+  \item \textbf{与布局工具结合}：在使用 \lstinline|\iqblayouttwo|、\lstinline|\iqbfig| 等布局命令时，合理添加间距能提升整体视觉效果。
+\end{enumerate}
+
+\section{演示文稿元数据设置}
+
+IQB-JC 模板支持丰富的演示文稿元数据字段，这些信息会自动显示在封面页上。
+
+\subsection{基础字段}
+
+以下字段是必填的，用于定义演示文稿的基本信息：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\title{演示标题}           % 封面主标题
+\subtitle{副标题}           % 可选：副标题
+\author{作者名字}           % 作者名字
+\institute{机构/学院}       % 学院或研究所名称
+\date{\today}               % 日期（\today 表示当前日期）
+\end{lstlisting}
+
+\subsection{扩展字段}
+
+模板额外支持以下字段，用于学位申请、奖学金申请等场景。这些字段**完全可选**，如不设置则不显示：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\stuid{学号}               % 学号（如果设置则在封面显示）
+\major{专业名称}           % 专业或学位类型（如果设置则在封面显示）
+\advisor{导师名字 教授}    % 指导教师名字（如果设置则在封面显示）
+\end{lstlisting}
+
+使用示例：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\title{杨咏曼奖学金申请陈述}
+\author{高旭帆}
+\institute{生命科学学院 \quad 生物物理研究所}
+\stuid{12207134}
+\major{生物物理学}
+\advisor{周如鸿 教授}
+\end{lstlisting}
+
+\subsection{日期格式设置}
+
+模板支持中英文日期格式切换，通过 \lstinline|\dateformat{}| 命令控制：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+% 使用中文日期格式（推荐用于中文演示）
+\dateformat{zh}
+\date{\today}           % 显示为："2025 年 11 月 5 日"
+
+% 使用英文日期格式（推荐用于英文演示）
+\dateformat{en}
+\date{\today}           % 显示为："5 November 2025"
+\end{lstlisting}
+
+\textbf{注意}：\lstinline|\dateformat| 命令必须在 \lstinline|\date{}| 之前调用。

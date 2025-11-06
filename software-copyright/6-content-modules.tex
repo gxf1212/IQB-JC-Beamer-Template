@@ -1,0 +1,65 @@
+%!TEX root = document.tex
+
+\chapter{图表模块与作者信息}
+\label{chap:6}
+
+本章详细介绍 IQB-JC 模板的高级布局模块和快捷命令系统，包括图片居中模块、自动编号图表、作者信息模块、智能强调系统等高级功能。这些模块为用户提供了更专业、更高效的演示文稿创建体验。
+
+\section{图片局部居中}
+
+\subsection{问题描述}
+
+在多列布局中（如 \lstinline|\iqblayouttwo| 等），使用 \lstinline|\centering| 命令会影响整个列的后续文字对齐方式，导致本意只想居中图片，结果文字也被迫居中。
+
+\subsection{解决方案：\texttt{\textbackslash iqbimgcenter}}
+
+使用 \lstinline|\iqbimgcenter| 命令可以实现图片局部居中，不影响后续文字的对齐。该命令使用 \lstinline|\begingroup...\endgroup| 来局限 \lstinline|\centering| 的作用范围。
+
+命令格式：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbimgcenter[图片选项]{图片路径}
+\end{lstlisting}
+
+参数说明：
+\begin{itemize}
+  \item \lstinline|[图片选项]| - 可选，图片尺寸设置，如 \lstinline|width=0.5\textwidth|、\lstinline|height=0.6\textheight| 等
+  \item \lstinline|{图片路径}| - 必需，图片的相对或绝对路径
+\end{itemize}
+
+使用示例：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqblayouttwo{
+  \iqbimgcenter[width=0.5\textwidth]{images/photo.jpg}
+  \iqbtinysep
+  \textbf{说明文字：}
+  \begin{itemize}
+    \item 文字项目1
+    \item 文字项目2
+  \end{itemize}
+}{
+  右列内容...
+}
+\end{lstlisting}
+
+效果：图片会在列内居中显示，而下方的"说明文字"仍然保持左对齐。
+
+\subsection{与 \texttt{center} 环境的对比}
+
+\begin{table}[!h]
+\centering
+\caption{图片居中方式对比}
+\label{tab:imgcenter-compare}
+\begin{tabular}{p{3cm}p{3.5cm}p{6cm}}
+\toprule
+\textbf{方式} & \textbf{使用方式} & \textbf{特点} \\
+\midrule
+\lstinline|\iqbimgcenter| & \lstinline|\iqbimgcenter[opts]{path}| & 局部生效，不影响后续文字 \\
+\lstinline|\centering| & \lstinline|\centering\includegraphics...| & 全局生效，影响后续所有文字 \\
+\lstinline|\begin{center}| & \lstinline|\begin{center}\includegraphics\end{center}| & 局部生效，独占一行 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{推荐}：在多列布局中，优先使用 \lstinline|\iqbimgcenter|；在简单场景中，\lstinline|\begin{center}| 也很有效。
