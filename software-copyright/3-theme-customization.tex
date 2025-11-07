@@ -36,6 +36,15 @@
 \dateformat{zh}                % 可选：zh 为中文日期，en 为英文日期（默认英文）
 \date{\today}
 
+% ============================================================
+% Footer Configuration（页脚配置）
+% ============================================================
+% 格式：\iqbfootline{left}{center}{right}
+% - left:   default 或自定义文本
+% - center: section（章节名）或 title（当前页标题）
+% - right:  ratio（N / 总数）、pageofy（Page N/总数）、zhpageofy（第N/总数页）
+\iqbfootline{default}{title}{pageofy}
+
 \begin{document}
 
 % 封面页（无 header/footer）
@@ -155,4 +164,140 @@ Linux & Noto Serif CJK SC & Noto Sans CJK SC（思源黑体） & 需先安装字
 sudo apt-get install fonts-noto-cjk    % Ubuntu/Debian
 sudo pacman -S noto-fonts-cjk           % Arch Linux
 \end{lstlisting}
+
+\section{页脚（Footer）配置}
+\label{sec:footer-config}
+
+\subsection{概述}
+
+IQB Beamer 模板提供灵活的页脚配置系统，允许用户在导言区用一行代码即可自定义页脚的三段式内容（左 | 中 | 右）。页脚通常显示在所有内容页的底部，包含机构信息、章节/标题、和页码等内容。
+
+\subsection{基本用法}
+
+\textbf{配置命令}：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbfootline{left}{center}{right}
+\end{lstlisting}
+
+该命令应在导言区（\lstinline|\usepackage| 之后，\lstinline|\begin{document}| 之前）调用。
+
+\subsection{参数说明}
+
+\begin{table}[!h]
+\centering
+\caption{Footer 配置参数}
+\label{tab:footer-params}
+\begin{tabular}{p{2cm}p{3.5cm}p{7cm}}
+\toprule
+\textbf{参数位置} & \textbf{可选值} & \textbf{说明} \\
+\midrule
+\multirow{2}{*}{\textbf{left}} & \lstinline|default| & 显示机构名称（来自 \lstinline|\institute| 命令） \\
+& 自定义文本 & 显示用户指定的文本，例如 \lstinline|"IQB Lab"| 或 \lstinline|"团队名称"| \\
+\midrule
+\multirow{2}{*}{\textbf{center}} & \lstinline|section| & 显示当前章节名（需配合 \lstinline|\setsection{章节名}| 使用） \\
+& \lstinline|title| & 显示当前页面的标题（Frame title） \\
+\midrule
+\multirow{3}{*}{\textbf{right}} & \lstinline|ratio| & 显示格式 \lstinline|N / 总数|（如 \lstinline|5 / 25|） \\
+& \lstinline|pageofy| & 显示格式 \lstinline|Page N/总数|（如 \lstinline|Page 5/25|） \\
+& \lstinline|zhpageofy| & 显示格式 \lstinline|第N/总数页|（如 \lstinline|第5/25页|） \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{使用示例}
+
+\subsubsection{示例 1：显示 Frame 标题与英文页码}
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbfootline{default}{title}{pageofy}
+\end{lstlisting}
+
+\textbf{效果}：页脚显示为 \lstinline|机构名 | 当前页标题 | Page N/总数|
+
+此配置适用于希望强调每一页核心内容的演示。
+
+\subsubsection{示例 2：显示章节名与中文页码}
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbfootline{default}{section}{zhpageofy}
+\end{lstlisting}
+
+\textbf{效果}：页脚显示为 \lstinline|机构名 | 章节名 | 第N/总数页|
+
+此配置需要在文档中使用 \lstinline|\setsection{章节名}| 来设置章节。示例：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+% Part 1: Fundamentals
+\setsection{Fundamentals}
+\begin{frame}{Introduction to QSAR}
+  % 页面内容
+\end{frame}
+
+% Part 2: Methods
+\setsection{Methods}
+\begin{frame}{Molecular Descriptors}
+  % 页面内容
+\end{frame}
+\end{lstlisting}
+
+\subsubsection{示例 3：自定义左侧文本}
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbfootline{Molecular Modeling Lab}{title}{ratio}
+\end{lstlisting}
+
+\textbf{效果}：页脚显示为 \lstinline|Molecular Modeling Lab | 当前页标题 | N / 总数|
+
+此配置适用于想要完全自定义左侧机构或团队信息的情况。
+
+\subsubsection{示例 4：混合配置}
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbfootline{自定义文本}{section}{zhpageofy}
+\end{lstlisting}
+
+用户可灵活组合三个参数以满足不同的演示需求。
+
+\subsection{高级用法}
+
+\subsubsection{设置总页数（可选）}
+
+默认情况下，模板会自动检测文档的总页数。如需手动覆盖，可使用：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbfoottotal{25}  % 强制将总页数显示为 25
+\end{lstlisting}
+
+此命令适用于以下场景：
+\begin{itemize}
+  \item 生成的 PDF 包含不计入页码的附录页
+  \item 希望显示实际讲解页数而非技术总页数
+\end{itemize}
+
+\subsection{常见问题}
+
+\textbf{Q: 为什么页脚没有显示？}
+
+A: 请检查以下几点：
+\begin{enumerate}
+  \item \lstinline|\iqbfootline| 命令必须在 \lstinline|\begin{document}| 之前调用
+  \item 确保已加载 \lstinline|beamerthemeiqb| 主题包
+  \item 某些特殊页面（如 \lstinline|[plain]| 选项的页面）可能不显示页脚
+\end{enumerate}
+
+\textbf{Q: 如何在部分页面隐藏页脚？}
+
+A: 使用 Beamer 的 \lstinline|plain| 选项创建不显示页脚的页面：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\begin{frame}[plain]
+  \centering
+  {\Huge Thank You!}
+\end{frame}
+\end{lstlisting}
+
+\textbf{Q: 中文文本在页脚显示不正常？}
+
+A: 确保使用 XeLaTeX 编译器并已正确配置中文字体支持（见第 \ref{sec:cjk} 节）。
 
