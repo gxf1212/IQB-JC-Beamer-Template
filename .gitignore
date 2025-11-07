@@ -102,7 +102,5 @@ credentials.json
 *.tar.gz
 .pptx
 
-examples/Xufan.tex
-examples/images/Scholarship/
-examples/membrane_images
+examples\images\membrane_images_wechat_promotion
 .history/

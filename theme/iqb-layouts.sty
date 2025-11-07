@@ -1948,9 +1948,11 @@
 \newcommand{\iqbbluebox}[2]{%
   \setbeamercolor{block title}{fg=white,bg=iqbblue}%
   \setbeamercolor{block body}{fg=black,bg=iqblightgray!30}%
-  \begin{block}{\textbf{#1}}
-    #2
-  \end{block}%
+  {\setbeamerfont{block title}{size=\footnotesize}%
+   \begin{block}{\textbf{#1}}
+     #2
+   \end{block}%
+  }%
   \setbeamercolor{block title}{fg=white,bg=iqbblue}%  % 保持默认
   \setbeamercolor{block body}{fg=black,bg=iqblightgray!30}%
 }
@@ -1961,9 +1963,11 @@
 \newcommand{\iqborangebox}[2]{%
   \setbeamercolor{block title}{fg=white,bg=iqborange}%
   \setbeamercolor{block body}{fg=black,bg=iqborange!10}%
-  \begin{block}{\textbf{#1}}
-    #2
-  \end{block}%
+  {\setbeamerfont{block title}{size=\footnotesize}%
+   \begin{block}{\textbf{#1}}
+     #2
+   \end{block}%
+  }%
   \setbeamercolor{block title}{fg=white,bg=iqbblue}%  % 恢复默认
   \setbeamercolor{block body}{fg=black,bg=iqblightgray!30}%
 }
@@ -1974,9 +1978,11 @@
 \newcommand{\iqbgreenbox}[2]{%
   \setbeamercolor{block title}{fg=white,bg=iqbgreen}%
   \setbeamercolor{block body}{fg=black,bg=iqbgreen!10}%
-  \begin{block}{\textbf{#1}}
-    #2
-  \end{block}%
+  {\setbeamerfont{block title}{size=\footnotesize}%
+   \begin{block}{\textbf{#1}}
+     #2
+   \end{block}%
+  }%
   \setbeamercolor{block title}{fg=white,bg=iqbblue}%  % 恢复默认
   \setbeamercolor{block body}{fg=black,bg=iqblightgray!30}%
 }
@@ -1988,9 +1994,11 @@
 \newcommand{\iqbredbox}[2]{%
   \setbeamercolor{block title}{fg=white,bg=iqbred}%
   \setbeamercolor{block body}{fg=black,bg=iqbred!10}%
-  \begin{block}{\textbf{#1}}
-    #2
-  \end{block}%
+  {\setbeamerfont{block title}{size=\footnotesize}%
+   \begin{block}{\textbf{#1}}
+     #2
+   \end{block}%
+  }%
   \setbeamercolor{block title}{fg=white,bg=iqbblue}%  % 恢复默认
   \setbeamercolor{block body}{fg=black,bg=iqblightgray!30}%
 }
@@ -2115,6 +2123,113 @@
   \centering%
   \includegraphics[#1]{#2}\par%
   \endgroup%
+}
+
+% ============================================================
+% Overrides: Punchline sizing management
+% ============================================================
+% Make punchline box title/body sizes configurable and align body with itemize
+\providecommand{\iqbpunchlinetitlesize}{\footnotesize}
+\providecommand{\iqbpunchlinebodysize}{\footnotesize}
+
+\renewcommand{\iqbbluebox}[2]{%
+  \setbeamercolor{block title}{fg=white,bg=iqbblue}%
+  \setbeamercolor{block body}{fg=black,bg=iqblightgray!30}%
+  {\setbeamerfont{block title}{size=\iqbpunchlinetitlesize}%
+   \setbeamerfont{block body}{size=\iqbpunchlinebodysize}%
+   \begin{block}{\textbf{#1}}#2\end{block}%
+  }%
+  \setbeamercolor{block title}{fg=white,bg=iqbblue}%
+  \setbeamercolor{block body}{fg=black,bg=iqblightgray!30}%
+}
+
+\renewcommand{\iqborangebox}[2]{%
+  \setbeamercolor{block title}{fg=white,bg=iqborange}%
+  \setbeamercolor{block body}{fg=black,bg=iqborange!10}%
+  {\setbeamerfont{block title}{size=\iqbpunchlinetitlesize}%
+   \setbeamerfont{block body}{size=\iqbpunchlinebodysize}%
+   \begin{block}{\textbf{#1}}#2\end{block}%
+  }%
+  \setbeamercolor{block title}{fg=white,bg=iqbblue}%
+  \setbeamercolor{block body}{fg=black,bg=iqblightgray!30}%
+}
+
+\renewcommand{\iqbgreenbox}[2]{%
+  \setbeamercolor{block title}{fg=white,bg=iqbgreen}%
+  \setbeamercolor{block body}{fg=black,bg=iqbgreen!10}%
+  {\setbeamerfont{block title}{size=\iqbpunchlinetitlesize}%
+   \setbeamerfont{block body}{size=\iqbpunchlinebodysize}%
+   \begin{block}{\textbf{#1}}#2\end{block}%
+  }%
+  \setbeamercolor{block title}{fg=white,bg=iqbblue}%
+  \setbeamercolor{block body}{fg=black,bg=iqblightgray!30}%
+}
+
+\renewcommand{\iqbredbox}[2]{%
+  \setbeamercolor{block title}{fg=white,bg=iqbred}%
+  \setbeamercolor{block body}{fg=black,bg=iqbred!10}%
+  {\setbeamerfont{block title}{size=\iqbpunchlinetitlesize}%
+   \setbeamerfont{block body}{size=\iqbpunchlinebodysize}%
+   \begin{block}{\textbf{#1}}#2\end{block}%
+  }%
+  \setbeamercolor{block title}{fg=white,bg=iqbblue}%
+  \setbeamercolor{block body}{fg=black,bg=iqblightgray!30}%
+}
+
+% ============================================================
+% Unified sizing: section titles, itemize, and punchline boxes
+% ============================================================
+% Expose two size knobs so document authors can keep fonts consistent.
+\providecommand{\iqbsectionsize}{\normalsize}  % used by \iqbsectiontitle
+\providecommand{\iqbitemsize}{\footnotesize}   % used by lists and punchline body
+
+% Make \iqbsectiontitle use the configurable size
+\renewcommand{\iqbsectiontitle}[2][iqbblue]{%
+  {\iqbsectionsize\textcolor{#1}{\textbf{#2}}}\vspace{-0.5em}%
+}
+
+% Couple punchline sizes to the unified knobs
+\renewcommand{\iqbpunchlinetitlesize}{\iqbsectionsize}
+\renewcommand{\iqbpunchlinebodysize}{\iqbitemsize}
+
+% Section divider page without footer (no page number line)
+\renewcommand{\iqbsectionframe}[2]{%
+  \setsection{#1}%
+  \begin{frame}[plain,noframenumbering]
+    \begingroup
+      % Hide footer (page line + page number) on section divider only
+      \setbeamertemplate{footline}{}
+
+      % Background gradient (subtle right light gray)
+      \begin{tikzpicture}[remember picture,overlay]
+        \fill[white] (current page.south west) rectangle (current page.north east);
+        \shade[left color=white, right color=iqblightgray!30]
+              (current page.south west) rectangle (current page.north east);
+      \end{tikzpicture}
+
+      % Left vertical accent bar
+      \begin{tikzpicture}[remember picture,overlay]
+        \draw[line width=8pt, color=iqbblue]
+             (current page.north west) -- (current page.south west);
+      \end{tikzpicture}
+
+      % Decorative protein silhouette (keep as required)
+      \begin{tikzpicture}[remember picture,overlay]
+        \node[anchor=south east, inner sep=0pt, opacity=0.12]
+             at ($(current page.south east) + (-1cm, 1cm)$) {
+          \includegraphics[height=5cm,keepaspectratio]{../theme/images/protein.png}
+        };
+      \end{tikzpicture}
+
+      % Centered title and subtitle
+      \vspace*{0.5cm}
+      \begin{center}
+        {\Huge\color{iqbblue}\textbf{#2}}\\[0.3cm]
+        {\Large\color{iqbgray}#1}
+      \end{center}
+      \vspace*{0.3cm}
+    \endgroup
+  \end{frame}
 }
 
 \endinput

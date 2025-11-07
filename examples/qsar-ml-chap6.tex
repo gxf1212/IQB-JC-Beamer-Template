@@ -144,6 +144,237 @@
 \end{frame}
 
 % ------------------------------------------------------------
+% Frame A1: Hansch Equation (New Content)
+% ------------------------------------------------------------
+\begin{frame}{Hansch Equation: The Mathematical Foundation (1962)}
+  \iqblayouttwo{
+    \iqbsectiontitle{The Famous Equation}
+    The Hansch equation relates biological activity to molecular descriptors:
+
+    \[
+    y = c_0 + c_1 X_1 + c_2 X_2 + \cdots + c_n X_n
+    \]
+
+    \begin{iqbitemize}
+      \item $y$: biological activity (e.g., log(1/C), pIC$_{50}$)
+      \item $X_i$: molecular descriptors (logP, $\sigma$, $E_s$, etc.)
+      \item $c_i$: coefficients indicating descriptor importance
+      \item Multi-parametric regression establishes structure-activity correlation
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{Historical Impact}
+    \begin{iqbitemize}
+      \item 1962: Hansch \& Fujita report on phenoxyacetic acids as plant growth regulators
+      \item Introduced $\pi$ constant for hydrophobicity
+      \item Pioneered quantitative approach to medicinal chemistry
+      \item Foundation for all modern linear QSAR models
+    \end{iqbitemize}
+
+    \iqbsep
+
+    \iqborangebox{Key Insight}{
+      Coefficients reveal \textit{how} and \textit{how much} each structural feature modulates activity
+    }
+  }
+\end{frame}
+
+% ------------------------------------------------------------
+% Frame A2: Data Quality & Structure Curation
+% ------------------------------------------------------------
+\begin{frame}{Data Quality: ``Trust, but Verify'' (OECD P1)}
+  \iqblayouttwo{
+    \iqbsectiontitle{Why Data Curation Matters}
+    \begin{iqbitemize}
+      \item \textbf{Bad data $\Rightarrow$ Bad model} (garbage in, garbage out)
+      \item Outliers, duplicates, and measurement errors skew statistics
+      \item Structural ambiguity: tautomers, stereoisomers, protonation states
+      \item OECD Principle 1: Experimental values must be reliable
+    \end{iqbitemize}
+
+    \iqbsep
+
+    \iqbgreenbox{Data Cleaning Pipeline}{
+      Detect outliers (Z-score, IQR) $\rightarrow$ Normalize scales $\rightarrow$ Verify structures $\rightarrow$ Remove/flag duplicates
+    }
+  }{
+    \iqbsectiontitle{Quality Indicators}
+    \begin{iqbitemize}
+      \item \textbf{Measurement error}: Assay CV, detection limit
+      \item \textbf{Structural confidence}: X-ray vs. computational; validated tautomer set
+      \item \textbf{Activity range}: Log-scale variation (e.g., pIC$_{50}$ 4--10)
+      \item \textbf{Temporal consistency}: Same assay protocol over time
+    \end{iqbitemize}
+
+    \iqbsep
+
+    \iqborangebox{OECD Connection}{
+      OECD P1 codifies these principles in regulatory QSAR guidance for hazard assessment
+    }
+  }
+\end{frame}
+
+% ------------------------------------------------------------
+% Frame A3: Regression Metrics (Linear QSAR)
+% ------------------------------------------------------------
+\begin{frame}{Regression Metrics: Goodness-of-Fit \& Predictivity}
+  \iqblayoutthree{
+    \iqbsectiontitle{Fitting Metrics}
+    \small
+    \textbf{R$^2$ (R-squared):}
+    \[
+    R^2 = 1 - \frac{\sum(y_i - \hat{y}_i)^2}{\sum(y_i - \bar{y})^2}
+    \]
+    Fit to training data; risk of overfitting.
+
+    \textbf{Q$^2$ (Cross-validated):}
+    \[
+    Q^2 = 1 - \frac{\sum(y_i - \hat{y}_i)^2_{CV}}{\sum(y_i - \bar{y})^2}
+    \]
+    Leave-One-Out (LOO) or 5-fold CV.
+  }{
+    \iqbsectiontitle{Predictivity Metrics}
+    \small
+    \textbf{Golbraikh--Tropsha Criteria:}
+    \begin{enumerate}
+      \item $Q^2 > 0.5$
+      \item $R^2 - Q^2 < 0.3$
+      \item $R_m^2 = r^2(1-\sqrt{|r^2-r_0^2|})$
+      \item $|r_0^2 - r'^2_0| < 0.3$
+    \end{enumerate}
+    Ensures not just lucky fit.
+  }{
+    \iqbsectiontitle{External Validation}
+    \small
+    \textbf{Test Set Q$^2_F$:}
+    \[
+    Q^2_F = 1 - \frac{\sum(y_i - \hat{y}_i)^2_{test}}{\sum(y_i - \bar{y}_{train})^2}
+    \]
+    On completely held-out data.
+
+    \iqbsep
+
+    \textbf{CCC (Concordance):} Bland--Altman plot; agreement ratio $\geq 0.85$.
+  }
+\end{frame}
+
+% ------------------------------------------------------------
+% Frame A4: Classification Metrics (Binary QSAR)
+% ------------------------------------------------------------
+\begin{frame}{Classification Metrics: Beyond Accuracy}
+  \iqblayouttwo{
+    \iqbsectiontitle{Confusion Matrix \& Derived Metrics}
+    \small
+    \begin{tabular}{|c|cc|}
+      \hline
+      & \textbf{Pred+} & \textbf{Pred-} \\
+      \hline
+      \textbf{True+} & TP & FN \\
+      \textbf{True-} & FP & TN \\
+      \hline
+    \end{tabular}
+
+    \iqbsep
+
+    \begin{iqbitemize}
+      \item \textbf{Sensitivity} = $\frac{\text{TP}}{\text{TP}+\text{FN}}$ (recall)
+      \item \textbf{Specificity} = $\frac{\text{TN}}{\text{TN}+\text{FP}}$
+      \item \textbf{Precision} = $\frac{\text{TP}}{\text{TP}+\text{FP}}$
+      \item \textbf{F1} = $\frac{2 \cdot \text{Prec} \cdot \text{Rec}}{\text{Prec} + \text{Rec}}$
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{Advanced Metrics}
+    \small
+    \begin{iqbitemize}
+      \item \textbf{MCC} (Matthews Corr. Coef.) \\
+            $\text{MCC} = \frac{\text{TP} \cdot \text{TN} - \text{FP} \cdot \text{FN}}{\sqrt{(\text{TP}+\text{FP})(\text{TP}+\text{FN})(\text{TN}+\text{FP})(\text{TN}+\text{FN})}}$\\[0.1cm]
+            Balanced, handles imbalanced data.
+
+      \item \textbf{ROC--AUC}: Sensitivity vs. (1-Specificity) curve; AUC = 0.5 (random), 1.0 (perfect).
+
+      \item \textbf{Enrichment Factor} (EF) for screening: \\
+            $\text{EF} = \frac{\text{\% actives in top 10\%}}{\text{\% actives overall}}$
+    \end{iqbitemize}
+  }
+\end{frame}
+
+% ------------------------------------------------------------
+% Frame A5: Y-Scrambling & X-Scrambling (Validation)
+% ------------------------------------------------------------
+\begin{frame}{Y-Scrambling \& X-Scrambling: Testing Model Robustness}
+  \iqblayouttwo{
+    \iqbsectiontitle{Y-Scrambling (Activity Randomization)}
+    Randomly permute the response variable $y$ while keeping $X$ fixed. Refit the model.
+
+    \textbf{Expected behavior:} Q$^2$ drops to near 0, R$^2$ remains high.
+
+    \textbf{Interpretation:}
+    \begin{iqbitemize}
+      \item If Q$^2_{scrambled} \approx Q^2_{original}$ $\Rightarrow$ \textit{Model is false positive}
+      \item If R$^2_{scrambled}$ stays $> 0.3$ $\Rightarrow$ \textit{Overfitting alarm}
+      \item Repeat 100--1000 times; plot distribution
+    \end{iqbitemize}
+
+    \iqbgreenbox{Key Output}{
+      Y-scrambling prevents claiming predictive power from random coincidence
+    }
+  }{
+    \iqbsectiontitle{X-Scrambling (Descriptor Randomization)}
+    Randomize descriptor columns; keep $y$ correct. Refit.
+
+    \textbf{For classification:} Q$^2$ and MCC should collapse.
+
+    \begin{iqbitemize}
+      \item Detects multicollinearity artifacts
+      \item Shows if model relies on noise
+      \item Progressive corruption of features
+    \end{iqbitemize}
+
+    \iqbsep
+
+    \iqborangebox{Statistical Test}{
+      \% scrambled $\ll 5\%$ at $p=0.05$
+    }
+  }
+\end{frame}
+
+% ------------------------------------------------------------
+% Frame A6: Applicability Domain (Defining Model Limits)
+% ------------------------------------------------------------
+\begin{frame}{Applicability Domain (AD): Where Does the Model Work?}
+  \iqblayoutthree{
+    \iqbsectiontitle{Range-Based (Simplest)}
+    \small
+    Min--max boundaries on each descriptor.
+
+    \textbf{Pro:} Fast, interpretable
+
+    \textbf{Con:} Ignores multivariate structure; over/under-inclusive
+
+    Example: logP $\in [1,5]$, TPSA $\in [20,120]$ Å$^2$
+  }{
+    \iqbsectiontitle{Distance-Based (PCA/Leverage)}
+    \small
+    Compounds far from training set center (Mahalanobis, leverage $> h_{crit}$) are outside AD.
+
+    \textbf{Pro:} Accounts for correlation
+
+    \textbf{Con:} Sensitive to outliers; assumes linear manifold
+
+    Leverage: $h_i = \mathbf{x}_i (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{x}_i^T$
+  }{
+    \iqbsectiontitle{Probability Density Methods}
+    \small
+    KDE, Gaussian mixture, or kernel density in descriptor space.
+
+    \textbf{Pro:} Flexible; multi-modal support
+
+    \textbf{Con:} Computationally heavier; threshold subjective
+
+    $p(\mathbf{x}) = \frac{1}{n} \sum_i K(\mathbf{x} - \mathbf{x}_i)$
+  }
+\end{frame}
+
+% ------------------------------------------------------------
 % Part 2: Core Concepts
 % ------------------------------------------------------------
 \iqbsectionframe{Core Concepts}{核心概念}
@@ -254,6 +485,77 @@
     \iqbsep
     \iqbgreenbox{Lecture hook}{
       Pair with Fig. 6.3 visuals to discuss advantages/limitations and ongoing usage in medicinal chemistry teams.
+    }
+  }
+\end{frame}
+
+% ------------------------------------------------------------
+% Frame B1: 3D-QSAR Methods Detailed Comparison
+% ------------------------------------------------------------
+\begin{frame}{CoMFA vs. CoMSIA vs. HQSAR: In-Depth Comparison}
+  \small
+  \begin{tabular}{|l|ccc|}
+    \hline
+    \textbf{Criterion} & \textbf{CoMFA} & \textbf{CoMSIA} & \textbf{HQSAR} \\
+    \hline
+    \textbf{Alignment dependency} & High & Medium & None \\
+    \textbf{Grid-based?} & Yes & Yes & No (hologram) \\
+    \textbf{Descriptors} & Steric, E-static & 5 GRID fields & Fragment hashes \\
+    \textbf{Congeneric series} & Excellent & Very good & Good \\
+    \textbf{Diverse scaffolds} & Weak & Medium & Excellent \\
+    \textbf{Interpretability} & Contour maps & Field maps & Atom binning \\
+    \textbf{Robustness to noise} & Lower & Higher & Higher \\
+    \textbf{3D structure need} & Full 3D & Full 3D & Only scaffold \\
+    \hline
+  \end{tabular}
+
+  \iqbsep
+
+  \iqbgreenbox{Practical Guide}{
+    Start with HQSAR for rapid screening of diverse libraries. Use CoMSIA for congeneric SAR optimization to avoid alignment pitfalls. CoMFA remains gold standard for legacy projects with well-aligned analogs.
+  }
+\end{frame}
+
+% ------------------------------------------------------------
+% Frame B2: Rational Data Splitting Strategies
+% ------------------------------------------------------------
+\begin{frame}{Rational Train/Test Splitting: Beyond Random Shuffle}
+  \iqblayouttwo{
+    \iqbsectiontitle{Why Splitting Matters}
+    \small
+    \begin{iqbitemize}
+      \item \textbf{Random split}: Unbiased but may group similar compounds into same set
+      \item \textbf{Temporal split}: First 70\% training, last 30\% test (realistic deployment scenario)
+      \item \textbf{Diversity-based}: Use TMAP/t-SNE to split dissimilar compounds into train/test
+      \item \textbf{Stratified}: Maintain activity distribution balance in both sets
+    \end{iqbitemize}
+
+    \iqbsep
+
+    \iqborangebox{Example: Stratified K-Fold}{
+      Ensure each fold contains proportional active/inactive compounds; prevents fate of imbalanced classes
+    }
+  }{
+    \iqbsectiontitle{Algorithm: Hierarchical Splitting}
+    \small
+    1. Compute Tanimoto/Euclidean distances on fingerprints/descriptors
+
+    \iqbsep
+
+    2. Use hierarchical clustering $\rightarrow$ prune at threshold to get $k$ clusters
+
+    \iqbsep
+
+    3. Randomly sample compounds from each cluster proportionally into train/test
+
+    \iqbsep
+
+    4. Verify: no cluster $> 80\%$ in training set
+
+    \iqbsep
+
+    \iqbgreenbox{Statistical Test}{
+      Chi-square test: descriptor distributions train vs. test should be $p > 0.05$
     }
   }
 \end{frame}
@@ -598,6 +900,33 @@
     \iqborangebox{Teaching prompt}{
       Compare LIME vs. SHAP outputs for the same compound to discuss stability and computational cost.
     }
+  }
+\end{frame}
+
+% ------------------------------------------------------------
+% Frame B3: LIME vs. SHAP Deep Dive
+% ------------------------------------------------------------
+\begin{frame}{LIME vs. SHAP: Interpretability Trade-offs}
+  \small
+  \begin{tabular}{|l|cc|}
+    \hline
+    \textbf{Aspect} & \textbf{LIME} & \textbf{SHAP (Shapley Values)} \\
+    \hline
+    \textbf{Theoretical foundation} & Local linear approx. & Game theory \\
+    \textbf{Stability} & Variable; data-dependent & Guaranteed consistent \\
+    \textbf{Computation speed} & Fast (single instance) & Slow (exponential in features) \\
+    \textbf{Feature interactions} & Implicit & Explicit via interaction plots \\
+    \textbf{Global vs. local} & Single-instance & Can aggregate for global \\
+    \textbf{Model agnostic?} & Yes & Mostly (deep learning harder) \\
+    \textbf{Visualization} & Bar charts & Force plots, beeswarms, waterfall \\
+    \textbf{Classroom appeal} & High; intuitive & High; theoretically sound \\
+    \hline
+  \end{tabular}
+
+  \iqbsep
+
+  \iqbgreenbox{Practical Note}{
+    Use LIME for rapid prototyping and interactive demos. Switch to SHAP TreeExplainer for tree-based models (RF, XGBoost) or approximate Shapley (e.g., TreeSHAP, KernelSHAP) for deep neural networks.
   }
 \end{frame}
 

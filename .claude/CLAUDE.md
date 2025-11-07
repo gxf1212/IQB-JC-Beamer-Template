@@ -41,6 +41,13 @@
 - 图片不要太小，竖版图采用横向column布局（一列图片+其他列文字）
 - **字体大小参考PPTX中字体与页面大小的比例**
 
+你能否调用d/texlive/2022/bin/win32/xelatex.exe来测试编译？还是不行，能否边修复边测试编译？根据报错来修复
+尽量不要手动调字号\large，一般就用模板的
+overfull的话可以重新布局，可以拆分多页
+尽量不要出现overfull
+尽量不用vspace而是\iqbseq之类的
+\iqbsep前或后要换行
+
 ### 可复用模块
 
 模板提供丰富的预设模块（详见`theme/iqb-layouts.sty`）：
