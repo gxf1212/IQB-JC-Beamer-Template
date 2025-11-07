@@ -1,4 +1,4 @@
-% ============================================================
+﻿% ============================================================
 % QSAR & Machine Learning Predictors - Teaching Slides
 % Prepared for Chapter 6 (IQB JC Template)
 % ============================================================
@@ -17,46 +17,40 @@
 \title{Chapter 6: QSAR and Machine Learning Predictors}
 \subtitle{From Foundational Concepts to Regulatory-Ready Models}
 \author{Philipe Oliveira Fernandes \and Vinicius Gonçalves Maltarollo}
-\institute{Graduate QSAR Workshop \(\mid\) Instructor: \textbf{Xufan Gao}}
+\institute{Graduate QSAR Workshop}
+% \stuid{12207134}
+% \major{生物物理学}
+% \grade{直博四年级}
+% \institute{生物物理研究所}
+% \advisor{周如鸿 教授}
+% \dateformat{zh}
 \date{\today}
+% Cover metadata for template cover
+\papertitlechn{QSAR与机器学习预测器}
+\papertitlechnsub{Chapter 6 教学幻灯片}
+\paperengtitle{Chapter 6: QSAR and Machine Learning Predictors}
 
 \begin{document}
+
+% ============================================================
+% Footer Configuration
+% ============================================================
+% Set footer style: left={default|custom}, center={section|title}, right={ratio|pageofy|zhpageofy}
+\iqbfootline{default}{title}{pageofy}
 
 % ------------------------------------------------------------
 % 1. Cover
 % ------------------------------------------------------------
-\begin{frame}[plain,noframenumbering]
-  \vspace*{0.5cm}
-  {\Large Chapter 6 Teaching Slides}
+\iqbcoverframe
 
-  \vspace{0.3cm}
-  {\Huge \textbf{QSAR and Machine Learning Predictors}}
-
-  \vspace{0.3cm}
-  {\large Philipe Oliveira Fernandes \(\cdot\) Vinicius Gonçalves Maltarollo}
-
-  \vspace{0.2cm}
-  {\normalsize Course: Advanced Drug Design \(\mid\) Lecturer: \textbf{(your name)}}
-
-  \vspace{0.2cm}
-  {\normalsize Date: \today}
-
-  \vspace{0.5cm}
-  \iqbtwoimgside[0.2cm]{
-    \iqbbluebox{Keywords}{
-      QSAR \(\cdot\) Machine Learning \(\cdot\) Molecular Descriptors \(\cdot\) OECD Principles
-    }
-  }{
-    \iqborangebox{Chapter Takeaway}{
-      Integrate chemical intuition, data curation, ML workflows, validation, and interpretation to
-      deliver regulatory-accepted models that translate into experimental wins.
-    }
-  }
-\end{frame}
+% ------------------------------------------------------------
+% Part 1: Fundamentals
+% ------------------------------------------------------------
+\iqbsectionframe{Fundamentals}{基础介绍}
 
 % ------------------------------------------------------------
 % 2. Chapter overview & learning goals
-% ------------------------------------------------------------
+%  ------------------------------------------------------------
 \begin{frame}{Chapter Map \& Learning Objectives}
   \iqblayouttwo{
     \iqbsectiontitle{Three learning goals}
@@ -77,16 +71,16 @@
     \end{iqbitemize}
   }{
     \iqbsectiontitle{Lecture pacing (25 pages)}
-    \begin{tabular}{>{\bfseries}p{0.35\textwidth}p{0.47\textwidth}}
-      Part 1 & Fundamentals \& history (pp.1-4)\\
-      Part 2 & Core concepts \& representations (pp.5-10)\\
-      Part 3 & OECD principles (pp.11-13)\\
-      Part 4 & Tooling ecosystem (pp.14-15)\\
-      Part 5 & Validation \& controls (pp.16-19)\\
-      Part 6 & Interpretation (pp.20-21)\\
-      Part 7 & Practice \& cases (pp.22-23)\\
-      Part 8 & Challenges \& summary (pp.24-25)\\
-    \end{tabular}
+    \begin{iqbitemize}
+      \item Part 1: Fundamentals \& history (1--4)
+      \item Part 2: Concepts \& representations (5--10)
+      \item Part 3: OECD principles (11--13)
+      \item Part 4: Software \& tools (14--15)
+      \item Part 5: Validation \& controls (16--19)
+      \item Part 6: Interpretation (20--21)
+      \item Part 7: Practice \& cases (22--23)
+      \item Part 8: Challenges \& summary (24--25)
+    \end{iqbitemize}
   }
 \end{frame}
 
@@ -144,10 +138,15 @@
 
     \iqbsep
     \iqbgreenbox{Teaching cue}{
-      Use timeline questions: “Which inflection made QSAR mainstream?” to recap Fig. 6.1 context.
+      Use timeline questions: 鈥淲hich inflection made QSAR mainstream?鈥?to recap Fig. 6.1 context.
     }
   }
 \end{frame}
+
+% ------------------------------------------------------------
+% Part 2: Core Concepts
+% ------------------------------------------------------------
+\iqbsectionframe{Core Concepts}{核心概念}
 
 % ------------------------------------------------------------
 % 5. QSAR workflow
@@ -168,7 +167,7 @@
   }{
     \iqbsectiontitle{Quality checkpoints}
     \begin{iqbitemize}
-      \item Structure standardization (Fourches et al. “Trust, but verify”).
+      \item Structure standardization (Fourches et al. 鈥淭rust, but verify鈥?.
       \item Endpoint alignment: same units, biological context, experimental variance.
       \item Metadata logging for reproducibility (software versions, seeds, splits).
       \item Visual inspection: Fig. 6.1 pipeline as classroom walk-through.
@@ -186,7 +185,7 @@
     Dim & Definition & Representative features and notes\\
     \midrule
     1D & Scalar counts & Atom counts, bonds, rings, heteroatoms. Fast, coarse.\\
-    2D & Topological & Connectivity indices, Kier–Hall, fragment counts, logP. Captures adjacency.\\
+    2D & Topological & Connectivity indices, Kier鈥揌all, fragment counts, logP. Captures adjacency.\\
     3D & Shape/conformation & Steric/electrostatic fields, CoMFA grids, distances. Needs aligned 3D structures.\\
     4D & Multiple conformations & Ensemble averaged descriptors; solvent/excitation snapshots.\\
     5D & Environmental sampling & Explicit receptor/protein interactions or multiple alignment hypotheses.\\
@@ -240,6 +239,7 @@
       \item Sensitive to alignment protocol; great for congeneric series.
     \end{iqbitemize}
     \iqbsep
+
     \iqbsectiontitle{CoMSIA}
     \begin{iqbitemize}
       \item Uses Gaussian-type similarity indices (steric, electrostatic, hydrophobic, HBD/HBA).
@@ -308,6 +308,11 @@
 \end{frame}
 
 % ------------------------------------------------------------
+% Part 3: OECD Principles
+% ------------------------------------------------------------
+\iqbsectionframe{OECD Principles}{OECD 原则}
+
+% ------------------------------------------------------------
 % 11. OECD overview
 % ------------------------------------------------------------
 \begin{frame}{OECD Principles Overview (Regulatory Lens)}
@@ -342,6 +347,7 @@
       \item Ensure consensus across merged datasets; flag outliers.
     \end{iqbitemize}
     \iqbsep
+    
     \iqbsectiontitle{P2. Unambiguous algorithm}
     \begin{iqbitemize}
       \item Document software versions, equations, hyperparameters.
@@ -377,6 +383,11 @@
     \end{iqbitemize}
   }
 \end{frame}
+
+% ------------------------------------------------------------
+% Part 4: Software & Tools
+% ------------------------------------------------------------
+\iqbsectionframe{Software and Tools}{软件工具}
 
 % ------------------------------------------------------------
 % 14. Descriptor tools
@@ -423,10 +434,15 @@
     \begin{iqbitemize}
       \item KNIME, Orange, Weka for low-code experimentation.
       \item QSARINS, LQTA-QSAR, CORAL, 3D-QSAR.com for regulated workflows.
-      \item Commercial platforms (MOE, Schrödinger) when structural modeling is entwined.
+      \item Commercial platforms (MOE, Schr枚dinger) when structural modeling is entwined.
     \end{iqbitemize}
   }
 \end{frame}
+
+% ------------------------------------------------------------
+% Part 5: Validation & Controls
+% ------------------------------------------------------------
+\iqbsectionframe{Validation and Controls}{验证与控制}
 
 % ------------------------------------------------------------
 % 16. Internal validation
@@ -474,10 +490,6 @@
       \(\Delta r_m^2\) & Keep \(<0.2\) for consistent correlation.\\
       \bottomrule
     \end{tabular}
-    \iqbtinysep
-    \iqborangebox{Notes}{
-      Use plots (experimental vs. predicted) and confidence intervals, not single numbers.
-    }
   }{
     \iqbsectiontitle{Classification endpoints}
     \begin{iqbitemize}
@@ -485,6 +497,8 @@
       \item Threshold-free: ROC-AUC, PR-AUC, enrichment factor (EF) for early retrieval.
       \item Always state class prevalence and provide calibration or reliability diagrams.
     \end{iqbitemize}
+    \iqbtinysep
+    \iqborangebox{Notes}{Use plots (experimental vs. predicted) and confidence intervals; avoid single-number claims.}
   }
 \end{frame}
 
@@ -531,6 +545,11 @@
     }
   }
 \end{frame}
+
+% ------------------------------------------------------------
+% Part 6: Interpretation
+% ------------------------------------------------------------
+\iqbsectionframe{Interpretation}{模型解释}
 
 % ------------------------------------------------------------
 % 21. Global interpretation
@@ -583,6 +602,11 @@
 \end{frame}
 
 % ------------------------------------------------------------
+% Part 7: Practice & Cases
+% ------------------------------------------------------------
+\iqbsectionframe{Practice and Cases}{实践与案例}
+
+% ------------------------------------------------------------
 % 23. Practical checklist
 % ------------------------------------------------------------
 \begin{frame}{QSAR Modeling Practical Checklist}
@@ -630,6 +654,11 @@
     \end{iqbitemize}
   }
 \end{frame}
+
+% ------------------------------------------------------------
+% Part 8: Outlook & Summary
+% ------------------------------------------------------------
+\iqbsectionframe{Outlook and Summary}{展望与总结}
 
 % ------------------------------------------------------------
 % 25. Challenges

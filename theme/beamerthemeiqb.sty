@@ -1,4 +1,4 @@
-% ============================================================
+﻿% ============================================================
 % IQB Journal Club Beamer Theme
 % Based on Metropolis Theme
 % Version: 2.0
@@ -17,11 +17,11 @@
 \RequirePackage{graphicx}
 \RequirePackage{calc}
 \RequirePackage{etoolbox}
-\RequirePackage{setspace}  % 用于行间距控制
-\RequirePackage{fontawesome5}  % 学术图标和社交媒体图标
-\RequirePackage{xeCJK}       % 中文支持（XeLaTeX required）
-\RequirePackage{ifplatform}  % 平台检测，用于跨平台字体配置
-\RequirePackage{ifthen}      % 条件判断，用于日期格式切换
+\RequirePackage{setspace}  % 鐢ㄤ簬琛岄棿璺濇帶鍒?
+\RequirePackage{fontawesome5}  % 瀛︽湳鍥炬爣鍜岀ぞ浜ゅ獟浣撳浘鏍?
+\RequirePackage{xeCJK}       % 涓枃鏀寔锛圶eLaTeX required锛?
+\RequirePackage{ifplatform}  % 骞冲彴妫€娴嬶紝鐢ㄤ簬璺ㄥ钩鍙板瓧浣撻厤缃?
+\RequirePackage{ifthen}      % 鏉′欢鍒ゆ柇锛岀敤浜庢棩鏈熸牸寮忓垏鎹?
 
 % ============================================================
 % Theme Options
@@ -34,7 +34,7 @@
 
 % Table of contents numbering option
 \newif\ifbeamer@iqb@tocnumbered
-\beamer@iqb@tocnumberedfalse  % 默认不编号
+\beamer@iqb@tocnumberedfalse  % 榛樿涓嶇紪鍙?
 
 \DeclareOptionBeamer{tocnumbered}{\beamer@iqb@tocnumberedtrue}
 
@@ -65,20 +65,23 @@
 }
 
 % ============================================================
-% Cross-platform CJK Font Configuration (跨平台中文字体配置)
+% Cross-platform CJK Font Configuration (璺ㄥ钩鍙颁腑鏂囧瓧浣撻厤缃?
 % ============================================================
-% 根据操作系统自动选择最优字体，用户无需手动配置
-% 同时配置粗体字体，使 \textbf{中文} 能正确显示加粗效果
+% 鏍规嵁鎿嶄綔绯荤粺鑷姩閫夋嫨鏈€浼樺瓧浣擄紝鐢ㄦ埛鏃犻渶鎵嬪姩閰嶇疆
+% 鍚屾椂閰嶇疆绮椾綋瀛椾綋锛屼娇 \textbf{涓枃} 鑳芥纭樉绀哄姞绮楁晥鏋?
 \ifwindows
-  % Windows: 宋体正文 + 黑体加粗
+  % Windows defaults
   \setCJKmainfont[BoldFont=SimHei]{SimSun}
+  \setCJKsansfont{SimHei}
 \else
   \ifmacosx
-    % macOS: 宋体-简体正文 + 黑体加粗
+    % macOS defaults
     \setCJKmainfont[BoldFont=STHeiti]{Songti SC}
+    \setCJKsansfont{PingFang SC}
   \else
-    % Linux: Noto Serif CJK SC正文 + Noto Sans CJK SC加粗
+    % Linux defaults
     \setCJKmainfont[BoldFont=Noto Sans CJK SC]{Noto Serif CJK SC}
+    \setCJKsansfont{Noto Sans CJK SC}
   \fi
 \fi
 
@@ -94,36 +97,36 @@
 }
 
 % ============================================================
-% Configuration Commands (可定制选项)
+% Configuration Commands (鍙畾鍒堕€夐」)
 % ============================================================
-% 机构名称配置
+% 鏈烘瀯鍚嶇О閰嶇疆
 \newcommand{\iqbinstitute}{Institute of Quantitative Biology}
 \newcommand{\setiqbinstitute}[1]{\renewcommand{\iqbinstitute}{#1}}
 
-% Logo路径配置
+% Logo璺緞閰嶇疆
 \newcommand{\iqblogopath}{../theme/images/header.png}
 \newcommand{\setiqblogopath}[1]{\renewcommand{\iqblogopath}{#1}}
 
-% 主题颜色配置（版本1.0不启用，保留扩展接口）
+% 涓婚棰滆壊閰嶇疆锛堢増鏈?.0涓嶅惎鐢紝淇濈暀鎵╁睍鎺ュ彛锛?
 % \newcommand{\setiqbcolor}[1]{\definecolor{iqbblue}{HTML}{#1}}
 
 % ============================================================
-% Color Theme (配色方案)
+% Color Theme (閰嶈壊鏂规)
 % ============================================================
-% 主颜色定义
-\definecolor{iqbblue}{RGB}{0, 51, 102}        % IQB 主题色 #003366
-\definecolor{iqbdarkblue}{RGB}{0, 26, 51}    % 深蓝色（标题强调）
-\definecolor{iqblightblue}{RGB}{74, 144, 226} % 浅蓝色（强调）
-\definecolor{iqbgray}{RGB}{85, 85, 85}        % 深灰色
-\definecolor{iqblightgray}{RGB}{240, 240, 240} % 浅灰色背景
+% 涓婚鑹插畾涔?
+\definecolor{iqbblue}{RGB}{0, 51, 102}        % IQB 涓婚鑹?#003366
+\definecolor{iqbdarkblue}{RGB}{0, 26, 51}    % 娣辫摑鑹诧紙鏍囬寮鸿皟锛?
+\definecolor{iqblightblue}{RGB}{74, 144, 226} % 娴呰摑鑹诧紙寮鸿皟锛?
+\definecolor{iqbgray}{RGB}{85, 85, 85}        % 娣辩伆鑹?
+\definecolor{iqblightgray}{RGB}{240, 240, 240} % 娴呯伆鑹茶儗鏅?
 
-% 辅助颜色定义（用于强调和警告）
-\definecolor{iqborange}{RGB}{255, 107, 53}   % 橙色 #FF6B35
-\definecolor{iqbgreen}{RGB}{46, 204, 113}    % 绿色 #2ECC71
-\definecolor{iqbred}{RGB}{231, 76, 60}       % 红色 #E74C3C
+% 杈呭姪棰滆壊瀹氫箟锛堢敤浜庡己璋冨拰璀﹀憡锛?
+\definecolor{iqborange}{RGB}{255, 107, 53}   % 姗欒壊 #FF6B35
+\definecolor{iqbgreen}{RGB}{46, 204, 113}    % 缁胯壊 #2ECC71
+\definecolor{iqbred}{RGB}{231, 76, 60}       % 绾㈣壊 #E74C3C
 
 \setbeamercolor{normal text}{fg=black, bg=white}
-\setbeamercolor{frametitle}{fg=iqbblue}  % 完全透明背景，深蓝文字
+\setbeamercolor{frametitle}{fg=iqbblue}  % 瀹屽叏閫忔槑鑳屾櫙锛屾繁钃濇枃瀛?
 \setbeamercolor{title}{fg=iqbblue}
 \setbeamercolor{subtitle}{fg=iqbgray}
 \setbeamercolor{author}{fg=iqbgray}
@@ -133,29 +136,29 @@
 \setbeamercolor{block body}{fg=black, bg=iqblightgray}
 
 % ============================================================
-% Font Theme (统一字号体系: 正文9pt, 标题12pt, 大标题14.4pt)
+% Font Theme (缁熶竴瀛楀彿浣撶郴: 姝ｆ枃9pt, 鏍囬12pt, 澶ф爣棰?4.4pt)
 % ============================================================
-% 字体层级（从大到小）：
-%   Level 3: \Large (14.4pt)       - 封面标题、\iqbpagetitle
-%   Level 4: \large (12pt)         - frametitle、punchline系列
-%   Level 5: \normalsize (11pt)    - \iqbsectiontitle（页面内段落标题）
-%   Level 7: \footnotesize (9pt)   - 正文、itemize（新默认）
-%   Level 8: \scriptsize (8pt)     - 图注、表格、备注
-%   Level 9: \tiny (5pt)           - 页脚
-\setbeamerfont{title}{size=\Large, series=\bfseries}  % 封面标题 (14.4pt)
-\setbeamerfont{subtitle}{size=\normalsize}  % 封面副标题 (11pt)
-\setbeamerfont{author}{size=\normalsize}  % 封面作者 (11pt)
-\setbeamerfont{date}{size=\normalsize}  % 封面日期 (11pt)
-\setbeamerfont{frametitle}{size=\large, series=\bfseries}  % 页面标题 (12pt)
+% 瀛椾綋灞傜骇锛堜粠澶у埌灏忥級锛?
+%   Level 3: \Large (14.4pt)       - 灏侀潰鏍囬銆乗iqbpagetitle
+%   Level 4: \large (12pt)         - frametitle銆乸unchline绯诲垪
+%   Level 5: \normalsize (11pt)    - \iqbsectiontitle锛堥〉闈㈠唴娈佃惤鏍囬锛?
+%   Level 7: \footnotesize (9pt)   - 姝ｆ枃銆乮temize锛堟柊榛樿锛?
+%   Level 8: \scriptsize (8pt)     - 鍥炬敞銆佽〃鏍笺€佸娉?
+%   Level 9: \tiny (5pt)           - 椤佃剼
+\setbeamerfont{title}{size=\Large, series=\bfseries}  % 灏侀潰鏍囬 (14.4pt)
+\setbeamerfont{subtitle}{size=\normalsize}  % 灏侀潰鍓爣棰?(11pt)
+\setbeamerfont{author}{size=\normalsize}  % 灏侀潰浣滆€?(11pt)
+\setbeamerfont{date}{size=\normalsize}  % 灏侀潰鏃ユ湡 (11pt)
+\setbeamerfont{frametitle}{size=\large, series=\bfseries}  % 椤甸潰鏍囬 (12pt)
 \setbeamerfont{footline}{size=\tiny}  % footer (5pt)
-\setbeamerfont{block title}{size=\scriptsize, series=\bfseries}  % block标题 (8pt粗体)
-\setbeamerfont{normal text}{size=\footnotesize}  % 正文基准 (9pt - 改为 footnotesize)
-\setbeamerfont{itemize/enumerate body}{size=\footnotesize}  % 列表项 (9pt - 改为 footnotesize)
-\setbeamerfont{itemize/enumerate subbody}{size=\footnotesize}  % 子列表项也保持 (9pt)
-\setbeamerfont{caption}{size=\scriptsize}  % 图注统一 (8pt)
+\setbeamerfont{block title}{size=\scriptsize, series=\bfseries}  % block鏍囬 (8pt绮椾綋)
+\setbeamerfont{normal text}{size=\footnotesize}  % 姝ｆ枃鍩哄噯 (9pt - 鏀逛负 footnotesize)
+\setbeamerfont{itemize/enumerate body}{size=\footnotesize}  % 鍒楄〃椤?(9pt - 鏀逛负 footnotesize)
+\setbeamerfont{itemize/enumerate subbody}{size=\footnotesize}  % 瀛愬垪琛ㄩ」涔熶繚鎸?(9pt)
+\setbeamerfont{caption}{size=\scriptsize}  % 鍥炬敞缁熶竴 (8pt)
 
-% 注：frame字体控制策略 - 使用AtBeginEnvironment
-% 对每个frame（除plain外）应用\footnotesize，兼容TeXLive 2022
+% 娉細frame瀛椾綋鎺у埗绛栫暐 - 浣跨敤AtBeginEnvironment
+% 瀵规瘡涓猣rame锛堥櫎plain澶栵級搴旂敤\footnotesize锛屽吋瀹筎eXLive 2022
 \AtBeginEnvironment{frame}{%
   \ifbeamer@plainframe\else
     \footnotesize
@@ -170,24 +173,24 @@
 \setbeamertemplate{navigation symbols}{}
 
 % ============================================================
-% Line Spacing & Vertical Layout (行间距与垂直布局)
+% Line Spacing & Vertical Layout (琛岄棿璺濅笌鍨傜洿甯冨眬)
 % ============================================================
-% 使用setspace包的\setstretch命令进行行间距控制
-% 默认设置为1.2倍行间距（120%）以实现紧凑、专业的布局
-% 用户可通过在.tex中添加\setstretch{值}来自由调整：
-%   \setstretch{1.0}  - 单倍行距
-%   \setstretch{1.2}  - 1.2倍行距（默认，推荐）
-%   \setstretch{1.5}  - 1.5倍行距（宽松）
-%   \setstretch{2.0}  - 双倍行距
-\setstretch{1.2}  % 设置行间距为120%字号（紧凑布局，推荐用于演示PPT）
+% 浣跨敤setspace鍖呯殑\setstretch鍛戒护杩涜琛岄棿璺濇帶鍒?
+% 榛樿璁剧疆涓?.2鍊嶈闂磋窛锛?20%锛変互瀹炵幇绱у噾銆佷笓涓氱殑甯冨眬
+% 鐢ㄦ埛鍙€氳繃鍦?tex涓坊鍔燶setstretch{鍊紏鏉ヨ嚜鐢辫皟鏁达細
+%   \setstretch{1.0}  - 鍗曞€嶈璺?
+%   \setstretch{1.2}  - 1.2鍊嶈璺濓紙榛樿锛屾帹鑽愶級
+%   \setstretch{1.5}  - 1.5鍊嶈璺濓紙瀹芥澗锛?
+%   \setstretch{2.0}  - 鍙屽€嶈璺?
+\setstretch{1.2}  % 璁剧疆琛岄棿璺濅负120%瀛楀彿锛堢揣鍑戝竷灞€锛屾帹鑽愮敤浜庢紨绀篜PT锛?
 
-% 减小itemize和列表间距，防止内容溢出
-\setlength{\leftmargini}{0.9em}  % 减小左缩进
-\setlength{\itemsep}{0.1ex}  % 减小项目间距
-\setlength{\parsep}{0pt}  % 减小段落间距
-\setlength{\parskip}{0pt}  % 减小段落跳过
+% 鍑忓皬itemize鍜屽垪琛ㄩ棿璺濓紝闃叉鍐呭婧㈠嚭
+\setlength{\leftmargini}{0.9em}  % 鍑忓皬宸︾缉杩?
+\setlength{\itemsep}{0.1ex}  % 鍑忓皬椤圭洰闂磋窛
+\setlength{\parsep}{0pt}  % 鍑忓皬娈佃惤闂磋窛
+\setlength{\parskip}{0pt}  % 鍑忓皬娈佃惤璺宠繃
 
-% 调整公式周围间距
+% 璋冩暣鍏紡鍛ㄥ洿闂磋窛
 \AtBeginDocument{
   \setlength{\abovedisplayskip}{3pt}
   \setlength{\belowdisplayskip}{3pt}
@@ -195,10 +198,10 @@
   \setlength{\belowdisplayshortskip}{2pt}
 }
 
-% 语义化间距命令（替代手动vspace）
-\newcommand{\tinysep}{\par\smallskip}    % 约3pt，替代vspace{0.1-0.15cm}
-\newcommand{\blocksep}{\par\medskip}     % 约6pt，替代vspace{0.2-0.3cm}
-\newcommand{\bigsep}{\par\bigskip}       % 约12pt，替代vspace{0.4-0.6cm}
+% 璇箟鍖栭棿璺濆懡浠わ紙鏇夸唬鎵嬪姩vspace锛?
+\newcommand{\tinysep}{\par\smallskip}    % 绾?pt锛屾浛浠space{0.1-0.15cm}
+\newcommand{\blocksep}{\par\medskip}     % 绾?pt锛屾浛浠space{0.2-0.3cm}
+\newcommand{\bigsep}{\par\bigskip}       % 绾?2pt锛屾浛浠space{0.4-0.6cm}
 
 % Title page
 \defbeamertemplate*{title page}{iqb}[1][]
@@ -223,29 +226,29 @@
     \begin{beamercolorbox}[sep=4pt,center,#1]{institute}
       \usebeamerfont{author}\insertinstitute
     \end{beamercolorbox}
-    % 显示自定义字段（学号、专业、导师等）
+    % 鏄剧ず鑷畾涔夊瓧娈碉紙瀛﹀彿銆佷笓涓氥€佸甯堢瓑锛?
     \ifx\@stuid\empty\else
       \vskip0.2em
       \begin{beamercolorbox}[sep=2pt,center,#1]{author}
-        \usebeamerfont{author}学号：\@stuid
+        \usebeamerfont{author}瀛﹀彿锛歕@stuid
       \end{beamercolorbox}
     \fi
     \ifx\@major\empty\else
       \vskip0.2em
       \begin{beamercolorbox}[sep=2pt,center,#1]{author}
-        \usebeamerfont{author}专业：\@major
+        \usebeamerfont{author}涓撲笟锛歕@major
       \end{beamercolorbox}
     \fi
     \ifx\@grade\empty\else
       \vskip0.2em
       \begin{beamercolorbox}[sep=2pt,center,#1]{author}
-        \usebeamerfont{author}年级：\@grade
+        \usebeamerfont{author}骞寸骇锛歕@grade
       \end{beamercolorbox}
     \fi
     \ifx\@advisor\empty\else
       \vskip0.2em
       \begin{beamercolorbox}[sep=2pt,center,#1]{author}
-        \usebeamerfont{author}导师：\@advisor
+        \usebeamerfont{author}瀵煎笀锛歕@advisor
       \end{beamercolorbox}
     \fi
     \vskip0.5em
@@ -259,7 +262,7 @@
 % Block environment
 \setbeamertemplate{blocks}[rounded][shadow=false]
 
-% Itemize/Enumerate 样式 - IQB蓝色
+% Itemize/Enumerate 鏍峰紡 - IQB钃濊壊
 \setbeamercolor{itemize item}{fg=iqbblue}
 \setbeamercolor{itemize subitem}{fg=iqbblue}
 \setbeamercolor{itemize subsubitem}{fg=iqbblue}
@@ -267,7 +270,7 @@
 \setbeamertemplate{itemize subitem}{$\circ$}
 \setbeamertemplate{itemize subsubitem}{$-$}
 
-% Caption template - 左对齐
+% Caption template - 宸﹀榻?
 \setbeamertemplate{caption}{%
   \raggedright
   \insertcaption\par
@@ -277,10 +280,10 @@
 % Outer Theme (Header, Footer, Frame Title)
 % ============================================================
 
-% Frame title - 透明背景，左上角，深蓝文字，叠在banner空白区域
+% Frame title - 閫忔槑鑳屾櫙锛屽乏涓婅锛屾繁钃濇枃瀛楋紝鍙犲湪banner绌虹櫧鍖哄煙
 \defbeamertemplate*{frametitle}{iqb}[1][]
 {
-  % 标题绝对定位到header banner空白区域（不占用正常内容空间）
+  % 鏍囬缁濆瀹氫綅鍒癶eader banner绌虹櫧鍖哄煙锛堜笉鍗犵敤姝ｅ父鍐呭绌洪棿锛?
   \begin{tikzpicture}[remember picture,overlay]
     \node[anchor=north west,inner sep=0pt] at ($(current page.north west) + (1.5cm,-0.35cm)$) {
       \begin{minipage}{0.62\paperwidth}
@@ -293,7 +296,7 @@
       \end{minipage}
     };
   \end{tikzpicture}
-  \vskip0.05cm  % header后留较小间距，提高内容高度
+  \vskip0.05cm  % header鍚庣暀杈冨皬闂磋窛锛屾彁楂樺唴瀹归珮搴?
 }
 
 % Header with IQB logo banner
@@ -303,18 +306,18 @@
 \defbeamertemplate*{headline}{iqb}
 {
   \ifbeamer@iqb@showheader
-    % 只在非plain frame上显示header
-    % plain frame会设置\beamer@plainframe标志
+    % 鍙湪闈瀙lain frame涓婃樉绀篽eader
+    % plain frame浼氳缃甛beamer@plainframe鏍囧織
     \ifbeamer@plainframe
-      % plain frame - 不显示header
+      % plain frame - 涓嶆樉绀篽eader
     \else
       \begin{tikzpicture}[remember picture,overlay]
         \node[anchor=north,inner sep=0pt] at (current page.north) {
-          % 占满全宽，保持原始宽高比（1999:204 ≈ 9.8:1）
+          % 鍗犳弧鍏ㄥ锛屼繚鎸佸師濮嬪楂樻瘮锛?999:204 鈮?9.8:1锛?
           \includegraphics[width=\paperwidth,keepaspectratio]{\iqbheaderimage}
         };
       \end{tikzpicture}
-      \vskip0.65cm  % header高度约0.65cm（减小给内容更多空间）
+      \vskip0.65cm  % header楂樺害绾?.65cm锛堝噺灏忕粰鍐呭鏇村绌洪棿锛?
     \fi
   \fi
 }
@@ -323,31 +326,86 @@
 \newcommand{\iqbsection}{}  % Store current section name
 \newcommand{\setsection}[1]{\renewcommand{\iqbsection}{#1}}
 
+% --- Footline configuration hooks ---
+% Defaults
+\newcommand{\iqb@footleft}{\textbf{\iqbinstitute}}
+\newcommand{\iqb@footcenter}{\iqbsection}
+\newcommand{\iqb@ftotal}{\inserttotalframenumber}
+\newcommand{\iqb@footright}{\insertframenumber{} / \iqb@ftotal}
+
+% One-line configuration: \iqbfootlineconfig{center}{right}{leftText}{total}
+%   center: section | title
+%   right:  ratio | pageofy | zhpageofy
+%   leftText: default | <custom text>
+%   total: auto | <number> (override total frames displayed)
+\newcommand{\iqbfootlineconfig}[4]{%
+  % center block
+  \def\@tmpa{#1}%
+  \ifthenelse{\equal{\@tmpa}{title}}{\renewcommand{\iqb@footcenter}{\insertshortframetitle}}{\renewcommand{\iqb@footcenter}{\iqbsection}}%
+  % right block
+  \def\@tmpb{#2}%
+  \ifthenelse{\equal{\@tmpb}{ratio}}{\renewcommand{\iqb@footright}{\insertframenumber{} / \iqb@ftotal}}{%
+    \ifthenelse{\equal{\@tmpb}{pageofy}}{\renewcommand{\iqb@footright}{Page~\insertframenumber/\iqb@ftotal}}{%
+      \ifthenelse{\equal{\@tmpb}{zhpageofy}}{\renewcommand{\iqb@footright}{第\insertframenumber/\iqb@ftotal~页}}{%
+        \renewcommand{\iqb@footright}{\insertframenumber{} / \iqb@ftotal}%
+      }%
+    }%
+  }%
+  % left block
+  \def\@tmpc{#3}%
+  \ifthenelse{\equal{\@tmpc}{default}}{\renewcommand{\iqb@footleft}{\textbf{\iqbinstitute}}}{\renewcommand{\iqb@footleft}{#3}}%
+  % total override
+  \def\@tmpd{#4}%
+  \ifthenelse{\equal{\@tmpd}{auto}}{}{\renewcommand{\iqb@ftotal}{#4}}%
+}
+
+% ============================================================
+% User Interface Commands for Footer Configuration
+% ============================================================
+% Convenience alias: \iqbfootline{left}{center}{right}
+%  - left:   text on the left (or 'default' for institute name)
+%  - center: section | title (show section name or frame title)
+%  - right:  ratio | pageofy | zhpageofy (page numbering format)
+%
+% Usage in导言区 (preamble):
+%   \iqbfootline{default}{title}{pageofy}
+%   \iqbfootline{IQB Lab}{section}{ratio}
+%   \iqbfootline{Custom Left Text}{title}{zhpageofy}
+\newcommand{\iqbfootline}[3]{%
+  \iqbfootlineconfig{#2}{#3}{#1}{auto}%
+}
+
+% Set total pages displayed in right block (optional, auto-detected by default)
+%   \iqbfoottotal{25}  % Override automatic page count
+\newcommand{\iqbfoottotal}[1]{\renewcommand{\iqb@ftotal}{#1}}
+
+% ============================================================
+% Footer Template Implementation
+% ============================================================
 \defbeamertemplate*{footline}{iqb}
 {
-  % 只在非plain frame上显示footer
   \ifbeamer@plainframe
-    % plain frame - 不显示footer
+    % plain frame - 涓嶆樉绀篺ooter
   \else
-    \vskip-8pt%  % 向上移动footer整体位置
-    % 添加顶部IQB蓝色分割线
+    \vskip-8pt%  % 鍚戜笂绉诲姩footer鏁翠綋浣嶇疆
+    % 娣诲姞椤堕儴IQB钃濊壊鍒嗗壊绾?
     \begin{beamercolorbox}[wd=\paperwidth,ht=1.5pt,dp=0pt,sep=0pt]{structure}
       \color{iqbblue}\rule{\paperwidth}{1.5pt}
     \end{beamercolorbox}%
-    \vskip2pt%  % 蓝线和文字之间增加纵向间距
-    % Footer主体内容
+    \vskip2pt%  % 钃濈嚎鍜屾枃瀛椾箣闂村鍔犵旱鍚戦棿璺?
+    % Footer涓讳綋鍐呭
     \leavevmode%
     \hbox{%
     \begin{beamercolorbox}[wd=.333333\paperwidth,ht=1.8ex,dp=0.6ex,left]{footline}%
-      \hspace{0.8em}\usebeamerfont{footline}\textcolor{iqbblue}{\textbf{\iqbinstitute}}
+      \hspace{0.8em}\usebeamerfont{footline}\textcolor{iqbblue}{\iqb@footleft}
     \end{beamercolorbox}%
     \begin{beamercolorbox}[wd=.333333\paperwidth,ht=1.8ex,dp=0.6ex,center]{footline}%
-      \usebeamerfont{footline}\iqbsection
+      \usebeamerfont{footline}\iqb@footcenter
     \end{beamercolorbox}%
     \begin{beamercolorbox}[wd=.333333\paperwidth,ht=1.8ex,dp=0.6ex,right]{footline}%
-      \usebeamerfont{footline}\insertframenumber{} / \inserttotalframenumber\hspace{0.8em}
+      \usebeamerfont{footline}\iqb@footright\hspace{0.8em}
     \end{beamercolorbox}}%
-    \vskip2pt%  % 底部留小间距
+    \vskip2pt%  % 搴曢儴鐣欏皬闂磋窛
   \fi
 }
 
@@ -388,20 +446,20 @@
 % ============================================================
 % Font Size Mode Switching
 % ============================================================
-% 提供三种模式：normal（默认）、small（紧凑）
-% 使用 \iqbfontsizemode{normal|small} 在导言区或frame间进行切换
+% 鎻愪緵涓夌妯″紡锛歯ormal锛堥粯璁わ級銆乻mall锛堢揣鍑戯級
+% 浣跨敤 \iqbfontsizemode{normal|small} 鍦ㄥ瑷€鍖烘垨frame闂磋繘琛屽垏鎹?
 
 \newcommand{\iqbfontsizemode}[1]{%
   \ifthenelse{\equal{#1}{small}}{%
-    % small 模式：所有字体缩小1级
-    \setbeamerfont{normal text}{size=\scriptsize}              % 9pt → 8pt
-    \setbeamerfont{itemize/enumerate body}{size=\scriptsize}  % 9pt → 8pt
-    \setbeamerfont{itemize/enumerate subbody}{size=\tiny}     % 9pt → 7pt
-    \setbeamerfont{frametitle}{size=\normalsize, series=\bfseries}  % 12pt → 11pt
-    \setbeamerfont{block title}{size=\tiny}                   % 8pt → 7pt
-    \setbeamerfont{caption}{size=\tiny}                       % 8pt → 7pt
+    % small 妯″紡锛氭墍鏈夊瓧浣撶缉灏?绾?
+    \setbeamerfont{normal text}{size=\scriptsize}              % 9pt 鈫?8pt
+    \setbeamerfont{itemize/enumerate body}{size=\scriptsize}  % 9pt 鈫?8pt
+    \setbeamerfont{itemize/enumerate subbody}{size=\tiny}     % 9pt 鈫?7pt
+    \setbeamerfont{frametitle}{size=\normalsize, series=\bfseries}  % 12pt 鈫?11pt
+    \setbeamerfont{block title}{size=\tiny}                   % 8pt 鈫?7pt
+    \setbeamerfont{caption}{size=\tiny}                       % 8pt 鈫?7pt
   }{%
-    % normal 模式（默认）：恢复初始设置
+    % normal 妯″紡锛堥粯璁わ級锛氭仮澶嶅垵濮嬭缃?
     \setbeamerfont{normal text}{size=\footnotesize}           % 9pt
     \setbeamerfont{itemize/enumerate body}{size=\footnotesize}  % 9pt
     \setbeamerfont{itemize/enumerate subbody}{size=\footnotesize}  % 9pt
@@ -418,3 +476,6 @@
 % This matches the 16:9 ratio used in existing JC presentations
 
 \mode<all>
+
+
+
