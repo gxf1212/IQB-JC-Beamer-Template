@@ -1,0 +1,675 @@
+% ============================================================
+% QSAR & Machine Learning Predictors - Teaching Slides
+% Prepared for Chapter 6 (IQB JC Template)
+% ============================================================
+
+\documentclass[aspectratio=169,11pt]{beamer}
+
+\usepackage{../theme/beamerthemeiqb}
+\usepackage{../theme/iqb-layouts}
+\renewcommand{\iqbheaderimage}{../theme/images/header.png}
+\setstretch{1.05}
+
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{array}
+
+\title{Chapter 6: QSAR and Machine Learning Predictors}
+\subtitle{From Foundational Concepts to Regulatory-Ready Models}
+\author{Philipe Oliveira Fernandes \and Vinicius Gonçalves Maltarollo}
+\institute{Graduate QSAR Workshop \(\mid\) Instructor: \textbf{Xufan Gao}}
+\date{\today}
+
+\begin{document}
+
+% ------------------------------------------------------------
+% 1. Cover
+% ------------------------------------------------------------
+\begin{frame}[plain,noframenumbering]
+  \vspace*{0.5cm}
+  {\Large Chapter 6 Teaching Slides}
+
+  \vspace{0.3cm}
+  {\Huge \textbf{QSAR and Machine Learning Predictors}}
+
+  \vspace{0.3cm}
+  {\large Philipe Oliveira Fernandes \(\cdot\) Vinicius Gonçalves Maltarollo}
+
+  \vspace{0.2cm}
+  {\normalsize Course: Advanced Drug Design \(\mid\) Lecturer: \textbf{(your name)}}
+
+  \vspace{0.2cm}
+  {\normalsize Date: \today}
+
+  \vspace{0.5cm}
+  \iqbtwoimgside[0.2cm]{
+    \iqbbluebox{Keywords}{
+      QSAR \(\cdot\) Machine Learning \(\cdot\) Molecular Descriptors \(\cdot\) OECD Principles
+    }
+  }{
+    \iqborangebox{Chapter Takeaway}{
+      Integrate chemical intuition, data curation, ML workflows, validation, and interpretation to
+      deliver regulatory-accepted models that translate into experimental wins.
+    }
+  }
+\end{frame}
+
+% ------------------------------------------------------------
+% 2. Chapter overview & learning goals
+% ------------------------------------------------------------
+\begin{frame}{Chapter Map \& Learning Objectives}
+  \iqblayouttwo{
+    \iqbsectiontitle{Three learning goals}
+    \begin{iqbitemize}
+      \item Understand QSAR/QSPR theory and representation choices.
+      \item Master modeling, validation, and OECD-aligned workflows.
+      \item Scan emerging ML/GNN trends plus real-world deployment tips.
+    \end{iqbitemize}
+
+    \iqbsep
+
+    \iqbsectiontitle{Scope of Chapter 6}
+    \begin{iqbitemize}
+      \item Descriptors \& fingerprints
+      \item Classic vs. modern modeling
+      \item OECD regulatory lens
+      \item Validation, interpretation, applications, outlook
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{Lecture pacing (25 pages)}
+    \begin{tabular}{>{\bfseries}p{0.35\textwidth}p{0.47\textwidth}}
+      Part 1 & Fundamentals \& history (pp.1-4)\\
+      Part 2 & Core concepts \& representations (pp.5-10)\\
+      Part 3 & OECD principles (pp.11-13)\\
+      Part 4 & Tooling ecosystem (pp.14-15)\\
+      Part 5 & Validation \& controls (pp.16-19)\\
+      Part 6 & Interpretation (pp.20-21)\\
+      Part 7 & Practice \& cases (pp.22-23)\\
+      Part 8 & Challenges \& summary (pp.24-25)\\
+    \end{tabular}
+  }
+\end{frame}
+
+% ------------------------------------------------------------
+% 3. What is QSAR
+% ------------------------------------------------------------
+\begin{frame}{What is QSAR? Core Definitions}
+  \iqblayouttwo{
+    \iqbbluebox{Definition}{
+      Quantitative Structure-Activity Relationship (QSAR) links molecular structure to measured
+      biological activity or physicochemical property through mathematical models.
+    }
+    \iqbsep
+    \begin{iqbitemize}
+      \item Treats structure as descriptors/fingerprints and activity as endpoints.
+      \item Serves as a rational design pillar in medicinal chemistry and chemical biology.
+      \item Extends to QSPR, QSRR, QSTR depending on the endpoint class.
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{Why it matters}
+    \begin{iqbitemize}
+      \item Rapid hypothesis triage before synthesis or assays.
+      \item Enables multi-parametric optimization (potency, ADME, toxicity).
+      \item Bridges wet-lab measurements with ML-driven insights.
+    \end{iqbitemize}
+
+    \iqbsep
+
+    \iqborangebox{Reminder}{
+      QSAR quality is only as good as input structures, curated data, and validation discipline.
+    }
+  }
+\end{frame}
+
+% ------------------------------------------------------------
+% 4. Historical background
+% ------------------------------------------------------------
+\begin{frame}{Historical Background \& Milestones}
+  \iqblayouttwo{
+    \begin{iqbitemize}
+      \item 1863: Cros connects alcohol toxicity and solubility.
+      \item 1884: Mills correlates melting/boiling points.
+      \item 1962: Hansch equation formalizes multi-parameter QSAR.
+      \item 1970s-1990s: Computer-assisted descriptors explode (logP, Hammett, 3D fields).
+      \item 2000s: Regulatory guidance (OECD) codifies best practice.
+      \item 2010s-2020s: ML/GNN and big data reshape predictive scope.
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{Naming evolution}
+    \begin{iqbitemize}
+      \item QSPR: structure-property (e.g., boiling point, solubility).
+      \item QSRR: structure-reactivity (kinetics, catalysis).
+      \item QSTR: structure-toxicity (safety profiling).
+    \end{iqbitemize}
+
+    \iqbsep
+    \iqbgreenbox{Teaching cue}{
+      Use timeline questions: “Which inflection made QSAR mainstream?” to recap Fig. 6.1 context.
+    }
+  }
+\end{frame}
+
+% ------------------------------------------------------------
+% 5. QSAR workflow
+% ------------------------------------------------------------
+\begin{frame}{QSAR Modeling Workflow (Fig. 6.1 Inspired)}
+  \iqblayouttwo{
+    \iqbsectiontitle{Four canonical steps}
+    \begin{enumerate}
+      \item \textbf{Data acquisition \& curation}\\
+            Gather endpoints, harmonize assays, deduplicate, verify structures.
+      \item \textbf{Molecular representation}\\
+            Choose descriptors/fingerprints/graphs; consider protonation and tautomers.
+      \item \textbf{Modeling}\\
+            Linear (MLR/PLS) or nonlinear (SVM, RF, DL); document hyperparameters.
+      \item \textbf{Training/test protocol}\\
+            Split strategies, internal validation loops, independent external sets.
+    \end{enumerate}
+  }{
+    \iqbsectiontitle{Quality checkpoints}
+    \begin{iqbitemize}
+      \item Structure standardization (Fourches et al. “Trust, but verify”).
+      \item Endpoint alignment: same units, biological context, experimental variance.
+      \item Metadata logging for reproducibility (software versions, seeds, splits).
+      \item Visual inspection: Fig. 6.1 pipeline as classroom walk-through.
+    \end{iqbitemize}
+  }
+\end{frame}
+
+% ------------------------------------------------------------
+% 6. Descriptor taxonomy
+% ------------------------------------------------------------
+\begin{frame}{Molecular Descriptors: 1D to 6D}
+  \footnotesize
+  \begin{tabular}{p{0.08\textwidth}p{0.28\textwidth}p{0.52\textwidth}}
+    \toprule
+    Dim & Definition & Representative features and notes\\
+    \midrule
+    1D & Scalar counts & Atom counts, bonds, rings, heteroatoms. Fast, coarse.\\
+    2D & Topological & Connectivity indices, Kier–Hall, fragment counts, logP. Captures adjacency.\\
+    3D & Shape/conformation & Steric/electrostatic fields, CoMFA grids, distances. Needs aligned 3D structures.\\
+    4D & Multiple conformations & Ensemble averaged descriptors; solvent/excitation snapshots.\\
+    5D & Environmental sampling & Explicit receptor/protein interactions or multiple alignment hypotheses.\\
+    6D & Dynamic conditions & Time-dependent properties, induced fit, environmental perturbations.\\
+    \bottomrule
+  \end{tabular}
+
+  \iqbsep
+  \begin{iqbitemize}
+    \item Higher dimensions capture richer physics but demand more sampling and validation.
+    \item Use Fig. 6.2 narratives to highlight when 3D+ is justified (e.g., binding pocket specificity).
+  \end{iqbitemize}
+\end{frame}
+
+% ------------------------------------------------------------
+% 7. Fingerprints
+% ------------------------------------------------------------
+\begin{frame}{Molecular Fingerprints \& Vector Encodings}
+  \iqblayouttwo{
+    \iqbsectiontitle{Concept}
+    \begin{iqbitemize}
+      \item Bit strings or count vectors derived from atom neighborhoods.
+      \item Examples: MACCS, ECFP/FCFP, MHFP, pharmacophore keys.
+      \item Encode presence/absence of substructures for fast similarity search.
+    \end{iqbitemize}
+
+    \iqbsep
+
+    \iqborangebox{Design choices}{
+      Radius/diameter, hashing length, folded vs. unfolded vectors, chirality toggles.
+    }
+  }{
+    \iqbsectiontitle{Teaching tips}
+    \begin{iqbitemize}
+      \item Contrast with descriptors: fingerprints are sparse binary, descriptors are engineered scalars.
+      \item Relate to Fig. 6.2(b): show how fragments map onto specific bit positions.
+      \item Demonstrate Tanimoto similarity and collision issues for hashed fingerprints.
+    \end{iqbitemize}
+  }
+\end{frame}
+
+% ------------------------------------------------------------
+% 8. Traditional QSAR methods
+% ------------------------------------------------------------
+\begin{frame}{Traditional 3D-QSAR Families}
+  \iqblayouttwo{
+    \iqbsectiontitle{CoMFA}
+    \begin{iqbitemize}
+      \item Align molecules; sample steric/electrostatic interaction fields on 3D grids.
+      \item Partial least squares (PLS) links grid values to activity.
+      \item Sensitive to alignment protocol; great for congeneric series.
+    \end{iqbitemize}
+    \iqbsep
+    \iqbsectiontitle{CoMSIA}
+    \begin{iqbitemize}
+      \item Uses Gaussian-type similarity indices (steric, electrostatic, hydrophobic, HBD/HBA).
+      \item Reduces lattice artifacts versus CoMFA; smoother contour maps.
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{HQSAR}
+    \begin{iqbitemize}
+      \item Fragment-based hologram: encodes substructures into hashed bins.
+      \item Avoids 3D alignment; useful for diverse scaffolds.
+    \end{iqbitemize}
+    \iqbsep
+    \iqbgreenbox{Lecture hook}{
+      Pair with Fig. 6.3 visuals to discuss advantages/limitations and ongoing usage in medicinal chemistry teams.
+    }
+  }
+\end{frame}
+
+% ------------------------------------------------------------
+% 9. Modern ML
+% ------------------------------------------------------------
+\begin{frame}{Modern Machine Learning in QSAR}
+  \iqblayouttwo{
+    \iqbsectiontitle{Why ML gained traction}
+    \begin{iqbitemize}
+      \item Handles nonlinearity, multi-task targets, and high-dimensional descriptors.
+      \item Data abundance (ChEMBL, PubChem) plus open-source toolkits (RDKit, scikit-learn).
+      \item GPU-accelerated deep learning shortens iteration cycles.
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{Model zoo}
+    \begin{iqbitemize}
+      \item Ensemble trees: Random Forest, XGBoost for tabular descriptors.
+      \item Kernel methods: SVM, Gaussian Process for smaller data.
+      \item Neural nets: FCNN, CNN on SMILES, sequence transformers.
+      \item Self-supervised encoders + transfer learning for scarce endpoints.
+    \end{iqbitemize}
+  }
+\end{frame}
+
+% ------------------------------------------------------------
+% 10. Graph learning
+% ------------------------------------------------------------
+\begin{frame}{Molecular Graphs \& GNN Pipelines (cf. Fig. 6.5)}
+  \iqblayouttwo{
+    \iqbsectiontitle{Graph construction}
+    \begin{iqbitemize}
+      \item Nodes: atom types, charges, aromaticity, hybridization, 3D coordinates.
+      \item Edges: bond order, conjugation, ring membership, spatial distances.
+      \item Optional 3D info via message passing with distance/angle encodings.
+    \end{iqbitemize}
+
+    \iqbsep
+
+    \iqborangebox{Preprocessing reminders}{
+      Standardize valence, add explicit hydrogens when needed, keep conformer IDs for 3D GNNs.
+    }
+  }{
+    \iqbsectiontitle{Representative models}
+    \begin{iqbitemize}
+      \item Chemprop message passing network (MPNN) for activity prediction.
+      \item Graph attention (GAT), GraphConv, DimeNet, SchNet for 3D-aware tasks.
+      \item Multi-task heads for simultaneous potency, ADME, toxicity endpoints.
+    \end{iqbitemize}
+  }
+\end{frame}
+
+% ------------------------------------------------------------
+% 11. OECD overview
+% ------------------------------------------------------------
+\begin{frame}{OECD Principles Overview (Regulatory Lens)}
+  \iqblayouttwo{
+    \iqbsectiontitle{Why OECD matters}
+    \begin{iqbitemize}
+      \item Provides transparent criteria for accepting QSARs in regulatory submissions.
+      \item Aligns academic best practices with industrial risk management.
+      \item Drives reproducibility, documentation, and interpretability expectations.
+    \end{iqbitemize}
+  }{
+    \iqbgreenbox{Five principles snapshot}{
+      \begin{enumerate}
+        \item Defined endpoint.
+        \item Unambiguous algorithm.
+        \item Defined applicability domain (AD).
+        \item Goodness-of-fit, robustness, predictivity metrics.
+        \item Mechanistic interpretation where possible.
+      \end{enumerate}
+    }
+  }
+\end{frame}
+
+% ------------------------------------------------------------
+% 12. OECD 1-3
+% ------------------------------------------------------------
+\begin{frame}{OECD Principles 1-3: Practical Notes}
+  \iqblayouttwo{
+    \iqbsectiontitle{P1. Defined endpoint}
+    \begin{iqbitemize}
+      \item Detail assay type, organism, conditions, units, variance.
+      \item Ensure consensus across merged datasets; flag outliers.
+    \end{iqbitemize}
+    \iqbsep
+    \iqbsectiontitle{P2. Unambiguous algorithm}
+    \begin{iqbitemize}
+      \item Document software versions, equations, hyperparameters.
+      \item Clarify randomness control (seeds) and feature engineering steps.
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{P3. Applicability domain}
+    \begin{iqbitemize}
+      \item Define AD strategy (distance to training set, leverage, probability density).
+      \item Label predictions as reliable/uncertain based on AD score.
+      \item Discuss AD limitations during interpretation to manage risk.
+    \end{iqbitemize}
+  }
+\end{frame}
+
+% ------------------------------------------------------------
+% 13. OECD 4-5
+% ------------------------------------------------------------
+\begin{frame}{OECD Principles 4-5: Validation \& Mechanism}
+  \iqblayouttwo{
+    \iqbsectiontitle{P4. Statistical performance}
+    \begin{iqbitemize}
+      \item Report internal (CV) and external metrics (see frames 17-18).
+      \item Avoid overfitting: compare training vs. validation trends, use Y-randomization checks.
+      \item Provide uncertainty estimates (confidence intervals, bootstraps).
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{P5. Mechanistic interpretation}
+    \begin{iqbitemize}
+      \item Link model features to known SAR insights or physicochemical rationale.
+      \item Discuss when mechanism is not feasible (novel targets, purely statistical models).
+      \item Use contour maps, feature attribution, or experimental follow-up to strengthen claims.
+    \end{iqbitemize}
+  }
+\end{frame}
+
+% ------------------------------------------------------------
+% 14. Descriptor tools
+% ------------------------------------------------------------
+\begin{frame}{Descriptor Calculation Tools \& Data Sources}
+  \footnotesize
+  \begin{tabular}{p{0.18\textwidth}p{0.35\textwidth}p{0.32\textwidth}}
+    \toprule
+    Tool & Coverage & Teaching notes\\
+    \midrule
+    Dragon & \(>5000\) descriptors (1D-3D) & Commercial benchmark, good for comparison studies.\\
+    PaDEL-Descriptor & 1D-3D + fingerprints & Free, GUI/CLI, integrates CDK features.\\
+    RDKit & Custom features, fingerprints & Python/C++; reproducible pipelines with notebooks.\\
+    Mordred & 1800+ descriptors & Scriptable via Python, easy to extend.\\
+    alvaDesc, ChemDes & Cloud/calculator hybrids & Useful for quick prototypes.\\
+    \bottomrule
+  \end{tabular}
+
+  \iqbsep
+  \iqbbluebox{Data inflow}{
+    ChEMBL, PubChem, BindingDB, PDBbind feed curated endpoints; emphasize unit normalization and assay notes before descriptor generation.
+  }
+\end{frame}
+
+% ------------------------------------------------------------
+% 15. QSAR platforms
+% ------------------------------------------------------------
+\begin{frame}{QSAR Modeling Platforms \& Software Ecosystem}
+  \iqblayouttwo{
+    \iqbsectiontitle{Programming-centric stack}
+    \begin{iqbitemize}
+      \item RDKit + scikit-learn / PyTorch / TensorFlow.
+      \item DeepChem, OpenFF, ADMETlab APIs.
+      \item TeachOpenCADD notebooks for instructional demos.
+    \end{iqbitemize}
+    \iqbsep
+    \iqbsectiontitle{Why scripting?}
+    \begin{iqbitemize}
+      \item Full transparency, version control, automation for benchmarking.
+      \item Easier integration with lab notebooks and LIMS.
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{GUI or specialized suites}
+    \begin{iqbitemize}
+      \item KNIME, Orange, Weka for low-code experimentation.
+      \item QSARINS, LQTA-QSAR, CORAL, 3D-QSAR.com for regulated workflows.
+      \item Commercial platforms (MOE, Schrödinger) when structural modeling is entwined.
+    \end{iqbitemize}
+  }
+\end{frame}
+
+% ------------------------------------------------------------
+% 16. Internal validation
+% ------------------------------------------------------------
+\begin{frame}{Internal Validation Strategies (Fig. 6.6 Reference)}
+  \iqblayouttwo{
+    \iqbsectiontitle{Hold-out splits}
+    \begin{iqbitemize}
+      \item Stratified random split (e.g., 70/30) with multiple seeds.
+      \item Time-split when chronology matters (prospective mimic).
+    \end{iqbitemize}
+    \iqbsep
+    \iqbsectiontitle{k-fold CV}
+    \begin{iqbitemize}
+      \item Typical \(k=5\) or \(k=10\); keep scaffold-balanced folds.
+      \item Report mean \(\pm\) std and inspect variance across folds.
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{LOO / LMO}
+    \begin{iqbitemize}
+      \item Leave-One-Out (LOO): sensitive to noise but exhaustive for small data.
+      \item Leave-Many-Out / bootstrap: stress test robustness.
+    \end{iqbitemize}
+    \iqborangebox{Instructor note}{
+      Highlight pitfalls: data leakage, improper standardization before splitting, reuse of test set for tuning.
+    }
+  }
+\end{frame}
+
+% ------------------------------------------------------------
+% 17. External metrics (regression + classification)
+% ------------------------------------------------------------
+\begin{frame}{External Validation Metrics (Regression \& Classification)}
+  \iqblayouttwo{
+    \iqbsectiontitle{Regression endpoints}
+    \footnotesize
+    \begin{tabular}{p{0.32\textwidth}p{0.5\textwidth}}
+      \toprule
+      Metric & Guidance\\
+      \midrule
+      \(R^2_{test}\) & Compare vs. training to spot overfitting.\\
+      \(Q^2_{F1/2/3}\) & External predictivity (target \(>0.6\)).\\
+      RMSE / MAE & Relate to assay SD; report both.\\
+      CCC & Bias + variance check (aim \(>0.85\)).\\
+      \(\Delta r_m^2\) & Keep \(<0.2\) for consistent correlation.\\
+      \bottomrule
+    \end{tabular}
+    \iqbtinysep
+    \iqborangebox{Notes}{
+      Use plots (experimental vs. predicted) and confidence intervals, not single numbers.
+    }
+  }{
+    \iqbsectiontitle{Classification endpoints}
+    \begin{iqbitemize}
+      \item Confusion-derived: accuracy, precision, recall, specificity, MCC, balanced accuracy.
+      \item Threshold-free: ROC-AUC, PR-AUC, enrichment factor (EF) for early retrieval.
+      \item Always state class prevalence and provide calibration or reliability diagrams.
+    \end{iqbitemize}
+  }
+\end{frame}
+
+% ------------------------------------------------------------
+% 19. Applicability domain
+% ------------------------------------------------------------
+\begin{frame}{Applicability Domain (AD) Assessment}
+  \iqblayouttwo{
+    \iqbsectiontitle{AD techniques}
+    \begin{iqbitemize}
+      \item Distance-based (kNN, Mahalanobis, leverage).
+      \item Probability density (Gaussian mixture, kernel density).
+      \item Ensemble disagreement or variance of predictions.
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{Communicating AD}
+    \begin{iqbitemize}
+      \item Provide AD score per prediction (traffic light labels).
+      \item Visualize in descriptor space; show where external compounds sit.
+      \item Case study: illustrate experimental failures when AD ignored.
+    \end{iqbitemize}
+  }
+\end{frame}
+
+% ------------------------------------------------------------
+% 20. Randomization tests
+% ------------------------------------------------------------
+\begin{frame}{Randomization \& Robustness Tests}
+  \iqblayouttwo{
+    \iqbsectiontitle{Y-scrambling}
+    \begin{iqbitemize}
+      \item Shuffle endpoints, rebuild models; expect low \(Q^2\)/\(R^2\) if real signal exists.
+      \item Perform multiple iterations (e.g., 50-100) and plot distribution.
+    \end{iqbitemize}
+    \iqbsep
+    \iqbsectiontitle{X-scrambling / progressive scrambling}
+    \begin{iqbitemize}
+      \item Randomize descriptors gradually to assess sensitivity.
+      \item Helps detect over-dependence on a few variables.
+    \end{iqbitemize}
+  }{
+    \iqbgreenbox{Reporting tips}{
+      Document protocol (random seeds, sample size), include comparison charts, and tie back to OECD P4 robustness narrative.
+    }
+  }
+\end{frame}
+
+% ------------------------------------------------------------
+% 21. Global interpretation
+% ------------------------------------------------------------
+\begin{frame}{Global Interpretation: Feature Importance}
+  \iqblayouttwo{
+    \iqbsectiontitle{Linear / parametric models}
+    \begin{iqbitemize}
+      \item Coefficients from MLR/PLS or linear SVM display directionality.
+      \item Standardize variables for fair comparison of magnitudes.
+    \end{iqbitemize}
+    \iqbsep
+    \iqbsectiontitle{Tree-based models}
+    \begin{iqbitemize}
+      \item Use impurity decrease, permutation importance, SHAP aggregation.
+      \item Highlight stability across CV folds.
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{Visualization ideas}
+    \begin{iqbitemize}
+      \item Fig. 6.9-inspired bar charts for global contributions.
+      \item Contour maps (CoMFA/CoMSIA) linking regions to activity gain/loss.
+      \item Counterexamples: showcase features with conflicting contributions.
+    \end{iqbitemize}
+  }
+\end{frame}
+
+% ------------------------------------------------------------
+% 22. Local interpretation
+% ------------------------------------------------------------
+\begin{frame}{Local Interpretation: LIME and SHAP}
+  \iqblayouttwo{
+    \iqbsectiontitle{LIME}
+    \begin{iqbitemize}
+      \item Perturb local neighborhood around a molecule and fit simple surrogate.
+      \item Reveals descriptor/fingerprint contributions for a single prediction.
+      \item Great for classroom demos with editable notebooks.
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{SHAP}
+    \begin{iqbitemize}
+      \item Based on Shapley values; consistent additive explanations.
+      \item Supports tree ensembles, deep networks, and graph models.
+      \item Visuals: force plots, decision plots, summary beeswarms.
+    \end{iqbitemize}
+    \iqborangebox{Teaching prompt}{
+      Compare LIME vs. SHAP outputs for the same compound to discuss stability and computational cost.
+    }
+  }
+\end{frame}
+
+% ------------------------------------------------------------
+% 23. Practical checklist
+% ------------------------------------------------------------
+\begin{frame}{QSAR Modeling Practical Checklist}
+  \iqblayouttwo{
+    \iqbsectiontitle{Data readiness}
+    \begin{iqbitemize}
+      \item Is assay metadata complete? Units aligned?
+      \item Are structures standardized (charges, salts, stereochemistry)?
+      \item Are duplicates, inconclusive labels, or outliers handled?
+    \end{iqbitemize}
+    \iqbsep
+    \iqbsectiontitle{Modeling choices}
+    \begin{iqbitemize}
+      \item Which representation aligns with mechanism hypotheses?
+      \item What baseline models will you compare?
+      \item How will you tune hyperparameters without leaking test data?
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{Validation \& deployment}
+    \begin{iqbitemize}
+      \item External set defined? AD strategy ready?
+      \item Interpretability plan (global + local) documented?
+      \item Deployment hooks: batch scoring, alerting on AD violations.
+    \end{iqbitemize}
+  }
+\end{frame}
+
+% ------------------------------------------------------------
+% 24. Case studies
+% ------------------------------------------------------------
+\begin{frame}{2023-2024 Success Stories}
+  \iqblayouttwo{
+    \iqbsectiontitle{Highlighted applications}
+    \begin{iqbitemize}
+      \item Anti-parasitic leads: QSAR + Chemprop-guided synthesis for \textit{T. cruzi}.
+      \item IL-2 modulation: multi-task QSAR finds dual-activity scaffolds.
+      \item \textit{S. aureus} antibacterial screens with ML-prioritized libraries.
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{Process themes}
+    \begin{iqbitemize}
+      \item Closed experimental loops confirm in-silico predictions.
+      \item Platform examples: PhaKinPro for ADME predictions, industrial Chemprop deployments.
+      \item Stress reproducibility: public code releases + benchmark datasets.
+    \end{iqbitemize}
+  }
+\end{frame}
+
+% ------------------------------------------------------------
+% 25. Challenges
+% ------------------------------------------------------------
+\begin{frame}{Challenges \& Future Directions}
+  \iqblayouttwo{
+    \iqbsectiontitle{Current pain points}
+    \begin{iqbitemize}
+      \item Cross-lab variability and incomplete metadata.
+      \item Class imbalance, bias reporting, and uncertainty quantification.
+      \item Limited mechanistic insight for black-box DL.
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{Opportunities}
+    \begin{iqbitemize}
+      \item Multi-task, transfer, and federated learning for data-scarce targets.
+      \item Integration with knowledge graphs and causal modeling.
+      \item Automated data governance + audit trails for OECD compliance at scale.
+    \end{iqbitemize}
+  }
+\end{frame}
+
+% ------------------------------------------------------------
+% 26. Summary
+% ------------------------------------------------------------
+\begin{frame}{Summary \& Next Steps}
+  \iqbbluebox{Key takeaways}{
+    \begin{iqbitemize}
+      \item QSAR links chemical structure to activity; success hinges on curated data and thoughtful representations.
+      \item OECD principles offer a checklist for credible, regulator-ready models.
+      \item Validation, applicability domain, and interpretation must be planned alongside modeling.
+      \item Modern ML and GNNs expand predictive power but magnify the need for transparency and governance.
+    \end{iqbitemize}
+  }
+
+  \iqbsep
+
+  \iqbgreenbox{For the classroom}{
+    Conclude with a mini-quiz (identify OECD principle given a scenario) or assign students to map a project proposal onto the practical checklist.
+  }
+\end{frame}
+
+\end{document}
