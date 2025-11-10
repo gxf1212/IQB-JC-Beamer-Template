@@ -1917,7 +1917,7 @@
 % Usage: \iqbsectiontitle{标题文字}          或  \iqbsectiontitle[颜色]{标题文字}
 % 效果：normalsize字号 (11pt) + IQB蓝色（默认） + 加粗，支持可选颜色参数
 \newcommand{\iqbsectiontitle}[2][iqbblue]{%
-  {\normalsize\textcolor{#1}{\textbf{#2}}}\vspace{-0.5em}%
+  {\normalsize\textcolor{#1}{\textbf{#2}}}\par%
 }
 
 % ============================================================
@@ -2185,7 +2185,13 @@
 
 % Make \iqbsectiontitle use the configurable size
 \renewcommand{\iqbsectiontitle}[2][iqbblue]{%
-  {\iqbsectionsize\textcolor{#1}{\textbf{#2}}}\vspace{-0.5em}%
+  {\iqbsectionsize\textcolor{#1}{\textbf{#2}}}\par%
+}
+
+% Subsection title - smaller than \iqbsectiontitle, for secondary headings
+% Usage: \iqbsubsectiontitle{Sub-heading}  or  \iqbsubsectiontitle[color]{Sub-heading}
+\newcommand{\iqbsubsectiontitle}[2][iqbblue]{%
+  {\small\textcolor{#1}{\textbf{#2}}}\par%
 }
 
 % Couple punchline sizes to the unified knobs

@@ -45,8 +45,14 @@
 尽量不要手动调字号\large，一般就用模板的
 overfull的话可以重新布局，可以拆分多页
 尽量不要出现overfull
-尽量不用vspace而是\iqbseq之类的
+尽量不用vspace而是\iqbseq之类的，尽量用可复用的title而不是textbf，不是不能用，正常临时加粗当然可以，但标题类的应该用模板，如果有必要可在iqbsectiontitle下面加一级小标题？你写的时候尽量不要手动，我微调才会加
 \iqbsep前或后要换行
+能用iqbitemize的，类似并列结构的就用
+需要标号的采用\iqbfig系统？没事就用\iqbimgcenter
+参考E:\graduate_study\other-affairs\素质评价\三学年\奖学金\专项\slides\Xufan.tex
+还有什么放图的命令吗？有些你觉得纯文字不好表达的可以加个简单的tikz示意图，自己试试这方面功能，如LIME。用PDF截图检查tikz图的页面，来美化和修复错误
+Internal Validation in Practice: Experimental vs. Predicted，这一页下面一页是空的. \item[Benefit]如果overfull了就用普通\item 
+左边栏的\item[CoMFA]这种长的标签，应该往右推，如\begin{iqbitemize}[1.5cm]
 
 ### 可复用模块
 

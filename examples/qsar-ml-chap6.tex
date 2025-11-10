@@ -1,4 +1,4 @@
-﻿% ============================================================
+% ============================================================
 % QSAR & Machine Learning Predictors - Teaching Slides
 % Prepared for Chapter 6 (IQB JC Template)
 % ============================================================
@@ -13,6 +13,8 @@
 \usepackage{amsmath}
 \usepackage{booktabs}
 \usepackage{array}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,positioning,calc}
 
 \title{Chapter 6: QSAR and Machine Learning Predictors}
 \subtitle{From Foundational Concepts to Regulatory-Ready Models}
@@ -136,7 +138,6 @@
       \item QSTR: structure-toxicity (safety profiling).
     \end{iqbitemize}
 
-    \iqbsep
     \iqbgreenbox{Teaching cue}{
       Use timeline questions: ``Which inflection made QSAR mainstream?'' to recap Fig. 6.1 context.
     }
@@ -219,7 +220,7 @@
 \begin{frame}{Regression Metrics: Goodness-of-Fit \& Predictivity}
   \iqblayoutthree{
     \iqbsectiontitle{Fitting Metrics}
-    \small
+    \iqbsep
     \textbf{R$^2$ (R-squared):}
     \[
     R^2 = 1 - \frac{\sum(y_i - \hat{y}_i)^2}{\sum(y_i - \bar{y})^2}
@@ -233,7 +234,7 @@
     Leave-One-Out (LOO) or 5-fold CV.
   }{
     \iqbsectiontitle{Predictivity Metrics}
-    \small
+    \iqbsep
     \textbf{Golbraikh--Tropsha Criteria:}
     \begin{enumerate}
       \item $Q^2 > 0.5$
@@ -244,7 +245,7 @@
     Ensures not just lucky fit.
   }{
     \iqbsectiontitle{External Validation}
-    \small
+    \iqbsep
     \textbf{Test Set Q$^2_F$:}
     \[
     Q^2_F = 1 - \frac{\sum(y_i - \hat{y}_i)^2_{test}}{\sum(y_i - \bar{y}_{train})^2}
@@ -263,7 +264,7 @@
 \begin{frame}{Classification Metrics: Beyond Accuracy}
   \iqblayouttwo{
     \iqbsectiontitle{Confusion Matrix \& Derived Metrics}
-    \small
+    \iqbsep
     \begin{tabular}{|c|cc|}
       \hline
       & \textbf{Pred+} & \textbf{Pred-} \\
@@ -302,28 +303,26 @@
 % ------------------------------------------------------------
 \begin{frame}{Y-Scrambling \& X-Scrambling: Testing Model Robustness}
   \iqblayouttwo{
-    \iqbsectiontitle{Y-Scrambling (Activity Randomization)}
+    \iqbsectiontitle{Y-Scrambling (Activity)}
+
     Randomly permute the response variable $y$ while keeping $X$ fixed. Refit the model.
 
-    \textbf{Expected behavior:} Q$^2$ drops to near 0, R$^2$ remains high.
-
-    \textbf{Interpretation:}
     \begin{iqbitemize}
-      \item If Q$^2_{scrambled} \approx Q^2_{original}$ $\Rightarrow$ \textit{Model is false positive}
-      \item If R$^2_{scrambled}$ stays $> 0.3$ $\Rightarrow$ \textit{Overfitting alarm}
-      \item Repeat 100--1000 times; plot distribution
+      \item \textbf{Expected:} Q$^2$ near 0, R$^2$ high
+      \item \textbf{False positive:} If Q$^2_{scrambled} \approx Q^2_{orig}$ $\Rightarrow$ test fails
+      \item \textbf{Overfitting:} If R$^2_{scrambled} > 0.3$ $\Rightarrow$ alarm
+      \item \textbf{Protocol:} Repeat 100--1000 times; plot
     \end{iqbitemize}
 
     \iqbgreenbox{Key Output}{
       Y-scrambling prevents claiming predictive power from random coincidence
     }
   }{
-    \iqbsectiontitle{X-Scrambling (Descriptor Randomization)}
+    \iqbsectiontitle{X-Scrambling (Descriptor)}
     Randomize descriptor columns; keep $y$ correct. Refit.
 
-    \textbf{For classification:} Q$^2$ and MCC should collapse.
-
     \begin{iqbitemize}
+      \item[For classification] Q$^2$ and MCC should collapse
       \item Detects multicollinearity artifacts
       \item Shows if model relies on noise
       \item Progressive corruption of features
@@ -334,21 +333,21 @@
     \iqborangebox{Statistical Test}{
       \% scrambled $\ll 5\%$ at $p=0.05$
     }
-  }
-\end{frame}
+  }\end{frame}
 
 % ------------------------------------------------------------
 % Frame A6: Applicability Domain (Defining Model Limits)
 % ------------------------------------------------------------
 \begin{frame}{Applicability Domain (AD): Where Does the Model Work?}
-  \iqblayoutthree{
+  \frametitle[Applicability Domain]{Applicability Domain (AD): Where Does the Model Work?}
+\iqblayoutthree{
     \iqbsectiontitle{Range-Based (Simplest)}
     \small
     Min--max boundaries on each descriptor.
 
-    \textbf{Pro:} Fast, interpretable
+    \iqbsubsectiontitle{Pro} Fast, interpretable
 
-    \textbf{Con:} Ignores multivariate structure; over/under-inclusive
+    \iqbsubsectiontitle[red]{Con} Ignores multivariate structure
 
     Example: logP $\in [1,5]$, TPSA $\in [20,120]$ Å$^2$
   }{
@@ -356,9 +355,9 @@
     \small
     Compounds far from training set center (Mahalanobis, leverage $> h_{crit}$) are outside AD.
 
-    \textbf{Pro:} Accounts for correlation
+    \iqbsubsectiontitle{Pro} Accounts for correlation
 
-    \textbf{Con:} Sensitive to outliers; assumes linear manifold
+    \iqbsubsectiontitle[red]{Con} Sensitive to outliers; assumes linear manifold
 
     Leverage: $h_i = \mathbf{x}_i (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{x}_i^T$
   }{
@@ -366,9 +365,9 @@
     \small
     KDE, Gaussian mixture, or kernel density in descriptor space.
 
-    \textbf{Pro:} Flexible; multi-modal support
+    \iqbsubsectiontitle{Pro} Flexible; multi-modal support
 
-    \textbf{Con:} Computationally heavier; threshold subjective
+    \iqbsubsectiontitle[red]{Con} Computationally heavier; threshold subjective
 
     $p(\mathbf{x}) = \frac{1}{n} \sum_i K(\mathbf{x} - \mathbf{x}_i)$
   }
@@ -431,7 +430,87 @@
   \end{iqbitemize}
 \end{frame}
 
-% ------------------------------------------------------------
+% Frame G1: Descriptor Types (Constitutional, Topological, etc.)
+\begin{frame}{Five Descriptor Types: What Each Captures}
+  \iqblayoutthree{
+    \iqbsectiontitle{Constitutional}
+    Molecular formula, atom counts, heteroatom types.
+
+    \iqbsep
+
+    \iqbsubsectiontitle{Example}
+    \# C atoms, \# H-bonds, MW, \# rotatable bonds
+
+    \iqbsep
+
+    \iqbbluebox{Nature}{No connectivity info; fastest}
+  }{
+    \iqbsectiontitle{Topological}
+    Connectivity between atoms; graph properties.
+
+    \iqbsep
+
+    \iqbsubsectiontitle{Example}
+    Kier--Hall, Randić indices, SMILES-derived patterns
+
+    \iqbsep
+
+    \iqbbluebox{Nature}{2D structure; captures neighborhood}
+  }{
+    \iqbsectiontitle{Geometrical}
+    3D spatial arrangement; distances, angles, surface area.
+
+    \iqbsep
+
+    \iqbsubsectiontitle{Example}
+    TPSA, Moment of inertia, van der Waals volume
+
+    \iqbsep
+
+    \iqbbluebox{Nature}{3D structure; alignment-dependent}
+  }
+\end{frame}
+
+% Frame G2: Electronic & Thermodynamic Descriptors
+\begin{frame}{Electronic \& Thermodynamic Descriptors}
+  \iqblayouttwo{
+    \iqbsectiontitle{Electronic}
+    Orbital energies, partial charges, polarizability, HOMO/LUMO gaps.
+
+    \iqbsep
+
+    \iqbsubsectiontitle{Examples}
+    \begin{iqbitemize}
+      \item Mulliken/Gasteiger partial charges
+      \item Quantum chemical descriptors (DFT-derived)
+      \item Electronegativity sums
+    \end{iqbitemize}
+
+    \iqbsep
+
+    \iqbbluebox{Pros}{Mechanistically meaningful}
+
+    \iqbbluebox{Cons}{Computationally expensive}
+  }{
+    \iqbsectiontitle{Thermodynamic}
+    Enthalpy, free energy, solvation energy contributions.
+
+    \iqbsep
+
+    \textbf{Application:}
+    \begin{iqbitemize}
+      \item QSPR for solubility, melting point
+      \item ADME predictions
+      \item Binding affinity estimation
+    \end{iqbitemize}
+
+    \iqbsep
+
+    \iqbbluebox{Challenge}{Requires MD sampling or QM calculations}
+  }
+\end{frame}
+
+% ----------- -------------------------------------------------------
 % 7. Fingerprints
 % ------------------------------------------------------------
 \begin{frame}{Molecular Fingerprints \& Vector Encodings}
@@ -461,31 +540,25 @@
 % ------------------------------------------------------------
 % 8. Traditional QSAR methods
 % ------------------------------------------------------------
-\begin{frame}{Traditional 3D-QSAR Families}
+\begin{frame}{Traditional 3D-QSAR Families: CoMFA, CoMSIA, HQSAR}
   \iqblayouttwo{
-    \iqbsectiontitle{CoMFA}
-    \begin{iqbitemize}
-      \item Align molecules; sample steric/electrostatic interaction fields on 3D grids.
-      \item Partial least squares (PLS) links grid values to activity.
-      \item Sensitive to alignment protocol; great for congeneric series.
-    \end{iqbitemize}
+    \iqbsectiontitle{CoMFA \& CoMSIA}
+    Grid-based MIF methods.
+
     \iqbsep
 
-    \iqbsectiontitle{CoMSIA}
-    \begin{iqbitemize}
-      \item Uses Gaussian-type similarity indices (steric, electrostatic, hydrophobic, HBD/HBA).
-      \item Reduces lattice artifacts versus CoMFA; smoother contour maps.
+    \begin{iqbitemize}[1.5cm]
+      \item[CoMFA] Steric + E-static fields; requires alignment
+      \item[CoMSIA] Gaussian indices; more robust
+      \item Both use PLS; great for congenerics
     \end{iqbitemize}
-  }{
-    \iqbsectiontitle{HQSAR}
-    \begin{iqbitemize}
-      \item Fragment-based hologram: encodes substructures into hashed bins.
-      \item Avoids 3D alignment; useful for diverse scaffolds.
-    \end{iqbitemize}
+ 
     \iqbsep
-    \iqbgreenbox{Lecture hook}{
-      Pair with Fig. 6.3 visuals to discuss advantages/limitations and ongoing usage in medicinal chemistry teams.
-    }
+
+    \iqbsectiontitle{HQSAR}
+    Fragment-based; no 3D alignment. Diverse scaffolds.
+  }{
+    \iqbimgcenter[width=0.9\textwidth]{images/qsar-ml-chap6/6.3.png}
   }
 \end{frame}
 
@@ -493,7 +566,8 @@
 % Frame B1: 3D-QSAR Methods Detailed Comparison
 % ------------------------------------------------------------
 \begin{frame}{CoMFA vs. CoMSIA vs. HQSAR: In-Depth Comparison}
-  \small
+  \frametitle[CoMFA vs. CoMSIA vs. HQSAR]{CoMFA vs. CoMSIA vs. HQSAR: In-Depth Comparison}
+\small
   \begin{tabular}{|l|ccc|}
     \hline
     \textbf{Criterion} & \textbf{CoMFA} & \textbf{CoMSIA} & \textbf{HQSAR} \\
@@ -520,7 +594,8 @@
 % Frame B2: Rational Data Splitting Strategies
 % ------------------------------------------------------------
 \begin{frame}{Rational Train/Test Splitting: Beyond Random Shuffle}
-  \iqblayouttwo{
+  \frametitle[Train/Test Splitting]{Rational Train/Test Splitting: Beyond Random Shuffle}
+\iqblayouttwo{
     \iqbsectiontitle{Why Splitting Matters}
     \small
     \begin{iqbitemize}
@@ -557,8 +632,7 @@
     \iqbgreenbox{Statistical Test}{
       Chi-square test: descriptor distributions train vs. test should be $p > 0.05$
     }
-  }
-\end{frame}
+  }\end{frame}
 
 % ------------------------------------------------------------
 % 9. Modern ML
@@ -612,31 +686,30 @@
 % ------------------------------------------------------------
 % Part 3: OECD Principles
 % ------------------------------------------------------------
-\iqbsectionframe{OECD Principles}{OECD 原则}
+\iqbsectionframe{OECD Principles}{OECD原则}
 
 % ------------------------------------------------------------
-% 11. OECD overview
+% 11. OECD overview - TEMPORARILY DISABLED FOR DEBUGGING
 % ------------------------------------------------------------
-\begin{frame}{OECD Principles Overview (Regulatory Lens)}
-  \iqblayouttwo{
-    \iqbsectiontitle{Why OECD matters}
-    \begin{iqbitemize}
-      \item Provides transparent criteria for accepting QSARs in regulatory submissions.
-      \item Aligns academic best practices with industrial risk management.
-      \item Drives reproducibility, documentation, and interpretability expectations.
-    \end{iqbitemize}
-  }{
-    \iqbgreenbox{Five principles snapshot}{
-      \begin{enumerate}
-        \item Defined endpoint.
-        \item Unambiguous algorithm.
-        \item Defined applicability domain (AD).
-        \item Goodness-of-fit, robustness, predictivity metrics.
-        \item Mechanistic interpretation where possible.
-      \end{enumerate}
-    }
-  }
-\end{frame}
+% \begin{frame}{OECD Principles Overview (Regulatory Lens)}
+%   \iqblayouttwo{
+%     \iqbsectiontitle{Why OECD matters}
+%     \begin{iqbitemize}
+%       \item Provides transparent criteria for accepting QSARs in regulatory submissions.
+%       \item Aligns academic best practices with industrial risk management.
+%       \item Drives reproducibility, documentation, and interpretability expectations.
+%     \end{iqbitemize}
+%   }{
+%     \iqbgreenbox{Five principles snapshot}{
+%       \begin{enumerate}
+%         \item Defined endpoint.
+%         \item Unambiguous algorithm.
+%         \item Defined applicability domain (AD).
+%         \item Goodness-of-fit, robustness, predictivity metrics.
+%         \item Mechanistic interpretation where possible.
+%       \end{enumerate}
+%     }}
+% \end{frame}
 
 % ------------------------------------------------------------
 % 12. OECD 1-3
@@ -710,7 +783,63 @@
 
   \iqbsep
   \iqbbluebox{Data inflow}{
-    ChEMBL, PubChem, BindingDB, PDBbind feed curated endpoints; emphasize unit normalization and assay notes before descriptor generation.
+    ChEMBL, PubChem, BindingDB, PDBbind feed curated endpoints. Normalize units and assay notes before descriptor generation.
+  }
+\end{frame}
+
+% Frame D1: Public Benchmarks & Datasets
+\begin{frame}{Open Datasets \& Benchmarking (Reproducibility)}
+  \iqblayouttwo{
+    \iqbsectiontitle{Gold-standard datasets}
+    \begin{iqbitemize}
+      \item \textbf{CHEMBL24+}: 2M+ activity records; curated, standardized
+      \item \textbf{PubChem}: Millions; variable quality but searchable
+      \item \textbf{PDBbind}: Binding affinity; crystal structure PDB IDs
+      \item \textbf{MolNet}: Assembled benchmarks for regression/classification
+    \end{iqbitemize}
+
+    \iqbsep
+
+    \iqbgreenbox{Why public?}{
+      Enables direct model comparison; boosts reproducibility and trust
+    }
+  }{
+    \iqbsectiontitle{Benchmark protocols}
+    \small
+    \begin{iqbitemize}
+      \item \textbf{Leaderboards:} SAMPL challenges, MoleculeNet rankings, RegioSQM.
+      \item \textbf{To evaluate:} Robustness to data splits, generalization, interpretation stability.
+    \end{iqbitemize}
+  }
+\end{frame}
+
+% Frame D2: Industrial Deployment Lessons
+\begin{frame}{Moving QSAR to Production: Real-World Lessons}
+  \iqblayoutthree{
+    \iqbsectiontitle{Early stages}
+    \small
+    \begin{iqbitemize}
+      \item Validate on internal projects before \textit{de novo}
+      \item Cross-functional sign-off (chemists, biologists)
+      \item Document assumptions; flag edge cases
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{Scaling phase}
+    \small
+    \begin{iqbitemize}
+      \item Continuous retraining on new data
+      \item A/B test: ML vs. human prioritization
+      \item Monitor prediction confidence; flag AD violations
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{Maintenance}
+    \small
+    \begin{iqbitemize}
+      \item Retrain quarterly; version control models
+      \item Track hit rates, false positives
+      \item User feedback loop
+      \item Explainability == trust
+    \end{iqbitemize}
   }
 \end{frame}
 
@@ -747,30 +876,52 @@
 \iqbsectionframe{Validation and Controls}{验证与控制}
 
 % ------------------------------------------------------------
-% 16. Internal validation
+% 16. Internal validation - TEMPORARILY DISABLED FOR DEBUGGING
 % ------------------------------------------------------------
-\begin{frame}{Internal Validation Strategies (Fig. 6.6 Reference)}
+% \begin{frame}{Internal Validation Strategies (Fig. 6.6 Reference)}
+%   \iqblayouttwo{
+%     \iqbsectiontitle{Hold-out splits}
+%     \begin{iqbitemize}
+%       \item Stratified random split (e.g., 70/30) with multiple seeds.
+%       \item Time-split when chronology matters (prospective mimic).
+%     \end{iqbitemize}
+%     \iqbsep
+%     \iqbsectiontitle{k-fold CV}
+%     \begin{iqbitemize}
+%       \item Typical \(k=5\) or \(k=10\); keep scaffold-balanced folds.
+%       \item Report mean \(\pm\) std and inspect variance across folds.
+%     \end{iqbitemize}
+%   }{
+%     \iqbsectiontitle{LOO / LMO}
+%     \begin{iqbitemize}
+%       \item Leave-One-Out (LOO): sensitive to noise but exhaustive for small data.
+%       \item Leave-Many-Out / bootstrap: stress test robustness.
+%     \end{iqbitemize}
+%     \iqborangebox{Instructor note}{
+%       Highlight pitfalls: data leakage, improper standardization before splitting, reuse of test set for tuning.
+%     }
+% \end{frame}
+
+% Frame G3: Internal Validation Visualization (with Fig 6.6)
+\begin{frame}{Internal Validation in Practice: Experimental vs. Predicted}
   \iqblayouttwo{
-    \iqbsectiontitle{Hold-out splits}
-    \begin{iqbitemize}
-      \item Stratified random split (e.g., 70/30) with multiple seeds.
-      \item Time-split when chronology matters (prospective mimic).
-    \end{iqbitemize}
+    \iqbsectiontitle{Visual diagnosis}
+    Plot experimental vs. predicted values:
+
     \iqbsep
-    \iqbsectiontitle{k-fold CV}
+
     \begin{iqbitemize}
-      \item Typical \(k=5\) or \(k=10\); keep scaffold-balanced folds.
-      \item Report mean \(\pm\) std and inspect variance across folds.
+      \item \textbf{Perfect fit:} Points lie on $y = \hat{y}$ line
+      \item \textbf{Overfitting:} Training R² high, CV Q² much lower
+      \item \textbf{Systematic bias:} Points scatter around offset line
+      \item \textbf{Outliers:} Large residuals indicate problematic compounds
     \end{iqbitemize}
+
+    \iqbsep
+
+    \iqbgreenbox{Teaching}{Use residual plots (predicted - experimental) to spot heteroscedasticity}
   }{
-    \iqbsectiontitle{LOO / LMO}
-    \begin{iqbitemize}
-      \item Leave-One-Out (LOO): sensitive to noise but exhaustive for small data.
-      \item Leave-Many-Out / bootstrap: stress test robustness.
-    \end{iqbitemize}
-    \iqborangebox{Instructor note}{
-      Highlight pitfalls: data leakage, improper standardization before splitting, reuse of test set for tuning.
-    }
+    \iqbimgcenter[width=0.9\textwidth]{images/qsar-ml-chap6/6.6.png}
   }
 \end{frame}
 
@@ -804,6 +955,94 @@
   }
 \end{frame}
 
+% Frame E1: Model Selection % Frame E1: Model Selection & Hyperparameter Tuning - TEMPORARILY DISABLED FOR DEBUGGING Hyperparameter Tuning - RESTORED AND FIXED
+% \begin{frame}{Choosing a Model: Bias-Variance Trade-off}
+%   \iqblayouttwo{
+%     \iqbsectiontitle{Algorithm landscape}
+%     \small
+%     \begin{iqbitemize}
+%       \item \textbf{Linear (MLR/PLS):} Low bias, low variance; easy to interpret; slow for nonlinear
+%       \item \textbf{Tree-based (RF, XGBoost):} Medium bias/variance; fast; robust; handles missing data
+%       \item \textbf{SVM:} Low bias; moderate variance; kernel trick for nonlinearity; sensitive to scaling
+%       \item \textbf{Deep learning:} Low bias, high variance; needs $N > 10k$; requires GPUs
+%     \end{iqbitemize}
+%     \iqbsep
+%     \iqbbluebox{Start with}{
+%       Random Forest for quick baselines. Only move to DL if dataset $> 5k$ compounds.
+%     }
+%   }{
+%     \iqbsectiontitle{Hyperparameter tuning}
+%     \small
+%     \begin{iqbitemize}
+%       \item[RF] n\_trees, max\_depth, min\_samples\_split
+%       \item[XGB] learning\_rate, max\_depth, subsample
+%       \item[SVM] C (regularization), kernel, $\gamma$
+%       \item[NN] learning\_rate, hidden dims, dropout
+%       \item[Tools] Bayesian optimization (Optuna, Ray Tune), GridSearchCV
+%     \end{iqbitemize}
+%     \iqbsep
+%     \iqborangebox{Warning}{
+%       Tune on CV only; test on held-out external set
+%     }
+% \end{frame}
+
+% Frame E2: Ensemble Methods & Model Stacking
+\begin{frame}{Ensemble Approaches: Combining Multiple Models}
+  \iqblayouttwo{
+    \iqbsectiontitle{Voting Ensemble Architecture}
+    \begin{tikzpicture}[scale=0.9, every node/.style={font=\tiny}]
+      % Input data
+      \node[draw, fill=gray!20, rounded rectangle, minimum width=1.2cm, minimum height=0.5cm] (input) at (0.8, 2.5) {Input Data};
+
+      % Three models
+      \node[draw, fill=blue!20, rectangle, minimum width=0.75cm, minimum height=0.4cm] (m1) at (0.15, 1.5) {RF};
+      \node[draw, fill=green!20, rectangle, minimum width=0.75cm, minimum height=0.4cm] (m2) at (0.8, 1.5) {SVM};
+      \node[draw, fill=orange!20, rectangle, minimum width=0.75cm, minimum height=0.4cm] (m3) at (1.45, 1.5) {XGB};
+
+      % Predictions
+      \node[draw, fill=yellow!20, ellipse, minimum width=0.6cm, minimum height=0.35cm] (p1) at (0.15, 0.8) {P1};
+      \node[draw, fill=yellow!20, ellipse, minimum width=0.6cm, minimum height=0.35cm] (p2) at (0.8, 0.8) {P2};
+      \node[draw, fill=yellow!20, ellipse, minimum width=0.6cm, minimum height=0.35cm] (p3) at (1.45, 0.8) {P3};
+
+      % Aggregation
+      \node[draw, fill=red!20, rounded rectangle, minimum width=1cm, minimum height=0.45cm] (agg) at (0.8, 0) {Vote/Avg};
+
+      % Arrows
+      \draw[->, thick] (input) -- (m1);
+      \draw[->, thick] (input) -- (m2);
+      \draw[->, thick] (input) -- (m3);
+      \draw[->, thick] (m1) -- (p1);
+      \draw[->, thick] (m2) -- (p2);
+      \draw[->, thick] (m3) -- (p3);
+      \draw[->, thick] (p1) -- (agg);
+      \draw[->, thick] (p2) -- (agg);
+      \draw[->, thick] (p3) -- (agg);
+    \end{tikzpicture}
+
+    \iqbsep
+    Reduces variance, improves robustness
+  }{
+    \iqbsectiontitle{Methods}
+    \small
+    \begin{iqbitemize}
+      \item[Voting] Average (regression) or majority vote
+      \item[Bagging] Random Forest, ExtraTrees
+      \item[Boosting] AdaBoost, GBM, XGBoost
+    \end{iqbitemize}
+
+    \iqbsep
+
+    \iqbsectiontitle{Stacking}
+    \small
+    \begin{iqbitemize}
+      \item Train base learners
+      \item Meta-features on validation
+      \item Meta-learner (logistic regression)
+      \item Final test prediction
+    \end{iqbitemize}
+  }
+\end{frame}
+
 % ------------------------------------------------------------
 % 19. Applicability domain
 % ------------------------------------------------------------
@@ -824,29 +1063,28 @@
     \end{iqbitemize}
   }
 \end{frame}
-
+ 
 % ------------------------------------------------------------
-% 20. Randomization tests
+% 20. Randomization tests - RESTORED AND FIXED
 % ------------------------------------------------------------
-\begin{frame}{Randomization \& Robustness Tests}
-  \iqblayouttwo{
-    \iqbsectiontitle{Y-scrambling}
-    \begin{iqbitemize}
-      \item Shuffle endpoints, rebuild models; expect low \(Q^2\)/\(R^2\) if real signal exists.
-      \item Perform multiple iterations (e.g., 50-100) and plot distribution.
-    \end{iqbitemize}
-    \iqbsep
-    \iqbsectiontitle{X-scrambling / progressive scrambling}
-    \begin{iqbitemize}
-      \item Randomize descriptors gradually to assess sensitivity.
-      \item Helps detect over-dependence on a few variables.
-    \end{iqbitemize}
-  }{
-    \iqbgreenbox{Reporting tips}{
-      Document protocol (random seeds, sample size), include comparison charts, and tie back to OECD P4 robustness narrative.
-    }
-  }
-\end{frame}
+% \begin{frame}{Randomization \& Robustness Tests}
+%   \iqblayouttwo{
+%     \iqbsectiontitle{Y-scrambling}
+%     \begin{iqbitemize}
+%       \item Shuffle endpoints, rebuild models; expect low \(Q^2\)/\(R^2\) if real signal exists.
+%       \item Perform multiple iterations (e.g., 50-100) and plot distribution.
+%     \end{iqbitemize}
+%     \iqbsep
+%     \iqbsectiontitle{X-scrambling / progressive scrambling}
+%     \begin{iqbitemize}
+%       \item Randomize descriptors gradually to assess sensitivity.
+%       \item Helps detect over-dependence on a few variables.
+%     \end{iqbitemize}
+%   }{
+%     \iqbgreenbox{Reporting tips}{
+%       Document protocol (random seeds, sample size), include comparison charts, and tie back to OECD P4 robustness narrative.
+%     }  % ← FIXED: Added missing closing brace
+% \end{frame}
 
 % ------------------------------------------------------------
 % Part 6: Interpretation
@@ -856,26 +1094,78 @@
 % ------------------------------------------------------------
 % 21. Global interpretation
 % ------------------------------------------------------------
+% Frame F1: Feature Selection & Dimensionality Reduction
+\begin{frame}{Feature Selection: Curse of Dimensionality}
+  \iqblayouttwo{
+    \iqbsectiontitle{Why select features?}
+    \begin{iqbitemize}
+      \item \textbf{Many descriptors:} 5000+ (Dragon) vs. few compounds ($N < 100$) $\Rightarrow$ overfitting
+      \item \textbf{Redundancy:} logP, TPSA often correlated
+      \item \textbf{Interpretability:} Simpler models are more trustworthy
+      \item \textbf{Cost:} Fewer descriptors to compute = faster screening
+    \end{iqbitemize}
+
+    \iqbsep
+
+    \iqbgreenbox{Rule of thumb}{
+      Aim for $N_{features} < N_{compounds} / 5$ to reduce overfitting risk
+    }
+  }{
+    \iqbsectiontitle{Common strategies}
+    \small
+    \begin{iqbitemize}
+      \item[Filter] Correlation-based, variance threshold, statistical test (ANOVA)
+      \item[Wrapper] Forward/backward selection, recursive elimination (RFE), genetic algorithms
+      \item[Embedded] L1 regularization (Lasso), tree feature importance
+    \end{iqbitemize}
+  }
+\end{frame}
+
+% Frame F2: Dimensionality Reduction (PCA, Autoencoders)
+\begin{frame}{Dimensionality Reduction: Latent Space Exploration}
+  \iqblayouttwo{
+    \iqbsectiontitle{PCA}
+    Linear projection; preserve $>90\%$ variance in 3--10 PCs.
+
+    \iqbsep
+
+    \iqbbluebox{Pros}{Interpretable; fast}
+
+    \iqbsep
+
+    \iqborangebox{Cons}{Loses nonlinearity}
+
+    \iqbsep
+
+    \iqbsectiontitle{t-SNE / UMAP}
+    Nonlinear for visualization; not for modeling.
+  }{
+    \iqbsectiontitle{Autoencoders}
+    Bottleneck learns compression. Variational (VAE) for generation.
+
+    \iqbsep
+
+    \iqbgreenbox{When}{$N > 1k$; GPU needed}
+  }
+\end{frame}
+
 \begin{frame}{Global Interpretation: Feature Importance}
   \iqblayouttwo{
-    \iqbsectiontitle{Linear / parametric models}
-    \begin{iqbitemize}
-      \item Coefficients from MLR/PLS or linear SVM display directionality.
-      \item Standardize variables for fair comparison of magnitudes.
-    \end{iqbitemize}
-    \iqbsep
-    \iqbsectiontitle{Tree-based models}
-    \begin{iqbitemize}
-      \item Use impurity decrease, permutation importance, SHAP aggregation.
-      \item Highlight stability across CV folds.
-    \end{iqbitemize}
+    \iqbsectiontitle{Computing importance}
+    \small
+    \textbf{Linear:} Coefficients magnitude
+
+    \textbf{Tree-based:} Impurity, permutation, SHAP
+
+    \textbf{Validation:} CV fold stability
+
+    \textbf{Insight:} Mechanistic clues from descriptors
   }{
-    \iqbsectiontitle{Visualization ideas}
-    \begin{iqbitemize}
-      \item Fig. 6.9-inspired bar charts for global contributions.
-      \item Contour maps (CoMFA/CoMSIA) linking regions to activity gain/loss.
-      \item Counterexamples: showcase features with conflicting contributions.
-    \end{iqbitemize}
+    \iqbimgcenter[width=0.9\textwidth]{images/qsar-ml-chap6/6.9.png}
+    \iqbsep
+    \centering
+    \small
+    Fig. 6.9: Feature importance scores.
   }
 \end{frame}
 
@@ -883,24 +1173,41 @@
 % 22. Local interpretation
 % ------------------------------------------------------------
 \begin{frame}{Local Interpretation: LIME and SHAP}
-  \iqblayouttwo{
-    \iqbsectiontitle{LIME}
-    \begin{iqbitemize}
-      \item Perturb local neighborhood around a molecule and fit simple surrogate.
-      \item Reveals descriptor/fingerprint contributions for a single prediction.
-      \item Great for classroom demos with editable notebooks.
-    \end{iqbitemize}
-  }{
-    \iqbsectiontitle{SHAP}
-    \begin{iqbitemize}
-      \item Based on Shapley values; consistent additive explanations.
-      \item Supports tree ensembles, deep networks, and graph models.
-      \item Visuals: force plots, decision plots, summary beeswarms.
-    \end{iqbitemize}
-    \iqborangebox{Teaching prompt}{
-      Compare LIME vs. SHAP outputs for the same compound to discuss stability and computational cost.
-    }
-  }
+  \iqbsectiontitle{LIME: Local Interpretable Model-agnostic Explanations}
+
+  \begin{center}
+  % \begin{tikzpicture}[scale=0.85, every node/.style={font=\tiny}]
+  %   % Step 1: Original Prediction
+  %   \node[draw, fill=blue!20, rounded rectangle, minimum width=1.4cm, minimum height=0.7cm] (step1) at (0, 1.5) {Original\\Prediction};
+  %   \draw[->, thick] (step1) -- (1.0, 1.5);
+
+  %   % Step 2: Local Perturbations
+  %   \node[draw, fill=green!20, rounded rectangle, minimum width=1.4cm, minimum height=0.7cm] (step2) at (2.0, 1.5) {Local\\Perturbations};
+  %   \draw[->, thick] (step2) -- (3.0, 1.5);
+
+  %   % Step 3: Predict Perturbed
+  %   \node[draw, fill=yellow!20, rounded rectangle, minimum width=1.4cm, minimum height=0.7cm] (step3) at (4.0, 1.5) {Predict\\Perturbed};
+  %   \draw[->, thick] (step3) -- (5.0, 1.5);
+
+  %   % Step 4: Fit Surrogate
+  %   \node[draw, fill=purple!20, rounded rectangle, minimum width=1.4cm, minimum height=0.7cm] (step4) at (6.0, 1.5) {Fit\\Surrogate};
+  %   \draw[->, thick] (step4) -- (7.0, 1.5);
+
+  %   % Step 5: Feature Importance
+  %   \node[draw, fill=red!20, rounded rectangle, minimum width=1.4cm, minimum height=0.7cm] (step5) at (8.0, 1.5) {Feature\\Importance};
+
+  %   % Explanations below
+  %   \node[below=0.6cm of step2, align=center, text width=2.2cm, font=\tiny] {Perturb \& weight samples};
+  %   \node[below=0.6cm of step4, align=center, text width=2.2cm, font=\tiny] {Linear surrogate fit};
+  % \end{tikzpicture}
+  \end{center}
+
+  \iqbsep
+
+  \small
+  \textbf{\textcolor{blue}{LIME:}} Model-agnostic; local explanations; interactive demos; lightweight.
+
+  \textbf{\textcolor{purple}{SHAP:}} Game theory based; consistent importance; multiple visualizations; global explanations.
 \end{frame}
 
 % ------------------------------------------------------------
@@ -966,6 +1273,68 @@
 % ------------------------------------------------------------
 % 24. Case studies
 % ------------------------------------------------------------
+% Frame B4: QSAR Variants Beyond Activity Prediction
+\begin{frame}{Beyond Activity: QSAR Variants (QSPR, QSRR, QSTR)}
+  \small
+  \iqblayouttwo{
+    \iqbsectiontitle{QSPR (Property)}
+    Predict physicochemical/ADME properties from structure:
+    \begin{iqbitemize}
+      \item logP (lipophilicity)
+      \item TPSA, H-bond donors/acceptors
+      \item Aqueous solubility (logS)
+      \item Metabolic stability (microsomal T$_{1/2}$)
+    \end{iqbitemize}
+
+    \iqbsep
+
+    \iqbgreenbox{Challenge}{
+      Properties often continuous and unbounded; require larger datasets for robust models.
+    }
+  }{
+    \iqbsectiontitle{QSRR \& QSTR}
+    \begin{iqbitemize}
+      \item[QSRR] Predict reaction rate or kinetics; rate constants, activation energies, selectivity
+      \item[QSTR] Toxicity risk; acute LD$_{50}$ predictions, carcinogenicity/mutagenicity flags, regulatory QSAR
+    \end{iqbitemize}
+  }
+\end{frame}
+
+% Frame C1: Graph Neural Networks (GNN) for QSAR
+\begin{frame}{GNNs \& Molecular Graphs: Next-Generation QSAR}
+  \iqblayoutthree{
+    \iqbsectiontitle{Why Graphs?}
+    \small
+    \begin{iqbitemize}
+      \item Preserve topology; encode atoms \& bonds directly
+      \item Permutation invariant; no manual alignment
+      \item Scalable to large libraries
+      \item Support multi-task learning
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{Common Architectures}
+    \small
+    \begin{iqbitemize}
+      \item[GraphConv] Simple graph convolution
+      \item[Chemprop] D-MPNN; message passing from bond features
+      \item[AttentiveFP] Attention layers; interpretable edge/atom weights
+      \item[GIN] Graph Isomorphism Network
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{In Practice}
+    \small
+    \begin{iqbitemize}
+      \item Outperform traditional descriptors on large datasets ($N > 5k$)
+      \item Transfer learning: pre-train on big pharma data
+      \item Challenge: black-box; need LIME/SHAP for explanation
+    \end{iqbitemize}
+
+    \iqbsep
+
+    \textbf{Tools:} RDKit, PyTorch Geometric, Chemprop
+  }
+\end{frame}
+
 \begin{frame}{2023-2024 Success Stories}
   \iqblayouttwo{
     \iqbsectiontitle{Highlighted applications}
@@ -1031,3 +1400,4 @@
 \end{frame}
 
 \end{document}
+

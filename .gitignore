@@ -104,3 +104,4 @@ credentials.json
 
 examples\images\membrane_images_wechat_promotion
 .history/
+*.synctex(busy)
