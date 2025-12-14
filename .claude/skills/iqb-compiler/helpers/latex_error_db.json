@@ -1,0 +1,132 @@
+{
+  "error_patterns": {
+    "undefined_control_sequence": {
+      "pattern": "Undefined control sequence",
+      "common_causes": [
+        "拼写错误（如 \\iqbfigure 应为 \\iqbfig）",
+        "缺少包（如未加载 iqb-layouts.sty）",
+        "命令在错误的作用域中使用"
+      ],
+      "fixes": [
+        "检查命令名拼写",
+        "确认已加载 \\usepackage{../theme/iqb-layouts}",
+        "查看 iqb-layouts.sty 确认命令存在"
+      ]
+    },
+    "file_not_found": {
+      "pattern": "File.*not found",
+      "common_causes": [
+        "图片路径错误",
+        "文件名拼写错误",
+        "相对路径不正确"
+      ],
+      "fixes": [
+        "使用 ls 检查文件是否存在",
+        "验证路径相对于 .tex 文件位置",
+        "检查文件扩展名（.png vs .PNG）"
+      ]
+    },
+    "missing_begin_document": {
+      "pattern": "Missing \\\\begin\\{document\\}",
+      "common_causes": [
+        "\\begin{document} 前有非注释文本",
+        "编码问题导致隐藏字符",
+        "宏包冲突"
+      ],
+      "fixes": [
+        "检查 preamble 是否有误",
+        "确认文件 UTF-8 编码",
+        "注释掉可疑的包加载"
+      ]
+    },
+    "extra_end": {
+      "pattern": "\\\\begin\\{.*\\} on line .* ended by \\\\end\\{document\\}",
+      "common_causes": [
+        "缺少 \\end{frame}",
+        "环境嵌套错误",
+        "多余的 \\begin 或 \\end"
+      ],
+      "fixes": [
+        "使用编辑器的括号匹配功能",
+        "向上搜索未闭合的 \\begin{frame}",
+        "检查环境配对（columns, itemize, etc.）"
+      ]
+    },
+    "undefined_color": {
+      "pattern": "Undefined color",
+      "common_causes": [
+        "主题未加载",
+        "主题加载顺序错误",
+        "颜色名拼写错误"
+      ],
+      "fixes": [
+        "确认 \\usepackage{../theme/beamerthemeiqb} 在前",
+        "检查颜色名（iqbblue, iqbgray, etc.）",
+        "不要手动加载 xcolor 包"
+      ]
+    },
+    "font_not_found": {
+      "pattern": "cannot be found",
+      "common_causes": [
+        "CJK 字体未安装",
+        "字体路径错误",
+        "Windows/Linux 字体差异"
+      ],
+      "fixes": [
+        "使用 Windows TeXLive 路径：/mnt/d/texlive/...",
+        "或修改 beamerthemeiqb.sty 使用 Linux 字体",
+        "运行 fc-list :lang=zh 检查可用中文字体"
+      ]
+    },
+    "package_option_clash": {
+      "pattern": "Option clash for package",
+      "common_causes": [
+        "包被重复加载且选项不同",
+        "主题已加载但又手动加载"
+      ],
+      "fixes": [
+        "删除手动的 \\usepackage（如 xcolor, tikz）",
+        "主题文件会自动加载依赖",
+        "如需选项，在首次加载时指定"
+      ]
+    }
+  },
+  "warning_patterns": {
+    "overfull_hbox": {
+      "pattern": "Overfull \\\\hbox.*too wide",
+      "severity": "warning",
+      "action": "使用 iqb-layout-optimizer 修复"
+    },
+    "overfull_vbox": {
+      "pattern": "Overfull \\\\vbox.*too high",
+      "severity": "warning",
+      "action": "使用 iqb-layout-optimizer 修复"
+    },
+    "reference_undefined": {
+      "pattern": "Reference.*undefined",
+      "severity": "info",
+      "action": "运行第二次编译以解析引用"
+    },
+    "citation_undefined": {
+      "pattern": "Citation.*undefined",
+      "severity": "info",
+      "action": "运行 biber 然后重新编译"
+    }
+  },
+  "quick_fixes": {
+    "common_typos": {
+      "\\iqbfigure": "\\iqbfig",
+      "\\iqblayout": "\\iqblayouttwo",
+      "\\iqbitemise": "\\iqbitemize",
+      "\\beginframe": "\\begin{frame}",
+      "\\endframe": "\\end{frame}"
+    },
+    "common_commands": [
+      "\\iqbfig[height=0.5\\textheight]{path}{caption}",
+      "\\iqblayouttwo{left}{right}",
+      "\\iqbitemize{\\item ...}",
+      "\\begin{frame}{Title}...\\end{frame}",
+      "\\setsection{Section Name}"
+    ]
+  }
+}

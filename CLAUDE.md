@@ -45,14 +45,43 @@
 尽量不要手动调字号\large，一般就用模板的
 overfull的话可以重新布局，可以拆分多页
 尽量不要出现overfull
-尽量不用vspace而是\iqbseq之类的，尽量用可复用的title而不是textbf，不是不能用，正常临时加粗当然可以，但标题类的应该用模板，如果有必要可在iqbsectiontitle下面加一级小标题？你写的时候尽量不要手动，我微调才会加
+尽量不用vspace而是\iqbseq之类的（需要的话可加到模板），尽量用可复用的title而不是textbf，不是不能用，正常临时加粗当然可以，但标题类的应该用模板，如果有必要可在iqbsectiontitle下面加一级小标题？你写的时候尽量不要手动，我微调才会加
 \iqbsep前或后要换行
 能用iqbitemize的，类似并列结构的就用
 需要标号的采用\iqbfig系统？没事就用\iqbimgcenter
 参考E:\graduate_study\other-affairs\素质评价\三学年\奖学金\专项\slides\Xufan.tex
 还有什么放图的命令吗？有些你觉得纯文字不好表达的可以加个简单的tikz示意图，自己试试这方面功能，如LIME。用PDF截图检查tikz图的页面，来美化和修复错误
 Internal Validation in Practice: Experimental vs. Predicted，这一页下面一页是空的. \item[Benefit]如果overfull了就用普通\item 
-左边栏的\item[CoMFA]这种长的标签，应该往右推，如\begin{iqbitemize}[1.5cm]
+ 必须用根目录的theme文件夹 
+读一下software-copyright\document.pdf的关键内容，用模板里面的feature、预定义的东西
+每提取一部分就优化相应部分的slides，一步一步来
+\begin{block}{\textbf{核心贡献}}这些改成\iqbgreenbox等，换换颜色
+根据CLAUDE.md修复layout可能的问题，overfull之类的，甚至可以大幅重组 
+尽量拆分和重组内容，信息密度可以大，而不是删减内容
+
+  - 结构与内容                                                                                                                                          
+      - 每页都要图文结合：至少放一张与标题直接对应的图，并在同页详述数据/方法/结论。                                                                    
+      - 标题需有 punchline，简洁概括主要结论，避免“结果：交叉验证”这类描述性标题。                                                                      
+      - 尽量按原文逻辑拆分，必要时增加页数，不要压缩信息；从原始 Markdown 或 PDF 大段取材以保证细节完整。                                               
+      - 重要结论或关键数据使用三线表或 itemize，保持可读性；长公式用行间形式且另起行。                                                                  
+  - 版式与字体                                                                                                                                          
+      - 使用模板提供的布局命令（例如 \iqblayouttwo、\iqbfigcap、\iqborangebox），避免手动 \small 等字号调整；通过全局模式切换控制字体大小。             
+      - 标题比正文大一级并加粗；正文、图注和列表保持一致字号（默认约 8pt），图注左对齐。                                                                
+      - 根据图片比例自动选择布局：超高图用“图1+文字2”横向布局，超宽图 2:1，常规图默认两栏 1/3+2/3，确保图面不太小且占满列高。                           
+      - 减少 \vspace，用模板内置间距命令；标题宽度过长时自动换行，避免与页眉图案重叠。                                                                  
+  - 图像与图注                                                                                                                                          
+      - 必须与原 PDF 页码对应，文件命名如 fig1a.png，确保图注准确翻译；必要时拆子图。                                                                   
+      - 图注可放在文字栏，尤其是长图；所有图注需使用模板封装命令实现左对齐和统一字体。                                                                  
+      - 对所有图片运行 tools/analyze_image_layout.py 等工具，辅助确定布局和尺寸；未用图放入 notusing。                                                  
+  - 模板与技能（skills）                                                                                                                                
+      - 充分利用模板内的自定义字段（作者、导师、页脚设置等）； \iqbsectiontitle 后默认换行，\iqbsep 两侧自动留白。                                      
+      - Punchline 框（如 \iqbpunchlinegreen、\iqborangebox）标题与正文分别使用模板定义的字号；可设参数控制对齐。                                        
+      - 所有页面含 banner、footer； \iqbsectionframe 项不显示 footer。                                                                                  
+      - 命令统一使用中文引号（Unicode 201C/201D）。                                                                                                     
+  - 编译与调试                                                                                                                                          
+      - 在 Windows 环境用 d/texlive/2022/bin/win32/xelatex.exe 测试；边修边编译，定位 overfull 行可暂时注释部分页面。                                   
+  调试”）。
+
 
 ### 可复用模块
 
