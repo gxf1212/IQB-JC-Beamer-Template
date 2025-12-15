@@ -1,0 +1,672 @@
+﻿% ============================================================
+% IQB Journal Club: Alchemical Free Energy Methods
+% 生物分子模拟中炼金术自由能方法的黎明
+% Date: 2025-11-22
+% Total Pages: 17
+% ============================================================
+
+\documentclass[aspectratio=169,11pt]{beamer}
+
+% Load IQB theme
+\usepackage{../../theme/beamerthemeiqb}
+\usepackage{../../theme/iqb-layouts}
+
+% Set header image path (relative to this .tex file)
+\renewcommand{\iqbheaderimage}{../../theme/images/header.png}
+\setstretch{1.0}
+
+% Metadata
+\title{The Dawn of Alchemical Free Energy Methods in Biomolecular Simulations}
+\subtitle{From Fundamental Theory to Drug Discovery Applications}
+\author{高旭帆}
+\institute{Institute of Quantitative Biology}
+\date{\today}
+
+% ============================================================
+% Paper Information (论文配置 - 在此定义，全文自动使用)
+% ============================================================
+\papertitle{生物分子模拟中炼金术自由能方法的黎明}
+\paperengtitle{The Dawn of Alchemical Free Energy Methods in Biomolecular Simulations}
+\papertitlechn{炼金术自由能：生物分子模拟的革命性工具}
+\papertitlechnsub{从统计力学基础到药物设计应用}
+\papercitation{Macuglia, D., Ciccotti, G., \& Roux, B. (2025). J. Phys. Chem. B \textbf{XXX}, XXX--XXX.}
+\paperdoi{10.1021/acs.jpcb.5c04731}
+\paperjournal{Journal of Physical Chemistry B}
+
+% ============================================================
+\begin{document}
+
+% ============================================================
+% Page 1: Cover Page (using template - 一行式命令)
+% ============================================================
+\iqbcoverframe
+
+% ============================================================
+% Page 2: Paper Information
+% ============================================================
+\begin{frame}{发表论文}
+  \iqblayouttwo{
+    \iqbbluebox{核心贡献}{
+      系统性重构炼金术自由能方法的历史发展
+      \begin{itemize}
+        \item 追溯1850-2020年代完整演进
+        \item 揭示1984-85年Jorgensen与McCammon双轨突破
+      \end{itemize}
+    }
+
+    \iqbsep
+
+    \iqbgreenbox{关键视角}{
+      从19世纪统计力学基础到现代药物设计
+      \begin{itemize}
+        \item 理论奠基：Boltzmann、Gibbs、Zwanzig
+        \item 方法创新：TI/FEP、软核势、多窗口
+        \item 产业应用：FEP+、GPU、云平台
+      \end{itemize}
+    }
+  }{
+    \iqborangebox{方法聚焦}{
+      热力学积分(TI)和自由能微扰(FEP)的演变
+      \begin{itemize}
+        \item TI：Kirkwood (1935) → 积分策略 → $\lambda$优化
+        \item FEP：Zwanzig (1954) → Jorgensen协议 → 收敛
+        \item 现代融合：BAR、MBAR、非平衡工作定理
+      \end{itemize}
+    }
+    
+    \iqbsep
+
+    \iqbbluebox{时间跨度}{
+      \begin{itemize}
+        \item 1850s: 统计力学奠基
+        \item 1935-1954: TI/FEP理论突破
+        \item 1984-85: 计算实现转折
+        \item 2015+: 工业级应用
+      \end{itemize}
+    }
+  }
+\end{frame}
+
+% ============================================================
+% Page 3: 研究背景与动机
+% ============================================================
+\setsection{Background}
+\begin{frame}{自由能计算的核心地位：从理论到应用}
+  \iqblayouttwo{
+    \iqbsectiontitle{挑战：生物分子系统的复杂性}
+    \begin{itemize}
+      \item 蛋白质-配体结合自由能的精确预测
+      \item 溶剂化效应的准确计算
+      \item 构象变化的能量景观探索
+      \item 长时间尺度现象的采样困难
+    \end{itemize}
+
+    \iqbsep
+
+    \iqbsectiontitle{需求：药物设计的定量预测}
+    \begin{itemize}
+      \item 结合亲和力的化学精度计算
+      \item 先导化合物的理性优化指导
+      \item 降低实验筛选成本与周期
+      \item 预测化学修饰对结合的影响
+    \end{itemize}
+  }{
+    \iqbsectiontitle{传统局限：直接模拟难以收敛}
+    \begin{itemize}
+      \item 构型空间随原子数指数增长
+      \item 时间尺度跨越纳秒到毫秒
+      \item 自由能壁垒导致采样困难
+      \item 稀有事件无法充分观测
+    \end{itemize}
+
+    \iqbsep
+
+    \iqbsectiontitle{炼金术优势：绕过直接采样困境}
+    \begin{itemize}
+      \item 热力学循环连接物理状态
+      \item 利用非物理中间态降低壁垒
+      \item 统计力学保证严格性
+      \item 计算效率提升数个数量级
+    \end{itemize}
+  }
+\end{frame}
+
+% ============================================================
+% Page 4: 理论奠基人物 - Kirkwood
+% ============================================================
+\setsection{Theory}
+\begin{frame}{Kirkwood (1935)：热力学积分方法奠基人}
+  \iqblayoutcustom[0.35]{
+    \setcounter{iqbfigure}{0}
+    \iqbfig[width=\linewidth,height=0.65\textheight]{Figures/figure-01.jpeg}{John Gamble Kirkwood (1907-1959)，理论化学家，统计力学与液体理论专家，提出耦合参数积分方法(Kirkwood TI)，为自由能计算奠定理论基础}
+  }{
+    \iqbsectiontitle{核心公式：TI自由能计算}
+    \[
+    \Delta F = \int_0^1 \left\langle \frac{\partial U(\lambda)}{\partial \lambda} \right\rangle_\lambda d\lambda
+    \]
+    通过耦合参数$\lambda$连续变换系统
+
+    \iqbtinysep
+
+    \iqbsectiontitle{计算优势}
+    \begin{itemize}
+      \item 避免指数放大采样误差
+      \item 积分路径平滑，数值稳定
+      \item 收敛性优于单向FEP
+    \end{itemize}
+
+    \iqbtinysep
+
+    \iqbsectiontitle{历史意义}
+    \begin{itemize}
+      \item 1935年理论，1980年代实现
+      \item 理论到应用跨越近50年
+    \end{itemize}
+  }
+\end{frame}
+
+% ============================================================
+% Page 5: 理论奠基人物 - Zwanzig
+% ============================================================
+\begin{frame}{Zwanzig (1954)：自由能微扰理论革命}
+  \iqblayoutcustom[0.35]{
+    \setcounter{iqbfigure}{1}
+    \iqbfig[width=\linewidth,height=0.6\textheight]{Figures/figure-02.jpeg}{Robert W. Zwanzig (1928-2014)，物理化学家(马里兰大学/NIST)，1954年提出自由能微扰理论(Zwanzig方程)，为现代炼金术自由能计算奠定统计力学基础。摄于1980年代末IPST办公室}
+  }{
+    \iqbsectiontitle{核心方程：FEP公式}
+    \[
+    \Delta F = -k_B T \ln \left\langle \exp\left(-\frac{\Delta U}{k_B T}\right)\right\rangle_0
+    \]
+    $\Delta U$为势能差，$\langle \cdot \rangle_0$为参考态平均
+
+    \iqbtinysep
+
+    \iqbsectiontitle{物理意义}
+    \begin{itemize}
+      \item 通过参考态采样计算目标态自由能
+      \item 指数函数放大稀有构型贡献
+      \item 需覆盖低概率高权重构型
+    \end{itemize}
+
+    \iqbtinysep
+
+    \iqbsectiontitle{历史意义}
+    \begin{itemize}
+      \item 1954年理论，1984年实现
+      \item 理论到应用跨越30年
+    \end{itemize}
+  }
+\end{frame}
+
+% ============================================================
+% Page 6: 热力学循环 - 炼金术方法核心思想
+% ============================================================
+\begin{frame}{热力学循环：连接物理与非物理路径}
+  \iqblayouttwo{
+    \iqbsectiontitle{核心思想：利用状态函数性质}
+    \begin{itemize}
+      \item 自由能是状态函数，与路径无关
+      \item 物理路径(直接结合)难以采样
+      \item 非物理路径(炼金术变换)易于计算
+      \item 热力学一致性：循环自由能和为零
+    \end{itemize}
+
+    \iqbsmallsep
+
+    \iqbsectiontitle{相对自由能计算}
+    \begin{itemize}
+      \item $\Delta \Delta G_{\text{bind}} = \Delta G_{\text{bind}}(I^*) - \Delta G_{\text{bind}}(I)$
+      \item 水平边：物理结合过程$E + I \rightarrow E\!-\!I$
+      \item 垂直边：炼金术变换$I \rightarrow I^*$
+      \item 计算两个垂直边即可得相对结合自由能
+    \end{itemize}
+  }{
+    \setcounter{iqbfigure}{4}
+    \iqbfig[height=0.65\textheight]{Figures/figure-05.jpeg}{热力学循环：计算两个抑制剂I和I$^*$与酶E结合的相对自由能。水平边为物理结合，垂直边为炼金术变换(结合态与非结合态)}
+  }
+\end{frame}
+
+% ============================================================
+% Page 7: 方法学发展 - MD先驱
+% ============================================================
+\begin{frame}{分子动力学方法发展：为炼金术计算铺平道路}
+  \iqblayouttwo{
+    \setcounter{iqbfigure}{2}
+    \iqbfig[width=\linewidth,height=0.6\textheight]{Figures/figure-03.jpeg}{从左至右：Jean-Pierre Hansen (1942-)、Berni J. Alder (1925-2020)、Herman J. C. Berendsen (1934-2019)。2013年CECAM Berni Alder奖颁奖典礼(莫斯科IUPAP计算物理会议)。Hansen贡献于液态理论，Berendsen开创生物分子动力学方法}
+  }{
+    \iqbsectiontitle{MD方法学奠基(1950-1970s)}
+    \begin{itemize}
+      \item Alder (1957)：硬球分子动力学，证明相变
+      \item Hansen：液态理论与计算机模拟结合
+      \item Berendsen (1970s)：生物分子MD方法，GROMACS前身
+      \item 为自由能计算提供采样基础设施
+    \end{itemize}
+
+    \iqbsep
+
+    \iqbsectiontitle{技术积累：计算能力的提升}
+    \begin{itemize}
+      \item 从简单液体到复杂生物分子
+      \item 从微秒到毫秒时间尺度
+      \item 高效算法与并行化
+      \item 等待炼金术理论的应用时机
+    \end{itemize}
+  }
+\end{frame}
+
+% ============================================================
+% Page 8: 方法发展历程 - 早期探索
+% ============================================================
+\setsection{History}
+\begin{frame}{炼金术方法的萌芽：1970-1980年代}
+  \iqblayouttwo{
+    \iqbsectiontitle{理论奠基：早期理论工作}
+    \begin{itemize}
+      \item Born离子溶剂化理论(1920s)
+      \item Kirkwood积分公式(1935)
+      \item Zwanzig微扰方程(1954)
+      \item 理论到计算跨越数十年
+    \end{itemize}
+
+    \iqbsep
+
+    \iqbsectiontitle{计算实现：早期尝试}
+    \begin{itemize}
+      \item 简单液体系统的应用
+      \item 统计力学理论的数值验证
+      \item 计算资源严重限制发展
+      \item 等待硬件突破
+    \end{itemize}
+  }{
+    \setcounter{iqbfigure}{5}
+    \iqbfig[width=\linewidth,height=0.65\textheight]{Figures/figure-06.jpeg}{William L. Jorgensen (1949-)，计算化学家，现耶鲁大学教授。摄于1982年普渡大学实验室，坐在Harris H80小型机终端前，身后书架上堆满输出活页夹和磁带卷——早期计算化学数据存储的典型媒介}
+  }
+\end{frame}
+
+% ============================================================
+% Page 9: 方法发展历程 - 关键突破
+% ============================================================
+\begin{frame}{1984-85年双轨突破：McCammon与Jorgensen各领风骚}
+  \iqblayouttwo{
+    \setcounter{iqbfigure}{3}
+    \iqbfig[height=0.28\textheight]{Figures/figure-04.jpeg}{J. Andrew McCammon (1947-)，UCSD教授。摄于1990年代中期，手持药物分子模型，屏幕显示蛋白质结构。开创生物分子MD模拟，1984-86年率先将FEP应用于蛋白质-配体结合自由能计算}
+    \iqbsmallsep
+
+    \iqbsectiontitle{McCammon组：Tembre \& McCammon (1984)配体结合首次应用}
+    \begin{itemize}
+      \item 计算配体-受体对的结合自由能差异
+      \item 从理论到生物学应用的关键跨越
+    \end{itemize}
+  }{
+    \setcounter{iqbfigure}{5}
+    \iqbfig[height=0.28\textheight]{Figures/figure-06.jpeg}{William L. Jorgensen (1949-)，耶鲁大学教授。摄于1982年普渡大学Harris H80小型机终端前。1985年建立现代FEP多窗口采样标准协议，计算甲醇-乙烷水化自由能差}
+    \iqbsmallsep
+
+    \iqbsectiontitle{Jorgensen组：Jorgensen \& Ravimohan (1985)溶剂化协议}
+    \begin{itemize}
+      \item 乙烷$\rightarrow$甲醇：离散$\lambda$窗口、dummy atom策略
+      \item 建立现代FEP标准协议，启发Kollman组AMBER实现
+    \end{itemize}
+  }
+\end{frame}
+
+% ============================================================
+% Page 10: 核心算法与技术 - FEP细节
+% ============================================================
+\setsection{Methods}
+\begin{frame}{FEP多窗口采样克服指数采样难题：Jorgensen标准协议}
+  \iqblayouttwo{
+    \iqbsectiontitle{算法核心：FEP的计算流程}
+    \begin{itemize}
+      \item $\lambda$窗口的离散化（通常10-20个窗口）
+      \item 每个窗口独立的分子动力学采样
+      \item Zwanzig方程的数值计算
+      \item 窗口间自由能差累加得总自由能
+    \end{itemize}
+
+    \iqbsep
+
+    \iqbsectiontitle{关键技术：提高计算效率与稳定性}
+    \begin{itemize}
+      \item 双拓扑(dual-topology)：两态原子同时存在
+      \item 软核势(soft-core)：正则化LJ奇点，避免崩溃
+      \item Bennett接受比率(BAR, 1976)：方差最优估计
+      \item 多重Bennett接受比率(MBAR)：全局优化
+    \end{itemize}
+  }{
+    \setcounter{iqbfigure}{6}
+    \iqbfig[width=\linewidth,height=0.6\textheight]{Figures/figure-07.jpeg}{Jorgensen用于甲醇-乙烷炼金术变换自由能计算的FORTRAN蒙特卡罗代码的原始行式打印机输出（1985年论文）。代码头显示NPT系综溶质-溶剂系统，底部手写注释标记变换方向}
+  }
+\end{frame}
+
+% ============================================================
+% Page 11: 核心算法与技术 - TI实现
+% ============================================================
+\begin{frame}{TI避免指数不稳定性：数值积分更稳定收敛}
+  \iqblayouttwo{
+    \iqbsectiontitle{核心公式：TI的数学基础}
+    \begin{itemize}
+      \item $\Delta F = \int_0^1 \langle \frac{\partial H(\lambda)}{\partial \lambda} \rangle_\lambda d\lambda$
+      \item $H(\lambda) = (1-\lambda)H_0 + \lambda H_1$
+      \item 避免指数权重的数值不稳定
+    \end{itemize}
+
+    \iqbsep
+
+    \iqbsectiontitle{积分方法：数值积分策略}
+    \begin{itemize}
+      \item 梯形法则：简单稳定，均匀$\lambda$网格
+      \item Simpson法则：更高精度(误差$\sim h^4$)
+      \item Gaussian积分：最优效率，自适应节点
+    \end{itemize}
+
+    \iqbsep
+
+    \iqbsectiontitle{$\lambda$路径设计：耦合参数的策略}
+    \begin{itemize}
+      \item 均匀分布：$\lambda_i = i/N$，简单变换
+      \item 自适应分布：在$\langle\partial H/\partial\lambda\rangle$剧烈区加密
+      \item 多阶段方法：分段处理电荷、LJ奇点
+    \end{itemize}
+  }{
+    \begin{center}
+      \begin{tikzpicture}[scale=0.85]
+        % Axes
+        \draw[->] (0,0) -- (6,0) node[right] {$\lambda$};
+        \draw[->] (0,0) -- (0,4) node[above] {$\langle\frac{\partial H}{\partial\lambda}\rangle$};
+
+        % Lambda points
+        \foreach \x in {0,1,2,3,4,5} {
+          \draw (\x,0.1) -- (\x,-0.1);
+          \pgfmathparse{\x/5}
+          \node[below] at (\x,-0.1) {\tiny $\pgfmathprintnumber[precision=1]{\pgfmathresult}$};
+        }
+
+        % Curve representing dH/dlambda
+        \draw[blue, thick, smooth] plot coordinates {
+          (0,0.5) (1,1.2) (2,2.8) (3,2.5) (4,1.5) (5,0.8)
+        };
+
+        % Trapezoids
+        \foreach \x in {0,1,2,3,4} {
+          \pgfmathsetmacro{\xnext}{\x+1}
+          \draw[red, dashed] (\x,0) -- (\x,{0.5+\x*0.4});
+          \draw[red, dashed] (\xnext,0) -- (\xnext,{0.5+\xnext*0.4-0.3});
+        }
+
+        % Fill one trapezoid
+        \fill[green!20, opacity=0.5] (2,0) -- (2,2.8) -- (3,2.5) -- (3,0) -- cycle;
+
+        % Annotation
+        \node[blue] at (3,3.5) {\scriptsize 数值积分求面积};
+        \draw[->, blue] (3,3.3) -- (2.5,2.6);
+
+        % Delta F
+        \node[align=center] at (3,-1) {\scriptsize $\Delta F = \sum_{i=0}^{N-1} \frac{1}{2}(\langle\frac{\partial H}{\partial\lambda}\rangle_i + \langle\frac{\partial H}{\partial\lambda}\rangle_{i+1})\Delta\lambda$};
+      \end{tikzpicture}
+
+      \vspace{0.3cm}
+
+      \scriptsize \textbf{图~4:} TI方法通过数值积分避免FEP的指数平均不稳定性
+    \end{center}
+  }
+\end{frame}
+
+% ============================================================
+% Page 12: 核心算法与技术 - 软件实现
+% ============================================================
+\begin{frame}{Jorgensen preprint启发AMBER快速实现：学术协作推动软件发展}
+  \iqblayouttwo{
+    \iqbsectiontitle{早期软件：学术代码快速发展}
+    \begin{itemize}
+      \item AMBER (1984-85)：Kollman组，U.C. Singh编程实现
+      \item GROMOS/ARGOS：欧洲Straatsma等开发
+      \item CHARMM：Karplus组实现(1989)
+      \item 学术界协作推动软件进步
+    \end{itemize}
+
+    \iqbsep
+
+    \iqbsectiontitle{现代发展：从实验室到产业应用}
+    \begin{itemize}
+      \item Schrödinger FEP+(2015)：工业级标准
+      \item OpenMM：开源GPU加速
+      \item GROMACS、AMBER：持续更新
+      \item 云平台集成与自动化工作流
+    \end{itemize}
+  }{
+    \setcounter{iqbfigure}{9}
+    \iqbfig[height=0.5\textheight]{Figures/figure-10.jpeg}{Peter A. Kollman (1944-2001)和William L. Jorgensen (1949-)在1996年计算化学Gordon研究会议(GRC)上。两位炼金术自由能方法的主要开发者，共同塑造了方法学基础和实际实现}
+  }
+\end{frame}
+
+% ============================================================
+% Page 13: 应用案例 - 药物设计
+% ============================================================
+\setsection{Applications}
+\begin{frame}{从学术实验到工业应用：30年漫长之路}
+  \iqblayouttwo{
+    \iqbsectiontitle{学术乐观：1980年代的期望}
+    \begin{itemize}
+      \item McCammon、Jorgensen、Kollman等充满信心
+      \item 1987年CECAM首届FEP研讨会
+      \item 预期5-10年内工业应用
+    \end{itemize}
+
+    \iqbsep
+
+    \iqbsectiontitle{工业困境：30年的技术障碍}
+    \begin{itemize}
+      \item 精度需求：RMS < 1 kcal/mol，实际2-3
+      \item 1 kcal/mol $\approx$ 10倍亲和力差异
+      \item 系统误差：采样、制备、质子化
+    \end{itemize}
+
+    \iqbsep
+
+    \iqbsectiontitle{2015突破：Schrödinger FEP+}
+    \begin{itemize}
+      \item Wang等工业级可靠预测
+      \item GPU加速，月→天级计算
+      \item RMS降至1 kcal/mol以下
+    \end{itemize}
+  }{
+    \setcounter{iqbfigure}{4}
+    \iqbfig[height=0.48\textheight]{Figures/figure-05.jpeg}{热力学循环：计算两个抑制剂I和I$^*$与同一酶E结合的相对自由能。水平边表示物理结合过程(E + I $\rightarrow$ E–I)，垂直边表示炼金术变换(I $\rightarrow$ I$^*$在结合态与非结合态之间)。根据热力学一致性，四条路径自由能变化之和为零}
+  }
+\end{frame}
+
+% ============================================================
+% Page 14: 应用案例 - 溶剂化效应
+% ============================================================
+\begin{frame}{水占生物质量70\%：溶剂化自由能决定分子行为}
+  \iqblayouttwo{
+    \iqbsectiontitle{理论重要性：溶剂化自由能决定分子行为}
+    \begin{itemize}
+      \item 水占生物体质量70\%
+      \item 疏水效应驱动蛋白折叠
+      \item 氢键网络维持生物大分子结构
+      \item 溶剂化自由能影响药物分配系数
+    \end{itemize}
+
+    \iqbsep
+
+    \iqbsectiontitle{计算挑战：水分子的复杂性}
+    \begin{itemize}
+      \item 显式溶剂：精确但昂贵
+      \item 隐式溶剂：快速但近似
+      \item 长程静电相互作用处理
+      \item 水分子网络的动态重排
+    \end{itemize}
+  }{
+    \setcounter{iqbfigure}{10}
+    \iqbfig[height=0.5\textheight]{Figures/figure-11.jpeg}{Martin Karplus (1930-2024)，理论化学家，哈佛大学教授。因发展复杂化学系统的多尺度模型获2013年诺贝尔化学奖（与Michael Levitt和Arieh Warshel共享）}
+  }
+\end{frame}
+
+% ============================================================
+% Page 15: 应用案例 - 方法验证
+% ============================================================
+\begin{frame}{1 kcal/mol化学精度标准：热力学循环闭合验证可靠性}
+  \iqbsectiontitle{验证标准：计算结果的可靠性检验}
+  \begin{itemize}
+    \item 热力学循环的闭合性检验
+    \item 与实验数据的对比分析
+    \item 系统误差的量化评估
+  \end{itemize}
+
+  \iqbsep
+
+  \iqbsectiontitle{精度指标：计算化学的"黄金标准"}
+  \begin{itemize}
+    \item 1 kcal/mol的化学精度（$\approx$RT at 300K）
+    \item $R^2 > 0.8$的相关性要求
+    \item 预测性与可重复性验证
+  \end{itemize}
+
+  \iqbsep
+
+  \iqbsectiontitle{实际影响：从学术研究到产业应用}
+  \begin{itemize}
+    \item 降低药物研发成本50\%以上，缩短周期2-3年
+    \item 提高临床试验成功率
+    \item 支持虚拟筛选与先导化合物优化
+  \end{itemize}
+\end{frame}
+
+% ============================================================
+% Page 16: 历史技术挑战 - dummy particles等
+% ============================================================
+\begin{frame}{1985-2005年的技术困境：从乐观到挫折}
+  \iqblayouttwo{
+    \iqbsectiontitle{Dummy原子难题：拓扑变化挑战}
+    \begin{itemize}
+      \item 原子数不匹配：乙烷vs.甲醇
+      \item "Ghost"原子完全解耦导致扩散
+      \item Single/dual topology之争持续10年
+    \end{itemize}
+
+    \iqbsep
+
+    \iqbsectiontitle{数值不稳定：端点奇点问题}
+    \begin{itemize}
+      \item LJ势在$r\rightarrow 0$时发散
+      \item 软核势正则化(Zacharias 1994)
+      \item $\lambda=0$和$\lambda=1$端点特别敏感
+    \end{itemize}
+
+    \iqbsep
+
+    \iqbsectiontitle{采样效率：计算成本瓶颈}
+    \begin{itemize}
+      \item 20-50个$\lambda$窗口，周-月级计算
+      \item 滞后误差>2 kcal/mol
+      \item CPU限制使规模化不可行
+    \end{itemize}
+  }{
+    \begin{center}
+      \begin{tikzpicture}[scale=0.8]
+        % Timeline
+        \draw[thick, ->] (0,0) -- (0,6.5) node[above] {\scriptsize 时间};
+
+        % Events
+        \node[anchor=east, align=right] at (-0.3,6) {\tiny \textbf{1985}: 初步成功};
+        \node[anchor=west, align=left] at (0.3,6) {\tiny Jorgensen协议建立};
+        \fill (0,6) circle (1.5pt);
+
+        \node[anchor=east, align=right] at (-0.3,5) {\tiny \textbf{1989-92}};
+        \node[anchor=west, align=left] at (0.3,5) {\tiny Dummy原子问题凸显};
+        \fill[red] (0,5) circle (1.5pt);
+
+        \node[anchor=east, align=right] at (-0.3,4) {\tiny \textbf{1994}};
+        \node[anchor=west, align=left] at (0.3,4) {\tiny Zacharias软核势};
+        \fill[orange] (0,4) circle (1.5pt);
+
+        \node[anchor=east, align=right] at (-0.3,3) {\tiny \textbf{1996-99}};
+        \node[anchor=west, align=left] at (0.3,3) {\tiny Boresch约束方案};
+        \fill[orange] (0,3) circle (1.5pt);
+
+        \node[anchor=east, align=right] at (-0.3,2) {\tiny \textbf{2001}};
+        \node[anchor=west, align=left] at (0.3,2) {\tiny Bash等报告大偏差};
+        \fill[red] (0,2) circle (1.5pt);
+
+        \node[anchor=east, align=right] at (-0.3,1) {\tiny \textbf{2002-05}};
+        \node[anchor=west, align=left] at (0.3,1) {\tiny 方法学瓶颈期};
+        \fill[red] (0,1) circle (1.5pt);
+
+        \node[anchor=east, align=right] at (-0.3,0.2) {\tiny \textbf{2006+}};
+        \node[anchor=west, align=left] at (0.3,0.2) {\tiny GPU/增强采样复兴};
+        \fill[green] (0,0.2) circle (1.5pt);
+      \end{tikzpicture}
+
+      \vspace{0.2cm}
+
+      \scriptsize \textbf{图~5:} 20年技术发展曲折历程
+    \end{center}
+  }
+\end{frame}
+
+% ============================================================
+% Page 17: 现代挑战与展望
+% ============================================================
+\setsection{Challenges}
+\begin{frame}{机器学习增强采样与AI驱动发现：下一代自由能计算}
+  \iqblayoutthree{
+    \iqbsectiontitle{计算挑战}
+    \begin{itemize}
+      \item 采样效率瓶颈
+      \item 力场精度限制
+      \item 尺度扩展困难
+      \item 长时间尺度现象
+    \end{itemize}
+  }{
+    \iqbsectiontitle{方法发展}
+    \begin{itemize}
+      \item ML增强采样
+      \item 多尺度建模
+      \item QM/MM结合
+      \item 非平衡方法
+    \end{itemize}
+  }{
+    \iqbsectiontitle{应用前景}
+    \begin{itemize}
+      \item 个性化药物
+      \item 蛋白质工程
+      \item AI驱动发现
+      \item 材料设计
+    \end{itemize}
+  }
+
+  \iqbsep
+
+  \iqbgreenbox{结论}{
+    炼金术自由能方法经历了从理论概念到实用工具的完整演进，现已成为药物设计和生物分子研究不可或缺的计算手段。随着计算能力和算法的不断发展，其应用前景将更加广阔。
+  }
+\end{frame}
+
+% ============================================================
+% Page 17: 致谢页
+% ============================================================
+\begin{frame}
+  \vfill
+  \begin{center}
+    \Huge\textcolor{iqbblue}{谢谢！}
+
+    \vspace{1cm}
+
+    \Large Questions \& Discussion
+
+    \vspace{1cm}
+
+    \normalsize
+    \textbf{参考文献}\\
+    Macuglia, D., Ciccotti, G., \& Roux, B. (2025).\\
+    The Dawn of Alchemical Free Energy Methods\\
+    in Biomolecular Simulations.\\
+    J. Phys. Chem. B, DOI: 10.1021/acs.jpcb.5c04731
+  \end{center}
+  \vfill
+\end{frame}
+
+% ============================================================
+\end{document}
