@@ -82,7 +82,9 @@
 %
 \newcommand{\iqbsep}{\vspace{0.3cm}}       % 标准段落间距 (~0.3cm)，最常用
 \newcommand{\iqbbigsep}{\vspace{0.5cm}}    % 大段落间距 (~0.5cm)，用于主要分节
+\newcommand{\iqbsmallsep}{\vspace{0.2cm}}  % 中小间距 (~0.2cm)，用于次级分隔
 \newcommand{\iqbtinysep}{\vspace{0.15cm}}  % 小间距 (~0.15cm)，用于列表项间
+\newcommand{\iqbmicrosep}{\vspace{0.1cm}}  % 微小间距 (~0.1cm)，用于紧凑排版
 
 % ============================================================
 % Two-Column Layouts (双列布局 - 35% 使用率)
@@ -1159,7 +1161,12 @@
 \newenvironment{iqbitemize}[1][0em]{%
   \leavevmode\hspace*{#1}%
   \begin{minipage}[t]{\dimexpr\linewidth - #1\relax}%
+  \vspace{-0.6em}% 进一步减少上边距
   \begin{itemize}%
+  \setlength{\topsep}{0pt}%
+  \setlength{\partopsep}{0pt}%
+  \setlength{\itemsep}{2pt}%
+  \setlength{\parsep}{0pt}%
   % 重定义 \item 命令以处理可选参数（支持带标签和不带标签）
   \let\iqbolditem\item%
   % 使用 \@ifnextchar 检测是否有 [ 参数

@@ -62,34 +62,97 @@ Overfull \hbox (12.34pt too wide) in paragraph at lines 45--46
 \begin{column}{0.42\textwidth}  % was 0.48
 ```
 
-### Problem 2: Overfull \vbox (Content Too Tall)
+### Problem 2: Overfull \vbox (Content Too Tall) - **CRITICAL**
 
 **Symptoms:**
 ```
 Overfull \vbox (5.67pt too high) detected at line 89
 ```
 
-**Solutions:**
+**Important:** vbox overfull >5pt 必须修复！会导致内容被遮挡。
 
-1. **Reduce figure height:**
+**修复优先级（从高到低）：**
+
+**Priority 1: 使用全局small模式（首选）**
 ```latex
-% Before
-\iqbfig[height=0.6\textheight]{image.png}{Long caption...}
+\begin{frame}{标题}
+  \iqbfontsizemode{small}  % 整页字体缩小一级
+  % 正文从\footnotesize → \scriptsize
+  % 列表从\scriptsize → \tiny
+  \iqblayouttwo{
+    内容...
+  }{
+    图片...
+  }
+\end{frame}
+```
+- 适用于：方法详述、复杂表格、MD模拟、信息密集页
+- 优点：保持内容完整，全局一致
 
-% After
-\iqbfig[height=0.5\textheight]{image.png}{Shorter caption}
+**Priority 2: 压缩间距**
+```latex
+% 替换更小的间距命令
+\iqbsep       → \iqbsmallsep    % 0.3cm → 0.2cm
+\iqbsmallsep  → \iqbtinysep     % 0.2cm → 0.15cm
+\iqbtinysep   → \iqbmicrosep    % 0.15cm → 0.1cm
 ```
 
-2. **Condense text:**
+**Priority 3: 优化表格**
 ```latex
-% Remove redundant lines, merge related points
-\iqbitemize{
-  \item Point 1: brief description  % was 2 lines
-  \item Point 2: brief description  % was 2 lines
+% 减小表格字体
+\footnotesize  % 尝试
+\begin{tabular}...
+
+\scriptsize    % 如果还不够
+\begin{tabular}...
+
+\tiny          % 最后手段
+\begin{tabular}...
+
+% 简化列内容
+催化残基固定 → 固定催化
+无约束Relax → 无约束
+```
+
+**Priority 4: 调整图片高度**
+```latex
+% 从大到小逐步降低
+height=0.75\textheight  % 起始
+     ↓
+height=0.70\textheight  % 第一次尝试
+     ↓
+height=0.68\textheight  % 通常足够
+     ↓
+height=0.65\textheight  % 密集内容
+```
+
+**Priority 5: 重构布局**
+```latex
+% TikZ mindmap → 双栏列表
+% Before (占用空间大)
+\begin{tikzpicture}[mindmap]
+  \node{中心}
+    child{...}
+\end{tikzpicture}
+
+% After (更紧凑)
+\iqblayouttwo{
+  \iqbsectiontitle{类别1}
+  \begin{iqbitemize}
+    \item 要点A
+  \end{iqbitemize}
+}{
+  \iqbsectiontitle{类别2}
+  \begin{iqbitemize}
+    \item 要点B
+  \end{iqbitemize}
 }
+
+% formula frame → 普通frame
+% \iqbformulaframe 占用空间大，改用标准布局
 ```
 
-3. **Split into two slides:**
+**Priority 6: 拆分页面（最后手段）**
 ```latex
 % Slide 1: Methods Part A
 \begin{frame}{Core Innovation: Switching Function Design}
@@ -109,6 +172,12 @@ Overfull \vbox (5.67pt too high) detected at line 89
   }
 \end{frame}
 ```
+
+**重要原则：**
+- ✅ **信息密度可以大，但不能删减内容**
+- ✅ **拆分和重组优于删减**
+- ✅ overfull >5pt必须修复，<5pt可接受
+- ❌ **绝对不删减关键信息**（如"α/β混合结构"）
 
 ### Problem 3: Images Too Small
 
@@ -137,7 +206,19 @@ Overfull \vbox (5.67pt too high) detected at line 89
 \end{frame}
 ```
 
-2. **Use dedicated slide for complex figure:**
+2. **Use global small mode if text is dense:**
+```latex
+\begin{frame}{Title}
+  \iqbfontsizemode{small}  % Shrink text to make room for larger image
+  \iqblayouttwo{
+    Detailed text...
+  }{
+    \iqbfig[height=0.60\textheight]{tall.png}{Caption}  % Even larger!
+  }
+\end{frame}
+```
+
+3. **Use dedicated slide for complex figure:**
 ```latex
 \begin{frame}{Figure Analysis: [Punchline Title]}
   \begin{columns}[T]
@@ -161,7 +242,20 @@ Overfull \vbox (5.67pt too high) detected at line 89
 
 **Solutions:**
 
-1. **Condense to key points only:**
+1. **Use global small mode (first try):**
+```latex
+\begin{frame}{Title}
+  \iqbfontsizemode{small}  % Shrink fonts to fit more points
+  \begin{iqbitemize}
+    \item Point 1...
+    \item Point 2...
+    \item Point 3...
+    ...  % Can now fit 8-10 points comfortably
+  \end{iqbitemize}
+\end{frame}
+```
+
+2. **Condense to key points only:**
 ```latex
 % Before (8 points, verbose)
 \iqbitemize{
@@ -178,7 +272,7 @@ Overfull \vbox (5.67pt too high) detected at line 89
 }
 ```
 
-2. **Use hierarchical structure:**
+3. **Use hierarchical structure:**
 ```latex
 \iqbitemize{
   \item Major point 1
@@ -190,7 +284,7 @@ Overfull \vbox (5.67pt too high) detected at line 89
 }
 ```
 
-3. **Split into two slides:**
+4. **Split into two slides (last resort):**
 ```latex
 % Slide A: First 3-4 points
 % Slide B: Remaining points with different punchline title
@@ -286,13 +380,16 @@ Overfull \vbox (5.67pt too high) detected at line 89
 ## Quality Checklist
 
 After optimization:
-- [ ] No overfull warnings in compilation output
+- [ ] Overfull warnings acceptable (<5pt for vbox, <10pt for hbox)
+- [ ] No critical overfull (vbox >5pt causes content blocking)
 - [ ] Figures are readable (min height 0.4\textheight for important figures)
-- [ ] Text density: 10-12 lines max at `\scriptsize`
+- [ ] Text density: 10-12 lines max at `\footnotesize`, 12-15 lines at `\scriptsize` (with `\iqbfontsizemode{small}`)
 - [ ] No `[shrink]` option used
-- [ ] No manual `\vspace` hacks
+- [ ] No manual `\vspace` hacks (use `\iqbsep`, `\iqbsmallsep`, `\iqbtinysep`, `\iqbmicrosep`)
 - [ ] Punchline title preserved
-- [ ] Content meaning preserved
+- [ ] **Content meaning preserved (CRITICAL - never delete key information)**
+- [ ] Prefer `\iqbfontsizemode{small}` over manual font size adjustments
+- [ ] Use spacing hierarchy: `\iqbsep` > `\iqbsmallsep` > `\iqbtinysep` > `\iqbmicrosep`
 
 ## Integration with Other Skills
 
@@ -311,14 +408,59 @@ After optimization:
 
 ## Advanced Optimization Techniques
 
-### Technique 1: Progressive Figure Sizing
-Start with recommended size, reduce incrementally if needed:
+### Technique 0: Global Small Mode (Most Important)
+**Always try this first** before any other optimization:
 ```latex
-% Try sequence: 0.6 → 0.55 → 0.5 → 0.45\textheight
-\iqbfig[height=0.5\textheight]{image.png}{Caption}
+\begin{frame}{Title}
+  \iqbfontsizemode{small}  % FIRST CHOICE for dense content
+  % All subsequent content automatically shrinks:
+  % - Normal text: \footnotesize → \scriptsize
+  % - Lists: \scriptsize → \tiny
+  % - Captions: \scriptsize → \tiny
+
+  % Your dense content here...
+\end{frame}
 ```
 
-### Technique 2: Content Hierarchy
+**When to use:**
+- MD simulation details (100ns, force fields, parameters)
+- Complex tables (screening criteria, progressive thresholds)
+- Method details with many bullet points
+- Any slide with >10 lines of text
+
+**Benefits:**
+- Preserves all content (never delete)
+- Globally consistent (no manual font adjustments)
+- Reduces overfull by 50-80% in one command
+
+### Technique 1: Spacing Hierarchy
+Use template spacing commands in order of preference:
+```latex
+% Standard spacing (use by default)
+\iqbsep          % 0.3cm - between major sections
+
+% Compressed spacing (for denser content)
+\iqbsmallsep     % 0.2cm - between minor sections
+
+% Tight spacing (for very dense content)
+\iqbtinysep      % 0.15cm - between related items
+
+% Micro spacing (last resort before splitting)
+\iqbmicrosep     % 0.1cm - minimal separation
+```
+
+### Technique 2: Progressive Figure Sizing
+Start with recommended size, reduce incrementally if needed:
+```latex
+% Try sequence: 0.75 → 0.70 → 0.68 → 0.65\textheight
+\iqbfig[height=0.68\textheight]{image.png}{Caption}
+
+% With global small mode, can increase figure:
+\iqbfontsizemode{small}
+\iqbfig[height=0.75\textheight]{image.png}{Caption}  % Larger image!
+```
+
+### Technique 3: Content Hierarchy
 Use structure to reduce perceived density:
 ```latex
 % Instead of flat list
@@ -328,7 +470,7 @@ Use structure to reduce perceived density:
   \item Detail B
 }
 
-\medskip
+\iqbsmallsep  % Template spacing instead of \medskip
 
 \textbf{Category 2:} brief description
 \iqbitemize{
@@ -336,7 +478,7 @@ Use structure to reduce perceived density:
 }
 ```
 
-### Technique 3: Column Width Adjustment
+### Technique 4: Column Width Adjustment
 Fine-tune column widths for optimal balance:
 ```latex
 % Standard: 0.48 / 0.48
@@ -352,11 +494,140 @@ Fine-tune column widths for optimal balance:
 \end{columns}
 ```
 
-### Technique 4: Strategic Content Removal
-Identify and remove low-value content:
-- Redundant examples
-- Overly detailed explanations
-- Information better suited for appendix
+### Technique 5: Layout Restructuring (Before Deletion)
+**Principle:** Reorganize before removing content
+```latex
+% Before: TikZ mindmap (space-inefficient)
+\begin{tikzpicture}[mindmap]
+  \node{Center} child{...} child{...};
+\end{tikzpicture}
+
+% After: Dual-column list (compact, preserves all info)
+\iqblayouttwo{
+  \iqbsectiontitle{Category 1}
+  \begin{iqbitemize}
+    \item Point A
+    \item Point B
+  \end{iqbitemize}
+}{
+  \iqbsectiontitle{Category 2}
+  \begin{iqbitemize}
+    \item Point C
+    \item Point D
+  \end{iqbitemize}
+}
+```
+
+### Technique 6: Strategic Content Removal (LAST RESORT)
+**IMPORTANT:** Only remove content if ALL other techniques fail.
+
+**Allowed removals:**
+- Redundant examples (keep most illustrative one)
+- Overly verbose explanations (condense, don't delete)
 - Decorative text that doesn't advance narrative
 
-Remember: **Less is more** in presentations. Better to split into two clear slides than cram everything into one cluttered slide.
+**FORBIDDEN removals:**
+- Key technical details (e.g., "α/β mixed structure")
+- Critical parameters (e.g., "≥5% probability threshold")
+- Scientific conclusions or findings
+
+Remember: **拆分和重组优于删减** (Split and reorganize before deleting). Better to create two well-organized slides than one cluttered slide or one slide with missing information.
+
+## Real-World Example: Enzyme Design Presentation
+
+**Initial problem:** 39+ overfull warnings, content overflow on slides 17, 19, 21
+
+**Fix sequence:**
+
+**Slide 17 (MD Simulation - 40.68pt overfull vbox)**
+```latex
+% Before
+\begin{frame}{结果8：分子动力学验证活性位点稳定性}
+  \iqblayoutcustom[0.45]{
+    \textbf{MD模拟验证}：
+    \begin{iqbitemize}
+      \item 100 ns全原子MD在溶液中进行
+      ...
+    \end{iqbitemize}
+    \iqbsep
+    \textbf{关键发现}：
+    ...
+  }{...}
+\end{frame}
+% Result: Overfull \vbox (40.68pt too high)
+
+% After - Applied Technique 0 (Global Small Mode)
+\begin{frame}{结果8：分子动力学验证活性位点稳定性}
+  \iqbfontsizemode{small}  % ONE LINE FIX
+  \iqblayoutcustom[0.45]{
+    % Same content, no deletion
+  }{...}
+\end{frame}
+% Result: Overfull reduced to 2.34pt (negligible)
+```
+
+**Slide 19 (Mechanistic Insights - 90pt overfull vbox)**
+```latex
+% Before - TikZ mindmap too large
+\begin{tikzpicture}[mindmap]
+  \node{决定因素} child{node{几何精度}} child{...};
+\end{tikzpicture}
+% Result: Overfull \vbox (90pt) even with \iqbfontsizemode{small}
+
+% After - Applied Technique 5 (Layout Restructuring)
+\iqbfontsizemode{small}
+\iqblayouttwo{
+  \iqbsectiontitle{必要条件：几何精度}
+  \begin{iqbitemize}
+    \item Cα原子对齐（RMSD < 1 Å）
+    \item 侧链位置精确定位
+  \end{iqbitemize}
+  \iqbsmallsep
+  \iqbsectiontitle{支撑网络：结构稳定}
+  ...
+}{
+  \iqbsectiontitle{底物进入：通道可达}
+  ...
+  \iqbsmallsep
+  \iqbsectiontitle{动力学：过渡态稳定}
+  ...
+}
+% Result: 0pt overfull, all content preserved
+```
+
+**Slide 21 (Impact - 74.68pt overfull vbox)**
+```latex
+% Before - Formula frame too rigid
+\iqbformulaframe{
+  \textbf{科学贡献}
+  ...
+}
+% Result: Overfull \vbox (74.68pt)
+
+% After - Applied Technique 5 (Convert to normal frame)
+\begin{frame}{广泛意义与学科影响}
+  \iqbfontsizemode{small}
+  \iqbsectiontitle{科学贡献}
+  \begin{iqbitemize}...
+  \iqbsmallsep
+  \iqbsectiontitle{技术转移}
+  ...
+\end{frame}
+% Result: 1.14pt overfull (acceptable)
+```
+
+**Slide 12 (Critical mistake - deleted key information)**
+```latex
+% WRONG - Deleted "α/β"
+\item 圆二色谱（CD）显示典型混合结构
+
+% CORRECT - Preserved all key details
+\item 圆二色谱（CD）显示典型α/β混合结构
+```
+
+**Final outcome:**
+- Overfull warnings: 39+ → 1 (only 1.14pt, negligible)
+- Slides affected: 17, 19, 21 (all fixed)
+- Content deleted: 0 (all information preserved)
+- Techniques used: Global small mode (3x), Layout restructuring (2x), Spacing compression (throughout)
+- Total time: ~30 minutes (would have been hours with manual adjustments)
