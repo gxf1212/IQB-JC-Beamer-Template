@@ -89,20 +89,17 @@
 % 2. Why Study Dimeric Enzymes?
 % ------------------------------------------------------------
 \begin{frame}{超半数酶为同源二聚体：一个不容忽视的生物学现象}
-  \iqblayoutcustom[0.30]{
+  \iqblayoutcustom[0.40]{
     \iqbsectiontitle{Database统计结果}
     \begin{iqbitemize}
-      \item UniProt数据库：同源二聚体占所有蛋白质结构的51\%以上，远超单体和其他寡聚形式
-      \item Brenda数据库：已定义寡聚形式的酶中，二聚体数量超过单体
+      \item UniProt数据库：各种催化功能的酶，\textbf{同源二聚体}占所有蛋白质结构的\textbf{51\%以上}，远超单体和其他寡聚形式
+      \item Brenda数据库：已定义寡聚形式的酶中，\textbf{二聚体数量超过单体}
       \item 偶数亚基($2n$)酶多于奇数亚基($2n-1$)酶
-      \item 大多数辅因子依赖酶(NAD, ATP, 金属离子等)以同源二聚体形式存在
+      \item 大多数辅因子依赖酶（NAD, ATP, 金属离子等）以\textbf{同源二聚体}形式存在
     \end{iqbitemize}
 
   }{
-    \iqbfig[height=0.50\textheight]{Figures/Figure01.png}{从19世纪统计力学基础到现代生物分子模拟：同源二聚体酶的演进与普遍性}
-    \iqbtinysep
-
-    \iqborangebox{关键发现}{各种催化功能(转移酶、裂合酶、水解酶、连接酶、氧化还原酶、异构酶)中，同源二聚体形式均占50\%以上}
+    \iqbfig[height=0.60\textheight]{Figures/Figure01.png}{从19世纪统计力学基础到现代生物分子模拟：同源二聚体酶的演进与普遍性}
   }
 \end{frame}
 
@@ -113,9 +110,9 @@
   \iqblayouttwo{
     \iqbsectiontitle{理论基础：协同性概念的建立}
     \begin{iqbitemize}
-      \item 1965年：Monod-Wyman-Changeux (MWC)模型为血红蛋白建立变构与协同性理论
-      \item Perutz的双结构立体化学模型为理解二聚体酶亚基间协同性提供基础
-      \item 亚基间变构调节导致底物/产物亲和力或催化效率差异，通过构象变化实现
+      \item 1965年：\textbf{Monod-Wyman-Changeux (MWC)模型}为血红蛋白建立\textbf{变构与协同性}理论
+      \item Perutz的双结构立体化学模型为理解二聚体酶\textbf{亚基间协同性}提供基础
+      \item 亚基间\textbf{变构调节}导致底物/产物亲和力或催化效率差异，通过\textbf{构象变化}实现
     \end{iqbitemize}
   }{
     \iqbsectiontitle{本综述的研究范围}
@@ -129,9 +126,9 @@
       \item 二聚体有机催化剂的协同催化
     \end{iqbitemize}
   }
-    \iqbtinysep
+    \iqbsep
 
-    \iqbgreenbox{应用前景}{为设计高效催化剂(如二聚体有机催化剂)和药物(如Paxlovid靶向SARS-CoV-2同源二聚体主蛋白酶)提供理论支撑}
+    \iqbgreenbox{应用前景}{为设计高效催化剂（如\textbf{二聚体有机催化剂}）和药物（如\textbf{Paxlovid}靶向SARS-CoV-2\textbf{同源二聚体}主蛋白酶）提供理论支撑}
 \end{frame}
 
 % ------------------------------------------------------------
@@ -142,38 +139,36 @@
 % ------------------------------------------------------------
 % 4a1. Biological Advantages: Protein Folding
 % ------------------------------------------------------------
-\begin{frame}{二聚化的生物学优势Ia：促进蛋白质折叠}
-  \iqbfontsizemode{small}
-
+\begin{frame}{二聚化的生物学优势：促进蛋白质折叠}
   \iqblayouttwo{
     \iqbsectiontitle{促进蛋白质折叠的机制}
     \begin{iqbitemize}
-      \item 亚基界面提供额外的疏水核心
-      \item 减少溶剂暴露表面积(BSA降低)
-      \item 降低折叠能量势垒$\Delta G_{fold}$
+      \item 亚基界面提供额外的\textbf{疏水核心}
+      \item 减少\textbf{溶剂暴露表面积}（BSA降低）
+      \item 降低\textbf{折叠能量势垒}$\Delta G_{fold}$
       \item 提高折叠效率和成功率
       \item 减少聚集形成包涵体的风险
     \end{iqbitemize}
 
-    \iqbtinysep
+    \iqbsep
 
     \iqbsectiontitle{界面形成的热力学驱动}
     \begin{iqbitemize}
-      \item 疏水效应：疏水残基埋藏释放水分子
-      \item 焓驱动：界面氢键、盐桥形成
-      \item 熵驱动：溶剂化水分子释放增加熵
+      \item \textbf{疏水效应}：疏水残基埋藏释放水分子
+      \item \textbf{焓驱动}：界面氢键、盐桥形成
+      \item \textbf{熵驱动}：溶剂化水分子释放增加熵
       \item 总自由能：$\Delta G_{bind} = \Delta H - T\Delta S$
     \end{iqbitemize}
   }{
     \iqbsectiontitle{定量数据}
     \begin{iqbitemize}
-      \item 典型界面埋藏面积：1000-3000 Å²
-      \item 界面自由能：-5至-15 kcal/mol
-      \item 解离常数：$K_d$ = nM至$\mu$M级别
-      \item BSA减少：15-25\%
+      \item 典型界面埋藏面积：\textbf{1000-3000 Å²}
+      \item 界面自由能：\textbf{-5至-15 kcal/mol}
+      \item 解离常数：$K_d$ = \textbf{nM至$\mu$M级别}
+      \item BSA减少：\textbf{15-25\%}
     \end{iqbitemize}
 
-    \iqbtinysep
+    \iqbsep
 
     \iqbsectiontitle{实例与应用}
     \begin{iqbitemize}
@@ -190,9 +185,7 @@
 % ------------------------------------------------------------
 % 4a2-2. Biological Advantages: Interface Interaction Types
 % ------------------------------------------------------------
-\begin{frame}{二聚化的生物学优势Ib2：界面相互作用网络}
-  \iqbfontsizemode{small}
-
+\begin{frame}{二聚化的生物学优势：界面相互作用网络}
   \iqblayouttwo{
     \iqbsectiontitle{界面相互作用类型}
     \begin{iqbitemize}
@@ -202,14 +195,14 @@
       \item 芳香堆积：Phe/Tyr/Trp $\pi$-$\pi$作用
     \end{iqbitemize}
 
-    \iqbtinysep
+    \iqbsep
 
     \iqbsectiontitle{能量贡献}
     \begin{iqbitemize}
-      \item 氢键：每个2-5 kcal/mol
-      \item 盐桥：每对3-7 kcal/mol
-      \item 疏水作用：总10-20 kcal/mol
-      \item 芳香堆积：每对2-4 kcal/mol
+      \item 氢键：每个\textbf{2-5 kcal/mol}
+      \item 盐桥：每对\textbf{3-7 kcal/mol}
+      \item 疏水作用：总\textbf{10-20 kcal/mol}
+      \item 芳香堆积：每对\textbf{2-4 kcal/mol}
     \end{iqbitemize}
   }{
     \iqbsectiontitle{工程应用}
@@ -218,52 +211,51 @@
       \item 引入盐桥提升高温稳定性
       \item 优化疏水核心降低解折叠速率
       \item 添加二硫键锁定二聚体构象
-      \item 成功案例：嗜热菌酶$T_m$提升至95°C
+      \item 成功案例：嗜热菌酶$T_m$提升至\textbf{95°C}
     \end{iqbitemize}
-  }
 
   \iqbtinysep
-
-  {\tiny\iqborangebox{工程策略}{多重界面相互作用协同提升热稳定性}}
+    \iqborangebox{工程策略}{\textbf{多重界面相互作用}协同提升\textbf{热稳定性}}
+  }
 \end{frame}
 
 % ------------------------------------------------------------
 % 4b. Biological Advantages: Catalysis & Regulation
 % ------------------------------------------------------------
-\begin{frame}{二聚化的生物学优势II：催化与调控}
+\begin{frame}{二聚化的生物学优势：催化与调控}
   \iqbfontsizemode{small}
 
   \iqblayouttwo{
     \iqbsectiontitle{3. 催化活性增强}
     \begin{iqbitemize}
       \item 单体通常催化活性极低或无活性
-      \item 二聚化诱导活性位点形成或优化
-      \item 亚基间协同作用提高$k_{cat}$/降低$K_M$
-      \item 底物通道化：中间产物直接传递
-      \item 变构调节：一个亚基影响另一个
+      \item 二聚化诱导\textbf{活性位点形成}或优化
+      \item 亚基间\textbf{协同作用}提高$k_{cat}$/降低$K_M$
+      \item \textbf{底物通道化}：中间产物直接传递
+      \item \textbf{变构调节}：一个亚基影响另一个
       \item 典型案例：HIV蛋白酶、TIM等
     \end{iqbitemize}
 
-    \iqbtinysep
+    \iqbsep
 
     \iqbsectiontitle{4. 调控功能实现}
     \begin{iqbitemize}
       \item 单体-二聚体平衡受配体/pH/离子强度调控
-      \item Caspase-9等凋亡酶通过二聚化激活
-      \item 实现开关式调控：ON/OFF状态
+      \item Caspase-9等凋亡酶通过\textbf{二聚化激活}
+      \item 实现\textbf{开关式调控}：ON/OFF状态
       \item 避免单体在细胞内误触发反应
       \item 提供额外调控层次
     \end{iqbitemize}
   }{
     \iqbsectiontitle{定量效应}
     \begin{iqbitemize}
-      \item 催化效率提升：2-1000倍
-      \item 底物亲和力提高：$K_M$降低10-100倍
+      \item 催化效率提升：\textbf{2-1000倍}
+      \item 底物亲和力提高：$K_M$降低\textbf{10-100倍}
       \item 产物释放加速：$k_{off}$提高
-      \item 协同系数：Hill系数$n_H > 1$
+      \item 协同系数：\textbf{Hill系数$n_H > 1$}
     \end{iqbitemize}
 
-    \iqbtinysep
+    \iqbsep
 
     \iqbsectiontitle{进化意义}
     \begin{iqbitemize}
@@ -273,9 +265,9 @@
       \item 约35\%的酶是寡聚体
     \end{iqbitemize}
 
-    \iqbtinysep
+    \iqbsep
 
-    \iqborangebox{核心优势}{二聚化整合结构稳定、催化增强、调控精准}
+    \iqborangebox{核心优势}{二聚化整合\textbf{结构稳定}、\textbf{催化增强}、\textbf{调控精准}}
   }
 \end{frame}
 
@@ -293,15 +285,15 @@
   \iqblayoutcustom[0.45]{
     \iqbsectiontitle{MWC模型核心假设}
     \begin{iqbitemize}
-      \item 酶在两种构象状态间平衡：活性态($E_A$)和非活性态($E_I$)
-      \item 对称性：二聚体的两个亚基同时处于相同状态
-      \item 预存平衡：构象转换发生在底物结合之前
-      \item 活性态对底物的亲和力远高于非活性态
+      \item 酶在\textbf{两种构象状态}间平衡：\textbf{活性态}($E_A$)和\textbf{非活性态}($E_I$)
+      \item \textbf{对称性}：二聚体的两个亚基同时处于相同状态
+      \item \textbf{预存平衡}：构象转换发生在底物结合之前
+      \item 活性态对底物的\textbf{亲和力远高于}非活性态
     \end{iqbitemize}
 
     \iqbtinysep
 
-    \iqbsectiontitle{状态权重(Boltzmann分布)}
+    \iqbsectiontitle{状态权重（Boltzmann分布）}
     \begin{iqbitemize}
       \item 活性态：$W_A = e^{-\beta E_A}$
       \item 非活性态：$W_I = e^{-\beta E_I}$
@@ -343,23 +335,21 @@
 
     \iqbtinysep
 
-    \iqbbluebox{MD挑战}{催化运动跨越6-9个数量级，需增强采样}
+    \iqbbluebox{MD挑战}{催化运动跨越\textbf{6-9个数量级}，需\textbf{增强采样}}
   }
 \end{frame}
 
 % 4a2-1a. Thermostability: Quantitative Data
 % ------------------------------------------------------------
-\begin{frame}{二聚化的生物学优势Ib1-1：定量热稳定性数据}
-  \iqbfontsizemode{small}
-
+\begin{frame}{二聚化的生物学优势：定量热稳定性数据}
   \iqblayoutcustom[0.35]{
     \iqbsectiontitle{定量数据}
     \begin{iqbitemize}
-      \item 二聚体$T_m$比单体高10-30°C
-      \item 典型界面埋藏面积：1000-3000 Å²
-      \item 每100 Å²界面约提升$T_m$ 1-2°C
-      \item 解折叠自由能提升5-15 kcal/mol
-      \item 蛋白酶解抗性提高2-10倍
+      \item 二聚体$T_m$比单体高\textbf{10-30°C}
+      \item 典型界面埋藏面积：\textbf{1000-3000 Å²}
+      \item 每100 Å²界面约提升$T_m$ \textbf{1-2°C}
+      \item 解折叠自由能提升\textbf{5-15 kcal/mol}
+      \item 蛋白酶解抗性提高\textbf{2-10倍}
     \end{iqbitemize}
   }{
     \iqbfig[height=0.43\textheight]{Figures/Figure04.png}{二聚化稳定构象：亚基界面形成提高酶热稳定性和结构刚性}
@@ -369,9 +359,7 @@
 % ------------------------------------------------------------
 % 4a2-1b. Thermostability: Stability Mechanism
 % ------------------------------------------------------------
-\begin{frame}{二聚化的生物学优势Ib1-2：稳定机制}
-  \iqbfontsizemode{small}
-
+\begin{frame}{二聚化的生物学优势：稳定机制}
   \iqblayouttwo{
     \iqbsectiontitle{稳定机制}
     \begin{iqbitemize}
@@ -385,9 +373,9 @@
 
     \iqbsectiontitle{界面相互作用}
     \begin{iqbitemize}
-      \item 氢键：2-5 kcal/mol，提供特异性
-      \item 盐桥：3-7 kcal/mol，稳定界面
-      \item 疏水作用：主要驱动力，占60-80\%
+      \item 氢键：\textbf{2-5 kcal/mol}，提供特异性
+      \item 盐桥：\textbf{3-7 kcal/mol}，稳定界面
+      \item 疏水作用：\textbf{主要驱动力}，占\textbf{60-80\%}
       \item 范德华力：优化界面互补性
     \end{iqbitemize}
   }{
@@ -420,10 +408,10 @@
   \iqblayoutcustom[0.35]{
     \iqbsectiontitle{单体到二聚体的模型演化}
     \begin{iqbitemize}
-      \item \textbf{单体MWC}：两种构象(T/R)，配体选择性结合R态
+      \item \textbf{单体MWC}：两种构象（T/R），配体选择性结合R态
       \item \textbf{单体KNF}：配体结合诱导构象变化
-      \item \textbf{二聚体MWC}：两个亚基对称切换(T$_2$ $\leftrightarrow$ R$_2$)
-      \item \textbf{二聚体KNF}：允许非对称中间态(TR、T$_2$S、TRS$_2$等)
+      \item \textbf{二聚体MWC}：两个亚基对称切换（T$_2$ $\leftrightarrow$ R$_2$）
+      \item \textbf{二聚体KNF}：允许非对称中间态（TR、T$_2$S、TRS$_2$等）
       \item \textbf{Hilser-Thompson模型}：考虑固有无序性和折叠/解折叠平衡
     \end{iqbitemize}
 
@@ -452,25 +440,25 @@
   \iqblayouttwo{
     \iqbsectiontitle{结构确定技术}
     \begin{iqbitemize}
-      \item X射线晶体学：高分辨率静态结构(Å级)
-      \item 冷冻电镜(Cryo-EM)：近原子分辨率，适用于大复合物和动态系统
-      \item 核磁共振(NMR)：溶液中的动态构象和弛豫时间
-      \item 小角X射线散射(SAXS)：溶液态寡聚状态和形状
-      \item 质谱(MS)：寡聚状态鉴定、氢氘交换动力学
+      \item X射线晶体学：高分辨率静态结构（Å级）
+      \item 冷冻电镜（Cryo-EM）：近原子分辨率，适用于大复合物和动态系统
+      \item 核磁共振（NMR）：溶液中的动态构象和弛豫时间
+      \item 小角X射线散射（SAXS）：溶液态寡聚状态和形状
+      \item 质谱（MS）：寡聚状态鉴定、氢氘交换动力学
     \end{iqbitemize}
   }{
     \iqbsectiontitle{酶动力学实验}
     \begin{iqbitemize}
       \item Michaelis-Menten方程：$v = \frac{V_{max}[S]}{K_m + [S]}$
-      \item MWC理论：酶在活性($E_A$)和非活性($E_I$)状态间切换
-      \item 稳态动力学 vs. 预稳态动力学(快速反应)
+      \item MWC理论：酶在活性（$E_A$）和非活性（$E_I$）状态间切换
+      \item 稳态动力学 vs. 预稳态动力学（快速反应）
       \item 同位素示踪、荧光/FRET跟踪构象变化
-      \item 等温滴定量热法(ITC)测结合热力学
+      \item 等温滴定量热法（ITC）测结合热力学
     \end{iqbitemize}
 
-    \iqbtinysep
+    \iqbsep
 
-    \iqborangebox{多技术结合}{结构+动力学+热力学的组合实验揭示完整的催化机制}
+    \iqborangebox{多技术结合}{\textbf{结构+动力学+热力学}的组合实验揭示完整的\textbf{催化机制}}
   }
 \end{frame}
 
@@ -482,7 +470,7 @@
     \iqbsectiontitle{分子动力学模拟}
     \small
     \begin{iqbitemize}
-      \item MD：原子级时间演化(ns-$\mu$s尺度)
+      \item MD：原子级时间演化（ns-$\mu$s尺度）
       \item 增强采样：metadynamics, umbrella sampling, REMD
       \item 机器学习加速：reinforced dynamics (RID)方法
     \end{iqbitemize}
@@ -529,35 +517,35 @@
 % ------------------------------------------------------------
 \begin{frame}{变构理论：MWC构象选择 vs. KNF诱导契合}
   \iqblayouttwo{
-    \iqbsectiontitle{MWC模型(Conformational Selection)}
+    \iqbsectiontitle{MWC模型（\textbf{Conformational Selection}）}
     \begin{iqbitemize}
-      \item 配体选择性结合与底物结合状态相似的主导构象
-      \item 强调亚基间对称性维持
-      \item 预先存在多种离散构象的平衡
+      \item 配体\textbf{选择性结合}与底物结合状态相似的主导构象
+      \item 强调\textbf{亚基间对称性}维持
+      \item 预先存在多种\textbf{离散构象}的平衡
       \item 快速平衡近似：底物结合/解离速率$>$构象转换速率
     \end{iqbitemize}
 
-    \iqbtinysep
+    \iqbsep
 
-    \iqbsectiontitle{KNF模型(Induced Fit)}
+    \iqbsectiontitle{KNF模型（\textbf{Induced Fit}）}
     \small
     \begin{iqbitemize}
-      \item 配体随机结合后诱导构象转变至最优态
-      \item 允许亚基间非对称性
+      \item 配体随机结合后\textbf{诱导构象转变}至最优态
+      \item 允许\textbf{亚基间非对称性}
       \item 第一个配体结合能量影响第二个配体结合
     \end{iqbitemize}
   }{
     \iqbsectiontitle{Hilser-Thompson (HT)模型}
     \begin{iqbitemize}
-      \item 蛋白质固有无序性在整个结构中存在
-      \item 折叠与解折叠的平衡
+      \item 蛋白质\textbf{固有无序性}在整个结构中存在
+      \item \textbf{折叠与解折叠}的平衡
       \item 配体结合过程中多种构象选择
-      \item 不强调亚基间对称性
+      \item \textbf{不强调亚基间对称性}
     \end{iqbitemize}
 
-    \iqbtinysep
+    \iqbsep
 
-    \iqbbluebox{现代观点}{动力学研究表明，构象选择(MWC)可能是配体结合目标蛋白的更普遍机制}
+    \iqbbluebox{现代观点}{动力学研究表明，\textbf{构象选择（MWC）}可能是配体结合目标蛋白的\textbf{更普遍机制}}
   }
 \end{frame}
 
@@ -565,34 +553,30 @@
 % 8. Thermodynamics of Allostery
 % ------------------------------------------------------------
 \begin{frame}{变构调节的热力学本质：熵与焓的平衡}
-  \iqbfontsizemode{small}
-
-  \iqblayoutcustom[0.38]{
+  \iqblayoutcustom[0.4]{
     \iqbsectiontitle{超越构象变化的变构}
     \begin{iqbitemize}
-      \item 变构不仅是构象改变，更依赖于熵和焓的综合变化
-      \item Cooper \& Dryden开创性发现：配体结合改变蛋白质热涨落幅度，而非构象本身
-      \item "熵驱动"系统：刚性和柔性区域的再平衡
-      \item PKA-C等酶的构象熵变化全局分布于整个酶
+      \item 变构不仅是构象改变，更依赖于\textbf{熵和焓}的综合变化
+      \item Cooper \& Dryden开创性发现：配体结合改变蛋白质\textbf{热涨落幅度}，而非构象本身
+      \item \textbf{"熵驱动"系统}：刚性和柔性区域的再平衡
+      \item PKA-C等酶的\textbf{构象熵变化}全局分布于整个酶
     \end{iqbitemize}
 
     \iqbmicrosep
 
     \iqbsectiontitle{熵-焓补偿原理}
     \begin{iqbitemize}
-      \item $\Delta G = \Delta H - T\Delta S$：自由能驱动变构
+      \item $\Delta G = \Delta H - T\Delta S$：\textbf{自由能驱动变构}
       \item 焓变：氢键、盐桥、范德华力的重排
       \item 熵变：构象自由度、溶剂化熵的变化
       \item 温度依赖性：$T\Delta S$项随温度显著变化
     \end{iqbitemize}
   }{
-    \iqbfig[height=0.68\textheight]{Figures/Figure07.png}{变构调节：熵-焓补偿原理驱动构象选择与自由能平衡}
+    \iqbfig[height=0.75\textheight]{Figures/Figure07.png}{变构调节：熵-焓补偿原理驱动构象选择与自由能平衡}
   }
 \end{frame}
 
 \begin{frame}{变构热力学：动态平衡与实验测量}
-  \iqbfontsizemode{small}
-
   \iqblayouttwo{
     \iqbsectiontitle{动态平衡与涨落}
     \begin{iqbitemize}
@@ -639,13 +623,11 @@
 % 9. Half-of-the-Sites Reactivity
 % ------------------------------------------------------------
 \begin{frame}{半位点反应性：为何只有一个亚基催化？}
-  \iqbfontsizemode{small}
-
   \iqblayoutcustom[0.37]{
     \iqbsectiontitle{半位点反应性}
     \begin{iqbitemize}
-      \item 二聚体中只有一个位点结合并催化底物
-      \item 另一亚基无法结合或结合但不催化
+      \item 二聚体中\textbf{只有一个位点}结合并催化底物
+      \item 另一亚基无法结合或结合但\textbf{不催化}
       \item 广泛存在于碱性磷酸酶、脱卤酶等
     \end{iqbitemize}
 
@@ -653,14 +635,14 @@
 
     \iqbsectiontitle{协同性类型}
     \begin{iqbitemize}
-      \item 正协同性：提高催化效率
-      \item 负协同性：降低酶活性
+      \item \textbf{正协同性}：提高催化效率
+      \item \textbf{负协同性}：降低酶活性
       \item 非催化亚基可促进或抑制催化
     \end{iqbitemize}
 
     \iqbtinysep
 
-    \iqbgreenbox{关键概念}{底物结合亲和力变化不等同于催化效率提升，需区分结合协同性与催化协同性}
+    \iqbgreenbox{关键概念}{\textbf{底物结合亲和力}变化不等同于\textbf{催化效率}提升，需区分\textbf{结合协同性}与\textbf{催化协同性}}
   }{
     \iqbfig[height=0.58\textheight]{Figures/Figure08.png}{半位点反应性的分子基础：亚基间构象不对称性}
   }
@@ -686,9 +668,9 @@
       \item 可能在调控蛋白(如激活/抑制蛋白)或核受体蛋白中更为普遍
     \end{iqbitemize}
 
-    \iqbtinysep
+    \iqbsep
 
-    \iqborangebox{生物学意义}{负协同性确保底物识别的特异性，避免非特异性催化}
+    \iqborangebox{生物学意义}{\textbf{负协同性}确保\textbf{底物识别特异性}，避免非特异性催化}
   }
 \end{frame}
 
@@ -742,8 +724,6 @@
 % 14b1-1a. Interface: Transmission Mechanism
 % ------------------------------------------------------------
 \begin{frame}{过渡态理论与抑制剂设计：TSID策略}
-  \iqbfontsizemode{small}
-
   \iqbfig[height=0.35\textheight]{Figures/Figure10.png}{过渡态理论与TSID (Transition State Inhibitor Design)：底物→过渡态→产物}
   \iqbtinysep
 
@@ -776,7 +756,7 @@
       \item 精细调控：通过界面调节寡聚状态和活性
     \end{iqbitemize}
 
-    \iqbtinysep
+    \iqbsep
 
     \iqbsectiontitle{小分子催化剂的局限}
     \begin{iqbitemize}
@@ -794,7 +774,7 @@
       \item 定向进化：筛选最优连接臂长度和角度
     \end{iqbitemize}
 
-    \iqbtinysep
+    \iqbsep
 
     \iqbbluebox{终极目标}{创造兼具酶的高效协同性和小分子催化剂广泛底物谱的新型催化系统}
   }
@@ -804,12 +784,14 @@
 % 16. Drug Design: Paxlovid Example
 % ------------------------------------------------------------
 \begin{frame}{药物设计实例：靶向SARS-CoV-2主蛋白酶的Paxlovid}
+  \iqbfontsizemode{small}
+
   \iqblayoutcustom[0.4]{
     \iqbsectiontitle{SARS-CoV-2主蛋白酶(M$^{\text{pro}}$)}
     \begin{iqbitemize}
       \item 同源二聚体形式
       \item 病毒复制必需酶，切割多蛋白前体
-      \item 催化三联体：His41-Cys145-Glu166
+      \item 催化二元：Cys145- His41组成半胱天冬氨酸样活性位点
       \item 二聚化对催化活性至关重要
       \item 单体几乎无活性
     \end{iqbitemize}
@@ -819,9 +801,9 @@
     \iqbsectiontitle{Paxlovid (Nirmatrelvir)设计策略}
     \small
     \begin{iqbitemize}
-      \item 共价抑制剂，与Cys145形成共价键
-      \item 利用二聚体活性位点的结构特征
-      \item 理解二聚体界面和协同机制指导优化
+      \item 共价抑制剂，与Cys145形成可逆共价键
+      \item 结合二聚体活性位点与S1/S2袋的构象特征
+      \item 通过理解二聚体界面驱动的协同机制优化药效
       \item 高选择性、强效、口服生物利用度高
     \end{iqbitemize}
   }{
@@ -838,9 +820,9 @@
   \iqblayoutcustom[0.35]{
     \iqbsectiontitle{Hill系数与协同性强度}
     \begin{iqbitemize}
-      \item Hill系数$n_H$：衡量协同性的定量指标
-      \item $n_H > 1$：正协同性；$n_H < 1$：负协同性；$n_H = 1$：无协同性
-      \item 理论最大值：$n_H = n$(亚基数)，二聚体最大为2
+      \item \textbf{Hill系数$n_H$}：衡量协同性的\textbf{定量指标}
+      \item \textbf{$n_H > 1$：正协同性}；\textbf{$n_H < 1$：负协同性}；$n_H = 1$：无协同性
+      \item 理论最大值：$n_H = n$(亚基数)，二聚体最大为\textbf{2}
       \item 实际测量值通常小于理论值，反映部分协同
     \end{iqbitemize}
 
@@ -848,16 +830,16 @@
 
     \iqbsectiontitle{动力学表现}
     \begin{iqbitemize}
-      \item S型(sigmoid)底物浓度-反应速率曲线
+      \item \textbf{S型（sigmoid）}底物浓度-反应速率曲线
       \item 陡峭的响应曲线：生理调控优势
-      \item $K_{0.5}$：达到半最大速率的底物浓度
+      \item \textbf{$K_{0.5}$}：达到半最大速率的底物浓度
       \item 可通过突变或辅因子改变协同性强度
     \end{iqbitemize}
   }{
     \iqbfig[height=0.5\textheight]{Figures/Figure12.png}{正协同性的Hill曲线特征：$n_H$、$K_{0.5}$与S型动力学响应}
 
   \iqbmicrosep
-    \iqborangebox{生物学意义}{正协同性Hill系数大于1使酶快速响应浓度变化实现代谢开关调控}
+    \iqborangebox{生物学意义}{正协同性\textbf{Hill系数大于1}使酶快速响应浓度变化实现\textbf{代谢开关调控}}
   }
 \end{frame}
 
@@ -865,12 +847,10 @@
 % 13. Empty Subunit Dynamics: FAcD Case (Figure 13)
 % ------------------------------------------------------------
 \begin{frame}{空亚基动力学：脱卤酶FAcD的熵驱动协同性}
-  \iqbfontsizemode{small}
-
   \iqblayoutcustom[0.40]{
     \iqbsectiontitle{FAcD酶的空亚基现象}
     \begin{iqbitemize}
-      \item 脱卤酶(FAcD)：催化卤代脂肪酸脱卤
+      \item 脱卤酶（FAcD）：催化卤代脂肪酸脱卤
       \item 实验观察：一个亚基结合底物时，另一个亚基保持空置
       \item 空亚基并非惰性旁观者，而是主动参与催化
       \item MD模拟揭示空亚基经历显著构象涨落
@@ -880,8 +860,8 @@
 
     \iqbsectiontitle{熵补偿机制}
     \begin{iqbitemize}
-      \item 底物结合导致催化亚基熵减($\Delta S < 0$)
-      \item 空亚基通过增大构象涨落提供熵增($\Delta S > 0$)
+      \item 底物结合导致催化亚基熵减（$\Delta S < 0$）
+      \item 空亚基通过增大构象涨落提供熵增（$\Delta S > 0$）
       \item 释放界面水分子进一步增加体系熵
       \item 总自由能变化：$\Delta G = \Delta H - T\Delta S_{total}$更负，反应更有利
     \end{iqbitemize}
@@ -899,30 +879,26 @@
 \begin{frame}{催化协同性实例：SaMTAN的双重调控机制}
   \iqbfontsizemode{small}
 
-  \iqblayoutcustom[0.4]{
+  \iqblayoutcustom[0.38]{
     \iqbsectiontitle{SaMTAN酶简介}
     \begin{iqbitemize}
-      \item S-腺苷甲硫氨酸(SAM)依赖的甲基转移酶
-      \item 催化亚硝基合成，参与细菌致病性
+      \item 5\textquotesingle-甲硫腺苷/ S-腺苷同型半胱氨酸核糖苷酶（MTAN）
+      \item 水解MTA/SAH的N-糖苷键，生成腺嘌呤与5-thioribosyl基
       \item 同源二聚体结构，每个亚基含独立催化位点
-      \item 底物结合协同性：$n_H \approx 1.8$
+      \item 第一催化位点亲和力高（约0.1\,$\mu$M），$n_H \approx 1.8$
     \end{iqbitemize}
 
-    \iqbtinysep
+    \iqbsep
 
     \iqbsectiontitle{亚基间通讯路径}
     \begin{iqbitemize}
-      \item 一个亚基结合底物后，通过界面氢键网络
-      \item 传递构象变化至相邻亚基
-      \item 促进第二个底物结合和催化活性提升
-      \item 关键残基突变消除协同性($n_H \rightarrow 1$)
+      \item 单个位点占据时催化速率较慢
+      \item 底物占据第二位点需等待第一位点产物释放
+      \item 界面氢键网络存储应变能，促进相邻亚基产物释放
+      \item 关键残基突变可将协同性降为$\;n_H \rightarrow 1$
     \end{iqbitemize}
-
-    \iqbtinysep
-
-%%    {\tiny\iqborangebox{结构-功能}{氢键网络介导亚基间协同催化}}
   }{
-    \iqbfig[height=0.50\textheight]{Figures/Figure14.png}{SaMTAN氢键网络介导正协同性：界面残基传递构象变化提升催化}
+    \iqbfig[height=0.6\textheight]{Figures/Figure14.png}{SaMTAN氢键网络介导正协同性：界面残基传递构象变化提升催化}
   }
 \end{frame}
 
@@ -932,26 +908,26 @@
 \begin{frame}{亚基功能不对称：ADAR2的结构-功能分工}
   \iqbfontsizemode{small}
 
-  \iqblayoutcustom[0.4]{
+  \iqblayoutcustom[0.38]{
     \iqbsectiontitle{ADAR2的RNA编辑功能}
     \begin{iqbitemize}
-      \item 腺苷脱氨酶(ADAR2)：将RNA中A转换为I(肌苷)
-      \item 同源二聚体，但两个亚基功能不对称
-      \item 一个亚基负责催化，另一个负责RNA识别和定位
-      \item 协同作用：提高编辑特异性和效率
+      \item 双链RNA特异的腺苷脱氨酶：将A转为I
+      \item 每条链包含C端脱氨酶结构域与多个dsRBD
+      \item 晶体结构显示同源二聚体呈功能不对称
+      \item 一条链主导催化，另一条链通过dsRBD负责RNA识别/定位
     \end{iqbitemize}
 
     \iqbtinysep
 
     \iqbsectiontitle{不对称性的分子基础}
     \begin{iqbitemize}
-      \item 晶体结构揭示两个亚基构象差异
-      \item RNA结合导致一个亚基活性位点优化
-      \item 另一个亚基通过变构效应稳定复合物
-      \item 动态不对称：亚基间催化与辅助功能可交替
+      \item 二聚界面结合RNA形成蛋白-蛋白/蛋白-RNA复合
+      \item dsRBD2靠近RNA双链，帮助定位目标序列
+      \item 另一个亚基的脱氨酶结构域直接承担催化
+      \item 功能分工提升整体编辑效率与特异性
     \end{iqbitemize}
   }{
-    \iqbfig[height=0.38\textheight]{Figures/Figure15.png}{ADAR2二聚体的功能不对称：催化与识别动态交替}
+    \iqbfig[height=0.42\textheight]{Figures/Figure15.png}{ADAR2二聚体的功能不对称：催化与识别动态交替}
 
     \iqbtinysep
 
@@ -967,21 +943,20 @@
   \iqblayoutcustom[0.4]{
     \iqbsectiontitle{HisFH的双功能催化}
     \begin{iqbitemize}
-      \item 催化组氨酸生物合成中的两步连续反应
-      \item 第一步：环化反应生成中间产物PRFAR
-      \item 第二步：异构化生成ProFAR
-      \item 二聚体结构：两个亚基协同工作
+      \item HisH亚基水解谷氨酰胺生成谷氨酸与NH$_3$
+      \item NH$_3$沿约25Å通道传递到HisF亚基
+      \item HisF将输送来的NH$_3$与底物PrFAR反应
+      \item 生成组氨酸前体ImGP与AICAR，实现跨亚基协作
     \end{iqbitemize}
 
     \iqbtinysep
 
     \iqbsectiontitle{底物通道的结构与功能}
     \begin{iqbitemize}
-      \item 亚基间形成约20Å的封闭通道
-      \item PRFAR从一个亚基的催化位点直接传递至另一个亚基
-      \item 通道内疏水性环境稳定极性中间产物
-      \item 避免中间产物扩散至溶液中降低反应效率
-      \item 通道出口处氨基酸残基精确定位底物
+      \item 亚基间形成封闭隧道，限制NH$_3$和中间体逸散
+      \item 疏水环境稳定反应中间体并指导其方向
+      \item 通道出口残基对ImGP前体精准定位
+      \item 通道化避免扩散损失并提高总体催化效率
     \end{iqbitemize}
   }{
     \iqbfig[height=0.50\textheight]{Figures/Figure16.png}{HisFH底物通道：PRFAR在20Å封闭通道内亚基间直接传递}
@@ -995,17 +970,16 @@
 % 17. Substrate Channel: JMJD1A Case (Figure 17)
 % ------------------------------------------------------------
 \begin{frame}{去甲基化酶JMJD1A：底物通道机制}
-  \iqbfontsizemode{small}
   \iqbfig[height=0.28\textheight]{Figures/Figure17.png}{JMJD1A底物通道：me1中间产物在亚基间传递}
   \iqbmicrosep
 
   \iqblayoutcustom[0.40]{
     \iqbsectiontitle{JMJD1A的组蛋白去甲基化功能}
     \begin{iqbitemize}
-      \item Jumonji C (JmjC)家族去甲基化酶
-      \item 催化组蛋白H3K9me3 → me2 → me1 → me0
-      \item 同源二聚体，Fe(II)和$\alpha$-酮戊二酸依赖性
-      \item 每步去甲基化生成甲醛和琥珀酸
+      \item Jumonji C (JmjC)家族Fe(II)/$\alpha$-酮戊二酸依赖酶
+      \item 选择性去除H3K9的单甲基与二甲基（me1/me2）
+      \item 同源二聚体：两个活性位点彼此协作
+      \item 每步反应伴随产生甲醛与琥珀酸
     \end{iqbitemize}
 
     \iqbmicrosep
@@ -1013,10 +987,10 @@
   }{
     \iqbsectiontitle{底物通道的独特优势}
     \begin{iqbitemize}
-      \item 中间产物me1通过亚基间通道传递
-      \item 防止部分去甲基化的组蛋白提前释放
-      \item 确保完全去甲基化(me3 → me0)一步到位
-      \item 避免染色质结构异常和表观遗传信息错误
+      \item me2在一亚基被转化为me1后沿通道传递至另一亚基
+      \item 避免未完全去甲基化的组蛋白提前释放
+      \item 保持H3K9修饰正确重塑，防止异常染色质状态
+      \item 任何活性位点突变都会显著削弱两步催化
     \end{iqbitemize}
   }
 \end{frame}
@@ -1055,8 +1029,6 @@
 % 19. Proton Wire Communication (Figure 19)
 % ------------------------------------------------------------
 \begin{frame}{质子线通讯：亚基间质子传递网络}
-  \iqbfontsizemode{small}
-
   \iqblayoutcustom[0.35]{
     \iqbsectiontitle{质子线的概念与结构}
     \begin{iqbitemize}
@@ -1076,7 +1048,7 @@
       \item 实例：脱氢酶、氧化还原酶等
     \end{iqbitemize}
   }{
-    \iqbfig[height=0.6\textheight]{Figures/Figure19.png}{质子线网络：氢键链介导质子传递与协同}
+    \iqbfig[height=0.58\textheight]{Figures/Figure19.png}{质子线网络：氢键链介导质子传递与协同}
 
     \iqbtinysep
 
@@ -1103,15 +1075,15 @@
     \iqbsectiontitle{亚基间电子协同}
     \begin{iqbitemize}
       \item 一个亚基的电子传递影响另一亚基的氧化还原电位
-      \item 铁硫簇(ISP)在两个亚基间摆动传递电子
-      \item 协同确保电子传递方向性和防止副反应(超氧生成)
+      \item 铁硫簇（ISP）在两个亚基间摆动传递电子
+      \item 协同确保电子传递方向性和防止副反应（超氧生成）
       \item 二聚体界面调控ISP的构象动力学
     \end{iqbitemize}
 
     \iqbmicrosep
     \iqborangebox{能量转换}{电子传递耦合质子泵送}
   }{
-    \iqbfig[height=0.64\textheight]{Figures/Figure20.png}{Cytbc$_1$二聚体的电子传递协同：ISP摆动实现跨亚基电子传递}
+    \iqbfig[height=0.69\textheight]{Figures/Figure20.png}{Cytbc$_1$二聚体的电子传递协同：ISP摆动实现跨亚基电子传递}
   }
 \end{frame}
 
@@ -1127,7 +1099,7 @@
       \item 热容$C_p = (\partial H / \partial T)_p$：能量涨落的度量
       \item 蛋白质折叠/结合通常伴随$\Delta C_p < 0$
       \item Makhatadze-Privalov模型：负$\Delta C_p$源于疏水效应
-      \item 底物结合减少溶剂可及表面积(SASA)
+      \item 底物结合减少溶剂可及表面积（SASA）
     \end{iqbitemize}
 
     \iqbtinysep
@@ -1162,9 +1134,7 @@
 % ------------------------------------------------------------
 % 21b-1a. Negative Heat Capacity: Heat Capacity Change
 % ------------------------------------------------------------
-\begin{frame}{负热容机制IIa-1a：底物结合的热容变化}
-  \iqbfontsizemode{small}
-
+\begin{frame}{负热容机制：底物结合的热容变化}
   \iqblayoutcustom[0.32]{
     \iqbsectiontitle{热容变化}
     \begin{iqbitemize}
@@ -1183,6 +1153,8 @@
       \item 界面疏水作用主导热容效应
       \item 温度敏感性源于水化熵变化
     \end{iqbitemize}
+  }{
+    \iqbfig[height=0.45\textheight]{Figures/Figure21.png}{负热容效应：疏水残基埋藏导致$\Delta C_p < 0$}
 
     \iqbtinysep
 
@@ -1191,8 +1163,6 @@
       \item ITC测量热焓，DSC测定热容
       \item 范特霍夫分析验证$\Delta C_p$
     \end{iqbitemize}
-  }{
-    \iqbfig[height=0.45\textheight]{Figures/Figure21.png}{负热容效应：疏水残基埋藏导致$\Delta C_p < 0$}
   }
 \end{frame}
 
@@ -1200,8 +1170,6 @@
 % 21b-1b. Negative Heat Capacity: Mechanism & Compensation (MERGED)
 % ------------------------------------------------------------
 \begin{frame}{负热容机制：分子机制与熵-焓补偿}
-  \iqbfontsizemode{small}
-
   \iqblayouttwo{
     \iqbsectiontitle{分子机制}
     \begin{iqbitemize}
@@ -1242,9 +1210,7 @@
 % ------------------------------------------------------------
 % 21c. Negative Heat Capacity in Dimeric Enzymes - Part 2
 % ------------------------------------------------------------
-\begin{frame}{负热容机制IIb：空亚基的热容贡献}
-  \iqbfontsizemode{small}
-
+\begin{frame}{负热容机制：空亚基的热容贡献}
   \iqblayouttwo{
     \iqbsectiontitle{非催化亚基的热容贡献}
     \begin{iqbitemize}
@@ -1286,10 +1252,10 @@
   \iqbfontsizemode{small}
 
   \iqblayoutcustom[0.36]{
-    \iqbsectiontitle{MMRT理论(Macromolecular Rate Theory)}
+    \iqbsectiontitle{MMRT理论（Macromolecular Rate Theory）}
     \begin{iqbitemize}
       \item Hobbs等提出的酶催化速率温度依赖性理论
-      \item 核心假设：$\Delta C_p^{\ddagger} \neq 0$(活化热容不为零)
+      \item 核心假设：$\Delta C_p^{\ddagger} \neq 0$（活化热容不为零）
       \item 解释非Arrhenius行为：曲线型Eyring plot
       \item $k_{cat}(T) = \frac{k_B T}{h} e^{-\Delta G^{\ddagger}(T)/RT}$
     \end{iqbitemize}
@@ -1312,9 +1278,7 @@
 % 23. Substrate/Product Coupling (Figure 23)
 % ------------------------------------------------------------
 \begin{frame}{底物结合-产物释放耦合：交替位点催化模型}
-  \iqbfontsizemode{small}
-
-  \iqblayoutcustom[0.30]{
+  \iqblayoutcustom[0.36]{
     \iqbsectiontitle{交替催化位点机制}
     \begin{iqbitemize}
       \item 一个亚基催化反应并释放产物
@@ -1323,7 +1287,7 @@
       \item 类似"跷跷板"效应：一侧产物离去，另一侧底物进入
     \end{iqbitemize}
 
-    \iqbtinysep
+    \iqbmicrosep
 
     \iqbsectiontitle{热力学与动力学耦合}
     \begin{iqbitemize}
@@ -1333,11 +1297,11 @@
       \item 实验证据：单分子FRET、快速动力学
     \end{iqbitemize}
   }{
-    \iqbfig[height=0.50\textheight]{Figures/Figure23.png}{底物-产物耦合机制：一个亚基底物结合促进另一亚基产物释放}
+    \iqbfig[height=0.45\textheight]{Figures/Figure23.png}{底物-产物耦合机制：一个亚基底物结合促进另一亚基产物释放}
 
-    \iqbtinysep
+    \iqbmicrosep
 
-    \iqbgreenbox{催化效率倍增}{耦合超过单体加和}
+    \iqbgreenbox{催化效率倍增}{亚基间底物结合与产物释放的耦合显著缩短催化周期时间，催化效率远超单体加和}
   }
 \end{frame}
 
@@ -1345,8 +1309,6 @@
 % 24. F-ATPase Rotational Catalysis (Figure 24)
 % ------------------------------------------------------------
 \begin{frame}{F-ATPase旋转催化：协同性的终极体现}
-  \iqbfontsizemode{small}
-
   \iqbimgcenter[height=0.42\textheight]{Figures/Figure24.png}
 
   \iqblayouttwo{
@@ -1362,7 +1324,7 @@
     \begin{iqbitemize}
       \item F$_0$亚基的质子流驱动$\gamma$亚基旋转
       \item 旋转力矩通过$\gamma$轴传递至$\beta$亚基
-      \item 机械能转化为化学能(ATP合成)
+      \item 机械能转化为化学能（ATP合成）
       \item 效率>90\%，接近热力学极限
     \end{iqbitemize}
   }
@@ -1380,13 +1342,13 @@
   \iqblayouttwo{
     \iqbsectiontitle{辅因子/配体或pH诱导的构象/寡聚形式变化}
     \begin{iqbitemize}
-      \item 金属离子(Mg$^{2+}$, Zn$^{2+}$)诱导单体-二聚体转换
+      \item 金属离子（Mg$^{2+}$, Zn$^{2+}$）诱导单体-二聚体转换
       \item pH依赖性：质子化状态改变影响界面相互作用
       \item NAD/NADP等辅因子结合稳定二聚体
       \item 变构效应物调节活性构象分布
     \end{iqbitemize}
 
-    \iqbtinysep
+    \iqbsep
 
     \iqbsectiontitle{突变或氨基酸修饰导致的环境变化}
     \begin{iqbitemize}
@@ -1402,7 +1364,7 @@
       \item 反映酶的物种特异性和对催化环境的高度依赖
     \end{iqbitemize}
 
-    \iqbtinysep
+    \iqbsep
 
     \iqbsectiontitle{界面水分子}
     \small
@@ -1463,8 +1425,6 @@
 % 25b. Interface Communication & Regulation
 % ------------------------------------------------------------
 \begin{frame}{亚基界面的通讯与调控功能}
-  \iqbfontsizemode{small}
-
   \iqblayouttwo{
     \iqbsectiontitle{通讯功能}
     \begin{iqbitemize}
@@ -1491,18 +1451,16 @@
       \item 变构调节剂开发
       \item 人工酶界面设计
     \end{iqbitemize}
-  }
 
   \iqborangebox{设计启示}{理解界面是调控二聚化和协同性的关键}
+  }
 \end{frame}
 
 % ------------------------------------------------------------
 % 14a. Interface Importance: Long-range Allosteric Interaction
 % ------------------------------------------------------------
 \begin{frame}{亚基界面：残基网络与长程变构传递}
-  \iqbfontsizemode{small}
-
-  \iqblayoutcustom[0.28]{
+  \iqblayoutcustom[0.35]{
     \iqbsectiontitle{界面残基网络作用}
     \begin{iqbitemize}
       \item 界面残基网络传递变构信号至活性位点
@@ -1511,7 +1469,7 @@
       \item 变构通路长度通常10-25 Å
     \end{iqbitemize}
 
-    \iqbmicrosep
+    \iqbsep
 
     \iqbsectiontitle{界面热点残基}
     \begin{iqbitemize}
@@ -1526,8 +1484,6 @@
 \end{frame}
 
 \begin{frame}{亚基界面：路径优化与实验证据}
-  \iqbfontsizemode{small}
-
   \iqblayouttwo{
     \iqbsectiontitle{路径优化机制}
     \begin{iqbitemize}
@@ -1537,7 +1493,7 @@
       \item 路径长度与效率的平衡
     \end{iqbitemize}
 
-    \iqbmicrosep
+    \iqbsep
 
     \iqbsectiontitle{定量分析}
     \begin{iqbitemize}
@@ -1554,7 +1510,7 @@
       \item 进化耦合分析预测关键接触
     \end{iqbitemize}
 
-    \iqbmicrosep
+    \iqbsep
 
     \iqbsectiontitle{工程应用}
     \begin{iqbitemize}
@@ -1634,8 +1590,6 @@
 % 14b1-2a. Interface: Network Properties + Experimental Validation (MERGED)
 % ------------------------------------------------------------
 \begin{frame}{亚基界面：残基网络特性与实验验证}
-  \iqbfontsizemode{small}
-
   \iqblayouttwo{
     \iqbsectiontitle{网络特性}
     \begin{iqbitemize}
@@ -1678,7 +1632,7 @@
 % ------------------------------------------------------------
 % 14b2. Interface: Proton Transmission
 % ------------------------------------------------------------
-\begin{frame}{亚基界面Ib2：质子传递机制}
+\begin{frame}{亚基界面：质子传递机制}
   \iqbfontsizemode{small}
 
   \iqblayouttwo{
@@ -1705,17 +1659,15 @@
       \item 提高酶的催化效率
       \item 精确控制反应时序
     \end{iqbitemize}
+
+    \iqborangebox{协同效应}{质子传递速率保证催化协同性}
   }
-
-  \iqbtinysep
-
-  {\tiny\iqborangebox{协同效应}{质子传递速率保证催化协同性}}
 \end{frame}
 
 % ------------------------------------------------------------
 % 14b. Interface Importance: Communication Mechanisms Part 2
 % ------------------------------------------------------------
-\begin{frame}{亚基界面Ib2：电子与静电场传递机制}
+\begin{frame}{亚基界面：电子与静电场传递机制}
   \iqbfontsizemode{small}
 
   \iqblayouttwo{
@@ -1753,14 +1705,14 @@
 % ------------------------------------------------------------
 % 14b. Interface Importance: Water Network Dynamics
 % ------------------------------------------------------------
-\begin{frame}{亚基界面Ib2：水分子网络的动态作用}
+\begin{frame}{亚基界面：水分子网络的动态作用}
   \iqbfontsizemode{small}
 
   \iqblayouttwo{
     \iqbsectiontitle{界面水网络的功能}
     \begin{iqbitemize}
       \item 响应构象变化：水网络结构重组传递信号
-      \item 质子传递介质：形成质子线(proton wire)
+      \item 质子传递介质：形成质子线（proton wire）
       \item 熵驱动补偿：空亚基界面水分子释放增加熵
       \item 稳定过渡态：界面水网络稳定催化过渡态
     \end{iqbitemize}
@@ -1791,9 +1743,7 @@
 % ------------------------------------------------------------
 % 14b. Interface Importance: Evolutionary Significance
 % ------------------------------------------------------------
-\begin{frame}{亚基界面II：进化创新的枢纽}
-  \iqbfontsizemode{small}
-
+\begin{frame}{亚基界面：进化创新的枢纽}
   \iqblayouttwo{
     \iqbsectiontitle{促进酶进化}
     \begin{iqbitemize}
@@ -1831,7 +1781,7 @@
     \begin{iqbitemize}
       \item 通过界面设计创造新型催化活性
       \item 调节界面亲和力优化酶活性
-      \item 人工二聚化系统：化学诱导二聚化(CID)
+      \item 人工二聚化系统：化学诱导二聚化（CID）
       \item 合成生物学中的多酶复合物设计
     \end{iqbitemize}
   }
@@ -1881,10 +1831,10 @@
 \begin{frame}{双核金属催化剂：金属协同的仿酶催化}
   \iqbfontsizemode{small}
 
-  \iqblayoutcustom[0.4]{
+  \iqblayoutcustom[0.36]{
     \iqbsectiontitle{双核金属中心的协同机制}
     \begin{iqbitemize}
-      \item 模拟金属酶：酪氨酸酶(Cu-Cu)、甲烷单加氧酶(Fe-Fe)
+      \item 模拟金属酶：酪氨酸酶（Cu-Cu）、甲烷单加氧酶（Fe-Fe）
       \item 双金属间电子传递：混合价态稳定化
       \item 协同底物活化：一个金属结合底物，另一个活化氧化剂
       \item 桥联配体调控金属间距和电子耦合
@@ -1895,7 +1845,7 @@
     \iqbsectiontitle{实例与应用}
     \begin{iqbitemize}
       \item Co-salen二聚体：CO$_2$/环氧化物共聚合
-      \item Ru-Ru双核配合物：水氧化催化(人工光合作用)
+      \item Ru-Ru双核配合物：水氧化催化（人工光合作用）
       \item Pd-Pd双核催化剂：C-H活化与偶联反应
       \item TOF(转化频率)提高10-100倍
     \end{iqbitemize}
@@ -1965,7 +1915,7 @@
       \item 从头设计人工二聚体酶
       \item 多酶复合物中的协同性网络
       \item 非平衡态热力学在酶催化中的应用
-      \item 膜蛋白二聚体(如受体、转运蛋白)的协同性研究
+      \item 膜蛋白二聚体（如受体、转运蛋白）的协同性研究
     \end{iqbitemize}
 
     \iqbtinysep
@@ -1990,7 +1940,7 @@
 
   \iqbsep
 
-  \iqbgreenbox{综述贡献}{系统总结了二聚体酶协同性和动力学的最新研究进展，为酶催化机制研究和催化剂设计提供了全面的理论框架}
+  \iqbgreenbox{综述的贡献}{系统总结了二聚体酶协同性和动力学的最新研究进展，为酶催化机制研究和催化剂设计提供了全面的理论框架}
 
 \end{frame}
 
