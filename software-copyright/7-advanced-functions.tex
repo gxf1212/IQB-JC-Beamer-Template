@@ -319,3 +319,173 @@ IQB-JC 模板提供了灵活的 Punchline 系统，用于在幻灯片页面中�
 
 \iqbpunchlineboxorange{有框的橙色 punchline}
 \end{lstlisting}
+\section{教材与课程资料引用模块}
+
+IQB-JC 模板提供了专门的教材引用系统，用于在课程讲义、学术讲座等场景中统一管理教材信息和章节引用。
+
+\subsection{设置教材信息}
+
+使用 \lstinline|\iqbtextbook| 命令在导言区设置教材的基本信息：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+% 在导言区设置
+\iqbtextbook{书名}{作者}{版本}{出版社}
+
+% 示例
+\iqbtextbook{Quantum Chemistry}{Levine}{7th Edition}{Pearson}
+\end{lstlisting}
+
+参数说明：
+
+\begin{table}[!h]
+\centering
+\caption{iqbtextbook 命令参数}
+\label{tab:iqbtextbook-params}
+\begin{tabular}{p{2.5cm}p{2.5cm}p{7cm}}
+\toprule
+\textbf{参数} & \textbf{类型} & \textbf{说明} \\
+\midrule
+\{书名\} & 必需 & 教材名称，建议使用英文原名 \\
+\{作者\} & 必需 & 作者姓名 \\
+\{版本\} & 必需 & 版本信息，如 "7th Edition" \\
+\{出版社\} & 必需 & 出版社名称 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{显示教材信息}
+
+\subsubsection{仅显示教材信息}
+
+使用 \lstinline|\iqbtextbookinfo| 命令显示已设置的教材信息：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\begin{frame}{课程信息}
+  \iqbtextbookinfo
+\end{frame}
+\end{lstlisting}
+
+效果：
+\begin{verbatim}
+教材：Levine, Quantum Chemistry, 7th Edition
+\end{verbatim}
+
+\subsubsection{显示教材 + 章节信息}
+
+使用 \lstinline|\iqbtextbookchapter| 命令同时显示教材和章节信息：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\begin{frame}{本章内容}
+  \iqbtextbookchapter{Chapter 2}{The Particle in a Box}
+\end{frame}
+\end{lstlisting}
+
+效果：
+\begin{verbatim}
+教材：Levine, Quantum Chemistry, 7th Edition
+Chapter 2：The Particle in a Box
+\end{verbatim}
+
+\subsubsection{仅显示章节信息}
+
+如果教材信息已在其他地方显示，可仅显示章节：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\begin{frame}{本章概览}
+  \iqbchapterinfo{Chapter 3}{Operators, Algebra, and Eigenvalue Problems}
+\end{frame}
+\end{lstlisting}
+
+效果：
+\begin{verbatim}
+Chapter 3：Operators, Algebra, and Eigenvalue Problems
+\end{verbatim}
+
+\subsubsection{简短格式（用于页脚或侧边栏）}
+
+使用 \lstinline|\iqbtextbookbrief| 命令显示简短格式的教材信息：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+\iqbtextbookbrief
+\end{lstlisting}
+
+效果：
+\begin{verbatim}
+Levine: Quantum Chemistry (7th Edition)
+\end{verbatim}
+
+\subsection{完整示例}
+
+以下是一个完整的量子化学课程讲义示例：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+% !TEX program = xelatex
+\documentclass[aspectratio=169, 10pt]{beamer}
+
+\usepackage{../../../theme/beamerthemeiqb}
+\usepackage{../../../theme/iqb-layouts}
+
+% 设置教材信息
+\iqbtextbook{Quantum Chemistry}{Levine}{7th Edition}{Pearson}
+
+\title{量子化学：算符理论}
+\subtitle{Chapter 3: Operators, Algebra, and Eigenvalue Problems}
+\author{Lecture Series}
+\institute{IQB Laboratory}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{课程信息与本章概览}
+  \iqbtextbookchapter{Chapter 3}{Operators, Algebra, and Eigenvalue Problems}
+
+  \vspace{0.5cm}
+
+  \begin{itemize}
+    \item 算符基础 (Operators)
+    \item 算符代数 (Operator Algebra)
+    \item 对易关系 (Commutation Relations)
+    \item 本征值问题 (Eigenvalue Problems)
+  \end{itemize}
+\end{frame}
+
+% 更多内容...
+
+\end{document}
+\end{lstlisting}
+
+\subsection{命令速查表}
+
+表 \ref{tab:textbook-commands} 总结了教材引用模块的所有命令。
+
+\begin{table}[!h]
+\centering
+\caption{教材引用命令速查表}
+\label{tab:textbook-commands}
+\begin{tabular}{p{3cm}p{4cm}p{5cm}}
+\toprule
+\textbf{命令} & \textbf{用法} & \textbf{效果} \\
+\midrule
+\lstinline|\iqbtextbook| & 导言区设置教材信息 & 定义全局教材变量 \\
+\lstinline|\iqbtextbookinfo| & 显示教材信息 & "教材：Author, Book, Edition" \\
+\lstinline|\iqbtextbookchapter| & 显示教材+章节 & 教材信息 + 章节 \\
+\lstinline|\iqbchapterinfo| & 仅显示章节 & "Chapter X：Title" \\
+\lstinline|\iqbtextbookbrief| & 简短格式 & "Author: Book (Edition)" \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{应用场景}
+
+教材引用模块适用于以下场景：
+
+\begin{itemize}
+  \item \textbf{课程讲义}：统一管理每节课的教材和章节信息
+  \item \textbf{学术讲座}：标明讲座内容对应的教材章节
+  \item \textbf{复习资料}：明确标注知识点来源
+  \item \textbf{教学大纲}：快速生成课程对应的教材列表
+\end{itemize}

@@ -69,7 +69,7 @@
 - 间距命令前后必须换行
 - 章节间用`\iqbsep`或`\iqbsmallsep`
 - 列表项内用`\iqbtinysep`或`\iqbmicrosep`
-- ❌ 禁止使用`\vspace{}`、`\medskip`等原生命令
+- ❌ 尽量不使用`\vspace{}`、`\medskip`等原生命令
 
 #### Overfull处理策略
 
@@ -125,10 +125,19 @@ grep "Overfull \\hbox" file.log
    \end{frame}
    ```
 
-**重要原则**：
+- **编译时检查**：XeLaTeX编译会警告 `Overfull \hbox` 或 `Overfull \vbox`
+- **修复方法**：
+  - 优先：
+    - 调整图片高度参数
+    - 拆分为两页
+  - 不优先：
+    - 使用更紧凑的布局（如`\iqblayoutthree`代替`\iqblayouttwo`）
+    - 减少文字行数，提炼关键点
+修复overfull的**重要原则**：
 - **信息密度可以大，但不能删减内容**
 - **拆分和重组优于删减**
 - **overfull >5pt必须修复，<5pt可接受**
+- 尽量按原文逻辑拆分，必要时增加页数，不要压缩信息
 
 #### 其他排版要求
 
@@ -163,10 +172,32 @@ grep "Overfull \\hbox" file.log
 **结构与内容**：
 - 每页都要图文结合：至少放一张与标题直接对应的图，并在同页详述数据/方法/结论
 - 标题需有punchline，简洁概括主要结论，避免"结果：交叉验证"这类描述性标题
-- 尽量按原文逻辑拆分，必要时增加页数，不要压缩信息
 - 从原始Markdown或PDF大段取材以保证细节完整
 - 重要结论或关键数据使用三线表或itemize，保持可读性
-- 长公式用行间形式且另起行
+- **公式规范**:
+    - 所有公式，无论长短，都必须用 `$` (行内) 或 `$$` (行间) 包裹，并使用标准的LaTeX格式。
+    - S²之类的要用公式，不要用这个小的上标或下标！！永远不要！除非不得不在加粗里面出现
+    - **变量名 vs 数学表达式**：
+      - 变量名用反引号：`p_hill`、`curve_class2`、`data0..data3`、`IC50_M`、`log_ac50`
+      - 数学表达式用LaTeX公式：`$r^2 \ge 0.9$`、`$\mathrm{IC50} \le 10~\mu\mathrm{M}$`、`$p_{\text{hill}} \ge 3$`
+      - 不要用反引号包裹公式：禁止使用 `` `$R^2 \ge 0.9$` ``，而应直接用 `$R^2 \ge 0.9$`
+      - 不要用文本格式的数学符号：禁止使用 `IC50≤10 µM`、`r2>=0.9`、`efficacy > 80%`，必须改为 `$\mathrm{IC50} \le 10~\mu\mathrm{M}$`、`$r^2 \ge 0.9$`、`efficacy $>80\%$`
+      - 表格中的数学比较符号也要用公式格式：如 `$\ge 3$`、`$< 0.9$`、`$>80\%$`、`$\le 80\%$`
+    - 行间公式若一行太长就用aligned环境
+    - 对于带单位的物理量，请使用正体表示单位，例如 $\Delta\Delta G = -3.69 \mathrm{kcal/mol}$，或者将单位写在公式外部。kJ·mol−1·nm−2这种涉及上标的的格式，用正体公式$2000\,\mathrm{kJ\cdot  mol^{-1}\cdot nm^{-2}}$这种，或sup也行啊，尽量不用那个小的字符，不要用mol⁻¹·nm⁻²这种。涉及上下标的都改，不涉及的、普通字体就规范的可以不改。μs、ps、Å之类不用公式不影响显示的（无上下标）也可以不用公式
+    - 单位之类的能不用公式也行，如Å全部使用Å而不是公式，$\mu$这种但不涉及下标的也不用公式
+    - k<sub>cat</sub>这种其实是要求用公式的，$k_cat$或$k_\text{cat}$，k₄改成$k_4$，M<sup>-1</sup>s<sup>-1</sup>也是，但前面的数字可以不用
+    - $d\xi$这种求导的要用$\mathrm{d}\xi$,$\dfrac{dU}{dx}$ 这种都得用 $\mathrm{d}x$
+    - NaCl之类的化学式用$\ce{NaCl}$
+    - r = -0.84, p<0.001，R²=0.33，这些类似的都用公式，不是数学公式的也用Markdown兼容的<sup>1</sup>和<sub>1</sub>之类的标签，能化学式的就用$\ce{NaCl}$这种
+    - 行间公式用\dfrac而不是\frac
+    - 连续的多个居中行间公式，方程组之类的，不要多个$$环境，而是\\分隔每一行。连续推导：xxxx=xx=yy=zz这种才有必要也可以用
+- 行间尽量\dfrac而不是\frac
+- 每个item至少15字，\iqborangebox也是，否则要么合并要么加长（或加英文名词）
+- \item[--] 单位：m$^{-3}$  这种要用嵌套\begin{iqbitemize}！
+- \iqborangebox这些不一定都得放双栏外面，也可以放在某一栏
+
+清理临时文件，包括xelatex*.fls 
 
 **版式细节**：
 - 标题比正文大一级并加粗
@@ -223,6 +254,27 @@ grep "Overfull \\hbox" file.log
 - `\iqbconclusion{}` - 结论总结
 - `\iqbtimeline{}{}...` - 时间线/流程图
 
+短的\iqborangebox这些不一定都得放双栏外面，也可以放在某一栏，第二章也修复。这样还能多点空位，把话说完整
+修复类似的，多加点，看课本PDF。每个item至少15字，\iqborangebox也是
+解决一下，为什么半天编译不出来
+图片：不是整页，而是裁剪到只包含那个图片；- \item[--] 单位：m$^{-3}$  这种要用嵌套\begin{iqbitemize}！
+及时清理掉background tasks
+修复overfull，有的只需要把\iqborangebox挪到另一半边。
+尽量和原始PDF里面的大标题相同啊，比如1.2 Historical Background of Quantum Mechanics，别简化为Historical Background
+
+lecuture_collection\Quantum-Chemistry\chapter1\qm_chap1.tex，根据lecuture_collection\Quantum-Chemistry\chapter1\chapter1.pdf，浅补充点关键名词、概念的原始英文，当然不要overfull。\textbf{概率}（probability）这种太简单的就不用了 
+
+充分讲解啊，对于复杂的概念还要稍微通俗易懂点地讲。字少的页面都多点文字
+先修复图片，必须搜索FIGURE 3.1之类的文字。现在的Figures下很多都没有图片
+完了以后继续Extract detailed content from chapter3.pdf，边读边改写，而不是一次探索完，每改几页读一下相关内容 
+
+提取图片的流程搞一个.claude\skills，使用tools\search_pdf_text.py、tools\crop_figure_from_page.py、tools\crop_figure_from_page.py、tools\analyze_image_layout.py之类的脚本完成。必须搜索FIGURE 3.1之类的文字，不要提取完整页面。
+修改裁剪的，要完全没有正文文字
+
+
+
+
+
 ## 参考资料
 
 - **PPTX样式参考**: `E:\GitHub-repo\literature-reading\JC`
@@ -240,6 +292,8 @@ tools\search_pdf_text.py查看lecuture_collection\free-energy\the-dawn-of-alchem
 cd examples
 /mnt/d/texlive/2022/bin/win32/xelatex.exe -interaction=nonstopmode membrane-pore-jc.tex
 ```
+
+封装为tools\compile.sh
 
 ### PDF审查
 编译后使用 **pdf-layout-reviewer agent** 自动检查所有格式要求，但不一定所有页面，要不然太慢：
@@ -323,14 +377,6 @@ IQB-JC-master/
 ### 3. 字体层级（已统一）
 一般**禁止**在正文中出现11pt的文字（如`\normalsize`的加粗标题）
 
-### 4. 溢出检查
-- **编译时检查**：XeLaTeX编译会警告 `Overfull \hbox` 或 `Overfull \vbox`
-- **修复方法**：
-  - 减少文字行数，提炼关键点
-  - 调整图片高度参数
-  - 拆分为两页
-  - 使用更紧凑的布局（如`\iqblayoutthree`代替`\iqblayouttwo`）
-
 ## 与 Claude Code 协作提示
 
 - 用户说"编译"或"检查PDF" → 使用TeXLive编译 + 调用pdf-layout-reviewer
@@ -340,3 +386,28 @@ IQB-JC-master/
 - **修改内容后必须编译验证**：检查溢出、字体大小、图片尺寸
 
 给用户的使用说明写在 `software-copyright` 文件夹下。先写一个初版，先只写 `software-copyright/3-usage.tex`（有需要可以拆几章）已经实现的部分，既要满足软著使用手册的 `prompt.md`，又要符合LaTeX包说明文档的要求。使用说明更新到software-copyright中，所有新的更新。 
+
+## export
+
+读文献PDF，生成以下格式的：
+
+```markdown
+
+## 本文信息
+- **标题**: [论文标题中文翻译]
+- **作者**: [论文的主要作者]
+- 发表时间: [论文发表时间，某年某月某日]
+- **单位**: [如果可知，作者的主要单位，国家肯定是要标注的]
+- **引用格式**: [这里是完整的原文引用信息，请使用标准的学术引用格式，例如：Author, A. A., & Author, B. B. (Year). Title of work. *Journal Title*, *Volume*(Issue), pages. https://doi.org/...]
+```
+这几项一个都不能少
+
+导出编译好的PDF，每页一张图片，放在exported文件夹下，命名为{原文件名}_pageXX.png
+
+```shell
+mkdir lecuture_collection/dimeric_enzyme/exported
+for i in `seq 27 40`; do python tools/extract_pdf_page.py lecuture_collection/dimeric_enzyme/dimeric_enzyme.pdf ${i} lecuture_collection/dimeric_enzyme/exported/dimeric_enzyme_page${i}.png; done
+```
+
+
+

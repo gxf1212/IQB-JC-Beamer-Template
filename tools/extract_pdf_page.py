@@ -53,7 +53,7 @@ def extract_pdf_page(pdf_path: str, page_number: int, output_path: str = None) -
             pdf_path,
             first_page=page_number,
             last_page=page_number,
-            dpi=150  # 足够用于调试的分辨率
+            dpi=300  # 高质量分辨率（300 DPI标准打印质量）
         )
 
         if not images:

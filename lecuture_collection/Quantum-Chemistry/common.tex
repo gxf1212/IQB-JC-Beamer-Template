@@ -1,0 +1,41 @@
+% Fix protein.png path for this subdirectory
+\renewcommand{\iqbsectionframe}[2]{%
+  \setsection{#1}%
+  \begin{frame}[plain,noframenumbering]
+    \begingroup
+      % Hide footer on section divider
+      \setbeamertemplate{footline}{}
+      % Background gradient
+      \begin{tikzpicture}[remember picture,overlay]
+        \fill[white] (current page.south west) rectangle (current page.north east);
+        \shade[left color=white, right color=iqblightgray!30]
+              (current page.south west) rectangle (current page.north east);
+      \end{tikzpicture}
+      % Left vertical bar
+      \begin{tikzpicture}[remember picture,overlay]
+        \draw[line width=8pt, color=iqbblue]
+             (current page.north west) -- (current page.south west);
+      \end{tikzpicture}
+      % Decorative protein (FIXED PATH)
+      \begin{tikzpicture}[remember picture,overlay]
+        \node[anchor=south east, inner sep=0pt, opacity=0.12]
+             at ($(current page.south east) + (-1cm, 1cm)$) {
+          \includegraphics[height=5cm,keepaspectratio]{../../../theme/images/protein.png}
+        };
+      \end{tikzpicture}
+      % Title
+      \vspace*{0.5cm}
+      \begin{center}
+        {\Huge\color{iqbblue}\textbf{#2}}\\[0.3cm]
+        {\Large\color{iqbgray}#1}
+      \end{center}
+      \vspace*{0.3cm}
+    \endgroup
+  \end{frame}
+}
+
+% 缩小子项缩进（本课程讲义使用更紧凑的层级）
+\renewcommand{\subitem}[1]{%
+  \par\vspace{2pt}%
+  \noindent\hspace{0.8em}\textcolor{iqbblue}{$\circ$}\ #1%
+}

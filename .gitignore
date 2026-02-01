@@ -25,6 +25,7 @@ lecuture_collection/free-energy/extracted-slides
 *.xdv
 *.dvi
 *.ps
+*.txt
 
 # Beamer 特定文件
 *.bbl

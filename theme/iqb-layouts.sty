@@ -1177,11 +1177,23 @@
   }%
   % 处理有可选参数的情况
   \def\iqb@item@withopt[##1]{%
-    \iqbolditem[\textcolor{iqbblue}{\textbf{##1}}]%
+    % 检测是否是 -- 标记（子项）
+    \ifnum\pdf@strcmp{##1}{--}=0
+      \iqbolditem[\textcolor{iqbblue}{$\circ$}]%
+    \else
+      \iqbolditem[\textcolor{iqbblue}{\textbf{##1}}]%
+    \fi
   }%
 }{%
   \end{itemize}%
   \end{minipage}%
+}
+
+% 子项命令（在 iqbitemize 中使用，自动缩进）
+% Usage: \subitem{内容}  相当于带缩进的子项
+\newcommand{\subitem}[1]{%
+  \par\vspace{2pt}%
+  \noindent\hspace{1.6em}\textcolor{iqbblue}{$\circ$}\ #1%
 }
 
 % 快速创建描述列表（适合较长标签，支持标签右对齐）
@@ -1322,6 +1334,18 @@
 \def\@paperyear{\the\year}
 
 % ============================================================
+% Lecture/Course Metadata (课程讲义元数据预定义)
+% ============================================================
+
+% 初始化课程元数据存储变量
+\newcommand{\lecturetitle}[1]{\gdef\@lecturetitle{#1}}
+\newcommand{\lectureengtitle}[1]{\gdef\@lectureengtitle{#1}}
+
+% 设置默认值
+\gdef\@lecturetitle{课程标题}
+\gdef\@lectureengtitle{Course Title}
+
+% ============================================================
 % Paper Metadata Display (论文元数据显示宏)
 % ============================================================
 
@@ -1330,6 +1354,58 @@
 % 需预先定义: \paperdoi{...}
 \newcommand{\iqbpublicationinfo}{%
   \textbf{发表}: \textit{J. Chem. Inf. Model.} \textbf{65}, 908–920 (2025) | \textbf{DOI}: \@paperdoi
+}
+
+% ============================================================
+% Textbook/Material Citation (教材/课程资料引用)
+% ============================================================
+
+% 设置教材信息
+% Usage: \iqbtextbook{书名}{作者}{版本}{出版社}
+% 示例: \iqbtextbook{Quantum Chemistry}{Levine}{7th Edition}{Pearson}
+\newcommand{\iqbtextbook}[4]{%
+  \gdef\iqb@textbook@name{#1}%
+  \gdef\iqb@textbook@author{#2}%
+  \gdef\iqb@textbook@edition{#3}%
+  \gdef\iqb@textbook@publisher{#4}%
+}
+
+% 设置默认值
+\gdef\iqb@textbook@name{教材名称}
+\gdef\iqb@textbook@author{作者}
+\gdef\iqb@textbook@edition{版本}
+\gdef\iqb@textbook@publisher{出版社}
+
+% 显示教材信息（完整格式）
+% Usage: \iqbtextbookinfo
+% 效果: 教材：Author, Book Name, Edition
+\newcommand{\iqbtextbookinfo}{%
+  \textbf{教材：}\iqb@textbook@author, \textit{\iqb@textbook@name}, \iqb@textbook@edition%
+}
+
+% 显示教材信息 + 章节信息
+% Usage: \iqbtextbookchapter{章节标识}{章节标题}
+% 示例: \iqbtextbookchapter{Chapter 2}{The Particle in a Box}
+% 效果:
+%   教材：Author, Book Name, Edition
+%   Chapter 2：The Particle in a Box
+\newcommand{\iqbtextbookchapter}[2]{%
+  \textbf{教材：}\iqb@textbook@author, \textit{\iqb@textbook@name}, \iqb@textbook@edition\\[0.1cm]%
+  \textbf{#1：}#2%
+}
+
+% 仅显示章节信息（教材已定义）
+% Usage: \iqbchapterinfo{章节标识}{章节标题}
+% 示例: \iqbchapterinfo{Chapter 3}{Operators}
+\newcommand{\iqbchapterinfo}[2]{%
+  \textbf{#1：}#2%
+}
+
+% 简化版：仅显示教材名称和作者（用于首页或页脚）
+% Usage: \iqbtextbookbrief
+% 效果: Author: Book Name (Edition)
+\newcommand{\iqbtextbookbrief}{%
+  \iqb@textbook@author: \textit{\iqb@textbook@name} (\iqb@textbook@edition)%
 }
 
 % ============================================================
@@ -1550,23 +1626,37 @@
 
 % 快速生成封面页（自动从元数据读取）
 % Usage: \iqbcoverframe
-% 自动使用已定义的元数据：\papertitlechn, \papertitlechnsub, \author, \institute, \date
+% 自动使用已定义的元数据
+% 优先使用课程元数据（\lecturetitle, \lectureengtitle），如未设置则使用论文元数据（\papertitlechn等）
+% 如果设置了教材信息，会在封面显示
 \newcommand{\iqbcoverframe}{%
   \begin{frame}[plain,noframenumbering]
     \vfill
     \centering
 
-    {\LARGE\textcolor{iqbblue}{\textbf{\@papertitlechn}}}\\[0.3cm]%
-    {\LARGE\textcolor{iqbblue}{\textbf{\@papertitlechnsub}}}\\
-
-    \medskip
-
-    {\large \@paperengtitle}
+    % 检查是否设置了课程元数据，优先使用
+    \def\temp{课程标题}%
+    \ifx\@lecturetitle\temp
+      % 未设置课程元数据，使用论文元数据
+      {\LARGE\textcolor{iqbblue}{\textbf{\@papertitlechn}}}\\[0.3cm]%
+      {\LARGE\textcolor{iqbblue}{\textbf{\@papertitlechnsub}}}\\
+      \medskip
+      {\large \@paperengtitle}
+    \else
+      % 使用课程元数据：中文标题 + 英文标题（各一行）
+      {\LARGE\textcolor{iqbblue}{\textbf{\@lecturetitle}}}\\[0.3cm]%
+      {\large \@lectureengtitle}
+    \fi
 
     \bigskip
 
-    {\normalsize \insertauthor}\\[0.2cm]%
-    {\normalsize \insertinstitute}\\[0.2cm]%
+    {\normalsize \insertauthor}\\[0.3cm]%
+
+    % 显示教材信息（使用正常字体大小）
+    {\normalsize
+    \textbf{教材：}\iqb@textbook@author, \textit{\iqb@textbook@name}, \iqb@textbook@edition
+    }\\[0.3cm]%
+
     {\normalsize \insertdate}
 
     \vfill

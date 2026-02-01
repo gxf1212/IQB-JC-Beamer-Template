@@ -199,9 +199,10 @@
 \setstretch{1.2}  
 
 
-\setlength{\leftmargini}{0.9em}  
-\setlength{\itemsep}{0.1ex}  
-\setlength{\parsep}{0pt}  
+\setlength{\leftmargini}{0.9em}
+\setlength{\leftmarginii}{1.6em}  % 子列表缩进
+\setlength{\itemsep}{0.1ex}
+\setlength{\parsep}{0pt}
 \setlength{\parskip}{0pt}  
 
 
@@ -285,7 +286,7 @@
 \setbeamercolor{itemize subitem}{fg=iqbblue}
 \setbeamercolor{itemize subsubitem}{fg=iqbblue}
 \setbeamertemplate{itemize item}{$\bullet$}
-\setbeamertemplate{itemize subitem}{$\circ$}
+\setbeamertemplate{itemize subitem}{$\circ$}  % 子项使用空心圆点
 \setbeamertemplate{itemize subsubitem}{$-$}
 
 
@@ -314,7 +315,7 @@
       \end{minipage}
     };
   \end{tikzpicture}
-  \vskip0.05cm  
+  \vskip-0.6cm  
 }
 
 
@@ -335,7 +336,7 @@
           \includegraphics[width=\paperwidth,keepaspectratio]{\iqbheaderimage}
         };
       \end{tikzpicture}
-      \vskip0.65cm  
+      \vskip0.65cm
     \fi
   \fi
 }

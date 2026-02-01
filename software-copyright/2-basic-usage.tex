@@ -156,6 +156,185 @@ sudo apt-get install fonts-noto-cjk    % Ubuntu/Debian
 sudo pacman -S noto-fonts-cjk           % Arch Linux
 \end{lstlisting}
 
+
+\section{双轨体系：文献讲解 vs 课程讲义}
+
+IQB-JC 模板支持两种不同的使用场景，通过自动检测元数据类型来选择合适的封面格式。用户无需手动切换，模板会根据设置的元数据自动适配。
+
+\subsection{体系对比}
+
+表 \ref{tab:dual-system} 总结了两种体系的主要区别。
+
+\begin{table}[!h]
+\centering
+\caption{IQB-JC 模板双轨体系对比}
+\label{tab:dual-system}
+\begin{tabular}{p{3cm}p{5cm}p{5cm}}
+\toprule
+\textbf{特性} & \textbf{文献讲解（Journal Club）} & \textbf{课程讲义（Lecture）} \\
+\midrule
+\textbf{适用场景} & 学术论文讲解、文献汇报、论文答辩 & 课程讲义、教材讲解、教学PPT \\
+\textbf{元数据命令} & \lstinline|\papertitlechn|, \lstinline|\paperengtitle| & \lstinline|\lecturetitle|, \lstinline|\lectureengtitle| \\
+\textbf{封面行数} & 三行标题 & 两行标题 \\
+\textbf{教材信息} & 不显示 & 自动显示 \\
+\textbf{发表信息} & 显示期刊、DOI等 & 不显示 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{文献讲解体系}
+
+用于学术论文的讲解和汇报，展示完整的发表信息。
+
+\subsubsection{元数据设置}
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+% 文献元数据
+\papertitlechn{蛋白质折叠机制的深度学习研究}
+\papertitlechnsub{基于AlphaFold2的改进算法}
+\paperengtitle{Deep Learning for Protein Folding: An Improved AlphaFold2 Algorithm}
+\papercitation{Zhang et al., Nature, 2023, 612:123-145}
+\paperdoi{10.1038/s41586-023-12345-6}
+\paperjournal{Nature}
+\paperyear{2023}
+
+% 作者信息
+\author{张三}
+\institute{IQB Laboratory}
+\date{\today}
+\end{lstlisting}
+
+\subsubsection{封面效果}
+
+文献讲解的封面包含三行标题：
+\begin{enumerate}
+  \item \textbf{中文主标题}（蓝色大字）
+  \item \textbf{中文副标题}（蓝色大字）
+  \item \textbf{英文标题}（黑色大字）
+\end{enumerate}
+
+随后显示作者、机构、日期等信息。
+
+\subsection{课程讲义体系}
+
+用于课程教学和教材讲解，简洁清晰，突出教学内容。
+
+\subsubsection{元数据设置}
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+% 课程讲义元数据
+\lecturetitle{薛定谔方程}
+\lectureengtitle{Chapter 1: The Schrödinger Equation}
+
+% 教材信息
+\iqbtextbook{Quantum Chemistry}{Levine}{7th Edition}{Pearson}
+
+% 作者信息
+\author{东山月光下QM小组}
+\date{\today}
+\end{lstlisting}
+
+\subsubsection{封面效果}
+
+课程讲义的封面包含两行标题：
+\begin{enumerate}
+  \item \textbf{中文标题}（蓝色大字）
+  \item \textbf{英文标题}（黑色大字）
+\end{enumerate}
+
+随后显示作者、教材信息、日期。
+
+\subsection{自动检测机制}
+
+模板的 \lstinline|\iqbcoverframe| 命令会自动检测使用哪种元数据：
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+% 自动选择封面格式的命令
+\iqbcoverframe
+\end{lstlisting}
+
+检测逻辑：
+\begin{itemize}
+  \item 如果设置了 \lstinline|\lecturetitle|（值不是默认的"课程标题"），使用课程讲义格式
+  \item 否则，使用文献讲解格式
+\end{itemize}
+
+这意味着：
+\begin{itemize}
+  \item 课程讲义：只需设置 \lstinline|\lecturetitle| 和 \lstinline|\lectureengtitle|
+  \item 文献讲解：设置 \lstinline|\papertitlechn| 等论文元数据（或不设置任何元数据，使用默认的 Beamer \lstinline|\title|/\lstinline|\subtitle|）
+\end{itemize}
+
+\subsection{完整示例对比}
+
+\subsubsection{文献讲解示例}
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+% !TEX program = xelatex
+\documentclass[aspectratio=169,11pt]{beamer}
+
+\usepackage{../../../theme/beamerthemeiqb}
+\usepackage{../../../theme/iqb-layouts}
+\renewcommand{\iqbheaderimage}{../../../theme/images/header.png}
+
+% 论文元数据
+\papertitlechn{分子动力学模拟的采样方法研究}
+\papertitlechnsub{加速算法与并行计算}
+\paperengtitle{Sampling Methods in Molecular Dynamics Simulations}
+\papercitation{Li et al., J. Chem. Theory Comput., 2023}
+\paperdoi{10.1021/acs.jctc.3c12345}
+
+\author{李四}
+\institute{IQB Laboratory}
+\date{\today}
+
+\begin{document}
+
+% 封面（自动使用文献讲解格式）
+\iqbcoverframe
+
+% 内容页...
+\end{document}
+\end{lstlisting}
+
+\subsubsection{课程讲义示例}
+
+\begin{lstlisting}[style=blockstyle,language=TeX]
+% !TEX program = xelatex
+\documentclass[aspectratio=169,11pt]{beamer}
+
+\usepackage{../../../theme/beamerthemeiqb}
+\usepackage{../../../theme/iqb-layouts}
+\renewcommand{\iqbheaderimage}{../../../theme/images/header.png}
+
+% 课程讲义元数据
+\lecturetitle{箱中粒子}
+\lectureengtitle{Chapter 2: The Particle in a Box}
+
+% 教材信息
+\iqbtextbook{Quantum Chemistry}{Levine}{7th Edition}{Pearson}
+
+\author{东山月光下QM小组}
+\date{\today}
+
+\begin{document}
+
+% 封面（自动使用课程讲义格式）
+\iqbcoverframe
+
+% 内容页...
+\end{document}
+\end{lstlisting}
+
+\subsection{切换建议}
+
+\begin{itemize}
+  \item \textbf{Journal Club}：使用文献讲解体系，展示论文的完整发表信息
+  \item \textbf{课程讲义}：使用课程讲义体系，简洁清晰，突出教学内容
+  \item \textbf{学位论文答辩}：使用文献讲解体系，可添加 \lstinline|\stuid|、\lstinline|\major|、\lstinline|\advisor| 等字段
+  \item \textbf{学术报告}：根据报告性质选择，文献综述用文献讲解，课程汇报用课程讲义
+\end{itemize}
+
 \section{页面结构控制}
 
 IQB-JC Beamer 模板具有三种页面类型：封面页、标准内容页和特殊页面（如致谢页）。
