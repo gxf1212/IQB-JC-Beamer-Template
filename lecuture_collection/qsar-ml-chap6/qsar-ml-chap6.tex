@@ -11,6 +11,7 @@
 \setstretch{1.05}
 
 \usepackage{amsmath}
+\usepackage[version=4]{mhchem}
 \usepackage{booktabs}
 \usepackage{array}
 \usepackage{tikz}
@@ -157,7 +158,7 @@
     \]
 
     \begin{iqbitemize}
-      \item $y$: biological activity (e.g., log(1/C), pIC$_{50}$)
+      \item $y$: biological activity (e.g., log(1/C), \ce{pIC50})
       \item $X_i$: molecular descriptors (logP, $\sigma$, $E_s$, etc.)
       \item $c_i$: coefficients indicating descriptor importance
       \item Multi-parametric regression establishes structure-activity correlation
@@ -202,7 +203,7 @@
     \begin{iqbitemize}
       \item \textbf{Measurement error}: Assay CV, detection limit
       \item \textbf{Structural confidence}: X-ray vs. computational; validated tautomer set
-      \item \textbf{Activity range}: Log-scale variation (e.g., pIC$_{50}$ 4--10)
+      \item \textbf{Activity range}: Log-scale variation (e.g., \ce{pIC50} 4--10)
       \item \textbf{Temporal consistency}: Same assay protocol over time
     \end{iqbitemize}
 
@@ -1295,7 +1296,7 @@
     \iqbsectiontitle{QSRR \& QSTR}
     \begin{iqbitemize}
       \item[QSRR] Predict reaction rate or kinetics; rate constants, activation energies, selectivity
-      \item[QSTR] Toxicity risk; acute LD$_{50}$ predictions, carcinogenicity/mutagenicity flags, regulatory QSAR
+      \item[QSTR] Toxicity risk; acute \ce{LD50} predictions, carcinogenicity/mutagenicity flags, regulatory QSAR
     \end{iqbitemize}
   }
 \end{frame}
