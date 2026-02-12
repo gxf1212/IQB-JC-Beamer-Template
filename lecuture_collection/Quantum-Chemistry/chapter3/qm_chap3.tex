@@ -248,9 +248,9 @@
   }
 \end{frame}
 
-\begin{frame}{算符的线性：为什么如此重要？}
+\begin{frame}{算符的线性：为什么如此重要？（1/2）}
   
-  \iqblayouttwo{
+  
     \iqbsectiontitle{线性算符的直观理解}
     \begin{iqbitemize}
       \item \textbf{叠加性的物理意义}
@@ -277,7 +277,12 @@
         \item 物理后果：保证概率诠释的一致性
       \end{itemize}
     \end{iqbitemize}
-  }{
+  
+\end{frame}
+
+\begin{frame}{算符的线性：为什么如此重要？（2/2）}
+  \iqbfontsizemode{small}
+  
     \iqbsectiontitle{线性的数学验证}
     \begin{iqbitemize}
       \item \textbf{验证拉普拉斯算符的线性}
@@ -305,12 +310,13 @@
       \]
       显然$\sqrt{f+g} \neq \sqrt{f} + \sqrt{g}$，不满足线性
     \end{iqbitemize}
-  }
+  
+
 \end{frame}
 
-\begin{frame}{线性算符}
+\begin{frame}{线性算符（1/2）}
   
-  \iqblayouttwo{
+  
     \iqbsectiontitle{线性算符的定义}
     \begin{iqbitemize}
     \item 算符$\hat{A}$是线性的，当且仅当满足两个条件
@@ -341,7 +347,12 @@
     \item 物理意义：常数倍函数的算符作用等于常数倍的算符作用
     \item 确保算符作用保持波函数的归一化性质
     \end{iqbitemize}
-  }{
+  
+\end{frame}
+
+\begin{frame}{线性算符（2/2 上）}
+  
+  
     \iqbsectiontitle{为什么量子力学需要线性算符？}
     \begin{iqbitemize}
     \item \textbf{叠加原理的数学基础}
@@ -356,6 +367,11 @@
     \end{iqbitemize}
     \iqbsmallsep
 
+    \end{frame}
+
+\begin{frame}{线性算符（2/2 下）}
+  
+  
     \iqbsectiontitle{常见线性算符实例}
     \begin{iqbitemize}
     \item 微分算符：$\hat{D} = \dfrac{\mathrm{d}}{\mathrm{d}x}$
@@ -366,7 +382,8 @@
     \iqbsmallsep
 
     \iqborangebox{关键洞察}{线性确保量子态的演化保持幺正性，概率守恒}
-  }
+  
+
 \end{frame}
 
 \begin{frame}{算符代数：乘法顺序至关重要}
@@ -408,8 +425,8 @@
   }
 \end{frame}
 
-\begin{frame}{验证算符线性：叠加原理的数学证明}
-  \iqblayouttwo{
+\begin{frame}{验证算符线性：叠加原理的数学证明（1/2）}
+  
     \iqbsectiontitle{问题设定}
     \begin{iqbitemize}
     \item 设$\hat{A} = \dfrac{\mathrm{d}}{\mathrm{d}x}$（微分算符），$\hat{B} = x$（乘法算符）
@@ -431,7 +448,11 @@
       \[
         = f(x) + x f'(x) = (1 + x\dfrac{\mathrm{d}}{\mathrm{d}x})f(x)
       \]
-  }{
+  
+\end{frame}
+
+\begin{frame}{验证算符线性：叠加原理的数学证明（2/2 上）}
+  
     \iqbsectiontitle{计算$\hat{B}\hat{A}f(x)$}
     \begin{iqbitemize}
     \item 先求导后乘法：
@@ -447,6 +468,10 @@
       \]
     \iqbsmallsep
 
+    \end{frame}
+
+\begin{frame}{验证算符线性：叠加原理的数学证明（2/2 下）}
+  
     \iqbsectiontitle{对比与结论}
     \begin{iqbitemize}
     \item $\hat{A}\hat{B} = 1 + x\dfrac{\mathrm{d}}{\mathrm{d}x}$
@@ -462,7 +487,8 @@
     \iqbsmallsep
 
     \iqbgreenbox{物理意义}{算符顺序改变结果，是量子力学区别于经典力学的本质特征}
-  }
+  
+
 \end{frame}
 
 % ============================================================
@@ -598,9 +624,9 @@
   }
 \end{frame}
 
-\begin{frame}{算符多项式与函数}
+\begin{frame}{算符多项式与函数（1/2）}
   
-  \iqblayouttwo{
+  
     \iqbsectiontitle{算符多项式的定义}
     \begin{iqbitemize}
     \item 算符多项式是算符幂的线性组合
@@ -638,7 +664,12 @@
       (\hat{A} + \hat{B})^2 = \hat{A}^2 + 2\hat{A}\hat{B} + \hat{B}^2 + [\hat{B}, \hat{A}]
     \]
     \end{iqbitemize}
-  }{
+  
+\end{frame}
+
+\begin{frame}{算符多项式与函数（2/2 上）}
+  
+  
     \iqbsectiontitle{算符函数的定义}
     \begin{iqbitemize}
     \item 通过\textbf{泰勒级数展开}（Taylor series）定义
@@ -658,6 +689,11 @@
     \end{iqbitemize}
     \iqbsmallsep
 
+    \end{frame}
+
+\begin{frame}{算符多项式与函数（2/2 下）}
+  
+  
     \iqbsectiontitle{算符函数的性质}
     \begin{iqbitemize}
     \item 级数必须收敛才有意义
@@ -668,7 +704,8 @@
     \iqbsmallsep
 
     \iqbgreenbox{物理意义}{算符函数描述量子态随时间、空间或角度的演化}
-  }
+  
+
 \end{frame}
 
 % ============================================================
@@ -713,8 +750,8 @@
   }
 \end{frame}
 
-\begin{frame}{对易子的基本性质}
-  \iqblayouttwo{
+\begin{frame}{对易子的基本性质（1/2）}
+  
     \iqbsectiontitle{基本代数性质}
     \begin{iqbitemize}
     \item \textbf{反对称性}（antisymmetry）：
@@ -734,7 +771,11 @@
     \begin{iqbitemize}
     \item 确保对易子运算的一致性
     \end{iqbitemize}
-  }{
+  
+\end{frame}
+
+\begin{frame}{对易子的基本性质（2/2）}
+  \iqbfontsizemode{small}
     \iqbsectiontitle{运算规则}
     \begin{iqbitemize}
     \item \textbf{莱布尼茨规则}（Leibniz rule）：
@@ -764,7 +805,8 @@
     \iqbtinysep
 
     \iqbgreenbox{记忆要点}{对易子运算就像导数运算，满足线性和莱布尼茨规则}
-  }
+  
+
 \end{frame}
 
 \begin{frame}{重要对易关系}
@@ -879,8 +921,8 @@
   }
 \end{frame}
 
-\begin{frame}{厄米算符本征函数：正交完备且实数本征值}
-  \iqblayouttwo{
+\begin{frame}{厄米算符本征函数：正交完备且实数本征值（1/2）}
+  
     \iqbsectiontitle{四个基本性质}
     \begin{iqbitemize}
     \item \textbf{实数性}（real eigenvalues）
@@ -905,7 +947,11 @@
     \item 类似于三维空间中不同坐标轴的正交
     \item 确保不同本征态彼此独立
     \end{iqbitemize}
-  }{
+  
+\end{frame}
+
+\begin{frame}{厄米算符本征函数：正交完备且实数本征值（2/2）}
+  \iqbfontsizemode{small}
     \iqbsectiontitle{完备性}
     \begin{iqbitemize}
     \item \textbf{完备性}（completeness）：
@@ -932,11 +978,12 @@
     \iqbtinysep
 
     \iqbgreenbox{核心意义}{这些性质确保量子力学测量理论的自洽性，使波函数的统计解释成为可能}
-  }
+  
+
 \end{frame}
 
-\begin{frame}{简并现象：对称性导致的能级多重态}
-  \iqblayouttwo{
+\begin{frame}{简并现象：对称性导致的能级多重态（1/2 上）}
+  
     \iqbsectiontitle{简并的定义}
     \begin{iqbitemize}
     \item \textbf{简并}（degeneracy）：
@@ -951,6 +998,10 @@
     \end{iqbitemize}
     \iqbsmallsep
 
+    \end{frame}
+
+\begin{frame}{简并现象：对称性导致的能级多重态（1/2 下）}
+  
     \iqbsectiontitle{三维箱中粒子的简并}
     \begin{iqbitemize}
     \item 能量公式：
@@ -965,7 +1016,11 @@
     \subitem{高度对称，大量简并}
     \subitem{例如：$(1,2,3)$、$(3,2,1)$等相同能量}
     \end{iqbitemize}
-  }{
+  
+\end{frame}
+
+\begin{frame}{简并现象：对称性导致的能级多重态（2/2 上）}
+  
     \iqbsectiontitle{对称性与简并的关系}
     \begin{iqbitemize}
     \item \textbf{核心原理}：
@@ -977,6 +1032,10 @@
     \end{iqbitemize}
     \iqbsmallsep
 
+    \end{frame}
+
+\begin{frame}{简并现象：对称性导致的能级多重态（2/2 下）}
+  
     \iqbsectiontitle{物理实例与应用}
     \begin{iqbitemize}
     \item \textbf{氢原子}：
@@ -992,7 +1051,8 @@
     \iqbtinysep
 
     \iqbgreenbox{重要洞察}{简并是系统对称性的直接体现，研究简并可以推断系统的对称性质}
-  }
+  
+
 \end{frame}
 
 \begin{frame}{例题：动量算符的本征函数}
@@ -1026,8 +1086,8 @@
   \end{iqbitemize}
 \end{frame}
 
-\begin{frame}{可观测量的测量}
-  \iqblayouttwo{
+\begin{frame}{可观测量的测量（1/2）}
+  \iqbfontsizemode{small}
     \iqbsectiontitle{测量结果的量子化}
     \begin{iqbitemize}
     \item \textbf{量子化结果}：
@@ -1054,7 +1114,11 @@
     \subitem{后续测量得到相同本征值}
     \item 这是量子力学最深刻的特征之一
     \end{iqbitemize}
-  }{
+  
+\end{frame}
+
+\begin{frame}{可观测量的测量（2/2 上）}
+  
     \iqbsectiontitle{期望值与不确定性}
     \begin{iqbitemize}
     \item \textbf{期望值}（expectation value）：
@@ -1076,6 +1140,10 @@
     \end{iqbitemize}
     \iqbsmallsep
 
+    \end{frame}
+
+\begin{frame}{可观测量的测量（2/2 下）}
+  
     \iqbsectiontitle{测量理论的含义}
     \begin{iqbitemize}
     \item \textbf{概率性}：
@@ -1091,7 +1159,8 @@
     \iqbtinysep
 
     \iqbgreenbox{哲学意义}{量子测量挑战了经典的客观实在概念，引发关于观察者角色的深刻讨论}
-  }
+  
+
 \end{frame}
 
 % ============================================================
@@ -1099,8 +1168,8 @@
 % ============================================================
 \iqbsectionframe{Section 3.5}{三维薛定谔方程 (3D Schrödinger Equation)}
 
-\begin{frame}{三维薛定谔方程}
-  \iqblayouttwo{
+\begin{frame}{三维薛定谔方程（1/2）}
+  \iqbfontsizemode{small}
     \iqbsectiontitle{薛定谔方程的三维形式}
     \begin{iqbitemize}
     \item \textbf{含时薛定谔方程}：
@@ -1137,7 +1206,11 @@
     \begin{iqbitemize}
     \item 描述空间中的二阶微分，是梯度的散度
     \end{iqbitemize}
-  }{
+  
+\end{frame}
+
+\begin{frame}{三维薛定谔方程（2/2）}
+  \iqbfontsizemode{small}
     \iqbsectiontitle{球坐标系中的表达}
     \begin{iqbitemize}
     \item 对于中心力场（如氢原子），使用球坐标$(r,\theta,\phi)$更方便
@@ -1166,7 +1239,8 @@
     \iqbsmallsep
 
     \iqbgreenbox{实际意义}{三维薛定谔方程是描述原子、分子和量子化学的基本方程}
-  }
+  
+
 \end{frame}
 
 \begin{frame}{三维箱中的粒子}
@@ -1212,9 +1286,9 @@
   }
 \end{frame}
 
-\begin{frame}{立方箱中的简并现象：对称性的数学体现}
+\begin{frame}{立方箱中的简并现象：对称性的数学体现（1/2）}
   
-  \iqblayouttwo{
+  
     \iqbsectiontitle{立方箱条件}
     \begin{iqbitemize}
       \item \textbf{高度对称}：$a = b = c$
@@ -1234,7 +1308,12 @@
       \item \textbf{物理原因}：
       空间旋转对称性使不同方向等价
     \end{iqbitemize}
-  }{
+  
+\end{frame}
+
+\begin{frame}{立方箱中的简并现象：对称性的数学体现（2/2）}
+  
+  
     \iqbsectiontitle{能级图示}
 
     \iqbfig[height=0.65\textheight]{Figures/fig3_3.png}{立方箱中粒子最低几个能级的示意图，显示基态$E_{1,1,1}$无简并，而激发态如$E_{1,1,2}$、$E_{1,2,2}$等出现多重简并，相同高度的能级对应不同的量子数组合}
@@ -1242,7 +1321,8 @@
     \iqbtinysep
 
     \iqbgreenbox{关键}{简并度随能级升高而增加}
-  }
+  
+
 \end{frame}
 
 \begin{frame}{例题3.3：验证对易关系$[\hat{x}, \hat{p}_x] = i\hbar$（1/2）}
@@ -1325,8 +1405,8 @@
   \iqbgreenbox{技巧}{利用对易子恒等式可大大简化计算}
 \end{frame}
 
-\begin{frame}{箱中粒子的动量测量}
-  \iqblayouttwo{
+\begin{frame}{箱中粒子的动量测量（1/2）}
+  
     \iqbsectiontitle{问题设定}
     \begin{iqbitemize}
     \item 一维箱中粒子的定态波函数：
@@ -1356,7 +1436,11 @@
     \item \textcolor{red}{结论}：$\psi_n$\textbf{不是}$\hat{p}_x$的本征函数
     \item 定态没有确定的动量值！
     \end{iqbitemize}
-  }{
+  
+\end{frame}
+
+\begin{frame}{箱中粒子的动量测量（2/2 上）}
+  
     \iqbsectiontitle{物理解释：束缚态的特性}
     \begin{iqbitemize}
     \item \textbf{经典图像}：
@@ -1371,6 +1455,10 @@
     \end{iqbitemize}
     \iqbsmallsep
 
+    \end{frame}
+
+\begin{frame}{箱中粒子的动量测量（2/2 下）}
+  
     \iqbsectiontitle{深刻意义}
     \begin{iqbitemize}
     \item \textbf{束缚态vs自由态}：
@@ -1386,11 +1474,12 @@
     \iqbtinysep
 
     \iqbgreenbox{核心洞察}{束缚态粒子位置受限，动量必然不确定，完美体现不确定性原理}
-  }
+  
+
 \end{frame}
 
-\begin{frame}{动量平方的本征值：能量vs动量}
-  \iqblayouttwo{
+\begin{frame}{动量平方的本征值：能量vs动量（1/2 上）}
+  
     \iqbsectiontitle{动量平方算符的作用}
     \begin{iqbitemize}
     \item \textbf{问题}：$p_x$无确定值，但$p_x^2$是否有确定值？
@@ -1409,6 +1498,10 @@
     \end{iqbitemize}
     \iqbsmallsep
 
+    \end{frame}
+
+\begin{frame}{动量平方的本征值：能量vs动量（1/2 下）}
+  
     \iqbsectiontitle{与能量的关系}
     \begin{iqbitemize}
     \item 动能公式：$T = \dfrac{p_x^2}{2m}$
@@ -1420,7 +1513,11 @@
     \item 与定态能量公式\textbf{完全一致}！
     \item 验证了波函数求解的正确性
     \end{iqbitemize}
-  }{
+  
+\end{frame}
+
+\begin{frame}{动量平方的本征值：能量vs动量（2/2 上）}
+  
     \iqbsectiontitle{物理意义与深刻洞察}
     \begin{iqbitemize}
     \item \textbf{看似矛盾的现象}：
@@ -1432,6 +1529,10 @@
     \end{iqbitemize}
     \iqbsmallsep
 
+    \end{frame}
+
+\begin{frame}{动量平方的本征值：能量vs动量（2/2 下）}
+  
     \iqbsectiontitle{数学理解}
     \begin{iqbitemize}
     \item \textbf{算符对易性}：
@@ -1447,12 +1548,13 @@
     \iqbsmallsep
 
     \iqbgreenbox{核心}{某些可观测量（如$p_x$）无确定值，但其函数（如$p_x^2$）可能有确定值}
-  }
+  
+
 \end{frame}
 
-\begin{frame}{算符函数：通过级数展开或本征值定义}
+\begin{frame}{算符函数：通过级数展开或本征值定义（1/2 上）}
 
-  \iqblayouttwo{
+  
     \iqbsectiontitle{两种定义方法}
 
     \begin{iqbitemize}
@@ -1470,6 +1572,11 @@
 
     \iqbsep
 
+    \end{frame}
+
+\begin{frame}{算符函数：通过级数展开或本征值定义（1/2 下）}
+
+  
     \iqbsectiontitle{实例与应用}
     \begin{iqbitemize}
     \item \textbf{时间演化算符}：
@@ -1486,7 +1593,12 @@
     \subitem{算符形式：$e^{-i\hat{L}_z\phi/\hbar}$}
     \subitem{物理意义：绕z轴旋转角度$\phi$}
     \end{iqbitemize}
-  }{
+  
+\end{frame}
+
+\begin{frame}{算符函数：通过级数展开或本征值定义（2/2）}
+
+  
     \iqbsectiontitle{算符函数的重要性质}
 
     \begin{iqbitemize}
@@ -1512,11 +1624,12 @@
     \iqbsep
 
     \iqbgreenbox{物理意义}{算符函数描述量子态随时间、空间或角度的演化规律}
-  }
+  
+
 \end{frame}
 
-\begin{frame}{角动量算符的对易关系}
-  \iqblayouttwo{
+\begin{frame}{角动量算符的对易关系（1/2）}
+  
     \iqbsectiontitle{角动量算符的定义}
     \begin{iqbitemize}
     \item 经典定义：$\mathbf{L} = \mathbf{r} \times \mathbf{p}$
@@ -1536,7 +1649,11 @@
       \[
         \hat{L}^2 = \hat{L}_x^2 + \hat{L}_y^2 + \hat{L}_z^2
       \]
-  }{
+  
+\end{frame}
+
+\begin{frame}{角动量算符的对易关系（2/2 上）}
+  
     \iqbsectiontitle{基本对易关系}
     \begin{iqbitemize}
     \item \textbf{分量间的对易关系}：
@@ -1556,6 +1673,10 @@
     \end{iqbitemize}
     \iqbsmallsep
 
+    \end{frame}
+
+\begin{frame}{角动量算符的对易关系（2/2 下）}
+  
     \iqbsectiontitle{角动量平方的对易性}
     \begin{iqbitemize}
     \item $\hat{L}^2$与每个分量都对易：
@@ -1574,11 +1695,12 @@
     \iqbtinysep
 
     \iqbgreenbox{物理意义}{角动量对易关系反映三维空间的旋转对称性，是原子结构理论的基础}
-  }
+  
+
 \end{frame}
 
-\begin{frame}{海森堡不确定性原理}
-  \iqblayouttwo{
+\begin{frame}{海森堡不确定性原理（1/2 上）}
+  
     \iqbsectiontitle{一般不确定性原理}
     \begin{iqbitemize}
     \item 对于两个可观测量$A$和$B$，不确定度的乘积满足：
@@ -1593,6 +1715,10 @@
     \end{iqbitemize}
     \iqbsmallsep
 
+    \end{frame}
+
+\begin{frame}{海森堡不确定性原理（1/2 下）}
+  
     \iqbsectiontitle{坐标-动量不确定性}
     \begin{iqbitemize}
     \item 由基本对易关系$[\hat{x}, \hat{p}_x] = i\hbar$得到：
@@ -1619,7 +1745,11 @@
     \begin{iqbitemize}
     \item 角动量不同分量之间也\textbf{不能同时精确测量}
     \end{iqbitemize}
-  }{
+  
+\end{frame}
+
+\begin{frame}{海森堡不确定性原理（2/2 上）}
+  
     \iqbsectiontitle{可对易观测量：同时测量}
     \begin{iqbitemize}
     \item 若$[\hat{A}, \hat{B}] = 0$，则$\Delta A \cdot \Delta B \geq 0$
@@ -1627,6 +1757,10 @@
     \end{iqbitemize}
     \iqbtinysep
 
+    \end{frame}
+
+\begin{frame}{海森堡不确定性原理（2/2 下 上）}
+  
     \iqbsectiontitle{实例：角动量的对易关系}
     \begin{iqbitemize}
     \item \textbf{不对易}：$[\hat{L}_x, \hat{L}_y] = i\hbar\hat{L}_z$
@@ -1639,6 +1773,10 @@
     \end{iqbitemize}
     \iqbsmallsep
 
+    \end{frame}
+
+\begin{frame}{海森堡不确定性原理（2/2 下 下）}
+  
     \iqbsectiontitle{通俗理解}
     \begin{iqbitemize}
     \item \textbf{波动性的必然结果}
@@ -1654,7 +1792,8 @@
     \iqbsmallsep
 
     \iqbgreenbox{哲学意义}{不确定性不是无知的体现，而是自然界的根本属性，深刻改变了我们对因果律的认识}
-  }
+  
+
 \end{frame}
 
 \begin{frame}{例题3.5：验证对易子恒等式}
@@ -1692,8 +1831,8 @@
   \iqbgreenbox{结论}{雅可比恒等式是李代数的基本性质}
 \end{frame}
 
-\begin{frame}{厄米算符的性质}
-  \iqblayouttwo{
+\begin{frame}{厄米算符的性质（1/2）}
+  
     \iqbsectiontitle{厄米算符的定义}
     \begin{iqbitemize}
     \item 算符$\hat{A}$是\textbf{厄米的}（Hermitian），如果满足：
@@ -1719,7 +1858,11 @@
     \]
     \item \textbf{完备性}：本征函数构成完备集，可展开任意波函数
     \end{iqbitemize}
-  }{
+  
+\end{frame}
+
+\begin{frame}{厄米算符的性质（2/2 上）}
+  
     \iqbsectiontitle{实例验证：动量算符}
     \begin{iqbitemize}
     \item 验证$\hat{p}_x = -i\hbar\dfrac{\mathrm{d}}{\mathrm{d}x}$是厄米的
@@ -1740,6 +1883,10 @@
     \end{iqbitemize}
     \iqbsmallsep
 
+    \end{frame}
+
+\begin{frame}{厄米算符的性质（2/2 下）}
+  
     \iqbsectiontitle{物理意义}
     \begin{iqbitemize}
     \item \textbf{可观测量的数学表示}
@@ -1753,11 +1900,12 @@
     \iqbtinysep
 
     \iqborangebox{核心}{厄米算符保证测量值为实数，是量子力学可观测量的充要条件}
-  }
+  
+
 \end{frame}
 
-\begin{frame}{算符的时间演化}
-  \iqblayouttwo{
+\begin{frame}{算符的时间演化（1/2）}
+  
     \iqbsectiontitle{海森堡方程}
     \begin{iqbitemize}
     \item 算符随时间的演化遵循海森堡方程：
@@ -1786,7 +1934,11 @@
     \subitem{中心力场：$[\hat{H}, \hat{L}^2] = 0$，角动量守恒}
     \subitem{时间平移对称：$[\hat{H}, \hat{H}] = 0$，能量守恒}
     \end{iqbitemize}
-  }{
+  
+\end{frame}
+
+\begin{frame}{算符的时间演化（2/2 上）}
+  
     \iqbsectiontitle{实例：谐振子坐标演化}
     \begin{iqbitemize}
     \item 计算一维谐振子的$\dfrac{d\hat{x}}{dt}$：
@@ -1804,6 +1956,10 @@
     \end{iqbitemize}
     \iqbsmallsep
 
+    \end{frame}
+
+\begin{frame}{算符的时间演化（2/2 下）}
+  
     \iqbsectiontitle{物理意义与应用}
     \begin{iqbitemize}
     \item \textbf{埃伦费斯特定理}（Ehrenfest theorem）：
@@ -1822,12 +1978,13 @@
     \iqbtinysep
 
     \iqbgreenbox{核心}{对易关系连接了算符代数与物理守恒定律，体现了对称性的深刻意义}
-  }
+  
+
 \end{frame}
 
-\begin{frame}{升降算符（阶梯算符）}
+\begin{frame}{升降算符（阶梯算符）（1/2）}
   
-  \iqblayouttwo{
+  
     \iqbsectiontitle{升降算符的定义}
     \begin{iqbitemize}
     \item 谐振子问题的\textbf{代数解法}（algebraic method）
@@ -1858,7 +2015,12 @@
     \begin{iqbitemize}
     \item 每次操作改变量子数$n$，就像爬楼梯
     \end{iqbitemize}
-  }{
+  
+\end{frame}
+
+\begin{frame}{升降算符（阶梯算符）（2/2 上）}
+  
+  
     \iqbsectiontitle{哈密顿算符与数算符}
     \begin{iqbitemize}
     \item \textbf{哈密顿算符的升降算符表示}：
@@ -1878,6 +2040,11 @@
     \end{iqbitemize}
     \iqbsmallsep
 
+    \end{frame}
+
+\begin{frame}{升降算符（阶梯算符）（2/2 下）}
+  
+  
     \iqbsectiontitle{物理意义与应用}
     \begin{iqbitemize}
     \item \textbf{能级结构}：
@@ -1894,12 +2061,13 @@
     \iqbtinysep
 
     \iqbgreenbox{核心思想}{升降算符将能量量子化问题转化为代数计数问题，深刻揭示了量子场的粒子本质}
-  }
+  
+
 \end{frame}
 
-\begin{frame}{宇称算符}
+\begin{frame}{宇称算符（1/2）}
   
-  \iqblayouttwo{
+  
     \iqbsectiontitle{宇称算符的定义与性质}
     \begin{iqbitemize}
     \item \textbf{宇称算符}（parity operator）执行空间反演：
@@ -1933,7 +2101,12 @@
     \]
     \item 偶函数和奇函数分别对应宇称算符的本征态
     \end{iqbitemize}
-  }{
+  
+\end{frame}
+
+\begin{frame}{宇称算符（2/2 上）}
+  
+  
     \iqbsectiontitle{物理实例}
     \begin{iqbitemize}
     \item \textbf{一维箱中粒子}（对称箱）：
@@ -1948,6 +2121,11 @@
     \end{iqbitemize}
     \iqbsmallsep
 
+    \end{frame}
+
+\begin{frame}{宇称算符（2/2 下）}
+  
+  
     \iqbsectiontitle{宇称守恒定律}
     \begin{iqbitemize}
     \item 若$[\hat{H}, \hat{P}] = 0$（哈密顿与宇称算符对易）：
@@ -1963,11 +2141,12 @@
     \iqbsmallsep
 
     \iqbgreenbox{重要应用}{宇称分析简化量子力学问题的求解，是判断跃迁是否可能的重要工具}
-  }
+  
+
 \end{frame}
 
-\begin{frame}{平移算符}
-  \iqblayouttwo{
+\begin{frame}{平移算符（1/2）}
+  
     \iqbsectiontitle{平移算符的定义}
     \begin{iqbitemize}
     \item \textbf{平移算符}（translation operator）作用：
@@ -1998,7 +2177,11 @@
           &= \psi(x+a) \quad \text{（泰勒级数）}
         \end{aligned}
       \]
-  }{
+  
+\end{frame}
+
+\begin{frame}{平移算符（2/2 上）}
+  
     \iqbsectiontitle{无穷小平移生成元}
     \begin{iqbitemize}
     \item \textbf{无穷小平移}：
@@ -2011,6 +2194,10 @@
     \end{iqbitemize}
     \iqbsmallsep
 
+    \end{frame}
+
+\begin{frame}{平移算符（2/2 下 上）}
+  
     \iqbsectiontitle{对称性与守恒量}
     \begin{iqbitemize}
     \item \textbf{诺特定理}（Noether's theorem）：
@@ -2023,6 +2210,10 @@
     \end{iqbitemize}
     \iqbsmallsep
 
+    \end{frame}
+
+\begin{frame}{平移算符（2/2 下 下）}
+  
     \iqbsectiontitle{物理应用}
     \begin{iqbitemize}
     \item \textbf{晶体学}：
@@ -2035,11 +2226,12 @@
     \iqbtinysep
 
     \iqbgreenbox{核心思想}{动量算符生成空间平移，深刻联系了对称性与守恒量}
-  }
+  
+
 \end{frame}
 
-\begin{frame}{多粒子系统的动能算符}
-  \iqblayouttwo{
+\begin{frame}{多粒子系统的动能算符（1/2）}
+  
     \iqbsectiontitle{问题设定}
     \begin{iqbitemize}
     \item 写出$n$个三维粒子的动能算符
@@ -2064,7 +2256,11 @@
     \begin{iqbitemize}
     \item 只对粒子$i$的坐标求导
     \end{iqbitemize}
-  }{
+  
+\end{frame}
+
+\begin{frame}{多粒子系统的动能算符（2/2 上）}
+  
     \iqbsectiontitle{n粒子系统总动能}
     \begin{iqbitemize}
     \item 总动能是各粒子动能之和：
@@ -2089,6 +2285,10 @@
     \end{iqbitemize}
     \iqbsmallsep
 
+    \end{frame}
+
+\begin{frame}{多粒子系统的动能算符（2/2 下）}
+  
     \iqbsectiontitle{物理意义与挑战}
     \begin{iqbitemize}
     \item \textbf{维数灾难}（curse of dimensionality）：
@@ -2105,12 +2305,13 @@
     \iqbtinysep
 
     \iqbgreenbox{核心}{多体问题精确求解的不可能性推动了量子化学各种近似方法的发展}
-  }
+  
+
 \end{frame}
 
-\begin{frame}{分离质心与相对运动：简化多体问题的技巧}
+\begin{frame}{分离质心与相对运动：简化多体问题的技巧（1/2 上）}
 
-  \iqblayouttwo{
+  
     \iqbsectiontitle{坐标变换技巧}
     \begin{iqbitemize}
     \item \textbf{质心坐标}（center-of-mass coordinate）：
@@ -2133,6 +2334,11 @@
 
     \iqbsmallsep
 
+    \end{frame}
+
+\begin{frame}{分离质心与相对运动：简化多体问题的技巧（1/2 下）}
+
+  
     \iqbsectiontitle{动能算符的分离}
     \begin{iqbitemize}
     \item \textbf{两体系统的动能}：
@@ -2148,7 +2354,12 @@
     \end{iqbitemize}
 
     \iqborangebox{数学核心}{分离变量将两体问题简化为两个独立的一体问题}
-  }{
+  
+\end{frame}
+
+\begin{frame}{分离质心与相对运动：简化多体问题的技巧（2/2 上）}
+
+  
     \iqbsectiontitle{物理意义}
     \begin{iqbitemize}
     \item \textbf{运动独立性的原理}
@@ -2163,6 +2374,11 @@
 
     \iqbsep
 
+    \end{frame}
+
+\begin{frame}{分离质心与相对运动：简化多体问题的技巧（2/2 下）}
+
+  
     \iqbsectiontitle{重要应用}
     \begin{iqbitemize}
     \item \textbf{氢原子问题}
@@ -2179,12 +2395,13 @@
     \subitem{相对运动描述散射过程}
     \subitem{质心运动包含整体平动}
     \end{iqbitemize}
-  }
+  
+
 \end{frame}
 
-\begin{frame}{哈密顿算符的构造（1/2）}
+\begin{frame}{哈密顿算符的构造（1/2 上 上）}
 
-  \iqblayouttwo{
+  
     \iqbsectiontitle{从经典到量子的对应规则}
     \begin{iqbitemize}
     \item \textbf{基本量子化规则}（canonical quantization）：
@@ -2197,6 +2414,11 @@
 
     \iqbsmallsep
 
+    \end{frame}
+
+\begin{frame}{哈密顿算符的构造（1/2 上 下 上）}
+
+  
     \iqbsectiontitle{实例1：自由粒子}
     \begin{iqbitemize}
     \item \textbf{经典哈密顿}：
@@ -2216,6 +2438,11 @@
 
     \iqbsmallsep
 
+    \end{frame}
+
+\begin{frame}{哈密顿算符的构造（1/2 上 下 下）}
+
+  
     \iqbsectiontitle{实例2：一维谐振子}
     \begin{iqbitemize}
     \item \textbf{经典哈密顿}：
@@ -2234,7 +2461,12 @@
     \end{iqbitemize}
 
     \iqborangebox{核心}{量子化规则：$p \rightarrow -i\hbar\nabla$, $x \rightarrow \hat{x}$}
-  }{
+  
+\end{frame}
+
+\begin{frame}{哈密顿算符的构造（1/2 下 上）}
+
+  
     \iqbsectiontitle{实例3：氢原子}
     \begin{iqbitemize}
     \item \textbf{经典哈密顿}（电子在核的库仑场中）：
@@ -2249,6 +2481,11 @@
 
     \iqbsmallsep
 
+    \end{frame}
+
+\begin{frame}{哈密顿算符的构造（1/2 下 下 上）}
+
+  
     \iqbsectiontitle{量子哈密顿算符}
     \begin{iqbitemize}
     \item \textbf{三维形式}：
@@ -2264,6 +2501,11 @@
 
     \iqbsep
 
+    \end{frame}
+
+\begin{frame}{哈密顿算符的构造（1/2 下 下 下）}
+
+  
     \iqbsectiontitle{量子化注意事项}
     \begin{iqbitemize}
     \item \textbf{算符顺序问题}：
@@ -2276,12 +2518,13 @@
     \end{iqbitemize}
 
     \iqbgreenbox{物理意义}{哈密顿算符$\hat{H}$对应系统的总能量，其本征值即为能级}
-  }
+  
+
 \end{frame}
 
-\begin{frame}{哈密顿算符的构造（2/2）}
+\begin{frame}{哈密顿算符的构造（2/2 上 上）}
 
-  \iqblayouttwo{
+  
     \iqbsectiontitle{量子化中的算符顺序问题}
     \begin{iqbitemize}
     \item \textbf{核心问题}：
@@ -2297,6 +2540,11 @@
 
     \iqbsep
 
+    \end{frame}
+
+\begin{frame}{哈密顿算符的构造（2/2 上 下）}
+
+  
     \iqbsectiontitle{对称化规则（Weyl ordering）}
     \begin{iqbitemize}
     \item \textbf{基本规则}：
@@ -2313,7 +2561,12 @@
     \end{iqbitemize}
 
     \iqbgreenbox{对称化原则}{对易的算符在量子化时必须对称排列，保证厄米性}
-  }{
+  
+\end{frame}
+
+\begin{frame}{哈密顿算符的构造（2/2 下 上）}
+
+  
     \iqbsectiontitle{厄米性的重要性}
     \begin{iqbitemize}
     \item \textbf{厄米算符定义}：
@@ -2321,6 +2574,11 @@
     \subitem{等价条件：$\int\psi^*\hat{A}\phi\,dx = \int(\hat{A}\psi)^*\phi\,dx$}
     \end{iqbitemize}
 
+    \end{frame}
+
+\begin{frame}{哈密顿算符的构造（2/2 下 下 上）}
+
+  
     \iqbsectiontitle{为什么必须厄米化？}
     \begin{iqbitemize}
     \item \textbf{本征值为实数}
@@ -2338,6 +2596,11 @@
 
     \iqbsep
 
+    \end{frame}
+
+\begin{frame}{哈密顿算符的构造（2/2 下 下 下）}
+
+  
     \iqbsectiontitle{验证算符的厄米性}
     \begin{iqbitemize}
     \item \textbf{检查对易子}：
@@ -2351,12 +2614,13 @@
     \end{iqbitemize}
 
     \iqborangebox{关键}{厄米算符的本征值必须是实数，对应物理可观测量}
-  }
+  
+
 \end{frame}
 
-\begin{frame}{算符的矩阵表示：波动力学与矩阵力学等价}
+\begin{frame}{算符的矩阵表示：波动力学与矩阵力学等价（1/2 上）}
 
-  \iqblayouttwo{
+  
     \iqbsectiontitle{算符的矩阵表示}
     \begin{iqbitemize}
     \item \textbf{矩阵元定义}：
@@ -2379,10 +2643,14 @@
     \[
       \hat{A}\psi = a\psi \quad \Rightarrow \quad \sum_n A_{mn}c_n = a c_m
     \]
-    \end{iqbitemize}
 
     \iqbsep
 
+    \end{frame}
+
+\begin{frame}{算符的矩阵表示：波动力学与矩阵力学等价（1/2 下 上）}
+
+  
     \iqbsectiontitle{实例：谐振子坐标算符}
     \begin{iqbitemize}
     \item \textbf{问题}：计算$\langle m|\hat{x}|n\rangle$
@@ -2396,6 +2664,15 @@
     \subitem{仅相邻能级有非零矩阵元}
     \subitem{反映了$\hat{x}$与升降算符的关系}
     \subitem{$\hat{x} \propto (\hat{a}_+ + \hat{a}_-)$}
+    \end{iqbitemize}
+  
+\end{frame}
+
+\begin{frame}{算符的矩阵表示：波动力学与矩阵力学等价（1/2 下 下）}
+
+  
+    \iqbsectiontitle{实例：谐振子坐标算符}
+    \begin{iqbitemize}
     \item \textbf{矩阵形式}（以$\psi_n$为基）：
     \end{iqbitemize}
     \[
@@ -2410,7 +2687,12 @@
     \]
 
     \iqbgreenbox{矩阵表示}{算符用矩阵表示，态用列向量表示，运算遵循矩阵代数}
-  }{
+  
+\end{frame}
+
+\begin{frame}{算符的矩阵表示：波动力学与矩阵力学等价（2/2 上）}
+
+  
     \iqbsectiontitle{海森堡矩阵力学}
     \begin{iqbitemize}
     \item \textbf{历史背景}
@@ -2427,6 +2709,11 @@
 
     \iqbsep
 
+    \end{frame}
+
+\begin{frame}{算符的矩阵表示：波动力学与矩阵力学等价（2/2 下 上）}
+
+  
     \iqbsectiontitle{波动力学与矩阵力学的对应}
     \begin{iqbitemize}
     \item \textbf{态的表示}
@@ -2444,6 +2731,11 @@
 
     \iqbsep
 
+    \end{frame}
+
+\begin{frame}{算符的矩阵表示：波动力学与矩阵力学等价（2/2 下 下）}
+
+  
     \iqbsectiontitle{实际应用}
     \begin{iqbitemize}
     \item \textbf{近似计算}
@@ -2460,7 +2752,8 @@
     \end{iqbitemize}
 
     \iqborangebox{等价性}{矩阵力学与波动力学是同一量子理论的两种数学表示，选择取决于问题性质}
-  }
+  
+
 \end{frame}
 
 \begin{frame}{例题3.7：势箱中粒子的平均值（位置1/2）}
@@ -2539,9 +2832,9 @@
   \iqbgreenbox{核心}{虽然$\langle p_x \rangle = 0$，但$\langle p_x^2 \rangle > 0$体现零点能}
 \end{frame}
 
-\begin{frame}{微扰理论：近似求解复杂量子系统的强大方法}
+\begin{frame}{微扰理论：近似求解复杂量子系统的强大方法（1/2 上）}
 
-  \iqblayouttwo{
+  
     \iqbsectiontitle{微扰理论的基本思想}
     \begin{iqbitemize}
     \item \textbf{核心思想}（perturbation theory）：
@@ -2550,6 +2843,11 @@
     \subitem{通过级数展开获得近似解}
     \end{iqbitemize}
 
+    \end{frame}
+
+\begin{frame}{微扰理论：近似求解复杂量子系统的强大方法（1/2 下）}
+
+  
     \iqbsectiontitle{哈密顿算符的分解}
     \begin{iqbitemize}
     \item \textbf{分解方案}：
@@ -2568,7 +2866,12 @@
     \end{iqbitemize}
 
     \iqborangebox{策略}{将难解问题转化为可解问题 + 小修正的级数}
-  }{
+  
+\end{frame}
+
+\begin{frame}{微扰理论：近似求解复杂量子系统的强大方法（2/2 上）}
+
+  
     \iqbsectiontitle{非简并一阶微扰公式}
     \begin{iqbitemize}
     \item \textbf{能量的一阶修正}：
@@ -2584,6 +2887,11 @@
 
     \iqbsep
 
+    \end{frame}
+
+\begin{frame}{微扰理论：近似求解复杂量子系统的强大方法（2/2 下 上）}
+
+  
     \iqbsectiontitle{波函数的一阶修正}
     \begin{iqbitemize}
     \item \textbf{修正公式}：
@@ -2600,6 +2908,11 @@
 
     \iqbsep
 
+    \end{frame}
+
+\begin{frame}{微扰理论：近似求解复杂量子系统的强大方法（2/2 下 下）}
+
+  
     \iqbsectiontitle{微扰理论的适用性}
     \begin{iqbitemize}
     \item \textbf{适用条件}：
@@ -2611,12 +2924,13 @@
     \end{iqbitemize}
 
     \iqbgreenbox{核心}{能量修正是对角矩阵元，波函数修正来自所有其他态的混合}
-  }
+  
+
 \end{frame}
 
-\begin{frame}{微扰理论实例与应用}
+\begin{frame}{微扰理论实例与应用（1/2 上）}
 
-  \iqblayouttwo{
+  
     \iqbsectiontitle{实例：一维非谐振子}
     \begin{iqbitemize}
     \item \textbf{物理系统}：
@@ -2625,6 +2939,11 @@
     \subitem{需加入高阶项修正}
     \end{iqbitemize}
 
+    \end{frame}
+
+\begin{frame}{微扰理论实例与应用（1/2 下 上）}
+
+  
     \iqbsectiontitle{哈密顿算符}
     \begin{iqbitemize}
     \item \textbf{完整哈密顿}：
@@ -2641,6 +2960,11 @@
 
     \iqbsmallsep
 
+    \end{frame}
+
+\begin{frame}{微扰理论实例与应用（1/2 下 下）}
+
+  
     \iqbsectiontitle{能量修正的计算}
     \begin{iqbitemize}
     \item \textbf{一阶能量修正}：
@@ -2653,9 +2977,19 @@
     \end{iqbitemize}
 
     \iqborangebox{实例}{分子振动的非谐性解释了红外光谱的精细结构}
-  }{
+  
+\end{frame}
+
+\begin{frame}{微扰理论实例与应用（2/2 上）}
+
+  
     \iqbsectiontitle{微扰理论的实际应用}
 
+    \end{frame}
+
+\begin{frame}{微扰理论实例与应用（2/2 下 上）}
+
+  
     \iqbsectiontitle{原子光谱效应}
     \begin{iqbitemize}
     \item \textbf{斯塔克效应}（Stark effect）：
@@ -2673,6 +3007,11 @@
 
     \iqbsep
 
+    \end{frame}
+
+\begin{frame}{微扰理论实例与应用（2/2 下 下 上）}
+
+  
     \iqbsectiontitle{化学中的微扰理论}
     \begin{iqbitemize}
     \item \textbf{分子间相互作用}：
@@ -2690,8 +3029,11 @@
     \subitem{解释配合物的颜色和磁性}
     \end{iqbitemize}
 
-    \iqbsep
+\end{frame}
 
+\begin{frame}{微扰理论实例与应用（2/2 下 下 下）}
+
+  
     \iqbsectiontitle{量子化学计算方法}
     \begin{iqbitemize}
     \item \textbf{多体微扰理论}（MBPT）：
@@ -2703,15 +3045,16 @@
     \end{iqbitemize}
 
     \iqbgreenbox{重要性}{微扰理论是量子化学计算的基础，从简单模型到高精度计算}
-  }
+  
+
 \end{frame}
 
 % ============================================================
 % Applications
 % ============================================================
-\begin{frame}{算符理论在量子化学中的应用}
+\begin{frame}{算符理论在量子化学中的应用（1/2 上）}
 
-  \iqblayouttwo{
+  
     \iqbsectiontitle{分子轨道理论}
     \begin{iqbitemize}
     \item \textbf{分子的哈密顿算符}：
@@ -2733,6 +3076,11 @@
 
     \iqbsmallsep
 
+    \end{frame}
+
+\begin{frame}{算符理论在量子化学中的应用（1/2 下）}
+
+  
     \iqbsectiontitle{化学键理论}
     \begin{iqbitemize}
     \item \textbf{价键理论}（Valence Bond Theory）：
@@ -2747,7 +3095,12 @@
     \end{iqbitemize}
 
     \iqborangebox{核心}{化学键的本质是电子波函数在空间中的对称性组合}
-  }{
+  
+\end{frame}
+
+\begin{frame}{算符理论在量子化学中的应用（2/2 上）}
+
+  
     \iqbsectiontitle{光谱学中的算符}
     \begin{iqbitemize}
     \item \textbf{电偶极跃迁}：
@@ -2764,6 +3117,11 @@
 
     \iqbsep
 
+    \end{frame}
+
+\begin{frame}{算符理论在量子化学中的应用（2/2 下 上）}
+
+  
     \iqbsectiontitle{计算化学软件}
     \begin{iqbitemize}
     \item \textbf{量子化学程序包}：
@@ -2786,6 +3144,11 @@
 
     \iqbsep
 
+    \end{frame}
+
+\begin{frame}{算符理论在量子化学中的应用（2/2 下 下）}
+
+  
     \iqbsectiontitle{算符方法的现代发展}
     \begin{iqbitemize}
     \item \textbf{群论与对称性}：
@@ -2799,12 +3162,13 @@
     \end{iqbitemize}
 
     \iqbgreenbox{应用}{算符理论是现代量子化学计算的基础框架}
-  }
+  
+
 \end{frame}
 
-\begin{frame}{扩展阅读：算符理论的前沿发展}
+\begin{frame}{扩展阅读：算符理论的前沿发展（1/2 上）}
 
-  \iqblayouttwo{
+  
     \iqbsectiontitle{密度泛函理论（DFT）}
     \begin{iqbitemize}
     \item \textbf{核心思想}：
@@ -2824,6 +3188,11 @@
     \subitem{适用于大分子和固体}
     \end{iqbitemize}
 
+    \end{frame}
+
+\begin{frame}{扩展阅读：算符理论的前沿发展（1/2 下）}
+
+  
     \iqbsectiontitle{量子计算}
     \begin{iqbitemize}
     \item \textbf{量子比特}（Qubit）：
@@ -2841,7 +3210,12 @@
     \end{iqbitemize}
 
     \iqborangebox{前沿}{量子计算利用量子算符的叠加与纠缠特性实现指数加速}
-  }{
+  
+\end{frame}
+
+\begin{frame}{扩展阅读：算符理论的前沿发展（2/2 上）}
+
+  
     \iqbsectiontitle{量子场论}
     \begin{iqbitemize}
     \item \textbf{场的量子化}：
@@ -2857,6 +3231,11 @@
 
     \iqbsep
 
+    \end{frame}
+
+\begin{frame}{扩展阅读：算符理论的前沿发展（2/2 下 上）}
+
+  
     \iqbsectiontitle{开放量子系统}
     \begin{iqbitemize}
     \item \textbf{密度矩阵形式}：
@@ -2874,6 +3253,11 @@
     \subitem{退相干与量子到经典过渡}
     \end{iqbitemize}
 
+    \end{frame}
+
+\begin{frame}{扩展阅读：算符理论的前沿发展（2/2 下 下）}
+
+  
     \iqbsectiontitle{非厄米量子力学}
     \begin{iqbitemize}
     \item \textbf{PT对称量子力学}：
@@ -2885,7 +3269,8 @@
     \end{iqbitemize}
 
     \iqbgreenbox{展望}{算符理论连接基础量子力学与前沿研究，从原子到量子计算机}
-  }
+  
+
 \end{frame}
 
 % ============================================================
@@ -2962,4 +3347,3 @@
 \end{frame}
 
 \end{document}
-

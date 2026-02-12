@@ -139,6 +139,8 @@ grep "Overfull \\hbox" file.log
 - **overfull >5pt必须修复，<5pt可接受**
 - 尽量按原文逻辑拆分，必要时增加页数，不要压缩信息
 
+尽量用双栏；每页内容不要太少，信息密度尽量大，要么根据lecuture_collection\Quantum-Chemistry\chapter3\chapter3.pdf添加完善的讲解，要么适当合并
+
 #### 其他排版要求
 
 **排版规则**：
