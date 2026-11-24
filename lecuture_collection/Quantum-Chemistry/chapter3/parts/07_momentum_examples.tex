@@ -1,0 +1,416 @@
+% !TeX root = ../qm_chap3.tex
+
+\begin{frame}{箱中粒子的动量测量（1/2）}
+  \iqbfontsizemode{small}
+    \iqbsectiontitle{问题设定}
+    \begin{iqbitemize}
+    \item 一维箱中粒子的定态波函数：
+    \end{iqbitemize}
+      \[
+        \psi_n(x) = \sqrt{\dfrac{2}{l}}\sin\left(\dfrac{n\pi x}{l}\right)
+      \]
+    \begin{iqbitemize}
+    \item \textbf{核心问题}：此态是否具有确定的动量？
+    \item 检验方法：验证$\psi_n$是否是$\hat{p}_x$的本征函数
+    \end{iqbitemize}
+    \iqbsmallsep
+
+    \iqbsectiontitle{动量算符的作用}
+    \begin{iqbitemize}
+    \item 计算动量算符的作用：
+    \end{iqbitemize}
+      \[
+        \begin{aligned}
+          \hat{p}_x\psi_n(x) &= -i\hbar\dfrac{\mathrm{d}}{\mathrm{d}x}\left[\sqrt{\dfrac{2}{l}}\sin\left(\dfrac{n\pi x}{l}\right)\right] \\
+          &= -i\hbar\sqrt{\dfrac{2}{l}} \cdot \dfrac{n\pi}{l}\cos\left(\dfrac{n\pi x}{l}\right) \\
+          &\neq \text{常数} \times \psi_n(x)
+        \end{aligned}
+      \]
+    \begin{iqbitemize}
+    \item 结果不是$\psi_n$的常数倍
+    \item \textcolor{red}{结论}：$\psi_n$\textbf{不是}$\hat{p}_x$的本征函数
+    \item 定态没有确定的动量值！
+    \end{iqbitemize}
+  
+\end{frame}
+
+\begin{frame}{箱中定态的动量分布在连续谱上展开}
+  \iqbfontsizemode{small}
+  \iqblayouttwo{
+    \iqbsectiontitle{箱内驻波可分解为两个方向的波}
+    \begin{iqbitemize}
+    \item \textbf{经典图像}：
+    \subitem{粒子在箱中来回运动}
+    \subitem{向右（$+p$）$\leftrightarrow$ 向左（$-p$）}
+    \item \textbf{量子图像}：
+    \subitem{驻波是左行和右行波的叠加}
+    \subitem{$\sin(k_nx)=(e^{ik_nx}-e^{-ik_nx})/(2i)$，其中$k_n=n\pi/l$。}
+    \item 这个分解只描述箱内的正弦形状。完整波函数在箱外为零，空间截断使动量分布具有有限宽度。
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{测量结果分布在连续的动量值上}
+    \begin{iqbitemize}
+    \item 按教材的全空间动量测量，用箱内波函数对平面波作投影：
+    \[
+      \widetilde\psi_n(p)=\dfrac{1}{\sqrt{2\pi\hbar}}
+        \int_0^l \psi_n(x)e^{-ipx/\hbar}\,\mathrm{d}x .
+    \]
+    \item $|\widetilde\psi_n(p)|^2\,\mathrm{d}p$给出动量落在小区间内的概率。
+    \item 教材指出，靠近$\pm nh/(2l)$的动量有较高概率。分布关于$p=0$对称，平均动量为零。
+    \end{iqbitemize}
+    \iqbtinysep
+
+    \iqbgreenbox{能量与动量}{箱中定态具有确定能量，单次动量测量仍有统计分散。}
+  }
+\end{frame}
+
+\begin{frame}{箱中粒子定态具有确定的动量平方}
+  
+    \iqbsectiontitle{动量平方算符的作用}
+    \begin{iqbitemize}
+    \item \textbf{问题}：$p_x$无确定值，但$p_x^2$是否有确定值？
+    \end{iqbitemize}
+      \[
+        \begin{aligned}
+          \hat{p}_x^2\psi_n(x) &= (-i\hbar)^2\dfrac{\mathrm{d}^2}{\mathrm{d}x^2}\left[\sqrt{\dfrac{2}{l}}\sin\left(\dfrac{n\pi x}{l}\right)\right] \\
+          &= -\hbar^2\sqrt{\dfrac{2}{l}} \cdot \left(-\dfrac{n^2\pi^2}{l^2}\right)\sin\left(\dfrac{n\pi x}{l}\right) \\
+          &= \dfrac{n^2\pi^2\hbar^2}{l^2}\psi_n(x) \\
+          &= \dfrac{n^2h^2}{4l^2}\psi_n(x)
+        \end{aligned}
+      \]
+    \begin{iqbitemize}
+    \item \textcolor{green}{关键发现}：$\psi_n$\textbf{是}$\hat{p}_x^2$的本征函数！
+    \item 本征值：$\boxed{\dfrac{n^2h^2}{4l^2}}$
+    \end{iqbitemize}
+    \iqbsmallsep
+
+    \end{frame}
+
+\begin{frame}{箱中粒子的能量由动量平方决定}
+  \iqblayouttwo{
+  
+    \iqbsectiontitle{与能量的关系}
+    \begin{iqbitemize}
+    \item 动能公式：$T = \dfrac{p_x^2}{2m}$
+    \end{iqbitemize}
+      \[
+        E_n = \dfrac{\langle p_x^2 \rangle}{2m} = \dfrac{n^2h^2}{8ml^2}
+      \]
+    \begin{iqbitemize}
+    \item 与定态能量公式\textbf{完全一致}！
+    \item 验证了波函数求解的正确性
+    \end{iqbitemize}
+  
+  }{
+  
+    \iqbsectiontitle{物理意义与深刻洞察}
+    \begin{iqbitemize}
+    \item \textbf{看似矛盾的现象}：
+    \subitem{动量$p_x$：无确定值（左右随机）}
+    \subitem{动量平方$p_x^2$：有确定值！}
+    \item \textbf{期望值}：
+    \subitem{$\langle p_x \rangle = 0$（左右对称）}
+    \subitem{$\langle p_x^2 \rangle = \dfrac{n^2h^2}{4l^2}$（确定值）}
+    \end{iqbitemize}
+    \iqbsmallsep
+
+    
+  }
+\end{frame}
+
+\begin{frame}{箱内动能的测量和全空间动量测量遵循不同边界条件}
+  \iqblayouttwo{
+    \iqbsectiontitle{箱内的动能算符}
+    \begin{iqbitemize}
+      \item 教材将$-\hbar^2\mathrm{d}^2/\mathrm{d}x^2$记作$\hat p_x^2$。在箱中，此二阶算符带有两端波函数为零的边界条件。
+      \item 箱内$V=0$，所以该算符等于$2m\hat H$。定态同时具有确定的能量和对应的箱内动能。
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{全空间的动量算符}
+    \begin{iqbitemize}
+      \item 全空间动量测量把在箱外补零的波函数投影到连续谱上。若逐次测量$p_x$并将结果平方，会得到连续的平方值分布。
+      \item 一阶导数通常把箱中的正弦本征函数变为箱壁处非零的余弦函数。判断动量和哈密顿算符是否兼容时，须考虑各自的定义域。
+    \end{iqbitemize}
+  }
+\end{frame}
+
+\begin{frame}{算符函数可以用级数或本征值定义}
+
+  
+    \iqbsectiontitle{两种定义方法}
+
+    \begin{iqbitemize}
+    \item \textbf{方法1：幂级数展开}
+    \[
+      f(\hat{A}) = \sum_{n=0}^{\infty} c_n\hat{A}^n, \quad
+      e^{\hat{A}} = \hat{1} + \hat{A} + \dfrac{\hat{A}^2}{2!} + \cdots
+    \]
+
+    \item \textbf{方法2：本征值定理}
+    \[
+      \hat{A}\phi_n = a_n\phi_n \quad \Rightarrow \quad f(\hat{A})\phi_n = f(a_n)\phi_n
+    \]
+    \end{iqbitemize}
+
+    \iqbsep
+
+    \end{frame}
+
+\begin{frame}{指数算符描述时间演化与空间变换}
+
+  
+    \iqbsectiontitle{实例与应用}
+    \begin{iqbitemize}
+    \item \textbf{时间演化算符}：
+    \subitem{算符形式：$e^{-i\hat{H}t/\hbar}$}
+    \subitem{作用结果：$e^{-i\hat{H}t/\hbar}\psi_n = e^{-iE_nt/\hbar}\psi_n$}
+    \subitem{物理意义：量子态随时间演化}
+
+    \item \textbf{空间平移算符}：
+    \subitem{算符形式：$e^{a\mathrm{d}/\mathrm{d}x}$}
+    \subitem{作用结果：$e^{a\frac{\mathrm{d}}{\mathrm{d}x}}f(x) = f(x+a)$}
+    \subitem{物理意义：波函数在空间中平移距离$a$}
+
+    \item \textbf{旋转算符}：
+    \subitem{算符形式：$e^{-i\hat{L}_z\phi/\hbar}$}
+    \subitem{物理意义：绕z轴旋转角度$\phi$}
+    \end{iqbitemize}
+  
+\end{frame}
+
+\begin{frame}{算符函数的对易性与自伴性}
+
+  
+    \iqbsectiontitle{算符函数的重要性质}
+
+    \begin{iqbitemize}
+    \item \textbf{收敛性要求}
+    \subitem{级数必须收敛才有物理意义}
+    \subitem{指数算符$e^{\hat{A}}$总是收敛的}
+
+    \item \textbf{多算符函数}
+    \subitem{$f(\hat{A}, \hat{B})$的展开更复杂}
+    \subitem{取决于对易关系$[\hat{A}, \hat{B}]$}
+
+    \item \textbf{特殊情况（对易）}
+    若$[\hat{A}, \hat{B}] = 0$，则：
+    \[
+      e^{\hat{A}}e^{\hat{B}} = e^{\hat{A}+\hat{B}}
+    \]
+
+    \item \textbf{一般情况（不对易）}
+    \subitem{$e^{\hat{A}}e^{\hat{B}} \neq e^{\hat{A}+\hat{B}}$}
+    \subitem{需用Baker-Campbell-Hausdorff公式}
+    \end{iqbitemize}
+
+    \iqbsep
+
+    \iqbgreenbox{物理意义}{算符函数描述量子态随时间、空间或角度的演化规律}
+  
+
+\end{frame}
+
+\begin{frame}{角动量算符由位置和动量构成}
+  
+    \iqbsectiontitle{角动量算符的定义}
+    \begin{iqbitemize}
+    \item 经典定义：$\mathbf{L} = \mathbf{r} \times \mathbf{p}$
+    \item \textbf{量子算符}（将位置和动量算符化）：
+    \end{iqbitemize}
+      \footnotesize
+      \[
+        \begin{aligned}
+          \hat{L}_x &= \hat{y}\hat{p}_z - \hat{z}\hat{p}_y = -i\hbar\left(y\dfrac{\partial}{\partial z} - z\dfrac{\partial}{\partial y}\right) \\
+          \hat{L}_y &= \hat{z}\hat{p}_x - \hat{x}\hat{p}_z = -i\hbar\left(z\dfrac{\partial}{\partial x} - x\dfrac{\partial}{\partial z}\right) \\
+          \hat{L}_z &= \hat{x}\hat{p}_y - \hat{y}\hat{p}_x = -i\hbar\left(x\dfrac{\partial}{\partial y} - y\dfrac{\partial}{\partial x}\right)
+        \end{aligned}
+      \]
+    \begin{iqbitemize}
+    \item \textbf{角动量平方}：
+    \end{iqbitemize}
+      \[
+        \hat{L}^2 = \hat{L}_x^2 + \hat{L}_y^2 + \hat{L}_z^2
+      \]
+  
+\end{frame}
+
+\begin{frame}{不同角动量分量的对易子指向第三个分量}
+  
+    \iqbsectiontitle{基本对易关系}
+    \begin{iqbitemize}
+    \item \textbf{分量间的对易关系}：
+    \end{iqbitemize}
+      \[
+        \begin{aligned}
+          \relax[\hat{L}_x, \hat{L}_y] &= i\hbar\hat{L}_z \\
+          [\hat{L}_y, \hat{L}_z] &= i\hbar\hat{L}_x \\
+          [\hat{L}_z, \hat{L}_x] &= i\hbar\hat{L}_y
+        \end{aligned}
+      \]
+    \begin{iqbitemize}
+    \item \textbf{矢量形式}：$\hat{\mathbf{L}} \times \hat{\mathbf{L}} = i\hbar\hat{\mathbf{L}}$
+    \item \textbf{重要推论}：
+    \subitem{角动量分量不对易}
+    \subitem{不能同时精确测量不同分量}
+    \end{iqbitemize}
+    \iqbsmallsep
+
+    \end{frame}
+
+\begin{frame}{角动量平方与各角动量分量对易}
+  
+    \iqbsectiontitle{角动量平方的对易性}
+    \begin{iqbitemize}
+    \item $\hat{L}^2$与每个分量都对易：
+    \end{iqbitemize}
+      \[
+        [\hat{L}^2, \hat{L}_x] = [\hat{L}^2, \hat{L}_y] = [\hat{L}^2, \hat{L}_z] = 0
+      \]
+    \begin{iqbitemize}
+    \item 物理意义：
+    \subitem{可以同时确定角动量大小和某一分量}
+    \subitem{例如：$\hat{L}^2$和$\hat{L}_z$有共同本征态}
+    \item \textbf{空间量子化}：
+    \subitem{$\hat{L}^2$本征值：$\hbar^2\ell(\ell+1)$}
+    \subitem{$\hat{L}_z$本征值：$\hbar m$}
+    \end{iqbitemize}
+    \iqbtinysep
+
+    \iqbgreenbox{物理意义}{角动量对易关系反映三维空间的旋转对称性，是原子结构理论的基础}
+  
+
+\end{frame}
+
+\begin{frame}{对易子的期望值给出不确定性的下界}
+  
+    \iqbsectiontitle{一般不确定性原理}
+    \begin{iqbitemize}
+    \item 对于两个可观测量$A$和$B$，不确定度的乘积满足：
+    \end{iqbitemize}
+      \[
+        \Delta A \cdot \Delta B \geq \dfrac{1}{2}\left|\langle[\hat{A}, \hat{B}]\rangle\right|
+      \]
+    \begin{iqbitemize}
+    \item 不确定度定义：$\Delta A = \sqrt{\langle A^2\rangle - \langle A\rangle^2}$
+    \item 右边是对易子的期望值的绝对值
+    \item \textbf{核心}：对易关系导致测量不确定性
+    \end{iqbitemize}
+    \iqbsmallsep
+
+    \end{frame}
+
+\begin{frame}{位置、动量和角动量的不确定关系}
+  
+    \iqbsectiontitle{坐标-动量不确定性}
+    \begin{iqbitemize}
+    \item 由基本对易关系$[\hat{x}, \hat{p}_x] = i\hbar$得到：
+    \end{iqbitemize}
+      \[
+        \boxed{\Delta x \cdot \Delta p_x \geq \dfrac{\hbar}{2}}
+      \]
+    \begin{iqbitemize}
+    \item \textbf{物理意义}：
+    \subitem{位置测量越精确，动量越不确定}
+    \subitem{动量测量越精确，位置越不确定}
+    \item 这是量子力学\textbf{最基本的限制}
+    \item 不是测量技术的限制，而是\textbf{自然的本质属性}
+    \end{iqbitemize}
+    \iqbsmallsep
+
+    \iqbsectiontitle{角动量不确定性}
+    \begin{iqbitemize}
+    \item 由$[\hat{L}_x, \hat{L}_y] = i\hbar\hat{L}_z$得到：
+    \end{iqbitemize}
+      \[
+        \Delta L_x \cdot \Delta L_y \geq \dfrac{\hbar}{2}|\langle L_z\rangle|
+      \]
+    \begin{iqbitemize}
+    \item 角动量不同分量之间也\textbf{不能同时精确测量}
+    \end{iqbitemize}
+  
+\end{frame}
+
+\begin{frame}{共同本征态允许同时确定可观测量}
+  \iqblayouttwo{
+  
+    \iqbsectiontitle{可对易观测量：同时测量}
+    \begin{iqbitemize}
+    \item 若$[\hat{A}, \hat{B}] = 0$，则$\Delta A \cdot \Delta B \geq 0$
+    \item 可以\textbf{同时精确测量}
+    \end{iqbitemize}
+    \iqbtinysep
+
+    
+  }{
+  
+    \iqbsectiontitle{实例：角动量的对易关系}
+    \begin{iqbitemize}
+    \item \textbf{不对易}：$[\hat{L}_x, \hat{L}_y] = i\hbar\hat{L}_z$
+    \subitem{不同分量不能同时精确测量}
+    \item \textbf{对易}：$[\hat{L}^2, \hat{L}_z] = 0$
+    \subitem{角动量大小与一个分量可同时确定}
+    \item 物理图像：
+    \subitem{角动量矢量绕$z$轴进动}
+    \subitem{$L_z$确定，但$L_x$和$L_y$不确定}
+    \end{iqbitemize}
+    \iqbsmallsep
+
+    
+  }
+\end{frame}
+
+\begin{frame}{波包越局域，动量成分越分散}
+  
+    \iqbsectiontitle{通俗理解}
+    \begin{iqbitemize}
+    \item \textbf{波动性的必然结果}
+    \subitem{粒子具有波动性，是弥散在空间中的}
+    \subitem{严格的"位置"和"动量"概念不适用于波}
+    \item \textbf{互补原理}
+    \subitem{位置和动量是互补的物理量}
+    \subitem{测量一个会干扰另一个}
+    \item \textbf{宏观世界 vs 微观世界}
+    \subitem{宏观：$\hbar \approx 10^{-34}$J·s，不确定性可忽略}
+    \subitem{微观：原子尺度，不确定性显著}
+    \end{iqbitemize}
+    \iqbsmallsep
+
+    \iqbgreenbox{哲学意义}{不确定性不是无知的体现，而是自然界的根本属性，深刻改变了我们对因果律的认识}
+  
+
+\end{frame}
+
+\begin{frame}{例题3.5：验证对易子恒等式}
+  \iqbfontsizemode{small}
+  \iqbsectiontitle{证明对易子雅可比恒等式}
+
+  \textbf{问题}：验证雅可比恒等式$[\hat{A}, [\hat{B}, \hat{C}]] + [\hat{B}, [\hat{C}, \hat{A}]] + [\hat{C}, [\hat{A}, \hat{B}]] = 0$
+
+  \begin{iqbitemize}
+    \item \textbf{展开第一项}：
+    \begin{align*}
+      [\hat{A}, [\hat{B}, \hat{C}]] &= [\hat{A}, \hat{B}\hat{C} - \hat{C}\hat{B}] \\
+      &= \hat{A}(\hat{B}\hat{C} - \hat{C}\hat{B}) - (\hat{B}\hat{C} - \hat{C}\hat{B})\hat{A} \\
+      &= \hat{A}\hat{B}\hat{C} - \hat{A}\hat{C}\hat{B} - \hat{B}\hat{C}\hat{A} + \hat{C}\hat{B}\hat{A}
+    \end{align*}
+
+    \item \textbf{展开第二项}：
+    \begin{align*}
+      [\hat{B}, [\hat{C}, \hat{A}]] &= \hat{B}\hat{C}\hat{A} - \hat{B}\hat{A}\hat{C} - \hat{C}\hat{A}\hat{B} + \hat{A}\hat{C}\hat{B}
+    \end{align*}
+
+    \item \textbf{展开第三项}：
+    \begin{align*}
+      [\hat{C}, [\hat{A}, \hat{B}]] &= \hat{C}\hat{A}\hat{B} - \hat{C}\hat{B}\hat{A} - \hat{A}\hat{B}\hat{C} + \hat{B}\hat{A}\hat{C}
+    \end{align*}
+
+    \item \textbf{相加求和}：所有项两两抵消，总和为0
+    \[
+      \text{每一项都与其相反项同时存在}
+    \]
+
+    \item \textbf{物理意义}：雅可比恒等式保证了对易子的代数结构自洽
+  \end{iqbitemize}
+
+  \iqbgreenbox{结论}{雅可比恒等式是李代数的基本性质}
+\end{frame}

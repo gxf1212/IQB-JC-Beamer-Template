@@ -1,0 +1,165 @@
+% !TeX root = ../qm_chap3.tex
+
+\begin{frame}{对易子的定义}
+  
+  \iqblayouttwo{
+    \iqbsectiontitle{定义}
+    \begin{iqbitemize}
+      \item 两个算符$\hat{A}$和$\hat{B}$的\textbf{对易子}（commutator）定义为
+      \[
+        [\hat{A}, \hat{B}] = \hat{A}\hat{B} - \hat{B}\hat{A}
+      \]
+
+      \item 对易子本身也是一个算符
+
+      \item \textbf{对易}（commute）：若$[\hat{A}, \hat{B}] = 0$，称两算符对易
+
+      \item \textbf{不对易}（non-commute）：若$[\hat{A}, \hat{B}] \neq 0$，称两算符不对易
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{物理意义}
+    \begin{iqbitemize}
+      \item 对易子反映了物理量是否能同时精确测量
+
+      \item \textbf{海森堡不确定性原理}的数学表述
+      \[
+        \Delta A \Delta B \geq \dfrac{1}{2}|\langle[\hat{A}, \hat{B}]\rangle|
+      \]
+
+      \item 对易的算符对应可同时观测的物理量
+
+      \item 不对易的算符对应\textbf{互补的物理量}（complementary observables）
+    \end{iqbitemize}
+
+    \iqbtinysep
+
+    \iqbgreenbox{核心}{对易关系是量子力学的核心特征}
+  }
+\end{frame}
+
+\begin{frame}{对易子的基本性质（1/2）}
+  
+    \iqbsectiontitle{基本代数性质}
+    \begin{iqbitemize}
+    \item \textbf{反对称性}（antisymmetry）：
+    \[
+      [\hat{A}, \hat{B}] = -[\hat{B}, \hat{A}]
+    \]
+    \item \textbf{自对易为零}：$[\hat{A}, \hat{A}] = 0$
+    \item \textbf{线性性质}（linearity）：
+    \[
+      [\hat{A}, c_1\hat{B} + c_2\hat{C}] = c_1[\hat{A}, \hat{B}] + c_2[\hat{A}, \hat{C}]
+    \]
+    \item \textbf{雅可比恒等式}（Jacobi identity）：
+    \end{iqbitemize}
+      \[
+        [\hat{A}, [\hat{B}, \hat{C}]] + [\hat{B}, [\hat{C}, \hat{A}]] + [\hat{C}, [\hat{A}, \hat{B}]] = 0
+      \]
+    \begin{iqbitemize}
+    \item 确保对易子运算的一致性
+    \end{iqbitemize}
+  
+\end{frame}
+
+\begin{frame}{对易子的基本性质（2/2）}
+  \iqbfontsizemode{small}
+    \iqbsectiontitle{运算规则}
+    \begin{iqbitemize}
+    \item \textbf{莱布尼茨规则}（Leibniz rule）：
+    \end{iqbitemize}
+      \[
+        [\hat{A}, \hat{B}\hat{C}] = [\hat{A}, \hat{B}]\hat{C} + \hat{B}[\hat{A}, \hat{C}]
+      \]
+    \begin{iqbitemize}
+    \item 类似微积分中的乘积求导法则
+    \item 推广形式：
+    \end{iqbitemize}
+      \[
+        [\hat{A}\hat{B}, \hat{C}] = \hat{A}[\hat{B}, \hat{C}] + [\hat{A}, \hat{C}]\hat{B}
+      \]
+    \begin{iqbitemize}
+    \item 注意保持算符顺序！
+    \end{iqbitemize}
+    \iqbsmallsep
+
+    \iqbsectiontitle{实用计算技巧}
+    \begin{iqbitemize}
+    \item 展开$[\hat{A}, \hat{B}]$时，先计算$\hat{A}\hat{B}$和$\hat{B}\hat{A}$
+    \item 验证结果是否满足反对称性
+    \item 利用已知的对易关系（如$[x, \hat{p}_x] = i\hbar$）
+    \item 复杂对易子可逐步分解为简单对易子
+    \end{iqbitemize}
+    \iqbtinysep
+
+    \iqbgreenbox{记忆要点}{对易子运算就像导数运算，满足线性和莱布尼茨规则}
+  
+
+\end{frame}
+
+\begin{frame}{重要对易关系}
+  
+  \iqblayouttwo{
+    \iqbsectiontitle{坐标与动量}
+    \begin{iqbitemize}
+      \item 一维情况：
+      \[
+        [x, \hat{p}_x] = i\hbar
+      \]
+
+      \item 三维情况：
+      \[
+        [x_i, \hat{p}_j] = i\hbar\delta_{ij}
+      \]
+
+      \item 这是量子力学的基本对易关系
+
+      \item 导致海森堡不确定性原理
+      \[
+        \Delta x \Delta p_x \geq \dfrac{\hbar}{2}
+      \]
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{角动量}
+    \begin{iqbitemize}
+      \item 角动量各分量之间不对易
+      \[
+        [\hat{L}_x, \hat{L}_y] = i\hbar\hat{L}_z
+      \]
+      \[
+        [\hat{L}_y, \hat{L}_z] = i\hbar\hat{L}_x
+      \]
+      \[
+        [\hat{L}_z, \hat{L}_x] = i\hbar\hat{L}_y
+      \]
+
+      \item 角动量平方与任意分量对易
+      \[
+        [\hat{L}^2, \hat{L}_i] = 0
+      \]
+
+      \item 可以同时测量$L^2$和一个分量
+    \end{iqbitemize}
+  }
+\end{frame}
+
+\begin{frame}{例题：计算对易子}
+  \iqbfontsizemode{small}
+  \iqbsectiontitle{计算$[\dfrac{\mathrm{d}}{\mathrm{d}x}, x]$}
+
+  \textbf{方法一：直接作用在任意函数上}
+
+  \begin{align*}
+    [\dfrac{\mathrm{d}}{\mathrm{d}x}, x]f(x) &= \dfrac{\mathrm{d}}{\mathrm{d}x}(xf(x)) - x\dfrac{\mathrm{d}}{\mathrm{d}x}f(x) \\
+                         &= f(x) + xf'(x) - xf'(x) \\
+                         &= f(x)
+  \end{align*}
+
+  \begin{iqbitemize}
+    \item 对任意$f(x)$，结果都是$f(x)$本身
+    \item 因此$[\dfrac{\mathrm{d}}{\mathrm{d}x}, x] = \hat{1}$（恒等算符）
+  \end{iqbitemize}
+
+  \iqbsep
+
+  \iqbgreenbox{推广}{}在量子力学中，$[\hat{p}_x, x] = -i\hbar$（因为$\hat{p}_x = -i\hbar\dfrac{\mathrm{d}}{\mathrm{d}x}$）
+\end{frame}

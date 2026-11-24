@@ -40,10 +40,6 @@ print_error() {
 cleanup() {
     print_info "清理临时文件..."
 
-    # 先尝试杀死可能残留的XeLaTeX进程
-    killall -9 xelatex 2>/dev/null || true
-    sleep 1
-
     # 删除LaTeX临时文件
     rm -f *.aux *.log *.toc *.out *.fdb_latexmk *.fls *.synctex.gz \
           *.bbl *.blg *.idx *.ind *.ilg *.lof *.lot *.nav *.snm \
@@ -62,6 +58,7 @@ compile() {
     local tex_dir="$(dirname "$tex_path")"
     local tex_name="$(basename "$tex_path")"
     local base_name="${tex_name%.tex}"
+    local pass
 
     # 检查文件是否存在
     if [ ! -f "$tex_path" ]; then
@@ -78,15 +75,15 @@ compile() {
     # 编译前先清理
     cleanup
 
-    # 执行XeLaTeX编译
-    print_info "执行XeLaTeX编译..."
-    if "$XELATEX" -interaction=nonstopmode "$tex_name" > /tmp/xelatex_compile.log 2>&1; then
-        print_success "XeLaTeX编译成功"
-    else
-        print_error "XeLaTeX编译失败，查看日志: /tmp/xelatex_compile.log"
-        tail -50 /tmp/xelatex_compile.log
-        exit 1
-    fi
+    for pass in 1 2; do
+        print_info "执行第 $pass 遍 XeLaTeX 编译..."
+        if ! "$XELATEX" -halt-on-error -interaction=nonstopmode "$tex_name" > /tmp/xelatex_compile.log 2>&1; then
+            print_error "XeLaTeX编译失败，查看日志: /tmp/xelatex_compile.log"
+            tail -50 /tmp/xelatex_compile.log
+            exit 1
+        fi
+    done
+    print_success "XeLaTeX编译成功"
 
     # 检查PDF是否生成
     if [ -f "${base_name}.pdf" ]; then
@@ -96,7 +93,7 @@ compile() {
         print_success "成功生成 ${base_name}.pdf (${pdf_pages} 页, ${pdf_size})"
 
         # 检查overfull警告
-        local overfull_count=$(grep -c "Overfull" /tmp/xelatex_compile.log 2>/dev/null || echo "0")
+        local overfull_count=$(grep -c "Overfull" /tmp/xelatex_compile.log || true)
         if [ "$overfull_count" -gt 0 ]; then
             print_warning "发现 ${overfull_count} 个overfull警告"
             print_info "详细信息:"
@@ -106,9 +103,6 @@ compile() {
         fi
 
         # 编译后清理
-        print_info "等待文件释放并清理临时文件..."
-        killall -9 xelatex 2>/dev/null || true
-        sleep 3  # 等待更长时间确保文件释放
         cleanup
 
         # 最终验证清理结果

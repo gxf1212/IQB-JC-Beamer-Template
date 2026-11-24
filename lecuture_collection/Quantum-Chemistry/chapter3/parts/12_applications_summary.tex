@@ -1,0 +1,262 @@
+% !TeX root = ../qm_chap3.tex
+
+\begin{frame}{分子轨道由本征值方程或矩阵方程求得}
+
+  
+    \iqbsectiontitle{分子轨道理论}
+    \begin{iqbitemize}
+    \item \textbf{分子的哈密顿算符}：
+    \end{iqbitemize}
+    \[
+      \hat{H} = \sum_i \hat{T}_i + \sum_i V_i + \sum_{i<j} \dfrac{e^2}{r_{ij}}
+    \]
+    \begin{iqbitemize}
+    \item \textbf{各项含义}：
+    \subitem{$\hat{T}_i$：第$i$个电子的动能}
+    \subitem{$V_i$：电子-核吸引势}
+    \subitem{$\dfrac{e^2}{r_{ij}}$：电子间排斥势}
+
+    \item \textbf{Hartree-Fock方法}：
+    \subitem{将多电子问题近似为单电子问题}
+    \subitem{福克算符：$\hat{F}(i) = \hat{h}(i) + \sum_j (\hat{J}_j(i) - \hat{K}_j(i))$}
+    \subitem{库仑算符$\hat{J}$和交换算符$\hat{K}$}
+    \end{iqbitemize}
+
+    \iqbsmallsep
+
+    \end{frame}
+
+\begin{frame}{算符方法解释化学键及其稳定性}
+
+  
+    \iqbsectiontitle{化学键理论}
+    \begin{iqbitemize}
+    \item \textbf{价键理论}（Valence Bond Theory）：
+    \subitem{海特勒-伦敦处理氢分子}
+    \subitem{交换算符描述电子自旋配对}
+    \subitem{共价键的量子解释}
+
+    \item \textbf{分子轨道理论}（Molecular Orbital Theory）：
+    \subitem{LCAO：原子轨道线性组合}
+    \subitem{分子轨道是哈密顿算符的本征函数}
+    \subitem{能级图解释键级和磁性}
+    \end{iqbitemize}
+
+    \iqborangebox{核心}{化学键的本质是电子波函数在空间中的对称性组合}
+  
+\end{frame}
+
+\begin{frame}{跃迁偶极矩决定电偶极跃迁强度}
+
+  
+    \iqbsectiontitle{光谱学中的算符}
+    \begin{iqbitemize}
+    \item \textbf{电偶极跃迁}：
+    \subitem{电偶极矩算符：$\hat{\boldsymbol{\mu}} = -e\sum_i \mathbf{r}_i$}
+    \subitem{跃迁矩阵元：$\langle\psi_f|\hat{\boldsymbol{\mu}}|\psi_i\rangle$}
+    \subitem{选择定则源于对易关系}
+    \subitem{例：$\Delta\ell = \pm 1$源于$[\hat{L}^2, \hat{z}] \neq 0$}
+
+    \item \textbf{磁矩与塞曼效应}：
+    \subitem{自旋磁矩算符：$\hat{\boldsymbol{\mu}}_S = -g_S\mu_B\hat{\mathbf{S}}$}
+    \subitem{轨道磁矩算符：$\hat{\boldsymbol{\mu}}_L = -\mu_B\hat{\mathbf{L}}$}
+    \subitem{塞曼分裂：$\hat{H}' = -\hat{\boldsymbol{\mu}} \cdot \mathbf{B}$}
+    \end{iqbitemize}
+
+    \iqbsep
+
+    \end{frame}
+
+\begin{frame}{量子化学软件用算符矩阵求电子结构}
+
+  
+    \iqbsectiontitle{计算化学软件}
+    \begin{iqbitemize}
+    \item \textbf{量子化学程序包}：
+    \subitem{Gaussian：最流行的量子化学软件}
+    \subitem{ORCA、NWChem、Q-Chem等}
+    \subitem{核心算法：求解$\hat{H}\psi = E\psi$}
+
+    \item \textbf{计算方法层次}：
+    \subitem{Hartree-Fock：平均场近似}
+    \subitem{DFT：密度泛函理论}
+    \subitem{Post-HF：MP2、CCSD(T)等高精度方法}
+    \subitem{半经验方法：AM1、PM3等}
+
+    \item \textbf{应用领域}：
+    \subitem{分子结构优化}
+    \subitem{反应机理研究}
+    \subitem{光谱性质预测}
+    \subitem{药物设计与材料科学}
+    \end{iqbitemize}
+
+    \iqbsep
+
+    \end{frame}
+
+\begin{frame}{现代电子结构方法扩展了算符的应用}
+
+  
+    \iqbsectiontitle{算符方法的现代发展}
+    \begin{iqbitemize}
+    \item \textbf{群论与对称性}：
+    \subitem{分子点群}
+    \subitem{不可约表示标记轨道对称性}
+    \subitem{简化久期方程}
+
+    \item \textbf{格林函数方法}：
+    \subitem{传播子理论}
+    \subitem{电子结构计算}
+    \end{iqbitemize}
+
+    \iqbgreenbox{应用}{算符理论是现代量子化学计算的基础框架}
+  
+
+\end{frame}
+
+\begin{frame}{扩展阅读　电子密度与量子门的算符应用}
+  \iqblayouttwo{
+    \iqbsectiontitle{密度泛函理论（DFT）}
+    \begin{iqbitemize}
+    \item \textbf{核心思想}：
+    \subitem{将多体问题转化为有效单粒子问题}
+    \subitem{用电子密度$\rho(\mathbf{r})$代替波函数}
+    \subitem{Hohenberg-Kohn定理：基态性质由密度唯一确定}
+
+    \item \textbf{Kohn-Sham方程}：
+    \end{iqbitemize}
+    \[
+      \hat{H}_{\text{eff}}[\rho]\psi_i = \left[-\dfrac{\hbar^2}{2m}\nabla^2 + V_{\text{eff}}[\rho]\right]\psi_i = \varepsilon_i\psi_i
+    \]
+    \begin{iqbitemize}
+    \item \textbf{实际应用}：
+    \subitem{最常用的量子化学方法}
+    \subitem{计算量适中（$N^3$-$N^4$）}
+    \subitem{适用于大分子和固体}
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{量子计算}
+    \begin{iqbitemize}
+    \item \textbf{量子比特}（Qubit）：
+    \subitem{用狄拉克符号$|0\rangle$、$|1\rangle$表示}
+    \subitem{叠加态：$|\psi\rangle = \alpha|0\rangle + \beta|1\rangle$}
+
+    \item \textbf{量子门}：
+    \subitem{量子算符：$\hat{U}^\dagger\hat{U} = \hat{1}$（酉算符）}
+    \subitem{Hadamard门、CNOT门、量子傅里叶变换}
+    \subitem{量子纠缠与非经典关联}
+
+    \item \textbf{量子算法}：
+    \subitem{Shor算法：大数分解}
+    \subitem{Grover算法：无序搜索}
+    \end{iqbitemize}
+
+    \iqborangebox{前沿}{量子计算利用量子算符的叠加与纠缠特性实现指数加速}
+  }
+\end{frame}
+
+\begin{frame}{量子场论用产生与湮灭算符描述粒子}
+
+  
+    \iqbsectiontitle{量子场论}
+    \begin{iqbitemize}
+    \item \textbf{场的量子化}：
+    \subitem{场算符$\hat{\psi}(\mathbf{r})$产生和湮灭粒子}
+    \subitem{二次量子化形式}
+    \subitem{对易关系：$[\hat{\psi}(\mathbf{r}), \hat{\psi}^\dagger(\mathbf{r}')] = \delta(\mathbf{r}-\mathbf{r}')$}
+
+    \item \textbf{应用领域}：
+    \subitem{量子电动力学（QED）}
+    \subitem{标准模型理论}
+    \subitem{凝聚态物理（多体理论）}
+    \end{iqbitemize}
+
+    \iqbsep
+
+    \end{frame}
+
+\begin{frame}{开放系统与非厄米算符}
+  \iqblayouttwo{
+  
+    \iqbsectiontitle{开放量子系统}
+    \begin{iqbitemize}
+    \item \textbf{密度矩阵形式}：
+    \subitem{纯态：$\hat{\rho} = |\psi\rangle\langle\psi|$}
+    \subitem{混合态：统计系综}
+
+    \item \textbf{Lindblad主方程}：
+    \end{iqbitemize}
+    \[
+      \dfrac{\mathrm{d}\hat{\rho}}{\mathrm{d}t} = -\dfrac{i}{\hbar}[\hat{H}, \hat{\rho}] + \sum_k \left(\hat{L}_k\hat{\rho}\hat{L}_k^\dagger - \dfrac{1}{2}\{\hat{L}_k^\dagger\hat{L}_k, \hat{\rho}\}\right)
+    \]
+    \begin{iqbitemize}
+    \item \textbf{物理意义}：
+    \subitem{描述量子系统与环境相互作用}
+    \subitem{退相干与量子到经典过渡}
+    \end{iqbitemize}
+
+    
+  }{
+  
+    \iqbsectiontitle{非厄米量子力学}
+    \begin{iqbitemize}
+    \item \textbf{PT对称量子力学}：
+    \subitem{宇称-时间对称}
+    \subitem{实数能谱但不厄米}
+    \item \textbf{应用}：
+    \subitem{光学系统}
+    \subitem{开放系统与损耗}
+    \end{iqbitemize}
+
+    \iqbgreenbox{展望}{算符理论连接基础量子力学与前沿研究，从原子到量子计算机}
+  
+  }
+\end{frame}
+
+\begin{frame}{本章总结：算符理论的核心要点}
+  \iqbfontsizemode{small}
+  \iqblayouttwo{
+    \iqbgreenbox{核心思想}{算符是量子力学的数学语言}
+    \iqbtinysep
+
+    \iqbsectiontitle{基本概念}
+    \begin{iqbitemize}
+      \item 算符将函数变换为函数
+      \item 线性算符满足叠加性和齐次性
+      \item 算符乘法一般不满足交换律
+      \item 对易子量化算符的不可交换性
+    \end{iqbitemize}
+
+    \iqbtinysep
+
+    \iqbsectiontitle{代数运算}
+    \begin{iqbitemize}
+      \item 算符可以进行加减乘和幂运算
+      \item 对易子满足特定的代数性质
+      \item 基本对易关系：$[x, \hat{p}_x] = i\hbar$
+      \item 角动量对易关系反映空间旋转对称性
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{本征值理论}
+    \begin{iqbitemize}
+      \item 本征方程$\hat{A}\phi_n = a_n\phi_n$
+      \item 厄米算符本征值为实数
+      \item 本征函数构成正交完备集
+      \item 任意态可展开为本征态的叠加
+    \end{iqbitemize}
+
+    \iqbtinysep
+
+    \iqbsectiontitle{物理应用}
+    \begin{iqbitemize}
+      \item 能量：哈密顿算符的本征值问题
+      \item 动量：连续谱本征函数$e^{ipx/\hbar}$
+      \item 测量：结果为本征值，概率为$|c_n|^2$
+      \item 不确定性：源于算符不对易
+    \end{iqbitemize}
+
+    \iqbtinysep
+
+    \iqborangebox{关键洞察}{对易关系是量子力学区别于经典力学的本质特征}
+  }
+\end{frame}

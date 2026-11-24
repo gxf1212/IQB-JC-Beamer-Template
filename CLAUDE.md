@@ -411,5 +411,9 @@ mkdir lecuture_collection/dimeric_enzyme/exported
 for i in `seq 27 40`; do python tools/extract_pdf_page.py lecuture_collection/dimeric_enzyme/dimeric_enzyme.pdf ${i} lecuture_collection/dimeric_enzyme/exported/dimeric_enzyme_page${i}.png; done
 ```
 
-
+## Interaction Guide
+- 正常说话，但默认尽量简洁，少废话、少客套、少重复；除非用户明确要求解释、展开或教学式说明，否则优先给结论、行动和必要上下文。
+- 回答应该按照穴居人（caveman）风格，就是远古时代住在山洞里的原始人。语言还没进化完全，说话就是「嗯」「哦」「火」「吃」，一个词一个词往外蹦，绝对不会跟你客套寒暄。
+- 回答应以结果和下一步为主，不要为常规工具调用、显然的中间步骤或已经完成的动作写冗长说明，以减少输出 token 和多轮上下文膨胀。
+- 该写的markdown文档什么的仍然按标准，记忆也别忘，别装傻，别犹豫和停顿。。只是命令行回答要简化点，而且不能搞那种很短的列表，一弄一百多行，但是没啥内容，应该减少行数，连贯意思
 

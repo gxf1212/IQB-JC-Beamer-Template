@@ -5,10 +5,44 @@
 
 \documentclass[aspectratio=169,11pt]{beamer}
 
-\usepackage{../theme/beamerthemeiqb}
-\usepackage{../theme/iqb-layouts}
-\renewcommand{\iqbheaderimage}{../theme/images/header.png}
-\setstretch{1.05}
+\usepackage{../../theme/beamerthemeiqb}
+\usepackage{../../theme/iqb-layouts}
+\renewcommand{\iqbheaderimage}{../../theme/images/header.png}
+
+\makeatletter
+\renewcommand{\iqbsectionframe}[2]{%
+  \setsection{#1}%
+  \begin{frame}[plain,noframenumbering]
+    \begin{tikzpicture}[remember picture,overlay]
+      \fill[white] (current page.south west) rectangle (current page.north east);
+      \shade[left color=white, right color=iqblightgray!30]
+            (current page.south west) rectangle (current page.north east);
+    \end{tikzpicture}
+
+    \begin{tikzpicture}[remember picture,overlay]
+      \draw[line width=8pt, color=iqbblue]
+           (current page.north west) -- (current page.south west);
+    \end{tikzpicture}
+
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=south east, inner sep=0pt, opacity=0.12]
+           at ($(current page.south east) + (-1cm, 1cm)$) {
+        \includegraphics[height=5cm,keepaspectratio]{../../theme/images/protein.png}
+      };
+    \end{tikzpicture}
+
+    \begin{tikzpicture}[remember picture,overlay]
+      \node[anchor=center] at ($(current page.center) + (0, 0.5cm)$) {
+        \begin{minipage}{0.8\paperwidth}
+          \centering
+          {\Huge\color{iqbblue}\textbf{#2}}\\[0.3cm]
+          {\Large\color{iqbgray}#1}
+        \end{minipage}
+      };
+    \end{tikzpicture}
+  \end{frame}
+}
+\makeatother
 
 \usepackage{amsmath}
 \usepackage[version=4]{mhchem}
@@ -32,6 +66,23 @@
 \papertitlechn{QSAR与机器学习预测器}
 \papertitlechnsub{Chapter 6 教学幻灯片}
 \paperengtitle{Chapter 6: QSAR and Machine Learning Predictors}
+
+% Textbook information (教材信息)
+\iqbtextbook{Computer-Aided Machine Learning-Driven Drug Design}{V. G. Maltarollo}{Springer 2024}{Springer Nature}
+
+% ============================================================
+% Source Information (教材信息)
+% ============================================================
+% Book Title: Computer-Aided and Machine Learning-Driven Drug Design
+% Series: Computer-Aided Drug Discovery and Design, Vol. 3
+% Publisher: Springer Nature Switzerland AG
+% Publication Year: 2024
+% Editors: Vinicius G. Maltarollo (Editor)
+% Chapter DOI: https://doi.org/10.1007/978-3-031-76718-0_6
+% Chapter Pages: 131-156
+% Chapter Authors: Philipe Oliveira Fernandes, Vinicius Gonçalves Maltarollo
+% Affiliation: Universidade Federal de Minas Gerais, Brazil
+% License: © The Author(s), under exclusive license to Springer Nature 2024
 
 \begin{document}
 
@@ -73,16 +124,16 @@
       \item Validation, interpretation, applications, outlook
     \end{iqbitemize}
   }{
-    \iqbsectiontitle{Lecture pacing (25 pages)}
+    \iqbsectiontitle{Lecture pacing (42 content frames)}
     \begin{iqbitemize}
-      \item Part 1: Fundamentals \& history (1--4)
-      \item Part 2: Concepts \& representations (5--10)
-      \item Part 3: OECD principles (11--13)
-      \item Part 4: Software \& tools (14--15)
-      \item Part 5: Validation \& controls (16--19)
-      \item Part 6: Interpretation (20--21)
-      \item Part 7: Practice \& cases (22--23)
-      \item Part 8: Challenges \& summary (24--25)
+      \item Part 1: Fundamentals \& history (frames 1--8)
+      \item Part 2: Concepts \& representations (frames 9--16)
+      \item Part 3: OECD principles (frames 17--18)
+      \item Part 4: Software \& tools (frames 19--22)
+      \item Part 5: Validation \& controls (frames 23--30)
+      \item Part 6: Interpretation (frames 31--35)
+      \item Part 7: Practice \& cases (frames 36--40)
+      \item Part 8: Challenges \& summary (frames 41--42)
     \end{iqbitemize}
   }
 \end{frame}
@@ -216,46 +267,181 @@
 \end{frame}
 
 % ------------------------------------------------------------
-% Frame A3: Regression Metrics (Linear QSAR)
+% Frame A3: Regression Metrics (Simplified)
 % ------------------------------------------------------------
-\begin{frame}{Regression Metrics: Goodness-of-Fit \& Predictivity}
-  \iqblayoutthree{
+\begin{frame}{Regression Metrics: Fit and Predictivity}
+  \iqbfontsizemode{small}
+  \iqblayoutcustom[0.48]{
     \iqbsectiontitle{Fitting Metrics}
-    \iqbsep
+    \scriptsize
     \textbf{R$^2$ (R-squared):}
     \[
     R^2 = 1 - \frac{\sum(y_i - \hat{y}_i)^2}{\sum(y_i - \bar{y})^2}
     \]
-    Fit to training data; risk of overfitting.
+    Measures how well the model fits the training set.
+
+    \iqbtinysep
 
     \textbf{Q$^2$ (Cross-validated):}
     \[
     Q^2 = 1 - \frac{\sum(y_i - \hat{y}_i)^2_{CV}}{\sum(y_i - \bar{y})^2}
     \]
-    Leave-One-Out (LOO) or 5-fold CV.
+    Estimates predictive stability under LOO or $k$-fold validation.
+
+    \iqbtinysep
+
+    \iqbgreenbox{Teaching Point}{
+      R$^2$ = ``fit''; Q$^2$ = ``can it still work after resampling?''
+    }
   }{
-    \iqbsectiontitle{Predictivity Metrics}
+    \iqbsectiontitle{Golbraikh--Tropsha Criteria}
+    \scriptsize
+    \begin{iqbitemize}
+      \item $Q^2 > 0.5$: validation still works
+      \item $R^2 - Q^2 < 0.3$: fit and validation stay close
+      \item $R_m^2 > 0.5$: slope quality is acceptable
+      \item $|r_0^2 - r'^2_0| < 0.3$: intercept bias is limited
+    \end{iqbitemize}
+
+    \iqbtinysep
+
+    \iqbgreenbox{Key Point}{
+      A useful QSAR model should fit well, survive validation, and avoid obvious bias
+    }
+  }
+\end{frame}
+
+% ------------------------------------------------------------
+% Frame A3b: Golbraikh-Tropsha Detailed Explanation
+% ------------------------------------------------------------
+\begin{frame}{Why Golbraikh--Tropsha Checks Matter}
+  \iqbfontsizemode{small}
+  \iqblayoutcustom[0.46]{
+    \iqbsectiontitle{Why These Criteria Matter}
+    \small
+    \begin{iqbitemize}
+      \item \textbf{High R$^2$ alone is not enough}: small datasets can look excellent by chance
+      \item \textbf{Descriptor-rich models are risky}: too many variables can memorize noise
+      \item \textbf{Community practice}: these criteria became standard to screen weak QSAR claims
+    \end{iqbitemize}
+
     \iqbsep
-    \textbf{Golbraikh--Tropsha Criteria:}
-    \begin{enumerate}
-      \item $Q^2 > 0.5$
-      \item $R^2 - Q^2 < 0.3$
-      \item $R_m^2 = r^2(1-\sqrt{|r^2-r_0^2|})$
-      \item $|r_0^2 - r'^2_0| < 0.3$
-    \end{enumerate}
-    Ensures not just lucky fit.
+
+    \iqbgreenbox{Key Insight}{
+      A convincing QSAR model must pass all checks together, because each one guards a different failure mode
+    }
   }{
-    \iqbsectiontitle{External Validation}
+    \iqbsectiontitle{Q² and R² Gap Explained}
+    \small
+    \textbf{Q² $>$ 0.5} \\
+    Cross-validation keeps removing part of the data. If the score stays acceptable, the model generalizes better.
+
     \iqbsep
-    \textbf{Test Set Q$^2_F$:}
+
+    \textbf{R² - Q² $<$ 0.3} \\
+    Training performance and validation performance should stay close. A large gap means overfitting.
+
+    \iqbsep
+
+    \iqborangebox{Red Flag}{
+      Example: R$^2$ = 0.95 but Q$^2$ = 0.40 means the model fits the training set yet fails when challenged
+    }
+  }
+\end{frame}
+
+% ------------------------------------------------------------
+% Frame A3c: R²m and Intercept Tests
+% ------------------------------------------------------------
+\begin{frame}{Advanced Metrics: R$^2_m$ and Intercept Tests}
+  \iqbfontsizemode{small}
+  \iqblayoutcustom[0.48]{
+    \iqbsectiontitle{R²m: Slope-Corrected Fit}
+    \small
+    \textbf{The formula:}
+    \[
+    R^2_m = R^2 \left(1 - \sqrt{|R^2 - R^2_0|}\right)
+    \]
+
+    \iqbsep
+
+    \textbf{Physical meaning:}
+    \begin{iqbitemize}
+      \item Penalizes models deviating from $y = x$ line
+      \item Higher $R^2_m$ $>$ 0.5 indicates good predictive power
+      \item Accounts for regression slope quality
+    \end{iqbitemize}
+
+    \iqbsep
+
+    \iqbgreenbox{Intuition}{
+      Best case: predictions lie near the $y=x$ line, so both fit quality and slope quality are acceptable
+    }
+  }{
+    \iqbsectiontitle{Intercept Test: $|R^2_0 - {R'}^2_0|$}
+    \small
+    \textbf{Two regression approaches:}
+    \begin{iqbitemize}
+      \item \textbf{$R^2_0$}: Forced through origin (0,0)
+      \item \textbf{${R'}^2_0$}: Free intercept (unforced)
+    \end{iqbitemize}
+
+    \iqbsep
+
+    \textbf{Why difference matters:}
+    \begin{iqbitemize}
+      \item Small difference ($<$ 0.3) means proper intercept handling
+      \item Large difference suggests biased predictions
+      \item Ensures model doesn't systematically over/under-predict
+    \end{iqbitemize}
+  }
+\end{frame}
+
+% ------------------------------------------------------------
+% Frame A3d: External Validation Metrics
+% ------------------------------------------------------------
+\begin{frame}{External Validation: Predictive Power}
+  \iqbfontsizemode{small}
+  \iqblayoutcustom[0.48]{
+    \iqbsectiontitle{Test Set Performance}
+    \small
+    \textbf{Q$^2_F$ (External predictivity):}
     \[
     Q^2_F = 1 - \frac{\sum(y_i - \hat{y}_i)^2_{test}}{\sum(y_i - \bar{y}_{train})^2}
     \]
-    On completely held-out data.
+
+    \begin{iqbitemize}
+      \item Evaluated on completely held-out data
+      \item Uses training set mean ($\bar{y}_{train}$) for normalization
+      \item Target: Q$^2_F$ $>$ 0.6 for acceptable models
+    \end{iqbitemize}
 
     \iqbsep
 
-    \textbf{CCC (Concordance):} Bland--Altman plot; agreement ratio $\geq 0.85$.
+    \textbf{RMSE vs. MAE:}
+    \begin{iqbitemize}
+      \item \textbf{RMSE}: Penalizes large errors more heavily
+      \item \textbf{MAE}: More robust to outliers
+      \item Report both for comprehensive error assessment
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{Concordance \& Agreement}
+    \small
+    \textbf{CCC (Concordance Correlation Coefficient):}
+    \begin{iqbitemize}
+      \item Measures precision and accuracy together
+      \item Values range from -1 to 1
+      \item Target: CCC $\geq$ 0.85 for good models
+    \end{iqbitemize}
+
+    \iqbsep
+
+    \textbf{Bland--Altman plot:}
+    \begin{iqbitemize}
+      \item Visualizes agreement between methods
+      \item X-axis: mean of two measurements
+      \item Y-axis: difference between measurements
+      \item 95\% limits of agreement should be tight
+    \end{iqbitemize}
   }
 \end{frame}
 
@@ -410,29 +596,29 @@
 % 6. Descriptor taxonomy
 % ------------------------------------------------------------
 \begin{frame}{Molecular Descriptors: 1D to 6D}
-  \footnotesize
-  \begin{tabular}{p{0.08\textwidth}p{0.28\textwidth}p{0.52\textwidth}}
+  \iqbfontsizemode{small}
+  {\small
+  \begin{tabular}{p{0.05\textwidth}p{0.23\textwidth}p{0.58\textwidth}}
     \toprule
-    Dim & Definition & Representative features and notes\\
+    \textbf{Dim} & \textbf{Definition} & \textbf{Representative features and notes}\\
     \midrule
     1D & Scalar counts & Atom counts, bonds, rings, heteroatoms. Fast, coarse.\\
     2D & Topological & Connectivity indices, Kier--Hall, fragment counts, logP. Captures adjacency.\\
-    3D & Shape/conformation & Steric/electrostatic fields, CoMFA grids, distances. Needs aligned 3D structures.\\
-    4D & Multiple conformations & Ensemble averaged descriptors; solvent/excitation snapshots.\\
-    5D & Environmental sampling & Explicit receptor/protein interactions or multiple alignment hypotheses.\\
-    6D & Dynamic conditions & Time-dependent properties, induced fit, environmental perturbations.\\
+    3D & Shape/conform. & Steric/electrostatic fields, CoMFA grids, distances. Needs aligned structures.\\
+    4D & Multi-conform. & Ensemble averaged; solvent/excitation snapshots.\\
+    5D & Environ. sampl. & Explicit receptor/protein or multiple alignment hypotheses.\\
+    6D & Dynamic cond. & Time-dependent properties, induced fit, environmental perturbations.\\
     \bottomrule
   \end{tabular}
-
-  \iqbsep
+  }
+  \iqbsmallsep
   \begin{iqbitemize}
     \item Higher dimensions capture richer physics but demand more sampling and validation.
     \item Use Fig. 6.2 narratives to highlight when 3D+ is justified (e.g., binding pocket specificity).
   \end{iqbitemize}
-\end{frame}
-
-% Frame G1: Descriptor Types (Constitutional, Topological, etc.)
+\end{frame}Frame G1: Descriptor Types (Constitutional, Topological, etc.)
 \begin{frame}{Five Descriptor Types: What Each Captures}
+  \iqbfontsizemode{small}
   \iqblayoutthree{
     \iqbsectiontitle{Constitutional}
     Molecular formula, atom counts, heteroatom types.
@@ -559,7 +745,7 @@
     \iqbsectiontitle{HQSAR}
     Fragment-based; no 3D alignment. Diverse scaffolds.
   }{
-    \iqbimgcenter[width=0.9\textwidth]{images/qsar-ml-chap6/6.3.png}
+    \iqbimgcenter[width=0.9\linewidth]{figures/6.3.png}
   }
 \end{frame}
 
@@ -568,18 +754,18 @@
 % ------------------------------------------------------------
 \begin{frame}{CoMFA vs. CoMSIA vs. HQSAR: In-Depth Comparison}
   \frametitle[CoMFA vs. CoMSIA vs. HQSAR]{CoMFA vs. CoMSIA vs. HQSAR: In-Depth Comparison}
-\small
+\iqbfontsizemode{small}
   \begin{tabular}{|l|ccc|}
     \hline
     \textbf{Criterion} & \textbf{CoMFA} & \textbf{CoMSIA} & \textbf{HQSAR} \\
     \hline
-    \textbf{Alignment dependency} & High & Medium & None \\
+    \textbf{Alignment dep.} & High & Medium & None \\
     \textbf{Grid-based?} & Yes & Yes & No (hologram) \\
     \textbf{Descriptors} & Steric, E-static & 5 GRID fields & Fragment hashes \\
     \textbf{Congeneric series} & Excellent & Very good & Good \\
     \textbf{Diverse scaffolds} & Weak & Medium & Excellent \\
     \textbf{Interpretability} & Contour maps & Field maps & Atom binning \\
-    \textbf{Robustness to noise} & Lower & Higher & Higher \\
+    \textbf{Robustness} & Lower & Higher & Higher \\
     \textbf{3D structure need} & Full 3D & Full 3D & Only scaffold \\
     \hline
   \end{tabular}
@@ -922,7 +1108,7 @@
 
     \iqbgreenbox{Teaching}{Use residual plots (predicted - experimental) to spot heteroscedasticity}
   }{
-    \iqbimgcenter[width=0.9\textwidth]{images/qsar-ml-chap6/6.6.png}
+    \iqbimgcenter[width=0.9\linewidth]{figures/6.6.png}
   }
 \end{frame}
 
@@ -1162,7 +1348,7 @@
 
     \textbf{Insight:} Mechanistic clues from descriptors
   }{
-    \iqbimgcenter[width=0.9\textwidth]{images/qsar-ml-chap6/6.9.png}
+    \iqbimgcenter[width=0.9\linewidth]{figures/6.9.png}
     \iqbsep
     \centering
     \small
@@ -1401,4 +1587,3 @@
 \end{frame}
 
 \end{document}
-

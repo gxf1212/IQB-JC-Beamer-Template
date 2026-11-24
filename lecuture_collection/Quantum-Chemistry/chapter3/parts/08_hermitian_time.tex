@@ -1,0 +1,244 @@
+% !TeX root = ../qm_chap3.tex
+
+\begin{frame}{厄米算符的性质（1/2）}
+  
+    \iqbsectiontitle{厄米算符的定义}
+    \begin{iqbitemize}
+    \item 算符$\hat{A}$是\textbf{厄米的}（Hermitian），如果满足：
+    \end{iqbitemize}
+      \[
+        \int \psi^*(x)\hat{A}\phi(x)\mathrm{d}x = \int [\hat{A}\psi(x)]^*\phi(x)\mathrm{d}x
+      \]
+    \begin{iqbitemize}
+    \item 狄拉克符号表示：$\langle\psi|\hat{A}\phi\rangle = \langle\hat{A}\psi|\phi\rangle$
+    \item 实际上就是算符的"转置共轭"等于其本身：$\hat{A}^\dagger = \hat{A}$
+    \end{iqbitemize}
+    \iqbsmallsep
+
+    \iqbsectiontitle{三个重要性质}
+    \begin{iqbitemize}
+    \item \textbf{实数本征值}：厄米算符的本征值必定是实数
+    \[
+      \hat{A}\phi_n = a_n\phi_n \quad \Rightarrow \quad a_n \in \mathbb{R}
+    \]
+    \item \textbf{正交性}：不同本征值的本征函数正交
+    \[
+      a_m \neq a_n \quad \Rightarrow \quad \int \phi_m^*\phi_n\mathrm{d}x = 0
+    \]
+    \item \textbf{完备性}：本征函数构成完备集，可展开任意波函数
+    \end{iqbitemize}
+  
+\end{frame}
+
+\begin{frame}{厄米算符的性质（2/2）}
+  \iqbfontsizemode{small}
+  \iqblayouttwo{
+    \iqbsectiontitle{实例验证：动量算符}
+    \begin{iqbitemize}
+    \item 验证$\hat{p}_x = -i\hbar\dfrac{\mathrm{d}}{\mathrm{d}x}$是厄米的
+    \item 使用分部积分法：
+    \end{iqbitemize}
+      \[
+        \begin{aligned}
+          \int \psi^*(-i\hbar\dfrac{\mathrm{d}\phi}{\mathrm{d}x})\mathrm{d}x
+          &= -i\hbar[\psi^*\phi]_{-\infty}^{\infty} \\
+          &\quad + i\hbar\int(\dfrac{\mathrm{d}\psi}{\mathrm{d}x})^*\phi \mathrm{d}x
+        \end{aligned}
+      \]
+    \begin{iqbitemize}
+    \item 边界项为零（波函数在无穷远处为0）
+    \item 结果：
+    \end{iqbitemize}
+      \[
+        \begin{aligned}
+          &= \int(-i\hbar\dfrac{\mathrm{d}\psi}{\mathrm{d}x})^*\phi \mathrm{d}x \\
+          &= \int(\hat{p}_x\psi)^*\phi \mathrm{d}x
+        \end{aligned}
+      \]
+    \begin{iqbitemize}
+    \item 满足厄米算符定义
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{物理意义}
+    \begin{iqbitemize}
+    \item \textbf{可观测量的数学表示}
+    \begin{iqbitemize}
+      \item 测量值必须是实数
+      \item 厄米算符确保本征值（测量可能结果）为实数
+    \end{iqbitemize}
+    \item \textbf{测量理论的基石}
+    \begin{iqbitemize}
+      \item 任意态可展开为本征态的叠加
+      \item 测量概率由展开系数的模平方给出
+    \end{iqbitemize}
+    \item 所有物理量算符（位置、动量、能量等）都是厄米的
+    \end{iqbitemize}
+    \iqbtinysep
+
+    \iqborangebox{核心}{厄米算符保证测量值为实数，\\是量子力学可观测量的充要条件}
+  }
+\end{frame}
+
+\begin{frame}{算符的时间演化（1/2）}
+  \iqblayouttwo{
+    \iqbsectiontitle{海森堡方程}
+    \begin{iqbitemize}
+    \item 算符随时间的演化遵循海森堡方程：
+    \end{iqbitemize}
+      \[
+        \boxed{\dfrac{d\hat{A}}{dt} = \dfrac{i}{\hbar}[\hat{H}, \hat{A}] + \dfrac{\partial \hat{A}}{\partial t}}
+      \]
+    \begin{iqbitemize}
+    \item \textbf{海森堡绘景}（Heisenberg picture）：
+    \begin{iqbitemize}
+      \item 算符随时间演化，态保持不变
+      \item 与薛定谔绘景（态演化，算符不变）等价
+    \end{iqbitemize}
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{守恒量条件}
+    \begin{iqbitemize}
+    \item \textbf{守恒量}（constant of motion）：
+    \end{iqbitemize}
+      \[
+      [\hat{H}, \hat{A}] = 0 \quad \Rightarrow \quad \dfrac{d\hat{A}}{dt} = 0
+      \]
+    \begin{iqbitemize}
+    \item 与哈密顿对易的算符对应守恒物理量
+    \item \textbf{实例}：
+    \begin{iqbitemize}
+      \item 自由粒子：$[\hat{H}, \hat{p}_x] = 0$，动量守恒
+      \item 中心力场：$[\hat{H}, \hat{L}^2] = 0$，角动量守恒
+      \item 时间平移对称：$[\hat{H}, \hat{H}] = 0$，能量守恒
+    \end{iqbitemize}
+    \end{iqbitemize}
+  }
+\end{frame}
+
+\begin{frame}{算符的时间演化（2/2）}
+  \iqbfontsizemode{small}
+  \iqblayouttwo{
+    \iqbsectiontitle{实例：谐振子坐标演化}
+    \begin{iqbitemize}
+    \item 计算一维谐振子的$\dfrac{d\hat{x}}{dt}$：
+    \end{iqbitemize}
+      \[
+        \begin{aligned}
+          \dfrac{d\hat{x}}{dt} &= \dfrac{i}{\hbar}[\hat{H}, \hat{x}] \\
+          &= \dfrac{i}{\hbar}\left[-\dfrac{\hbar^2}{2m}\dfrac{\mathrm{d}^2}{\mathrm{d}x^2} + \dfrac{1}{2}kx^2, \hat{x}\right] \\
+          &= \dfrac{\hat{p}_x}{m}
+        \end{aligned}
+      \]
+    \begin{iqbitemize}
+    \item 与经典力学$\dot{x} = p/m$\textbf{完全一致}
+    \item 量子算符的演化规律对应经典运动方程
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{物理意义与应用}
+    \begin{iqbitemize}
+    \item \textbf{埃伦费斯特定理}（Ehrenfest theorem）：
+    \begin{iqbitemize}
+      \item 量子期望值遵循经典运动方程
+      \item $\dfrac{d\langle x\rangle}{dt} = \dfrac{\langle p_x\rangle}{m}$
+    \end{iqbitemize}
+    \item \textbf{对称性与守恒量}：
+    \begin{iqbitemize}
+      \item 诺特定理在量子力学中的体现
+      \item 时间平移对称$\rightarrow$能量守恒
+      \item 空间平移对称$\rightarrow$动量守恒
+      \item 旋转对称$\rightarrow$角动量守恒
+    \end{iqbitemize}
+    \item \textbf{实际应用}：
+    \begin{iqbitemize}
+      \item 判断系统守恒量
+      \item 简化量子力学问题的求解
+      \item 选择量子数标记本征态
+    \end{iqbitemize}
+    \end{iqbitemize}
+    \iqbtinysep
+
+    \iqbgreenbox{核心}{对易关系连接了算符代数与物理守恒定律，体现了对称性的深刻意义}
+  }
+\end{frame}
+
+\begin{frame}{升降算符（阶梯算符）（1/2）}
+  
+  
+    \iqbsectiontitle{升降算符的定义}
+    \begin{iqbitemize}
+    \item 谐振子问题的\textbf{代数解法}（algebraic method）
+    \item \textbf{升算符}（creation operator）和\textbf{降算符}（annihilation operator）：
+    \end{iqbitemize}
+      \[
+        \hat{a}_+ = \dfrac{1}{\sqrt{2\hbar m\omega}}(-i\hat{p}_x + m\omega\hat{x}), \quad
+        \hat{a}_- = \dfrac{1}{\sqrt{2\hbar m\omega}}(i\hat{p}_x + m\omega\hat{x})
+      \]
+    \begin{iqbitemize}
+    \item \textbf{对易关系}：$[\hat{a}_-, \hat{a}_+] = 1$
+    \end{iqbitemize}
+    \iqbsmallsep
+
+    \iqbsectiontitle{升降作用}
+    \begin{iqbitemize}
+    \item 升算符增加一个能量量子：
+    \end{iqbitemize}
+      \[
+        \hat{a}_+\psi_n = \sqrt{n+1}\psi_{n+1}
+      \]
+    \begin{iqbitemize}
+    \item 降算符减少一个能量量子：
+    \end{iqbitemize}
+      \[
+        \hat{a}_-\psi_n = \sqrt{n}\psi_{n-1}
+      \]
+    \begin{iqbitemize}
+    \item 每次操作改变量子数$n$，就像爬楼梯
+    \end{iqbitemize}
+  
+\end{frame}
+
+\begin{frame}{升降算符（阶梯算符）（2/2）}
+  \iqbfontsizemode{small}
+  \iqblayouttwo{
+    \iqbsectiontitle{哈密顿算符与数算符}
+    \begin{iqbitemize}
+    \item \textbf{哈密顿算符的升降算符表示}：
+    \end{iqbitemize}
+      \[
+        \hat{H} = \hbar\omega\left(\hat{a}_+\hat{a}_- + \dfrac{1}{2}\right)
+      \]
+    \begin{iqbitemize}
+    \item \textbf{数算符}（number operator）：
+    \end{iqbitemize}
+      \[
+        \hat{N} = \hat{a}_+\hat{a}_- \quad \Rightarrow \quad \hat{N}\psi_n = n\psi_n
+      \]
+    \begin{iqbitemize}
+    \item $n$是声子数（phonon number）或量子数
+    \item 能量：$E_n = \hbar\omega(n + \dfrac{1}{2})$
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{物理意义与应用}
+    \begin{iqbitemize}
+    \item \textbf{能级结构}：
+    \begin{iqbitemize}
+      \item 从基态$\psi_0$出发，反复作用$\hat{a}_+$可得所有激发态
+      \item 降算符最终会达到基态，再作用会得到零（$\hat{a}_-\psi_0 = 0$）
+    \end{iqbitemize}
+    \item \textbf{代数优势}：
+    \begin{iqbitemize}
+      \item 避免求解复杂的微分方程
+      \item 直接用代数方法求能级和波函数关系
+    \end{iqbitemize}
+    \item \textbf{广泛应用}：
+    \begin{iqbitemize}
+      \item 量子场论中产生和湮灭粒子
+      \item 固体物理中的声子、光子
+      \item 量子光学与量子信息
+    \end{iqbitemize}
+    \end{iqbitemize}
+    \iqbtinysep
+
+    \iqbgreenbox{核心思想}{升降算符将能量量子化问题转化为代数计数问题，深刻揭示了量子场的粒子本质}
+  }
+\end{frame}

@@ -1,0 +1,347 @@
+% !TeX root = ../qm_chap3.tex
+
+\begin{frame}{宇称算符（1/2）}
+  \iqbfontsizemode{small}
+  \iqblayouttwo{
+    \iqbsectiontitle{宇称算符的定义与性质}
+    \begin{iqbitemize}
+    \item \textbf{宇称算符}（parity operator）执行空间反演：
+    \end{iqbitemize}
+      \[
+        \hat{P}\psi(x) = \psi(-x)
+      \]
+    \begin{iqbitemize}
+    \item 将波函数关于原点反射
+    \item \textbf{重要性质}：
+    \end{iqbitemize}
+      \[
+        \begin{aligned}
+          \hat{P}^2\psi(x) &= \hat{P}[\hat{P}\psi(x)] \\
+          &= \hat{P}\psi(-x) = \psi(x)
+        \end{aligned}
+      \]
+    \begin{iqbitemize}
+    \item 因此：$\hat{P}^2 = \hat{1}$（恒等算符）
+    \item 宇称算符是\textbf{自逆的}：$\hat{P}^{-1} = \hat{P}$
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{本征值与本征函数}
+    \begin{iqbitemize}
+    \item 由$\hat{P}^2 = \hat{1}$，本征值满足$\lambda^2 = 1$，故$\lambda = \pm 1$
+    \item \textbf{偶宇称}（even parity）：$\hat{P}\psi = +\psi$
+    \[
+      \psi(-x) = \psi(x) \quad \text{（关于原点对称）}
+    \]
+    \item \textbf{奇宇称}（odd parity）：$\hat{P}\psi = -\psi$
+    \[
+      \psi(-x) = -\psi(x) \quad \text{（关于原点反对称）}
+    \]
+    \item 偶函数和奇函数分别对应宇称算符的本征态
+    \end{iqbitemize}
+  }
+\end{frame}
+
+\begin{frame}{宇称算符（2/2）}
+  \iqbfontsizemode{small}
+  \iqblayouttwo{
+    \iqbsectiontitle{物理实例}
+    \begin{iqbitemize}
+    \item \textbf{一维箱中粒子}（对称箱）：
+    \begin{iqbitemize}
+      \item 以箱中心为原点，本征函数有确定宇称
+      \item 基态$n=1$：偶宇称，第一激发态$n=2$：奇宇称
+      \item 宇称随量子数交替：$(-1)^{n+1}$
+    \end{iqbitemize}
+
+    \item \textbf{谐振子}：
+    \begin{iqbitemize}
+      \item 本征函数是厄米多项式，宇称交替
+      \item $\psi_0, \psi_2, \psi_4, \ldots$：偶宇称
+      \item $\psi_1, \psi_3, \psi_5, \ldots$：奇宇称
+    \end{iqbitemize}
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{宇称守恒定律}
+    \begin{iqbitemize}
+    \item 若$[\hat{H}, \hat{P}] = 0$（哈密顿与宇称算符对易）：
+    \begin{iqbitemize}
+      \item 宇称是守恒量
+      \item 系统状态保持其宇称不变
+    \end{iqbitemize}
+    \item \textbf{物理意义}：
+    \begin{iqbitemize}
+      \item 势能满足$V(-x) = V(x)$（对称势场）
+      \item 波函数的宇称在演化过程中不变
+    \end{iqbitemize}
+    \item \textbf{选择定则}：
+    \begin{iqbitemize}
+      \item 跃迁只能发生在不同宇称的态之间
+      \item 电偶极跃迁：$\Delta \text{parity} = \text{change}$
+    \end{iqbitemize}
+    \end{iqbitemize}
+    \iqbsmallsep
+
+    \iqbgreenbox{重要应用}{宇称分析简化量子力学问题的求解，是判断跃迁是否可能的重要工具}
+  }
+\end{frame}
+
+\begin{frame}{动量算符的指数产生有限平移}
+  \iqbfontsizemode{small}
+    \iqbsectiontitle{平移算符的定义}
+    \begin{iqbitemize}
+    \item \textbf{平移算符}（translation operator）作用：
+    \end{iqbitemize}
+      \[
+        \hat{T}(a)\psi(x) = \psi(x+a)
+      \]
+    \begin{iqbitemize}
+    \item 这里将自变量替换为$x+a$。若$a>0$，波形整体向左移$a$。
+    \item \textbf{指数形式}：
+    \end{iqbitemize}
+      \[
+        \hat{T}(a) = e^{a\frac{\mathrm{d}}{\mathrm{d}x}} = e^{ia\hat{p}_x/\hbar}
+      \]
+    \begin{iqbitemize}
+    \item 平移算符由动量算符生成
+    \end{iqbitemize}
+    \iqbsmallsep
+
+    \iqbsectiontitle{验证：泰勒展开}
+    \begin{iqbitemize}
+    \item 展开指数算符：
+    \end{iqbitemize}
+      \[
+        \begin{aligned}
+          e^{a\frac{\mathrm{d}}{\mathrm{d}x}}\psi(x) &= \left(\hat{1} + a\dfrac{\mathrm{d}}{\mathrm{d}x} + \dfrac{a^2}{2!}\dfrac{\mathrm{d}^2}{\mathrm{d}x^2} + \cdots\right)\psi(x) \\
+          &= \psi(x) + a\psi'(x) + \dfrac{a^2}{2!}\psi''(x) + \cdots \\
+          &= \psi(x+a) \quad \text{（泰勒级数）}
+        \end{aligned}
+      \]
+  
+\end{frame}
+
+\begin{frame}{无穷小平移与动量守恒}
+  \iqbfontsizemode{small}
+  \iqblayouttwo{
+    \iqbsectiontitle{无穷小平移生成元}
+    \begin{iqbitemize}
+    \item \textbf{无穷小平移}：
+    \end{iqbitemize}
+      \[
+        \hat{T}(\delta a) = \hat{1} + \delta a\dfrac{\mathrm{d}}{\mathrm{d}x} = \hat{1} + \dfrac{i\delta a}{\hbar}\hat{p}_x
+      \]
+    \begin{iqbitemize}
+    \item 动量算符是平移的生成元（generator）
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{对称性与守恒量}
+    \begin{iqbitemize}
+    \item \textbf{诺特定理}（Noether's theorem）：
+    \begin{iqbitemize}
+      \item 空间平移对称性$\leftrightarrow$动量守恒
+      \item 时间平移对称性$\leftrightarrow$能量守恒
+      \item 旋转对称性$\leftrightarrow$角动量守恒
+    \end{iqbitemize}
+    \item \textbf{对易关系}：
+    \begin{iqbitemize}
+      \item 若$[\hat{H}, \hat{p}_x] = 0$，则动量守恒
+      \item 平移不变势场：$V(x) = V(x+a)$
+    \end{iqbitemize}
+    \end{iqbitemize}
+  }
+\end{frame}
+
+\begin{frame}{从晶格平移到布洛赫波函数}
+  
+    \iqbsectiontitle{物理应用}
+    \begin{iqbitemize}
+    \item \textbf{晶体学}：
+    \begin{iqbitemize}
+      \item 晶格平移对称性导致布洛赫定理
+      \item 电子波函数：$\psi_k(x) = e^{ikx}u_k(x)$
+    \end{iqbitemize}
+    \item \textbf{量子场论}：
+    \begin{iqbitemize}
+      \item 空间平移生成场动量算符
+      \item 时间平移生成哈密顿算符
+    \end{iqbitemize}
+    \end{iqbitemize}
+    \iqbtinysep
+
+    \iqbgreenbox{核心思想}{动量算符生成空间平移，深刻联系了对称性与守恒量}
+  
+
+\end{frame}
+
+\begin{frame}{单个粒子的动能只对自身坐标求导}
+  
+    \iqbsectiontitle{问题设定}
+    \begin{iqbitemize}
+    \item 写出$n$个三维粒子的动能算符
+    \item 每个粒子$i$具有质量$m_i$和坐标$(x_i, y_i, z_i)$
+    \item 总波函数：$\Psi = \Psi(\mathbf{r}_1, \mathbf{r}_2, \ldots, \mathbf{r}_n, t)$
+    \end{iqbitemize}
+    \iqbsmallsep
+
+    \iqbsectiontitle{单粒子动能算符}
+    \begin{iqbitemize}
+    \item 粒子$i$的动能：
+    \end{iqbitemize}
+      \[
+        \hat{T}_i = -\dfrac{\hbar^2}{2m_i}\nabla_i^2
+      \]
+    \begin{iqbitemize}
+    \item 拉普拉斯算符：
+    \end{iqbitemize}
+      \[
+        \nabla_i^2 = \dfrac{\partial^2}{\partial x_i^2} + \dfrac{\partial^2}{\partial y_i^2} + \dfrac{\partial^2}{\partial z_i^2}
+      \]
+    \begin{iqbitemize}
+    \item 只对粒子$i$的坐标求导
+    \end{iqbitemize}
+  
+\end{frame}
+
+\begin{frame}{多粒子总动能等于各粒子动能之和}
+  
+    \iqbsectiontitle{n粒子系统总动能}
+    \begin{iqbitemize}
+    \item 总动能是各粒子动能之和：
+    \end{iqbitemize}
+      \[
+        \hat{T} = \sum_{i=1}^{n}\hat{T}_i = -\sum_{i=1}^{n}\dfrac{\hbar^2}{2m_i}\nabla_i^2
+      \]
+    \begin{iqbitemize}
+    \item 展开形式：
+    \end{iqbitemize}
+      \[
+        \hat{T} = -\sum_{i=1}^{n}\dfrac{\hbar^2}{2m_i}\left(\dfrac{\partial^2}{\partial x_i^2} + \dfrac{\partial^2}{\partial y_i^2} + \dfrac{\partial^2}{\partial z_i^2}\right)
+      \]
+    \begin{iqbitemize}
+    \item \textbf{双原子分子实例}：
+    \end{iqbitemize}
+      \[
+        \hat{T} = -\dfrac{\hbar^2}{2m_1}\nabla_1^2 - \dfrac{\hbar^2}{2m_2}\nabla_2^2
+      \]
+    \begin{iqbitemize}
+    \item 共需处理$3n$个坐标的自由度
+    \end{iqbitemize}
+    \iqbsmallsep
+
+    \end{frame}
+
+\begin{frame}{多粒子波函数与计算复杂度}
+  
+    \iqbsectiontitle{物理意义与挑战}
+    \begin{iqbitemize}
+    \item \textbf{维数灾难}（curse of dimensionality）：
+    \begin{iqbitemize}
+      \item 2个粒子：6维
+      \item 10个粒子：30维
+      \item 100个电子：300维
+    \end{iqbitemize}
+    \item \textbf{量子化学的挑战}：
+    \begin{iqbitemize}
+      \item 多体薛定谔方程无法精确求解
+      \item 需要近似方法：Hartree-Fock、DFT、CI等
+    \end{iqbitemize}
+    \item \textbf{简化策略}：
+    \begin{iqbitemize}
+      \item 分离质心与相对运动
+      \item 引入有效场（平均场理论）
+    \end{iqbitemize}
+    \end{iqbitemize}
+    \iqbtinysep
+
+    \iqbgreenbox{核心}{多体问题精确求解的不可能性推动了量子化学各种近似方法的发展}
+  
+
+\end{frame}
+
+\begin{frame}{质心坐标与相对坐标描述两体运动}
+
+  
+    \iqbsectiontitle{坐标变换技巧}
+    \begin{iqbitemize}
+    \item \textbf{质心坐标}（center-of-mass coordinate）：
+    \end{iqbitemize}
+    \[
+      \mathbf{R} = \dfrac{m_1\mathbf{r}_1 + m_2\mathbf{r}_2}{m_1 + m_2}
+    \]
+    \begin{iqbitemize}
+    \item \textbf{相对坐标}（relative coordinate）：
+    \end{iqbitemize}
+    \[
+      \mathbf{r} = \mathbf{r}_2 - \mathbf{r}_1
+    \]
+    \begin{iqbitemize}
+    \item \textbf{约化质量}（reduced mass）：
+    \end{iqbitemize}
+    \[
+      \mu = \dfrac{m_1m_2}{m_1 + m_2}
+    \]
+
+    \iqbsmallsep
+
+    \end{frame}
+
+\begin{frame}{两体动能分解为质心动能与相对动能}
+
+  
+    \iqbsectiontitle{动能算符的分离}
+    \begin{iqbitemize}
+    \item \textbf{两体系统的动能}：
+    \end{iqbitemize}
+    \[
+      \hat{T} = -\dfrac{\hbar^2}{2(m_1+m_2)}\nabla_R^2 - \dfrac{\hbar^2}{2\mu}\nabla_r^2
+    \]
+    \begin{iqbitemize}
+    \item \textbf{分解结果}：
+    \begin{iqbitemize}
+      \item 质心动能：$\hat{T}_{\text{CM}} = -\dfrac{\hbar^2}{2(m_1+m_2)}\nabla_R^2$
+      \item 相对运动动能：$\hat{T}_{\text{rel}} = -\dfrac{\hbar^2}{2\mu}\nabla_r^2$
+      \item 总动能：$\hat{T} = \hat{T}_{\text{CM}} + \hat{T}_{\text{rel}}$
+    \end{iqbitemize}
+    \end{iqbitemize}
+
+    \iqborangebox{数学核心}{分离变量将两体问题简化为两个独立的一体问题}
+  
+\end{frame}
+
+\begin{frame}{分离质心运动简化原子、分子和散射问题}
+  \iqbfontsizemode{small}
+  \iqblayouttwo{
+    \iqbsectiontitle{物理意义}
+    \begin{iqbitemize}
+    \item \textbf{运动独立性的原理}
+    \begin{iqbitemize}
+      \item 质心运动与内部相对运动完全独立
+      \item 可以分别求解两个独立的薛定谔方程
+      \item 总波函数：$\Psi(\mathbf{R}, \mathbf{r}) = \psi_{\text{CM}}(\mathbf{R})\psi_{\text{rel}}(\mathbf{r})$
+    \end{iqbitemize}
+
+    \item \textbf{维数灾难的解决}
+    \begin{iqbitemize}
+      \item 两体问题：$6$维$\rightarrow$两个$3$维问题
+      \item $N$体问题：$3N$维$\rightarrow$质心$3$维 + 相对运动$3(N-1)$维
+    \end{iqbitemize}
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{重要应用}
+    \begin{iqbitemize}
+    \item \textbf{氢原子问题}
+    \subitem{电子与质子的两体系统}
+    \subitem{约化质量：$\mu \approx m_e$（质子远重于电子）}
+    \subitem{质心运动：自由粒子的平动}
+
+    \item \textbf{双原子分子}
+    \subitem{分解为平动（质心）+ 转动 + 振动}
+    \subitem{约化质量显著小于单个原子质量}
+    \subitem{分子光谱的精细结构}
+
+    \item \textbf{散射问题}
+    \subitem{相对运动描述散射过程}
+    \subitem{质心运动包含整体平动}
+    \end{iqbitemize}
+  }
+\end{frame}

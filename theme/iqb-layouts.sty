@@ -1158,6 +1158,14 @@
 % Usage: \begin{iqbitemize} \item[标签] 内容 \end{iqbitemize}
 %        或: \item 不带标签的项
 %        标签会自动加粗并变为 IQB 蓝色
+\def\iqb@item{\@ifnextchar[{\iqb@item@withopt}{\iqb@item@original}}
+\def\iqb@item@withopt[#1]{%
+  \ifnum\pdf@strcmp{#1}{--}=0
+    \iqb@item@original[\textcolor{iqbblue}{$\circ$}]%
+  \else
+    \iqb@item@original[\textcolor{iqbblue}{\textbf{#1}}]%
+  \fi
+}
 \newenvironment{iqbitemize}[1][0em]{%
   \leavevmode\hspace*{#1}%
   \begin{minipage}[t]{\dimexpr\linewidth - #1\relax}%
@@ -1167,23 +1175,10 @@
   \setlength{\partopsep}{0pt}%
   \setlength{\itemsep}{2pt}%
   \setlength{\parsep}{0pt}%
-  % 重定义 \item 命令以处理可选参数（支持带标签和不带标签）
-  \let\iqbolditem\item%
-  % 使用 \@ifnextchar 检测是否有 [ 参数
-  \def\item{%
-    \@ifnextchar[%
-      {\iqb@item@withopt}%
-      {\iqbolditem}%
-  }%
-  % 处理有可选参数的情况
-  \def\iqb@item@withopt[##1]{%
-    % 检测是否是 -- 标记（子项）
-    \ifnum\pdf@strcmp{##1}{--}=0
-      \iqbolditem[\textcolor{iqbblue}{$\circ$}]%
-    \else
-      \iqbolditem[\textcolor{iqbblue}{\textbf{##1}}]%
-    \fi
-  }%
+  \ifx\item\iqb@item\else
+    \let\iqb@item@original\item
+    \let\item\iqb@item
+  \fi
 }{%
   \end{itemize}%
   \end{minipage}%
@@ -1416,7 +1411,7 @@
 % Usage: \iqbthankyouframe
 % 或指定自定义引用: \iqbthankyouframe[自定义引用文本]
 \newcommand{\iqbthankyouframe}[1][\@papercitation]{%
-  \begin{frame}[plain]
+  \begin{frame}[plain,noframenumbering]
     \vfill
     \centering
 

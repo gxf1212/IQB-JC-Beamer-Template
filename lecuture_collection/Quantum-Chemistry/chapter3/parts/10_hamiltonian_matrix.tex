@@ -1,0 +1,342 @@
+% !TeX root = ../qm_chap3.tex
+
+\begin{frame}{从经典能量表达式构造哈密顿算符}
+
+  
+    \iqbsectiontitle{从经典到量子的对应规则}
+    \begin{iqbitemize}
+    \item \textbf{基本量子化规则}（canonical quantization）：
+    \end{iqbitemize}
+    \begin{enumerate}
+      \item \textbf{坐标算符}：$x, y, z$ $\rightarrow$ 乘法算符 $\hat{x}, \hat{y}, \hat{z}$
+      \item \textbf{动量算符}：$p_x, p_y, p_z$ $\rightarrow$ 微分算符 $-i\hbar\dfrac{\partial}{\partial x}$ 等
+      \item \textbf{哈密顿算符}：$H = T + V$ $\rightarrow$ $\hat{H} = \hat{T} + \hat{V}$
+    \end{enumerate}
+
+    \iqbsmallsep
+
+    \end{frame}
+
+\begin{frame}{自由粒子只有动能项}
+
+  
+    \iqbsectiontitle{实例1：自由粒子}
+    \begin{iqbitemize}
+    \item \textbf{经典哈密顿}：
+    \end{iqbitemize}
+    \[
+      H = \dfrac{p_x^2}{2m}
+    \]
+    \begin{iqbitemize}
+    \item \textbf{量子哈密顿算符}：
+    \end{iqbitemize}
+    \[
+      \hat{H} = -\dfrac{\hbar^2}{2m}\dfrac{\mathrm{d}^2}{\mathrm{d}x^2}
+    \]
+    \begin{iqbitemize}
+    \item 只有动能，势能$V = 0$
+    \end{iqbitemize}
+
+    \iqbsmallsep
+
+    \end{frame}
+
+\begin{frame}{一维谐振子具有二次势能}
+
+  
+    \iqbsectiontitle{实例2：一维谐振子}
+    \begin{iqbitemize}
+    \item \textbf{经典哈密顿}：
+    \end{iqbitemize}
+    \[
+      H = \dfrac{p_x^2}{2m} + \dfrac{1}{2}kx^2
+    \]
+    \begin{iqbitemize}
+    \item \textbf{量子哈密顿算符}：
+    \end{iqbitemize}
+    \[
+      \hat{H} = -\dfrac{\hbar^2}{2m}\dfrac{\mathrm{d}^2}{\mathrm{d}x^2} + \dfrac{1}{2}k\hat{x}^2
+    \]
+    \begin{iqbitemize}
+    \item 动能 + 弹性势能
+    \end{iqbitemize}
+
+    \iqborangebox{核心}{量子化规则：$p \rightarrow -i\hbar\nabla$, $x \rightarrow \hat{x}$}
+  
+\end{frame}
+
+\begin{frame}{氢原子的电子感受库仑吸引势}
+
+  
+    \iqbsectiontitle{实例3：氢原子}
+    \begin{iqbitemize}
+    \item \textbf{经典哈密顿}（电子在核的库仑场中）：
+    \end{iqbitemize}
+    \[
+      H = \dfrac{p^2}{2m} - \dfrac{e^2}{4\pi\varepsilon_0 r}
+    \]
+    \begin{iqbitemize}
+    \item \textbf{第一项}：电子动能，$p^2 = p_x^2 + p_y^2 + p_z^2$
+    \item \textbf{第二项}：库仑势能（负值，束缚态）
+    \end{iqbitemize}
+
+    \iqbsmallsep
+
+    \end{frame}
+
+\begin{frame}{动能与势能决定量子哈密顿算符}
+  \iqblayouttwo{
+  
+    \iqbsectiontitle{量子哈密顿算符}
+    \begin{iqbitemize}
+    \item \textbf{三维形式}：
+    \end{iqbitemize}
+    \[
+      \hat{H} = -\dfrac{\hbar^2}{2m}\nabla^2 - \dfrac{e^2}{4\pi\varepsilon_0 r}
+    \]
+    \begin{iqbitemize}
+    \item $\nabla^2 = \dfrac{\partial^2}{\partial x^2} + \dfrac{\partial^2}{\partial y^2} + \dfrac{\partial^2}{\partial z^2}$
+    \item \textbf{动能算符}：$\hat{T} = -\dfrac{\hbar^2}{2m}\nabla^2$
+    \item \textbf{势能算符}：$\hat{V} = -\dfrac{e^2}{4\pi\varepsilon_0 r}$（中心力场）
+    \end{iqbitemize}
+
+    \iqbsep
+
+    
+  }{
+  
+    \iqbsectiontitle{量子化注意事项}
+    \begin{iqbitemize}
+    \item \textbf{算符顺序问题}：
+    \subitem{若经典量包含$xp_x$，需对称化}
+    \subitem{$xp_x \rightarrow \dfrac{1}{2}(\hat{x}\hat{p}_x + \hat{p}_x\hat{x})$}
+
+    \item \textbf{厄米性要求}：
+    \subitem{可观测量算符必须是厄米算符}
+    \subitem{保证本征值为实数}
+    \end{iqbitemize}
+
+    \iqbgreenbox{物理意义}{哈密顿算符$\hat{H}$对应系统的总能量，其本征值即为能级}
+  
+  }
+\end{frame}
+
+\begin{frame}{位置与动量的乘积依赖算符顺序}
+
+  
+    \iqbsectiontitle{量子化中的算符顺序问题}
+    \begin{iqbitemize}
+    \item \textbf{核心问题}：
+    \subitem{经典力学量$xp_x$直接量子化时出现歧义}
+    \subitem{坐标和动量算符不对易：$\hat{x}\hat{p}_x \neq \hat{p}_x\hat{x}$}
+    \subitem{对易子：$[\hat{x}, \hat{p}_x] = i\hbar$}
+ 
+    \item \textbf{示例}：
+    \subitem{经典量：$A = xp_x$}
+    \subitem{可能的量子算符：$\hat{x}\hat{p}_x$或$\hat{p}_x\hat{x}$或$\dots$}
+    \subitem{哪个是正确的？}
+    \end{iqbitemize}
+
+    \iqbsep
+
+    \end{frame}
+
+\begin{frame}{对称化得到厄米算符}
+  \iqblayouttwo{
+  
+    \iqbsectiontitle{对称化规则（Weyl ordering）}
+    \begin{iqbitemize}
+    \item \textbf{基本规则}：
+    若经典哈密顿$H$包含$qp$这样的项，需要\textbf{对称化}：
+    \end{iqbitemize}
+    \[
+      q p \rightarrow \dfrac{1}{2}(\hat{q}\hat{p} + \hat{p}\hat{q})
+    \]
+    \begin{iqbitemize}
+    \item \textbf{实例}：
+    \subitem{经典角动量：$L_z = xp_y - yp_x$}
+    \subitem{量子算符：$\hat{L}_z = \dfrac{1}{2}(\hat{x}\hat{p}_y - \hat{y}\hat{p}_x + \hat{p}_y\hat{x} - \hat{p}_x\hat{y})$}
+    \subitem{简化为：$\hat{L}_z = \hat{x}\hat{p}_y - \hat{y}\hat{p}_x = -i\hbar(x\dfrac{\partial}{\partial y} - y\dfrac{\partial}{\partial x})$}
+    \end{iqbitemize}
+
+    \iqbgreenbox{对称化原则}{对易的算符在量子化时必须对称排列，保证厄米性}
+  
+  }{
+  
+    \iqbsectiontitle{厄米性的重要性}
+    \begin{iqbitemize}
+    \item \textbf{厄米算符定义}：
+    \subitem{满足$\hat{A}^\dagger = \hat{A}$}
+    \subitem{等价条件：$\int\psi^*\hat{A}\phi\,dx = \int(\hat{A}\psi)^*\phi\,dx$}
+    \end{iqbitemize}
+
+    
+  }
+\end{frame}
+
+\begin{frame}{厄米性保证测量值为实数，可用共轭转置检验}
+  \iqbfontsizemode{small}
+  \iqblayouttwo{
+    \iqbsectiontitle{为什么必须厄米化？}
+    \begin{iqbitemize}
+    \item \textbf{本征值为实数}
+    \subitem{可观测量（能量、动量、位置等）必须是实数}
+    \subitem{厄米算符的本征值恒为实数}
+    \subitem{非厄米算符可能给出复数本征值（无物理意义）}
+
+    \item \textbf{本征函数正交归一}
+    \subitem{不同本征值的本征函数正交}
+    \subitem{构成完备的基底}
+
+    \item \textbf{期望值为实数}
+    \subitem{任何态的期望值$\langle\psi|\hat{A}|\psi\rangle$为实数}
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{验证算符的厄米性}
+    \begin{iqbitemize}
+    \item \textbf{检查对易子}：
+    \subitem{若$\hat{A}$和$\hat{B}$厄米，则$\dfrac{1}{2}(\hat{A}\hat{B} + \hat{B}\hat{A})$厄米}
+    \subitem{若$\hat{A}$厄米，则$\hat{A}^2$、$\hat{A}^n$厄米}
+
+    \item \textbf{常见厄米算符}：
+    \subitem{坐标$\hat{x}$、动量$\hat{p}_x$、动能$\hat{T}$、势能$\hat{V}$}
+    \subitem{角动量$\hat{L}_x, \hat{L}_y, \hat{L}_z, \hat{L}^2$}
+    \subitem{哈密顿$\hat{H}$（绝大多数情况）}
+    \end{iqbitemize}
+
+    \iqborangebox{关键}{厄米算符的本征值必须是实数，对应物理可观测量}
+  }
+\end{frame}
+
+\begin{frame}{用一组基底定义算符矩阵元}
+
+  
+    \iqbsectiontitle{算符的矩阵表示}
+    \begin{iqbitemize}
+    \item \textbf{矩阵元定义}：
+    在基底$\{\phi_n\}$中，算符$\hat{A}$的矩阵元为：
+    \end{iqbitemize}
+    \[
+      A_{mn} = \langle\phi_m|\hat{A}|\phi_n\rangle = \int\phi_m^*(x)\hat{A}\phi_n(x)\mathrm{d}x
+    \]
+    \begin{iqbitemize}
+    \item \textbf{算符作用}：
+    \subitem{算符作用等于矩阵-向量乘法}
+    \end{iqbitemize}
+    \[
+      \hat{A}\phi_n = \sum_m A_{mn}\phi_m
+    \]
+    \begin{iqbitemize}
+    \item \textbf{特征值问题}：
+    \subitem{本征方程转化为矩阵本征值问题}
+    \end{iqbitemize}
+    \[
+      \hat{A}\psi = a\psi \quad \Rightarrow \quad \sum_n A_{mn}c_n = a c_m
+    \]
+
+    \iqbsep
+
+    \end{frame}
+
+\begin{frame}{谐振子坐标算符只在相邻能级间有非零矩阵元}
+  \iqbfontsizemode{small}
+  \iqblayouttwo{
+    \iqbsectiontitle{实例：谐振子坐标算符}
+    \begin{iqbitemize}
+    \item \textbf{问题}：计算$\langle m|\hat{x}|n\rangle$
+    \item \textbf{结果}：
+    \end{iqbitemize}
+    \[
+      \langle m|\hat{x}|n\rangle = \sqrt{\dfrac{\hbar}{2m\omega}}(\sqrt{n}\delta_{m,n-1} + \sqrt{n+1}\delta_{m,n+1})
+    \]
+    \begin{iqbitemize}
+    \item \textbf{物理意义}：
+    \subitem{仅相邻能级有非零矩阵元}
+    \subitem{反映了$\hat{x}$与升降算符的关系}
+    \subitem{$\hat{x} \propto (\hat{a}_+ + \hat{a}_-)$}
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{实例：谐振子坐标算符}
+    \begin{iqbitemize}
+    \item \textbf{矩阵形式}（以$\psi_n$为基）：
+    \end{iqbitemize}
+    \[
+      \hat{x} = \sqrt{\dfrac{\hbar}{2m\omega}}
+      \begin{pmatrix}
+      0 & \sqrt{1} & 0 & 0 & \cdots \\
+      \sqrt{1} & 0 & \sqrt{2} & 0 & \cdots \\
+      0 & \sqrt{2} & 0 & \sqrt{3} & \cdots \\
+      0 & 0 & \sqrt{3} & 0 & \cdots \\
+      \vdots & \vdots & \vdots & \vdots & \ddots
+      \end{pmatrix}
+    \]
+
+    \iqbgreenbox{矩阵表示}{算符用矩阵表示，态用列向量表示，运算遵循矩阵代数}
+  }
+\end{frame}
+
+\begin{frame}{海森堡用矩阵描述量子力学}
+
+  
+    \iqbsectiontitle{海森堡矩阵力学}
+    \begin{iqbitemize}
+    \item \textbf{历史背景}
+    \subitem{海森堡1925年创立矩阵力学}
+    \subitem{薛定谔1926年创立波动力学}
+    \subitem{狄拉克证明两者完全等价}
+
+    \item \textbf{矩阵力学特点}
+    \subitem{算符$\hat{A}$表示为方阵$[A_{mn}]$}
+    \subitem{量子态$|\psi\rangle$表示为列向量$[c_n]$}
+    \subitem{本征方程：$[A][c] = a[c]$}
+    \subitem{对易关系：$[\hat{A}, \hat{B}] = \hat{A}\hat{B} - \hat{B}\hat{A}$}
+    \end{iqbitemize}
+
+    \iqbsep
+
+    \end{frame}
+
+\begin{frame}{波动力学与矩阵力学给出相同的可观测结果}
+
+  
+    \iqbsectiontitle{波动力学与矩阵力学的对应}
+    \begin{iqbitemize}
+    \item \textbf{态的表示}
+    \subitem{波动力学：波函数$\psi(x)$}
+    \subitem{矩阵力学：列向量$[c_n]$，其中$c_n = \langle\phi_n|\psi\rangle$}
+
+    \item \textbf{算符的表示}
+    \subitem{波动力学：微分算符如$-i\hbar\dfrac{d}{dx}$}
+    \subitem{矩阵力学：矩阵$[A_{mn}] = \langle\phi_m|\hat{A}|\phi_n\rangle$}
+
+    \item \textbf{运算规则}
+    \subitem{波动力学：积分和微分}
+    \subitem{矩阵力学：矩阵乘法和求和}
+    \end{iqbitemize}
+
+    \iqbsep
+
+    \end{frame}
+
+\begin{frame}{矩阵表示将本征值问题转化为对角化}
+
+  
+    \iqbsectiontitle{实际应用}
+    \begin{iqbitemize}
+    \item \textbf{近似计算}
+    \subitem{微扰理论：用矩阵表示简化计算}
+    \subitem{变分法：在有限基底中对角化}
+
+    \item \textbf{数值求解}
+    \subitem{计算机计算：截断为有限维矩阵}
+    \subitem{复杂系统：矩阵对角化求解能级}
+
+    \item \textbf{物理图像}
+    \subitem{矩阵元反映跃迁概率}
+    \subitem{选择定则：零矩阵元对应禁戒跃迁}
+    \end{iqbitemize}
+
+    \iqborangebox{等价性}{矩阵力学与波动力学是同一量子理论的两种数学表示，选择取决于问题性质}
+  
+
+\end{frame}

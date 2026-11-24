@@ -754,9 +754,11 @@
   \iqblayouttwo{
     \iqbsectiontitle{衍射图样定量分析}
     \begin{iqbitemize}
-  \item 第一暗纹位置满足条件：$\sin\theta_1 = \lambda/w$ 其中$\theta_1$是从中心到第一暗纹的角度
+  \item 第一暗纹位置：$\sin\theta_1 = \lambda/w$
+  \subitem{$\theta_1$：从中心到第一暗纹的角度}
       \item 大部分电子落在中央亮纹（$-\theta_1$到$+\theta_1$范围内）
-  \item 小角度近似：当$\theta_1$很小时，$\sin\theta_1 \approx \theta_1 \approx \lambda/w$ 狭缝越窄，衍射越明显，中央亮纹越宽
+  \item 小角度近似：$\sin\theta_1 \approx \theta_1 \approx \lambda/w$
+  \subitem{$\theta_1$很小时，狭缝越窄则衍射越明显}
     \end{iqbitemize}
     \iqbtinysep
 
@@ -1131,43 +1133,42 @@
     \begin{iqbitemize}
     \item Erwin Schrödinger（1926）提出：
     \end{iqbitemize}
+      \scriptsize
       \[
         \boxed{-\dfrac{\hbar}{i}\dfrac{\partial\Psi}{\partial t} = -\dfrac{\hbar^2}{2m}\dfrac{\partial^2\Psi}{\partial x^2} + V\Psi}
       \]
+      \footnotesize
     \begin{iqbitemize}
       \item 这是量子力学的\textbf{基本假设}（公设）
       \item 不能从更基本的原理推导（相关理论）
       \item 地位类似于牛顿第二定律在经典力学中的地位
 
     \end{iqbitemize}
-    \iqbsmallsep
+    \iqbtinysep
 
     \iqbsectiontitle{方程的各项}
     \begin{iqbitemize}
     \item $\Psi = \Psi(x,t)$：波函数
       \item $\hbar = h/(2\pi)$：约化Planck常数
-      \item $i = \sqrt{-1}$：虚数单位
-      \item $m$：粒子质量
-      \item $V = V(x,t)$：势能函数
-      \item $\partial/\partial t$：对时间的偏导数
-      \item $\partial^2/\partial x^2$：对位置的二阶偏导数
+      \item $m$：粒子质量，$V = V(x,t)$：势能函数
+      \item $i = \sqrt{-1}$：虚数单位，$\partial/\partial t$：时间偏导
+      \item $\partial^2/\partial x^2$：位置二阶偏导
     \end{iqbitemize}
   }{
     \iqbsectiontitle{方程的结构}
     \begin{iqbitemize}
-    \item 左边项：$i\hbar\dfrac{\partial\Psi}{\partial t}$
-      \subitem{描述波函数随时间的变化率}
+    \item 左边：$i\hbar\dfrac{\partial\Psi}{\partial t}$（时间变化率）
     \item 右边第一项：$-\dfrac{\hbar^2}{2m}\dfrac{\partial^2\Psi}{\partial x^2}$
-      \subitem{对应\textbf{动能算符}（kinetic energy operator）}
-      \subitem{与粒子的运动有关}
+      \subitem{\textbf{动能算符}，与粒子运动有关}
     \item 右边第二项：$V\Psi$
-      \subitem{对应\textbf{势能算符}（potential energy operator）}
-      \subitem{与粒子所受的力有关}
-    \item 右边总和：\textbf{哈密顿算符}（Hamiltonian operator）$\hat{H}$作用在$\Psi$上
+      \subitem{\textbf{势能算符}，与粒子受力有关}
+    \item 右边总和：\textbf{哈密顿算符}$\hat{H}$作用在$\Psi$上
     \end{iqbitemize}
+      \scriptsize
       \[
         \hat{H}\Psi = -\dfrac{\hbar^2}{2m}\dfrac{\partial^2\Psi}{\partial x^2} + V\Psi
       \]
+      \footnotesize
 
     \iqbsectiontitle{简洁形式}
     \begin{iqbitemize}
@@ -1176,6 +1177,56 @@
       \[
         i\hbar\dfrac{\partial\Psi}{\partial t} = \hat{H}\Psi
       \]
+  }
+\end{frame}
+
+% ------------------------------------------------------------
+% 1.4-3.5. Plausibility of the Schrödinger Equation
+% ------------------------------------------------------------
+\begin{frame}{薛定谔方程的合理性：光学类比}
+  \iqbfontsizemode{small}
+
+  \iqblayouttwo{
+    \iqbsectiontitle{方程的性质}
+    \begin{iqbitemize}
+    \item 薛定谔方程是量子力学的\textbf{基本假设}（postulate）
+      \item 无法从更基本原理\textbf{严格推导}
+      \item 但可通过\textbf{光学类比}证明其合理性
+      \item 类比关系反映了深刻的物理本质
+    \end{iqbitemize}
+    \iqbsmallsep
+
+    \iqbsectiontitle{光学-力学类比}
+    \begin{iqbitemize}
+    \item \textbf{几何光学} $\leftrightarrow$ \textbf{经典力学}
+      \subitem{短波长极限：$\lambda \ll$ 物体尺寸}
+      \subitem{光线沿直线传播，粒子沿轨迹运动}
+    \item \textbf{波动光学} $\leftrightarrow$ \textbf{量子力学}
+      \subitem{一般情况：有限波长}
+      \subitem{光有衍射，粒子有波性}
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{极限行为的一致性}
+    \begin{iqbitemize}
+    \item 当波长很小时：
+      \subitem{波动光学 → 几何光学}
+      \subitem{量子力学 → 经典力学}
+    \item \textbf{对应原理}（correspondence principle）：
+      \subitem{量子力学在宏观极限下退化为经典力学}
+      \subitem{类似几何光学是波动光学的短波长极限}
+    \item 薛定谔方程的数学形式
+      \subitem{在$\hbar \to 0$极限下退化为经典力学方程}
+      \subitem{保证理论与已知的经典物理一致}
+    \end{iqbitemize}
+    \iqbsep
+
+    \iqbsectiontitle{类比的意义}
+    \begin{iqbitemize}
+    \item 说明薛定谔方程不是"凭空猜想"
+      \subitem{而是基于与光学的深刻类比}
+      \item 这种类比在物理学中常有先例
+      \subitem{为新理论的合理性提供了有力支持}
+    \end{iqbitemize}
   }
 \end{frame}
 
@@ -1190,7 +1241,7 @@
     \begin{iqbitemize}
     \item 对三维空间中的粒子（particle in 3D space）：
     \end{iqbitemize}
-      \footnotesize
+      \scriptsize
       \[
         -\dfrac{\hbar}{i}\dfrac{\partial\Psi}{\partial t} = -\dfrac{\hbar^2}{2m}\left(\dfrac{\partial^2\Psi}{\partial x^2} + \dfrac{\partial^2\Psi}{\partial y^2} + \dfrac{\partial^2\Psi}{\partial z^2}\right) + V\Psi
       \]
@@ -1198,7 +1249,7 @@
       \item $\Psi = \Psi(x, y, z, t)$依赖三个空间坐标
       \item $V = V(x, y, z, t)$为三维势能（potential energy）
     \end{iqbitemize}
-    \iqbsmallsep
+    \iqbtinysep
 
     \iqbsectiontitle{Laplace算符}
     \begin{iqbitemize}
@@ -1224,7 +1275,7 @@
     \item \textbf{时间演化}（time evolution）：
       \subitem{$-\dfrac{\hbar}{i}\dfrac{\partial\Psi}{\partial t}$描述波函数变化}
     \end{iqbitemize}
-    \iqbsep
+    \iqbtinysep
     \begin{iqbitemize}
     \item 三维形式适用于原子、分子等真实系统
     \end{iqbitemize}
@@ -1383,6 +1434,71 @@
 % ------------------------------------------------------------
 % 1.5-1. Separation of Variables
 % ------------------------------------------------------------
+\begin{frame}{分离变量法：推导步骤详解}
+  \iqbfontsizemode{small}
+
+  \iqblayouttwo{
+    \iqbsectiontitle{含时薛定谔方程}
+    \begin{iqbitemize}
+    \item 一维含时薛定谔方程：
+    \end{iqbitemize}
+      \footnotesize
+      \[
+        -\dfrac{\hbar}{i}\dfrac{\partial\Psi}{\partial t} = -\dfrac{\hbar^2}{2m}\dfrac{\partial^2\Psi}{\partial x^2} + V\Psi
+      \]
+    \iqbtinysep
+    \begin{iqbitemize}
+    \item \textbf{假设}：势能不显含时间 $V = V(x)$
+      \item \textbf{分离变量}：设 $\Psi(x,t) = \psi(x)f(t)$
+    \end{iqbitemize}
+    \iqbtinysep
+
+    \iqbsectiontitle{计算偏导数}
+    \begin{iqbitemize}
+    \item 对时间求偏导：
+    \end{iqbitemize}
+      \[
+        \dfrac{\partial\Psi}{\partial t} = \psi(x)\dfrac{df}{dt} = \psi f'
+      \]
+    \begin{iqbitemize}
+    \item 对位置求二阶偏导：
+    \end{iqbitemize}
+      \[
+        \dfrac{\partial^2\Psi}{\partial x^2} = \dfrac{d^2\psi}{dx^2}f(t) = \psi'' f
+      \]
+  }{
+    \iqbsectiontitle{代入方程}
+    \begin{iqbitemize}
+    \item 将偏导数代入薛定谔方程：
+    \end{iqbitemize}
+      \scriptsize
+      \[
+        -\dfrac{\hbar}{i}\psi f' = -\dfrac{\hbar^2}{2m}\psi'' f + V\psi f
+      \]
+    \begin{iqbitemize}
+    \item \textbf{关键步骤}：两边除以 $\psi f$
+      \subitem{目的是分离变量}
+    \end{iqbitemize}
+      \scriptsize
+      \[
+        -\dfrac{\hbar}{i}\dfrac{f'}{f} = -\dfrac{\hbar^2}{2m}\dfrac{\psi''}{\psi} + V
+      \]
+    \begin{iqbitemize}
+    \item \textbf{关键观察}：
+      \subitem{左边只含 $t$，右边只含 $x$}
+      \subitem{两边独立变化，必须等于常数}
+    \end{iqbitemize}
+    \iqbtinysep
+
+    \iqbsectiontitle{物理意义}
+    \begin{iqbitemize}
+    \item 这个常数就是\textbf{能量}$E$
+      \item 偏微分方程 $\to$ 两个常微分方程
+      \item 大大简化求解过程
+    \end{iqbitemize}
+  }
+\end{frame}
+
 \begin{frame}{分离变量法：简化含时薛定谔方程（1/2）}
   \iqbfontsizemode{small}
 
@@ -1581,7 +1697,7 @@
         \hat{H} = -\dfrac{\hbar^2}{2m}\dfrac{\mathrm{d}^2}{\mathrm{d}x^2} + V(x)
       \]
     \begin{iqbitemize}
-  \item 简洁形式：$\boxed{\hat{H}\psi = E\psi}$ 本征值方程
+  \item 简洁形式：$\boxed{\hat{H}\psi = E\psi}$（本征值方程）
 
     \end{iqbitemize}
   \iqbgreenbox{核心方程}{$\hat{H}\psi = E\psi$是量子化学计算基础}
@@ -1654,7 +1770,7 @@
     \end{iqbitemize}
   }
 
-  \iqbgreenbox{关键结论}{定态=能量本征态，概率密度$|\Psi|^2$不随时间变化}
+  \iqbgreenbox{关键结论}{定态即能量本征态，概率密度$|\Psi|^2$不随时间变化}
 \end{frame}
 
 % ------------------------------------------------------------
@@ -1763,7 +1879,9 @@
   \iqblayouttwo{
     \iqbsectiontitle{题目（Problem 1.10）}
     \begin{iqbitemize}
-  \item 定态波函数：$\psi(x) = be^{-cx}$ 已知：$c = 2.00$ nm$^{-1}$，$m = 1.00 \times 10^{-30}$ kg，$\hbar = 1.055 \times 10^{-34}$ J·s
+  \item 定态波函数：$\psi(x) = be^{-cx}$
+  \item 已知：$c = 2.00$ nm$^{-1}$，$m = 1.00 \times 10^{-30}$ kg
+  \item $\hbar = 1.055 \times 10^{-34}$ J·s
       \item 求粒子的能量$E$
 
     \end{iqbitemize}
@@ -1806,6 +1924,7 @@
     \begin{iqbitemize}
     \item 代入数值：
     \end{iqbitemize}
+      \scriptsize
       \[
         E = \dfrac{3 \times (2.00 \times 10^9)^2 \times (1.055 \times 10^{-34})^2}{2 \times 1.00 \times 10^{-30}}
       \]
@@ -2120,7 +2239,7 @@
       \item 指数形式：$z = 5e^{i \cdot 53.1°}$
 
     \end{iqbitemize}
-    \iqbsmallsep
+    \iqbtinysep
 
     \iqbsectiontitle{几何意义}
     \begin{iqbitemize}
@@ -2149,7 +2268,7 @@
       \item 连接了$e, i, \pi, 1, 0$五个重要常数
 
     \end{iqbitemize}
-    \iqbsep
+    \iqbtinysep
 
     \iqbsectiontitle{其他重要值}
     \begin{iqbitemize}

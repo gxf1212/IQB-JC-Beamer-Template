@@ -1,0 +1,271 @@
+% !TeX root = ../qm_chap3.tex
+
+\begin{frame}{本征值问题：可观测量的量子化}
+  
+  \iqblayouttwo{
+    \iqbsectiontitle{本征方程}
+    \begin{iqbitemize}
+      \item 算符$\hat{A}$的\textbf{本征方程}（eigenvalue equation）定义为
+      \[
+        \hat{A}\phi_n(x) = a_n\phi_n(x)
+      \]
+
+      \item $\phi_n\not\equiv 0$是算符$\hat A$的\textbf{本征函数}（eigenfunction），允许它在个别位置为零。
+
+      \item $a_n$：对应的\textbf{本征值}（eigenvalue）
+
+      \item 算符作用在本征函数上，结果是该函数乘以常数
+
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{物理意义}
+    \begin{iqbitemize}
+      \item \textbf{本征值}是测量该物理量可能得到的结果
+
+      \item 测量后系统处于对应\textbf{本征态}（eigenstate）
+
+      \item \textbf{哈密顿算符}的本征值是\textbf{能级}（energy levels）
+      \[
+        \hat{H}\psi_n = E_n\psi_n
+      \]
+
+      \item 定态薛定谔方程就是本征值问题
+    \end{iqbitemize}
+
+    \iqbtinysep
+
+    \iqborangebox{关键}{本征值问题连接数学与物理测量}
+  }
+\end{frame}
+
+\begin{frame}{教材3.2　边界条件限制微分算符的本征值}
+  \iqblayouttwo{
+    \iqbsectiontitle{验证与构造本征函数}
+    \begin{iqbitemize}
+      \item $\hat D e^{2x}=2e^{2x}$，而$\hat D\sin 2x=2\cos 2x$。指数函数满足本征方程，正弦函数求导后形状改变。
+      \item 若$\hat A f=kf$且$c\ne0$，则由线性得到$\hat A(cf)=c\hat Af=k(cf)$。缩放不改变本征值，这两个函数线性相关。
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{从形式解到满足边界条件的解}
+    \begin{iqbitemize}
+      \item 解$f'=kf$得到$f=Ce^{kx}$，其中$C\ne0$。
+      \item 写成$k=\alpha+i\beta$。$\alpha>0$时，振幅在$x\to+\infty$发散。$\alpha<0$时，振幅在$x\to-\infty$发散。
+      \item 要求两端有界，故$\alpha=0$，本征值为$k=i\beta$。乘以$-i\hbar$后，得到动量的实数本征值$\hbar\beta$。
+    \end{iqbitemize}
+  }
+\end{frame}
+
+\begin{frame}{教材3.8　可接受的束缚态波函数可以归一化}
+  \iqblayouttwo{
+    \iqbsectiontitle{平方可积给出归一化常数}
+    \begin{iqbitemize}
+      \item 对未归一化的束缚态$\psi$，计算概率密度的全空间积分。
+      \[
+        I=\int|\psi|^2\,\mathrm{d}\tau,\qquad
+        |N|=\dfrac{1}{\sqrt I}.
+      \]
+      \item 当$0<I<\infty$时，$N\psi$的总概率为1。零函数和平方积分发散的函数都无法这样归一化。
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{单值性、连续性与连续谱}
+    \begin{iqbitemize}
+      \item 波函数应当单值。对本章所用的普通势能，波函数连续，有限势能处一阶导数也连续。
+      \item 无穷高势阱的边界允许一阶导数跳变，波函数仍须连续并在墙上取零。
+      \item 自由粒子的平面波是连续谱的广义本征函数，可用$\delta$函数归一化。可归一化的自由粒子态可由它们叠加成波包。
+    \end{iqbitemize}
+  }
+\end{frame}
+
+\begin{frame}{本征函数的数学性质：连续性与可微性}
+  \iqblayouttwo{
+    \iqbsectiontitle{波函数的基本要求}
+    \begin{iqbitemize}
+      \item \textbf{连续性}（continuity）
+      \begin{iqbitemize}
+        \item 波函数$\psi(x)$必须连续
+        \item 概率密度$|\psi(x)|^2$不能突变
+      \end{iqbitemize}
+
+      \item \textbf{一阶导数连续性}
+      \begin{iqbitemize}
+        \item $\psi'(x)$通常连续
+        \item 有限势能处，跨过边界积分薛定谔方程可得导数连续
+      \end{iqbitemize}
+
+      \item \textbf{例外情况}
+      \begin{iqbitemize}
+        \item 无穷势阱边界处导数不连续
+        \item $\delta$势位置导数有跳跃
+      \end{iqbitemize}
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{连续性对比}
+    \iqbfigcap[width=\linewidth,height=0.55\textheight]{Figures/fig3_4.png}{图3.4　(a)函数及其一阶导数均连续。(b)函数连续，但一阶导数不连续。(c)函数本身不连续。有限势能区域的波函数须满足(a)的连续性条件。}
+  }
+\end{frame}
+
+\begin{frame}{厄米算符的本征值为实数，异值本征态正交}
+  
+    \iqbsectiontitle{四个基本性质}
+    \begin{iqbitemize}
+    \item \textbf{实数性}（real eigenvalues）
+    \end{iqbitemize}
+      \[
+        \hat{A}\phi_n = a_n\phi_n \quad \Rightarrow \quad a_n \in \mathbb{R}
+      \]
+    \begin{iqbitemize}
+    \item 所有本征值都是实数
+    \item 测量结果必定是实数（符合物理直觉）
+    \end{iqbitemize}
+    \iqbtinysep
+
+    \iqbsectiontitle{正交性}
+    \begin{iqbitemize}
+    \item 不同本征值的本征函数相互正交
+    \end{iqbitemize}
+      \[
+        \int \phi_m^*(x)\phi_n(x)\mathrm{d}x = 0 \quad (m \neq n)
+      \]
+    \begin{iqbitemize}
+    \item 类似于三维空间中不同坐标轴的正交
+    \item 确保不同本征态彼此独立
+    \end{iqbitemize}
+  
+\end{frame}
+
+\begin{frame}{用完备本征态展开波函数}
+  \iqbfontsizemode{small}
+    \iqbsectiontitle{完备性}
+    \begin{iqbitemize}
+    \item \textbf{完备性}（completeness）：
+    \end{iqbitemize}
+      \[
+        \psi(x) = \sum_{n} c_n\phi_n(x)
+      \]
+    \begin{iqbitemize}
+    \item 任意波函数可展开为本征函数的线性组合
+    \item 类似于：任意矢量可分解为基矢量的叠加
+    \item 系数为$c_n = \int \phi_n^*(x)\psi(x)\mathrm{d}x$
+    \end{iqbitemize}
+    \iqbsmallsep
+
+    \iqbsectiontitle{归一性与物理解释}
+    \begin{iqbitemize}
+    \item \textbf{归一性}：$\int |\phi_n(x)|^2\mathrm{d}x = 1$
+    \item 本征函数可以归一化到1
+    \item \textbf{物理解释}：
+    \subitem{测量后系统坍缩到某个本征态$\phi_n$}
+    \subitem{测量值为本征值$a_n$}
+    \subitem{概率为$|c_n|^2$}
+    \end{iqbitemize}
+    \iqbtinysep
+
+    \iqbgreenbox{核心意义}{这些性质确保量子力学测量理论的自洽性，使波函数的统计解释成为可能}
+  
+
+\end{frame}
+
+\begin{frame}{简并态具有相同能量和独立波函数}
+  
+    \iqbsectiontitle{简并的定义}
+    \begin{iqbitemize}
+    \item \textbf{简并}（degeneracy）：
+    \subitem{一个本征值对应多个线性无关的本征函数}
+    \subitem{多个量子态具有相同的能量}
+    \item \textbf{简并度}（degeneracy）：
+    \subitem{对应于同一本征值的线性无关本征函数个数}
+    \subitem{简并度为$n$表示有$n$个独立的量子态}
+    \item \textbf{简并子空间}：
+    \subitem{简并本征函数张成的线性空间}
+    \subitem{该空间内任意非零线性组合仍是本征函数}
+    \end{iqbitemize}
+    \iqbsmallsep
+
+    \end{frame}
+
+\begin{frame}{交换立方箱的坐标轴可得到同能态}
+  \iqblayouttwo{
+  
+    \iqbsectiontitle{三维箱中粒子的简并}
+    \begin{iqbitemize}
+    \item 能量公式：
+    \end{iqbitemize}
+      \[
+        E_{n_x,n_y,n_z} = \dfrac{h^2}{8m}\left(\dfrac{n_x^2}{a^2} + \dfrac{n_y^2}{b^2} + \dfrac{n_z^2}{c^2}\right)
+      \]
+    \begin{iqbitemize}
+    \item \textbf{长方箱}（$a \neq b \neq c$）：
+    \subitem{一般无简并（除偶然简并）}
+    \item \textbf{立方箱}（$a = b = c$）：
+    \subitem{高度对称，大量简并}
+    \subitem{例如：$(1,2,3)$、$(3,2,1)$等相同能量}
+    \end{iqbitemize}
+  
+  }{
+  
+    \iqbsectiontitle{对称性与简并的关系}
+    \begin{iqbitemize}
+    \item \textbf{核心原理}：
+    \subitem{对称性导致简并}
+    \subitem{额外的对称性可以使原本不同的态共享本征值}
+    \item \textbf{群论解释}：
+    \subitem{简并与系统的对称群相关}
+    \subitem{单个不可约表示给出相应的对称性简并度，同一能量也可能包含多个表示}
+    \end{iqbitemize}
+    \iqbsmallsep
+
+    
+  }
+\end{frame}
+
+\begin{frame}{从原子轨道到晶体场的简并实例}
+  
+    \iqbsectiontitle{物理实例与应用}
+    \begin{iqbitemize}
+    \item \textbf{氢原子}：
+    \subitem{球对称性导致角动量简并}
+    \subitem{理想库仑模型忽略自旋和精细结构时，能级$E_n$的简并度为$n^2$}
+    \item \textbf{晶体场}：
+    \subitem{对称性降低，简并部分解除}
+    \subitem{导致能级分裂（晶体场理论）}
+    \item \textbf{简并解除}：
+    \subitem{外加微扰（磁场、电场）破坏对称性}
+    \subitem{简并能级分裂为多个靠近的能级}
+    \end{iqbitemize}
+    \iqbtinysep
+
+    \iqbgreenbox{重要洞察}{简并是系统对称性的直接体现，研究简并可以推断系统的对称性质}
+  
+
+\end{frame}
+
+\begin{frame}{例题：动量算符的本征函数}
+  \iqbfontsizemode{small}
+  \iqbsectiontitle{求解$\hat{p}_x$的本征值问题}
+
+  \textbf{问题}：求动量算符$\hat{p}_x = -i\hbar\dfrac{\mathrm{d}}{\mathrm{d}x}$的本征函数和本征值
+
+  \begin{iqbitemize}
+    \item \textbf{建立本征方程}：
+    \[
+      -i\hbar\dfrac{\mathrm{d}}{\mathrm{d}x}\phi(x) = p\phi(x)
+    \]
+
+    \item \textbf{分离变量并积分}：
+    \[
+      \dfrac{d\phi}{\phi} = \dfrac{i p}{\hbar}dx \quad \Rightarrow \quad \ln\phi = \dfrac{ipx}{\hbar} + C
+    \]
+
+    \item \textbf{本征函数}：
+    \[
+      \phi_p(x) = A e^{ipx/\hbar}
+    \]
+
+    \item \textbf{本征值}：$p$可以取任意实数值（连续谱）
+
+    \item \textbf{归一化}：连续谱本征函数用$\delta$函数归一化
+    \[
+      \int \phi_{p'}^*(x)\phi_p(x)dx = \delta(p-p')
+    \]
+  \end{iqbitemize}
+\end{frame}

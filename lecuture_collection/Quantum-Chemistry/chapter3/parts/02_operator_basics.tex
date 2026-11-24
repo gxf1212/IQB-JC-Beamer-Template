@@ -1,0 +1,188 @@
+% !TeX root = ../qm_chap3.tex
+
+\begin{frame}{什么是算符？从薛定谔方程说起}
+  \iqbfontsizemode{small}
+  \iqblayouttwo{
+    \iqbsectiontitle{从薛定谔方程引入算符}
+    \begin{iqbitemize}
+      \item \textbf{定态薛定谔方程}（time-independent Schrödinger equation）可以写成算符形式
+      \[
+        \left[-\dfrac{\hbar^2}{2m}\dfrac{\mathrm{d}^2}{\mathrm{d}x^2} + V(x)\right]\psi(x) = E\psi(x)
+      \]
+      \item 方括号内的整体是一个\textbf{算符}（operator），称为\textbf{哈密顿算符}（Hamiltonian operator）$\hat{H}$
+      \item 算符作用在\textbf{波函数}（wave function）$\psi(x)$上，产生同样的波函数乘以能量$E$
+      \item 这启示我们：算符是量子力学描述物理量的数学语言
+    \end{iqbitemize}
+
+    \iqbtinysep
+
+    \iqbsectiontitle{算符的直观理解}
+    \begin{iqbitemize}
+      \item 算符是一个\textbf{操作规则}或\textbf{变换指令}
+      \item 它接受一个函数作为输入，输出另一个函数
+      \item 就像机器：输入原料（函数）→ 加工处理 → 输出产品（新函数）
+      \item 用帽子符号$\hat{\ }$标记算符，以区别于普通数字
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{具体例子}
+    \begin{iqbitemize}
+      \item \textbf{微分算符}（differential operator）$\hat{D} = \dfrac{\mathrm{d}}{\mathrm{d}x}$
+      \[
+        \hat{D}(x^2 + 3e^{2x}) = 2x + 6e^{2x}
+      \]
+      对原函数求导，得到新函数
+
+      \item \textbf{乘法算符}$\hat{3}$（乘以3）
+      \[
+        \hat{3}(x + e^{x}) = 3x + 3e^{x}
+      \]
+      将原函数整体乘以3
+
+      \item \textbf{三角算符}$\hat{T}$：
+      \[
+        \hat{T}f(x) = \tan[f(x)]
+      \]
+      对函数取正切
+    \end{iqbitemize}
+
+    \iqborangebox{核心概念}{算符不是数值而是对函数进行变换的操作或规则}
+  }
+\end{frame}
+
+\begin{frame}{算符运算遵循严格的代数规则}
+  
+  \iqblayouttwo{
+    \iqbsectiontitle{算符的加法与减法}
+    \begin{iqbitemize}
+      \item \textbf{定义}：两个算符的和（差）逐个作用后相加（减）
+      \[
+        (\hat{A} \pm \hat{B})f(x) = \hat{A}f(x) \pm \hat{B}f(x)
+      \]
+
+      \item \textbf{例子}：设$\hat{D} = \dfrac{\mathrm{d}}{\mathrm{d}x}$，$\hat{3}$为乘以3
+      \[
+        (\hat{D} + \hat{3})(x^3 - 5x) = \hat{D}(x^3 - 5x) + \hat{3}(x^3 - 5x)
+      \]
+      \[
+        = (3x^2 - 5) + (3x^3 - 15x) = 3x^3 + 3x^2 - 15x - 5
+      \]
+
+      \item 算符加法满足\textbf{交换律}：$\hat{A} + \hat{B} = \hat{B} + \hat{A}$
+
+      \item 算符加法满足\textbf{结合律}：$(\hat{A} + \hat{B}) + \hat{C} = \hat{A} + (\hat{B} + \hat{C})$
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{算符的乘积}
+    \begin{iqbitemize}
+      \item \textbf{关键规则}：从右向左依次作用
+      \[
+        \hat{A}\hat{B}f(x) = \hat{A}[\hat{B}f(x)]
+      \]
+      先作用右边的$\hat{B}$，再对结果作用左边的$\hat{A}$
+
+      \item \textbf{例子}：$\hat{3}\hat{D}f(x)$
+      \[
+        \hat{3}\hat{D}f(x) = \hat{3}[\hat{D}f(x)] = \hat{3}[f'(x)] = 3f'(x)
+      \]
+      先求导，再乘以3
+
+      \item \textbf{重要}：算符乘法\textbf{一般不满足交换律}
+      \[
+        \hat{A}\hat{B} \neq \hat{B}\hat{A}
+      \]
+      顺序不同，结果可能不同
+
+    \end{iqbitemize}
+
+    \iqbgreenbox{核心}{算符乘积的顺序至关重要，这是\textbf{对易关系}（commutation relation）的起源}
+  }
+\end{frame}
+
+\begin{frame}{算符等式与代数规则}
+  \iqblayouttwo{
+    \iqbsectiontitle{算符相等的严格定义}
+    \begin{iqbitemize}
+    \item \textbf{数学定义}（operator equality）
+    \end{iqbitemize}
+      \[
+        \hat{A} = \hat{B} \quad \text{当且仅当} \quad \hat{A}f = \hat{B}f \quad \text{对所有函数}f
+      \]
+    \begin{iqbitemize}
+    \item 两算符相等意味着对任意函数的作用结果相同
+    \item \textbf{常见错误}：不能仅从一次作用就判断算符相等
+    \end{iqbitemize}
+      \[
+        \frac{d}{dx}e^{2x} = 2e^{2x} \quad \text{但} \quad \frac{d}{dx} \neq 2
+      \]
+    \begin{iqbitemize}
+    \item 因为等式不对所有函数成立（例如对$x^2$不成立）
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{算符代数的基本规则}
+    \begin{iqbitemize}
+    \item \textbf{结合律}（associative）：
+    \[
+      (\hat{A}\hat{B})\hat{C} = \hat{A}(\hat{B}\hat{C})
+    \]
+    \item \textbf{分配律}（distributive）：左侧作用的$\hat{A}$须具有线性
+    \[
+      \hat{A}(\hat{B} + \hat{C}) = \hat{A}\hat{B} + \hat{A}\hat{C}
+    \]
+    \item \textbf{交换律不成立}（non-commutative）：
+    \[
+      \hat{A}\hat{B} \neq \hat{B}\hat{A} \quad \text{（一般情况）}
+    \]
+    \item 这是算符代数与普通代数的\textbf{根本区别}
+    \end{iqbitemize}
+    \iqbtinysep
+
+    \iqbgreenbox{关键洞察}{算符乘法顺序影响结果，体现量子力学的本质特征}
+  }
+\end{frame}
+
+\begin{frame}{算符等式的推导：对易关系的起源}
+  \iqblayouttwo{
+    \iqbsectiontitle{推导目标}
+    \begin{iqbitemize}
+    \item 证明微分算符与乘法算符的重要关系：
+    \end{iqbitemize}
+      \[
+        \boxed{\hat{D}\hat{x} = \hat{1} + \hat{x}\hat{D}}
+      \]
+    \begin{iqbitemize}
+    \item \textbf{方法}：利用算符相等定义，证明两边对任意函数$f(x)$作用结果相同
+    \end{iqbitemize}
+    \iqbtinysep
+
+    \iqbsectiontitle{左边作用：$\hat{D}\hat{x}f(x)$}
+    \begin{iqbitemize}
+    \item 计算：$\dfrac{\mathrm{d}}{\mathrm{d}x}[xf(x)]$
+    \item 使用乘积求导法则：$(uv)' = u'v + uv'$
+    \end{iqbitemize}
+      \[
+        \dfrac{\mathrm{d}}{\mathrm{d}x}[xf(x)] = 1 \cdot f(x) + x \cdot f'(x) = f(x) + x\dfrac{\mathrm{d}f}{\mathrm{d}x}
+      \]
+  }{
+    \iqbsectiontitle{右边作用：$(\hat{1} + \hat{x}\hat{D})f(x)$}
+    \begin{iqbitemize}
+    \item 计算：$\hat{1}f(x) + \hat{x}\hat{D}f(x)$
+    \end{iqbitemize}
+      \[
+        f(x) + x\dfrac{\mathrm{d}f}{\mathrm{d}x}
+      \]
+    \begin{iqbitemize}
+    \item 与左边结果\textbf{完全相同}
+    \end{iqbitemize}
+    \iqbsmallsep
+
+    \iqbsectiontitle{关键结论}
+    \begin{iqbitemize}
+    \item $\hat{D}\hat{x} - \hat{x}\hat{D} = \hat{1}$
+    \item 定义对易子：$[\hat{D}, \hat{x}] = \hat{D}\hat{x} - \hat{x}\hat{D} = \hat{1}$
+    \item 这是\textbf{海森堡不确定性原理}的数学基础
+    \end{iqbitemize}
+    \iqbtinysep
+
+    \iqbgreenbox{物理意义}{位置算符与动量算符不可对易，导致位置和动量不能同时精确测量}
+  }
+\end{frame}

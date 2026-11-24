@@ -1,0 +1,465 @@
+% !TeX root = ../qm_chap3.tex
+
+\begin{frame}{算符的线性：为什么如此重要？（1/2）}
+  
+  
+    \iqbsectiontitle{线性算符的直观理解}
+    \begin{iqbitemize}
+      \item \textbf{叠加性的物理意义}
+      \begin{iqbitemize}
+        \item 如果系统可以处于状态$\psi_1$或$\psi_2$
+        \item 那么也可以处于它们的\textbf{线性组合}（linear combination）$c_1\psi_1 + c_2\psi_2$
+        \item 这是\textbf{量子叠加原理}（quantum superposition principle）的数学表达
+      \end{iqbitemize}
+
+      \item \textbf{齐次性的物理意义}
+      \begin{iqbitemize}
+        \item 将波函数整体放大或缩小$c$倍
+        \item 不改变系统的物理状态
+        \item 因为概率密度$|\psi|^2$会相应缩放，但归一化条件保持比例
+      \end{iqbitemize}
+
+      \item \textbf{为什么量子力学算符必须是线性的？}
+      \begin{iqbitemize}
+        \item 实验观察：量子态满足叠加原理
+        \item 数学要求：薛定谔方程是\textbf{线性微分方程}（linear differential equation）
+        \item 物理后果：保证概率诠释的一致性
+      \end{iqbitemize}
+    \end{iqbitemize}
+  
+\end{frame}
+
+\begin{frame}{算符的线性：为什么如此重要？（2/2）}
+  \iqbfontsizemode{small}
+  
+    \iqbsectiontitle{线性的数学验证}
+    \begin{iqbitemize}
+      \item \textbf{验证拉普拉斯算符的线性}
+      \[
+        \nabla^2 = \dfrac{\partial^2}{\partial x^2} + \dfrac{\partial^2}{\partial y^2} + \dfrac{\partial^2}{\partial z^2}
+      \]
+
+      \item \textbf{叠加性验证}
+      \begin{align*}
+        \nabla^2(f+g) &= \dfrac{\partial^2(f+g)}{\partial x^2} + \cdots \\
+                  &= \dfrac{\partial^2 f}{\partial x^2} + \dfrac{\partial^2 g}{\partial x^2} + \cdots \\
+                  &= \nabla^2 f + \nabla^2 g
+      \end{align*}
+
+      \item \textbf{齐次性验证}
+      \begin{align*}
+        \nabla^2(cf) &= \dfrac{\partial^2(cf)}{\partial x^2} + \cdots \\
+                 &= c\dfrac{\partial^2 f}{\partial x^2} + \cdots \\
+                 &= c\nabla^2 f
+      \end{align*}
+
+      \item \textbf{非线性的反例}
+      \[
+        \sqrt{\hat{\ }}f(x) = \sqrt{f(x)}
+      \]
+      显然$\sqrt{f+g} \neq \sqrt{f} + \sqrt{g}$，不满足线性
+    \end{iqbitemize}
+  
+
+\end{frame}
+
+\begin{frame}{线性算符（1/2）}
+  
+  
+    \iqbsectiontitle{线性算符的定义}
+    \begin{iqbitemize}
+    \item 算符$\hat{A}$是线性的，当且仅当满足两个条件
+    \end{iqbitemize}
+    \iqbsmallsep
+
+    \iqbsectiontitle{条件1：叠加性（additivity）}
+    \begin{iqbitemize}
+    \item 数学表达：
+    \end{iqbitemize}
+      \[
+        \hat{A}[f(x) + g(x)] = \hat{A}f(x) + \hat{A}g(x)
+      \]
+    \begin{iqbitemize}
+    \item 物理意义：两个函数之和的算符作用等于各函数算符作用之和
+    \item 这允许我们将复杂状态分解为简单状态的叠加
+    \end{iqbitemize}
+    \iqbsmallsep
+
+    \iqbsectiontitle{条件2：齐次性（homogeneity）}
+    \begin{iqbitemize}
+    \item 数学表达：
+    \end{iqbitemize}
+      \[
+        \hat{A}[c \cdot f(x)] = c \cdot \hat{A}f(x)
+      \]
+    \begin{iqbitemize}
+    \item 比例系数$c$可以为复数，须验证算符对复数倍函数的作用
+    \item 线性算符作用后，波函数的范数仍可能改变
+    \end{iqbitemize}
+  
+\end{frame}
+
+\begin{frame}{线性算符保留量子态的叠加结构}
+  \iqblayouttwo{
+  
+  
+    \iqbsectiontitle{为什么量子力学需要线性算符？}
+    \begin{iqbitemize}
+    \item \textbf{叠加原理的数学基础}
+    \subitem{量子系统可以处于多个状态的叠加}
+    \subitem{例如：$\Psi = c_1\psi_1 + c_2\psi_2$}
+    \item \textbf{态的线性演化}
+    \subitem{薛定谔方程是线性的}
+    \subitem{初始态的线性叠加演化为末态的线性叠加}
+    \item \textbf{测量理论的要求}
+    \subitem{本征函数构成完备集}
+    \subitem{任意态可展开为本征态的叠加}
+    \end{iqbitemize}
+    \iqbsmallsep
+
+    
+  }{
+  
+  
+    \iqbsectiontitle{常见线性算符实例}
+    \begin{iqbitemize}
+    \item 微分算符：$\hat{D} = \dfrac{\mathrm{d}}{\mathrm{d}x}$
+    \item Laplace算符：$\nabla^2 = \dfrac{\partial^2}{\partial x^2} + \dfrac{\partial^2}{\partial y^2} + \dfrac{\partial^2}{\partial z^2}$
+    \item 哈密顿算符：$\hat{H} = -\dfrac{\hbar^2}{2m}\nabla^2 + V$
+    \item 位置表象中的乘法算符包括$\hat{x}$和$\hat{V}(x)$，$\hat{p}_x$则是微分算符
+    \end{iqbitemize}
+    \iqbsmallsep
+
+    \iqborangebox{关键洞察}{态的叠加依赖线性。由自伴哈密顿算符生成的演化还具有幺正性，因而保持总概率。}
+  
+  }
+\end{frame}
+
+\begin{frame}{算符代数：乘法顺序至关重要}
+  
+  \iqblayouttwo{
+    \iqbsectiontitle{算符的加减}
+    \begin{iqbitemize}
+      \item 两个算符之和定义为：
+      \[
+        (\hat{A} + \hat{B})f(x) = \hat{A}f(x) + \hat{B}f(x)
+      \]
+      \item 两个算符之差定义为：
+      \[
+        (\hat{A} - \hat{B})f(x) = \hat{A}f(x) - \hat{B}f(x)
+      \]
+      \item 算符加减后仍是算符
+      \item 加法满足交换律：$\hat{A} + \hat{B} = \hat{B} + \hat{A}$
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{算符的乘积}
+    \begin{iqbitemize}
+      \item 算符乘积定义为连续作用：
+      \[
+        \hat{A}\hat{B}f(x) = \hat{A}[\hat{B}f(x)]
+      \]
+      \item 先作用右边的算符$\hat{B}$，再作用左边的算符$\hat{A}$
+
+      \iqbtinysep
+
+      \item \textbf{重要}：算符乘法一般\textbf{不满足交换律}
+      \[
+        \hat{A}\hat{B} \neq \hat{B}\hat{A}
+      \]
+
+      \iqbtinysep
+
+      \item 这是量子力学与经典力学的重要区别
+    \end{iqbitemize}
+  }
+\end{frame}
+
+\begin{frame}{教材3.1　两种分配律的条件不同}
+  \iqblayouttwo{
+    \iqbsectiontitle{算符和位于乘积左侧}
+    \begin{iqbitemize}
+      \item 令任意输入$f$先经过$\hat C$，再应用算符和的定义。
+      \[
+        \begin{aligned}
+          \left[(\hat A+\hat B)\hat C\right]f&=(\hat A+\hat B)(\hat Cf)\\
+             &=\hat A(\hat Cf)+\hat B(\hat Cf)\\
+             &=(\hat A\hat C+\hat B\hat C)f .
+        \end{aligned}
+      \]
+      \item 对共同定义域中的任意$f$都成立，因此两侧算符相等。推导只用了求和与复合的定义。
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{算符和位于乘积右侧}
+    \begin{iqbitemize}
+      \item 若$\hat A$满足叠加性，可将它分别作用于$\hat Bf$和$\hat Cf$。
+      \[
+        \begin{aligned}
+          \left[\hat A(\hat B+\hat C)\right]f&=\hat A(\hat Bf+\hat Cf)\\
+             &=\hat A\hat Bf+\hat A\hat Cf .
+        \end{aligned}
+      \]
+      \item 平方操作$\hat Sf=f^2$作用于$f+g$时额外产生交叉项$2fg$。
+      \item 复共轭保留加法，但把常数$c$变为$c^*$。施行两次复共轭得到恒等算符。
+    \end{iqbitemize}
+  }
+\end{frame}
+
+\begin{frame}{算符乘积按从右到左的顺序作用}
+  
+    \iqbsectiontitle{问题设定}
+    \begin{iqbitemize}
+    \item 设$\hat{A} = \dfrac{\mathrm{d}}{\mathrm{d}x}$（微分算符），$\hat{B} = x$（乘法算符）
+    \item 计算$\hat{A}\hat{B}$和$\hat{B}\hat{A}$并比较
+    \item 验证它们是否相等（即是否对易）
+    \end{iqbitemize}
+    \iqbsmallsep
+
+    \iqbsectiontitle{计算$\hat{A}\hat{B}f(x)$}
+    \begin{iqbitemize}
+    \item 先乘法后求导：
+    \end{iqbitemize}
+      \[
+        \hat{A}\hat{B}f(x) = \dfrac{\mathrm{d}}{\mathrm{d}x}[x f(x)]
+      \]
+    \begin{iqbitemize}
+    \item 使用乘积法则：$(uv)' = u'v + uv'$
+    \end{iqbitemize}
+      \[
+        = f(x) + x f'(x) = (1 + x\dfrac{\mathrm{d}}{\mathrm{d}x})f(x)
+      \]
+  
+\end{frame}
+
+\begin{frame}{调换求导与乘法的顺序会多出恒等算符}
+  \iqbfontsizemode{small}
+  \iqblayouttwo{
+    \iqbsectiontitle{计算$\hat{B}\hat{A}f(x)$}
+    \begin{iqbitemize}
+    \item 先求导后乘法：
+    \end{iqbitemize}
+      \[
+        \hat{B}\hat{A}f(x) = x \cdot \dfrac{\mathrm{d}}{\mathrm{d}x}f(x)
+      \]
+    \begin{iqbitemize}
+    \item 直接对$f(x)$求导再乘$x$：
+    \end{iqbitemize}
+      \[
+        = x f'(x) = (x\dfrac{\mathrm{d}}{\mathrm{d}x})f(x)
+      \]
+  }{
+    \iqbsectiontitle{对比与结论}
+    \begin{iqbitemize}
+    \item $\hat{A}\hat{B} = 1 + x\dfrac{\mathrm{d}}{\mathrm{d}x}$
+    \item $\hat{B}\hat{A} = x\dfrac{\mathrm{d}}{\mathrm{d}x}$
+    \item \textbf{相差恒等算符}：
+    \end{iqbitemize}
+      \[
+        \hat{A}\hat{B} - \hat{B}\hat{A} = \hat{1} \quad \Rightarrow \quad [\hat{A}, \hat{B}] = \hat{1}
+      \]
+    \begin{iqbitemize}
+    \item 这就是著名的对易关系！
+    \end{iqbitemize}
+    \iqbsmallsep
+
+    \iqbgreenbox{物理意义}{算符顺序改变结果，是量子力学区别于经典力学的本质特征}
+  }
+\end{frame}
+
+\begin{frame}{例题3.1：验证算符代数恒等式}
+  \iqbfontsizemode{small}
+  \iqbsectiontitle{验证$(\hat{A} + \hat{B})^2 \neq \hat{A}^2 + 2\hat{A}\hat{B} + \hat{B}^2$}
+
+  \textbf{问题}：设$\hat{A} = \dfrac{\mathrm{d}}{\mathrm{d}x}$，$\hat{B} = x$，验证算符平方展开
+
+  \iqbsep
+
+  \begin{iqbitemize}
+    \item \textbf{经典代数}：$(a+b)^2 = a^2 + 2ab + b^2$
+
+    \item \textbf{算符代数}：一般\textcolor{red}{不成立}！
+    \[
+      (\hat{A} + \hat{B})^2 = (\hat{A} + \hat{B})(\hat{A} + \hat{B}) = \hat{A}^2 + \hat{A}\hat{B} + \hat{B}\hat{A} + \hat{B}^2
+    \]
+
+    \item \textbf{验证}：左边$(\hat{D} + \hat{x})^2 = (\hat{D} + \hat{x})(\hat{D} + \hat{x})$
+    \begin{align*}
+      &= \hat{D}^2 + \hat{D}\hat{x} + \hat{x}\hat{D} + \hat{x}^2 \\
+      &= \hat{D}^2 + (\hat{1} + \hat{x}\hat{D}) + \hat{x}\hat{D} + \hat{x}^2 \\
+      &= \hat{D}^2 + \hat{1} + 2\hat{x}\hat{D} + \hat{x}^2
+    \end{align*}
+
+    \item \textbf{右边}：$\hat{A}^2 + 2\hat{A}\hat{B} + \hat{B}^2 = \hat{D}^2 + 2\hat{D}\hat{x} + \hat{x}^2$
+
+    \item \textbf{比较}：
+    \begin{iqbitemize}
+      \item 左边展开：$\hat{D}^2 + \hat{1} + 2\hat{x}\hat{D} + \hat{x}^2$
+      \item 普通公式给出的交叉项为$2\hat{D}\hat{x}=2\hat{1}+2\hat{x}\hat{D}$
+      \item 正确展开减去普通公式的结果，差值为$-\hat{1}$
+    \end{iqbitemize}
+  \end{iqbitemize}
+
+  \iqbgreenbox{结论}{算符代数必须严格按照定义展开，不能套用经典代数公式}
+\end{frame}
+
+\begin{frame}{例题3.2：算符多项式的计算}
+  \iqbfontsizemode{small}
+  \iqbsectiontitle{计算$(\hat{A}+\hat{B})^3$的展开式}
+
+  \textbf{问题}：展开算符多项式$(\hat{A}+\hat{B})^3$并说明需要注意的问题
+
+  \iqbmicrosep
+
+  \begin{iqbitemize}
+    \item \textbf{错误的展开}（套用经典代数）：
+    \[
+      (\hat{A}+\hat{B})^3 \neq \hat{A}^3 + 3\hat{A}^2\hat{B} + 3\hat{A}\hat{B}^2 + \hat{B}^3
+    \]
+
+    \item \textbf{正确的展开}（保持算符顺序）：
+    \begin{align*}
+      (\hat{A}+\hat{B})^3 &= (\hat{A}+\hat{B})(\hat{A}+\hat{B})(\hat{A}+\hat{B}) \\
+      &= (\hat{A}+\hat{B})(\hat{A}^2 + \hat{A}\hat{B} + \hat{B}\hat{A} + \hat{B}^2) \\
+      &= \hat{A}^3 + \hat{A}^2\hat{B} + \hat{A}\hat{B}\hat{A} + \hat{A}\hat{B}^2 \\
+      &\quad + \hat{B}\hat{A}^2 + \hat{B}\hat{A}\hat{B} + \hat{B}^2\hat{A} + \hat{B}^3
+    \end{align*}
+
+    \item \textbf{关键区别}：
+    \begin{iqbitemize}
+      \item 普通数相乘可交换，$a^2b=aba=ba^2$，所以这三项可合并为$3a^2b$。
+      \item 算符乘积中，$\hat{A}^2\hat{B}$、$\hat{A}\hat{B}\hat{A}$和$\hat{B}\hat{A}^2$一般各不相同。
+      \item 一般展开式保留8项及其各自的作用顺序。
+    \end{iqbitemize}
+
+    \item \textbf{特例}：如果$\hat{A}$和$\hat{B}$对易（即$[\hat{A},\hat{B}]=0$），则经典公式成立
+    \[
+      [\hat{A},\hat{B}]=0 \Rightarrow \hat{A}\hat{B} = \hat{B}\hat{A}
+    \]
+    此时8项可以合并为4项
+  \end{iqbitemize}
+
+  \iqbgreenbox{关键}{算符乘法必须保持顺序，只有对易的算符才能交换}
+\end{frame}
+
+\begin{frame}{算符的幂运算}
+  
+  \iqblayouttwo{
+    \iqbsectiontitle{定义与性质}
+    \begin{iqbitemize}
+      \item 算符的$n$次幂定义为连续作用$n$次
+      \[
+        \hat{A}^n f(x) = \underbrace{\hat{A}\hat{A}\cdots\hat{A}}_{n\text{次}}f(x)
+      \]
+
+      \item 例如：$(\dfrac{\mathrm{d}}{\mathrm{d}x})^2 f(x) = \dfrac{\mathrm{d}^2f}{\mathrm{d}x^2}$
+
+      \item 指数律成立：$\hat{A}^m \hat{A}^n = \hat{A}^{m+n}$
+
+      \item 算符函数可用幂级数定义
+      \[
+        e^{\hat{A}} = \hat{1} + \hat{A} + \dfrac{\hat{A}^2}{2!} + \dfrac{\hat{A}^3}{3!} + \cdots
+      \]
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{实际应用}
+    \begin{iqbitemize}
+      \item \textbf{动能算符}：
+      \[
+        \hat{T} = -\dfrac{\hbar^2}{2m}\dfrac{\mathrm{d}^2}{\mathrm{d}x^2}
+      \]
+      涉及二阶导数算符
+
+      \item \textbf{哈密顿算符}：
+      \[
+        \hat{H} = \hat{T} + \hat{V}
+      \]
+      动能算符与势能算符之和
+
+      \item \textbf{平移算符}：
+      \[
+        e^{a\dfrac{\mathrm{d}}{\mathrm{d}x}}f(x) = f(x+a)
+      \]
+      指数算符产生函数平移
+    \end{iqbitemize}
+
+    \iqbtinysep
+
+    \iqborangebox{注意}{算符函数的级数展开必须收敛才有意义}
+  }
+\end{frame}
+
+\begin{frame}{算符多项式与函数（1/2）}
+  \iqbfontsizemode{small}
+  
+    \iqbsectiontitle{算符多项式的定义}
+    \begin{iqbitemize}
+    \item 算符多项式是算符幂的线性组合
+    \end{iqbitemize}
+      \[
+        P(\hat{A}) = c_0\hat{1} + c_1\hat{A} + c_2\hat{A}^2 + \cdots + c_n\hat{A}^n
+      \]
+    \begin{iqbitemize}
+    \item \textbf{单算符多项式}：类似普通代数
+    \[
+      (\hat{A} + \hat{1})^2 = \hat{A}^2 + 2\hat{A} + \hat{1}
+    \]
+    \item 因为算符与自身对易：$[\hat{A}, \hat{A}] = 0$
+    \end{iqbitemize}
+    \iqbsmallsep
+
+    \iqbsectiontitle{双算符多项式的复杂性}
+    \begin{iqbitemize}
+    \item \textbf{常见错误}：
+    \[
+      (\hat{A} + \hat{B})^2 \neq \hat{A}^2 + 2\hat{A}\hat{B} + \hat{B}^2
+    \]
+    \item 原因：$\hat{A}$与$\hat{B}$不对易
+    \end{iqbitemize}
+    \iqbtinysep
+
+    \iqbsectiontitle{正确展开方式}
+    \begin{iqbitemize}
+    \item 保留算符顺序：
+    \[
+      (\hat{A} + \hat{B})^2 = \hat{A}^2 + \hat{A}\hat{B} + \hat{B}\hat{A} + \hat{B}^2
+    \]
+    \item 使用对易子简化：
+    \[
+      (\hat{A} + \hat{B})^2 = \hat{A}^2 + 2\hat{A}\hat{B} + \hat{B}^2 + [\hat{B}, \hat{A}]
+    \]
+    \end{iqbitemize}
+  
+\end{frame}
+
+\begin{frame}{算符多项式与函数（2/2）}
+  \iqbfontsizemode{small}
+  \iqblayouttwo{
+    \iqbsectiontitle{算符函数的定义}
+    \begin{iqbitemize}
+    \item 通过\textbf{泰勒级数展开}（Taylor series）定义
+    \[
+      f(\hat{A}) = \sum_{n=0}^{\infty} \dfrac{f^{(n)}(0)}{n!}\hat{A}^n
+    \]
+    \item \textbf{指数算符}（exponential operator）：
+    \end{iqbitemize}
+      \[
+        e^{\hat{A}} = \hat{1} + \hat{A} + \dfrac{1}{2!}\hat{A}^2 + \dfrac{1}{3!}\hat{A}^3 + \cdots
+      \]
+    \begin{iqbitemize}
+    \item 物理中的重要应用：
+    \subitem{时间演化算符：$e^{-i\hat{H}t/\hbar}$}
+    \subitem{平移算符：$e^{a\mathrm{d}/\mathrm{d}x}$}
+    \subitem{旋转算符：$e^{-i\hat{L}_z\phi/\hbar}$}
+    \end{iqbitemize}
+  }{
+    \iqbsectiontitle{算符函数的性质}
+    \begin{iqbitemize}
+    \item 级数必须收敛才有意义
+    \item 不同算符的函数：$f(\hat{A}, \hat{B})$展开更复杂
+    \item 特殊情况：若$[\hat{A}, \hat{B}] = 0$，则$e^{\hat{A}}e^{\hat{B}} = e^{\hat{A}+\hat{B}}$
+    \item 一般情况：Baker-Campbell-Hausdorff公式
+    \end{iqbitemize}
+    \iqbsmallsep
+
+    \iqbgreenbox{物理意义}{算符函数描述量子态随时间、空间或角度的演化}
+  }
+\end{frame}
